@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./ShirtTee/*.{aspx,Master}"],
+    content: ["./ShirtTee/*.{aspx,Master}",
+        'node_modules/preline/dist/*.js',    ],
   theme: {
       extend: {
           gridTemplateRows: {
@@ -8,7 +9,8 @@ module.exports = {
           },
       },
   },
-  plugins: [
+    plugins: [
+        require('preline/plugin'),
       require('@tailwindcss/forms'),
       require('@tailwindcss/aspect-ratio'),
   ],
