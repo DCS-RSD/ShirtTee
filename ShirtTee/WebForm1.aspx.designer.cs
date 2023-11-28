@@ -11,7 +11,7 @@ namespace ShirtTee
 {
 
 
-    public partial class WebForm2
+    public partial class WebForm1
     {
     }
 }
