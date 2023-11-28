@@ -10,7 +10,6 @@
 </head>
 <body class="font-sans bg-gray-100">
 
-    <!--try using private branch-->
     <form id="form1" runat="server">
         <!-- Header -->
         <nav class="bg-white shadow-lg">
