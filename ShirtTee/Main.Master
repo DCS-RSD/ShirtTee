@@ -6,7 +6,7 @@
 <head runat="server">
     <title>ShirtTee</title>
     <link href="./dist/output.css" rel="stylesheet" />
-    <script src="./node_modules/preline/dist/preline.js"></script>
+    <script src="./dist/preline.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
