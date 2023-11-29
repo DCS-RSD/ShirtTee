@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="admin\AddProductForm.aspx" />
     <Content Include="admin\Dashboard.aspx" />
+    <Content Include="admin\SampleForm.aspx" />
     <Content Include="App_Data\ShirtTeeDatabase.mdf" />
     <Content Include="App_Data\ShirtTeeDatabase_log.ldf">
       <DependentUpon>ShirtTeeDatabase.mdf</DependentUpon>
@@ -98,6 +99,13 @@
     </Compile>
     <Compile Include="admin\MainAdmin.Master.designer.cs">
       <DependentUpon>MainAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.designer.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Homepage.aspx.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
