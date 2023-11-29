@@ -3,7 +3,8 @@
     "tailwindcss": "^3.3.5"
   },
   "scripts": {
-    "build:css": "tailwindcss build ./ShirtTee/input.css -o ./ShirtTee/dist/output.css"
+    "build:css": "tailwindcss build ./ShirtTee/input.css -o ./ShirtTee/dist/output.css",
+    "watch:css": "tailwindcss --watch -i ./ShirtTee/input.css -o ./ShirtTee/dist/output.css"
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
