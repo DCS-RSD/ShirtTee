@@ -67,6 +67,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ShirtTeeDatabase.mdf" />
+    <Content Include="App_Data\ShirtTeeDatabase_log.ldf">
+      <DependentUpon>ShirtTeeDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Homepage.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config" />
