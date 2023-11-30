@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: ["./ShirtTee/*.{aspx,Master}",
-        'node_modules/preline/dist/*.js',],
+        'node_modules/preline/dist/*.js',
+        "./ShirtTee/admin/*.{aspx,Master}",],
     theme: {
         extend: {
             gridTemplateRows: {
