@@ -34,10 +34,13 @@
                     </div>
 
                     <%-- SiteMapPath --%>
-                    <asp:SiteMapPath ID="SiteMapPath1" runat="server" SiteMapProvider="AdminSiteMapProvider">
-                    </asp:SiteMapPath>
-                    <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
+
                     <div class="hidden sm:block">
+                        <asp:SiteMapPath ID="SiteMapPath1" runat="server" SiteMapProvider="AdminSiteMapProvider">
+                            <NodeStyle CssClass="text-gray-500 hover:underline" />
+                            <CurrentNodeStyle CssClass="font-semibold text-gray-700" />
+                        </asp:SiteMapPath>
+                        <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
                     </div>
 
                     <div class="flex flex-row items-center justify-end gap-2">
