@@ -67,6 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\AddProductForm.aspx" />
+    <Content Include="admin\Dashboard.aspx" />
+    <Content Include="admin\SampleForm.aspx" />
     <Content Include="App_Data\ShirtTeeDatabase.mdf" />
     <Content Include="App_Data\ShirtTeeDatabase_log.ldf">
       <DependentUpon>ShirtTeeDatabase.mdf</DependentUpon>
@@ -75,25 +78,45 @@
     <Content Include="Image\clothes1.jpg" />
     <Content Include="Image\clothes2.jpg" />
     <Content Include="Image\clothes3.jpg" />
-    <Content Include="Login.aspx" />
     <Content Include="Men.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="admin\AddProductForm.aspx.cs">
+      <DependentUpon>AddProductForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\AddProductForm.aspx.designer.cs">
+      <DependentUpon>AddProductForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\MainAdmin.Master.cs">
+      <DependentUpon>MainAdmin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\MainAdmin.Master.designer.cs">
+      <DependentUpon>MainAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.designer.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Homepage.aspx.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Homepage.aspx.designer.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
@@ -127,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
+    <Content Include="admin\MainAdmin.Master" />
     <None Include="packages.config" />
     <Content Include="testing.Master" />
     <None Include="Web.Debug.config">
