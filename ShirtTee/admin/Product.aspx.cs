@@ -7,12 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace ShirtTee.admin
 {
-    public partial class MainAdmin : System.Web.UI.MasterPage
+    public partial class Product : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //SiteMapDataSource1.SiteMapProvider = "AdminSiteMapProvider";
-        }
 
+        }
     }
 }
