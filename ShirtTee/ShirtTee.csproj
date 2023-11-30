@@ -72,6 +72,9 @@
       <DependentUpon>ShirtTeeDatabase.mdf</DependentUpon>
     </Content>
     <Content Include="Homepage.aspx" />
+    <Content Include="Image\clothes1.jpg" />
+    <Content Include="Image\clothes2.jpg" />
+    <Content Include="Image\clothes3.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Men.aspx" />
     <Content Include="Web.config" />
