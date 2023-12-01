@@ -76,6 +76,17 @@
                     </asp:TextBox>
                 </div>
 
+<%--                <div class="col-span-1">
+                    <label for="btnColor" class="block text-sm font-medium mb-2 dark:text-white">Color picker</label>
+                </div>
+
+                <div class="col-span-3">
+                    <asp:TextBox type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer w-10 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700" 
+                        id="btnColor" value="#2563eb" title="Choose your color"
+                        runat="server">
+                    </asp:TextBox>
+                </div>--%>
+
                 <%--Button--%>
                 <div class="col-start-3">
                     <asp:Button ID="btnSubmit" runat="server" Text="Add Product" class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
