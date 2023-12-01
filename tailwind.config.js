@@ -2,8 +2,7 @@
 module.exports = {
     content: ["./ShirtTee/*.{aspx,Master}",
         'node_modules/preline/dist/*.js',
-        "./ShirtTee/admin/*.{aspx,Master}",
-        "./ShirtTee/auth/*.{aspx,Master}",],
+        "./ShirtTee/admin/*.{aspx,Master}",],
     theme: {
         extend: {
             gridTemplateRows: {
