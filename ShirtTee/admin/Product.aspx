@@ -10,10 +10,20 @@
             <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
-                        <div class="my-4 ml-8">
-                            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Product List
-                            </h2>
+                        <div class="mt-8 mb-4 mx-8 sm:flex sm:items-center">
+                            <div class="sm:flex-auto">
+                                <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Product List
+                                </h1>
+                            </div>
+                            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                                <asp:HyperLink
+                                    NavigateUrl="./AddProductForm.aspx"
+                                    runat="server" class=" justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                    Add Product
+                                </asp:HyperLink>
+                            </div>
                         </div>
+
                         <!-- Header -->
                         <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
                             <%--Title--%>
@@ -123,7 +133,10 @@
                         <!-- End Header -->
 
                         <!-- Table -->
-                        <table class=" min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]"></asp:SqlDataSource>
+
+
+                        <table class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
                             <thead class="bg-gray-50 dark:bg-slate-800">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-start">
@@ -154,35 +167,51 @@
                                         </div>
                                     </th>
 
-                                    <th scope="col" class="px-6 py-3 text-start">
-                                        <div class="flex items-center gap-x-2">
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Status
-                                            </span>
-                                        </div>
-                                    </th>
+                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>
                                 </tr>
                             </thead>
 
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]"></asp:SqlDataSource>
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1">
                                     <ItemTemplate>
-                                        <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
-                                            <td class="whitespace-nowrap p-4  text-gray-800 dark:text-gray-200">
-                                                <%--<img class="flex-shrink-0 h-[2.375rem] w-[2.375rem] rounded-lg" src="<%# ResolveUrl(Eval("imagepath").ToString()) %>" />--%>
-                                                <%# Eval("prodid") %>
-                                            </td>
-                                            <td class="whitespace-nowrap p-4  text-gray-800 dark:text-gray-200">
-                                                <%# Eval("prodname") %>
-                                            </td>
-                                            <td class="whitespace-nowrap p-4  text-gray-800 dark:text-gray-200">
-                                                <%# Eval("price") %>
-                                            </td>
+                                        <tr class=" bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
+                                            <asp:HyperLink runat="server">
+                       <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                           <%# Eval("prodid") %>
+                       </td>
+                       <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                           <%# Eval("prodname") %>
+                       </td>
+                       <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                           <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">Badge</span>
+                       </td>
+                       <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                           <%# Eval("price") %>
+                       </td>
+
+                       <td class="relative whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                           <div class="hs-tooltip inline-block">
+                               <a class="hs-tooltip-toggle w-10 h-10 inline-flex justify-center items-center gap-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/[.05] dark:hover:border-white/[.1] dark:hover:text-white">
+                                   <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9ZM11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12Z" />
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M21.83 11.2807C19.542 7.15186 15.8122 5 12 5C8.18777 5 4.45796 7.15186 2.17003 11.2807C1.94637 11.6844 1.94361 12.1821 2.16029 12.5876C4.41183 16.8013 8.1628 19 12 19C15.8372 19 19.5882 16.8013 21.8397 12.5876C22.0564 12.1821 22.0536 11.6844 21.83 11.2807ZM12 17C9.06097 17 6.04052 15.3724 4.09173 11.9487C6.06862 8.59614 9.07319 7 12 7C14.9268 7 17.9314 8.59614 19.9083 11.9487C17.9595 15.3724 14.939 17 12 17Z" />
+                                   </svg>
+                                   <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700" role="tooltip">
+                                       <img class="flex-shrink-0 h-32 w-32"
+                                           src="<%# ResolveUrl(Eval("imagepath").ToString()) %>" />
+                                   </div>
+                               </a>
+                           </div>
+                       </td>
+                             
+                                            </asp:HyperLink>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </tbody>
                         </table>
+
+
                         <!-- End Table -->
 
                         <!-- Footer -->
