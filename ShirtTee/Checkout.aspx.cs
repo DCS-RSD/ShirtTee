@@ -14,6 +14,7 @@ namespace ShirtTee
     public partial class Checkout : System.Web.UI.Page
     {
         public string sessionId = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];

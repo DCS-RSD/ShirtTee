@@ -144,11 +144,12 @@
                 </div>
                 <asp:Button ID="btnPlaceOrder" runat="server" class="mt-4 mb-8 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" />
             </div>
+
         </form>
+
+
     </div>
-    <script>
-        var test = '@Session.SessionID';
-    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var form = document.getElementById("shippingForm");
