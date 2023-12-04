@@ -15,9 +15,11 @@ namespace ShirtTee
     {
         public string sessionId = "";
 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+           
 
             var options = new SessionCreateOptions
             {
@@ -32,7 +34,7 @@ namespace ShirtTee
                   {
                       PriceData = new SessionLineItemPriceDataOptions
                       {
-                       UnitAmount = 10000000,
+                       UnitAmount = 1000,
                        Currency = "myr",
                        ProductData = new SessionLineItemPriceDataProductDataOptions
                        {
@@ -44,7 +46,7 @@ namespace ShirtTee
                   },
                 },
                 Mode = "payment",
-                SuccessUrl = "https://localhost:44306/success?id={CHECKOUT_SESSION_ID}",
+                SuccessUrl = "https://localhost:44374/SuccessPayment.aspx?id={CHECKOUT_SESSION_ID}",
                 CancelUrl = "https://localhost:44306/Cancel.aspx",
 
             };

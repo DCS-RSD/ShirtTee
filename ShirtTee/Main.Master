@@ -72,7 +72,9 @@
         }
     </style>
 </head>
+    <form id="form1" runat="server">
 <body>
+    
     <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
     <!-- ========== HEADER ========== -->
     <p class="flex h-10 items-center justify-center bg-black px-4 text-sm font-medium text-white sm:px-6 lg:px-8">FREE SHIPPING ON ORDERS OVER RM150</p>
@@ -863,8 +865,8 @@
         </div>
     </div>
 </footer>
-
-        <script src="./script.js"></script>
+        </form>
+   
 
 
 </html>

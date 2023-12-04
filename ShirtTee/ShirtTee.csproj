@@ -106,7 +106,7 @@
     <Content Include="Image\clothes3.jpg" />
     <Content Include="Men.aspx" />
     <Content Include="ProductDetails.aspx" />
-    <Content Include="script.js" />
+    <Content Include="SuccessPayment.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
@@ -192,6 +192,13 @@
     <Compile Include="StripePublicKeyHandler.ashx.cs">
       <DependentUpon>StripePublicKeyHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="SuccessPayment.aspx.cs">
+      <DependentUpon>SuccessPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuccessPayment.aspx.designer.cs">
+      <DependentUpon>SuccessPayment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="testing.Master.cs">
       <DependentUpon>testing.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -239,8 +246,7 @@
           <IISUrl>https://localhost:44374/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>https://localhost:8080/</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
