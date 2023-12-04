@@ -24,7 +24,7 @@ namespace ShirtTee.admin
                 case "AnotherPage":
                     customerLink.Attributes["class"] = activeNavClass;
                     break;
-                case "Product":
+                case var productPage when productPage.StartsWith("Product"):
                     productLink.Attributes["class"] = activeNavClass;
                     break;
                     // Add cases for other pages as needed

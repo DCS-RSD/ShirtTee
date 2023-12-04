@@ -24,13 +24,13 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.TextBox txtProdName;
 
         /// <summary>
-        /// ddlProdCategory control.
+        /// lbProdCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlProdCategory;
+        protected global::System.Web.UI.WebControls.ListBox lbProdCategory;
 
         /// <summary>
         /// txtPrice control.

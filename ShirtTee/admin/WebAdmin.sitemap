@@ -2,7 +2,8 @@
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
 	<siteMapNode url="~/admin/Dashboard.aspx" title="Dashboard"  description="">
 		<siteMapNode url="~/admin/Product.aspx" title="Product"  description="">
-			<siteMapNode url="~/admin/AddProductForm.aspx" title="Add New Product"  description="" />
+			<siteMapNode url="~/admin/ProductAddForm.aspx" title="Add New Product"  description="" />
+			<siteMapNode url="~/admin/ProductDetails.aspx" title="Product Details"  description="" />
 		</siteMapNode>
 	</siteMapNode>
 </siteMap>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="AddProductForm.aspx.cs" Inherits="ShirtTee.admin.AddProductForm" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="ProductAddForm.aspx.cs" Inherits="ShirtTee.admin.AddProductForm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="max-w-4xl mx-auto">
@@ -33,14 +33,13 @@
                 <%--Product Category--%>
 
                 <div class="col-span-1">
-                    <label for="ddlProdCategory" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
+                    <label for="lbProdCategory" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
                         Product Category
                     </label>
                 </div>
 
                 <div class="col-span-3">
-                    <asp:DropDownList ID="ddlProdCategory" runat="server" class="cInput">
-                    </asp:DropDownList>
+                    <asp:ListBox ID="lbProdCategory" runat="server" SelectionMode="Multiple"></asp:ListBox>
                 </div>
 
                 <%--Product Price--%>
@@ -76,7 +75,7 @@
                     </asp:TextBox>
                 </div>
 
-<%--                <div class="col-span-1">
+                <%--                <div class="col-span-1">
                     <label for="btnColor" class="block text-sm font-medium mb-2 dark:text-white">Color picker</label>
                 </div>
 
