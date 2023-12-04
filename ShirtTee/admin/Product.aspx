@@ -176,7 +176,8 @@
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
 
                                     <ItemTemplate>
-                                        <tr class=" bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
+                                        <tr onclick='<%# Eval("prodid", "window.location.href = \"ProductDetails.aspx?prodid={0}\";") %>'
+                                            class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 cursor-pointer">
 
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                                 <%# Eval("prodid") %>
@@ -219,7 +220,7 @@
 
                         <!-- Footer -->
                         <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex-row-reverse gap-x-2">
+                            <div class="inline-flex gap-x-2">
                                 <asp:DataPager ID="DataPager2" runat="server" PagedControlID="ListView1" PageSize="10">
                                     <Fields>
                                         <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowPreviousPageButton="True" ShowNextPageButton="False" ShowLastPageButton="False" />
