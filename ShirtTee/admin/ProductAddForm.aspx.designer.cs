@@ -24,13 +24,31 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.TextBox txtProdName;
 
         /// <summary>
-        /// lbProdCategory control.
+        /// radProdGroup control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbProdCategory;
+        protected global::System.Web.UI.WebControls.RadioButtonList radProdGroup;
+
+        /// <summary>
+        /// ddlProdCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProdCategory;
+
+        /// <summary>
+        /// SqlDataSource1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
 
         /// <summary>
         /// txtPrice control.

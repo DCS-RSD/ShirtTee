@@ -30,16 +30,37 @@
                     </asp:TextBox>
                 </div>
 
+                <%--Product Group--%>
+                <div class="col-span-1">
+                    <label for="radProdGroup" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
+                        Product Group
+                    </label>
+                </div>
+                <div class="col-span-3">
+                    <asp:RadioButtonList ID="radProdGroup" runat="server" AutoPostBack="True" RepeatDirection="Horizontal" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
+                        <asp:ListItem class="px-4" Value="man">  Man</asp:ListItem>
+                        <asp:ListItem class="px-4" Value="woman">  Woman</asp:ListItem>
+                        <asp:ListItem class="px-4" Value="kid">  Kid</asp:ListItem>
+                    </asp:RadioButtonList>
+                </div>
+
                 <%--Product Category--%>
 
                 <div class="col-span-1">
-                    <label for="lbProdCategory" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
+                    <label for="ddlProdCategory" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
                         Product Category
                     </label>
                 </div>
 
                 <div class="col-span-3">
-                    <asp:ListBox ID="lbProdCategory" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                    <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_name">
+
+                    </asp:DropDownList>
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ShirtTeeDBConnectionString %>" SelectCommand="SELECT [category_name] FROM [Category] WHERE ([category_group] = @category_group)">
+                        <SelectParameters>
+                            <asp:ControlParameter ControlID="radProdGroup" Name="category_group" PropertyName="SelectedValue" Type="String" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
                 </div>
 
                 <%--Product Price--%>
