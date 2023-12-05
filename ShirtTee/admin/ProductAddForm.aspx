@@ -53,8 +53,8 @@
                 </div>
 
                 <div class="col-span-3">
-                    <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_name">
-
+                    <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_name" Enabled="False">
+                        <asp:ListItem>Select Product Category</asp:ListItem>
                     </asp:DropDownList>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ShirtTeeDBConnectionString %>" SelectCommand="SELECT [category_name] FROM [Category] WHERE ([category_group] = @category_group)">
                         <SelectParameters>
@@ -96,6 +96,20 @@
                     </asp:TextBox>
                 </div>
 
+                <%--Product Image--%>
+
+                <div class="col-span-1">
+                    <label for="txtProdDescription" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
+                        Product Image
+                    </label>
+                </div>
+
+                <div class="col-span-3">
+                    <asp:Image ID="Image1" runat="server" ClientIDMode="Static" />
+                    <asp:FileUpload CssClass="cInput" onchange="loadFile(event)"
+                        ID="FileUpload1" runat="server" />
+                </div>
+
                 <%--                <div class="col-span-1">
                     <label for="btnColor" class="block text-sm font-medium mb-2 dark:text-white">Color picker</label>
                 </div>
@@ -118,4 +132,22 @@
 
         </div>
     </div>
+
+<script>
+    var loadFile = function (event) {
+
+        var input = event.target;
+        var file = input.files[0];
+        var type = file.type;
+
+        var output = document.getElementById('Image1');
+
+
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+</script>
+
 </asp:Content>

@@ -16,7 +16,7 @@ namespace ShirtTee.admin
 
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            ddlProdCategory.Enabled = true;
         }
     }
 }
