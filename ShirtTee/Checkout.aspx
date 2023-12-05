@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="ShirtTee.Checkout" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
         <div class="px-4 pt-4">
             <p class="text-xl font-medium">Order Summary</p>
@@ -102,10 +103,6 @@
                 <div class="flex flex-col sm:flex-row items-center sm:space-y-0 sm:space-x-4">
 
 
-
-
-
-
                     <input type="text" name="billing-zip" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="City"><input type="text" name="billing-zip" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="Postal Code">
                 </div>
                 <label for="billing-address" class="mt-4 mb-2 block text-sm font-medium">State / Country</label>
@@ -142,25 +139,20 @@
                     <p class="text-2xl font-semibold text-gray-900">RM 408.00</p>
                 </div>
             </div>
-            <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-            <asp:Button ID="btnPlaceOrder" runat="server" class="mt-4 mb-8 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" />
+            <asp:Button ID="btnHidden" runat="server" CssClass="hidden" OnClick="btnHidden_Click" Visible="False" />
+            <asp:Button ID="btnPlaceOrder" runat="server" class="mt-4 mb-8 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" OnClick="btnPlaceOrder_Click" />
         </div>
 
 
     </div>
 
-
     <script>
         function isFPXChecked() {
             var radFPX = document.getElementById("radio_1");
             return radFPX.checked;
-
         }
-
-
         document.addEventListener('DOMContentLoaded', function () {
             var form = document.getElementById("form1");
-
             form.addEventListener('submit', function (e) {
                 if (isFPXChecked()) {
                     e.preventDefault();
@@ -183,9 +175,12 @@
                         .catch(error => console.error('Error fetching Stripe public key:', error));
                 }
                 else {
-                    //paypal
+                    return;
                 }
             });
         });
+
     </script>
+
+
 </asp:Content>
