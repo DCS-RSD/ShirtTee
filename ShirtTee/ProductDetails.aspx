@@ -359,7 +359,7 @@
 
 <div class="w-full max-w-md mx-auto p-6">
 
-  <div id="hs-subscription-with-image" class="flex justify-between items-center hidden w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
+  <div id="hs-subscription-with-image" class="flex justify-center items-center hidden w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
     <div class=" hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full sm:mx-auto">
       <div class="relative flex flex-col bg-white shadow-lg rounded-xl dark:bg-gray-800">
         <div class="absolute top-2 end-2 z-[10]">
