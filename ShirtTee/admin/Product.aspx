@@ -133,7 +133,7 @@
                         <!-- End Header -->
 
                         <!-- Table -->
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]"></asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>"></asp:SqlDataSource>
 
 
                         <table class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
@@ -167,7 +167,7 @@
                                         </div>
                                     </th>
 
-                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>
+<%--                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>--%>
                                 </tr>
                             </thead>
 
@@ -176,14 +176,14 @@
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
 
                                     <ItemTemplate>
-                                        <tr onclick='<%# Eval("prodid", "window.location.href = \"ProductDetails.aspx?prodid={0}\";") %>'
+                                        <tr onclick='<%# Eval("product_id", "window.location.href = \"ProductDetails.aspx?product_id={0}\";") %>'
                                             class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 cursor-pointer">
 
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("prodid") %>
+                                                <%# Eval("product_id") %>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("prodname") %>
+                                                <%# Eval("product_name") %>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                                 <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">Badge</span>
@@ -192,7 +192,7 @@
                                                 <%# Eval("price") %>
                                             </td>
 
-                                            <td class="relative whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+<%--                                            <td class="relative whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                                 <div class="hs-tooltip inline-block">
                                                     <a class="hs-tooltip-toggle w-10 h-10 inline-flex justify-center items-center gap-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/[.05] dark:hover:border-white/[.1] dark:hover:text-white">
                                                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -205,7 +205,7 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                            </td>
+                                            </td>--%>
 
                                         </tr>
                                     </ItemTemplate>

@@ -56,7 +56,7 @@
                     <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_name" Enabled="False">
                         <asp:ListItem>Select Product Category</asp:ListItem>
                     </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ShirtTeeDBConnectionString %>" SelectCommand="SELECT [category_name] FROM [Category] WHERE ([category_group] = @category_group)">
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [category_name] FROM [Category] WHERE ([category_group] = @category_group)">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="radProdGroup" Name="category_group" PropertyName="SelectedValue" Type="String" />
                         </SelectParameters>
