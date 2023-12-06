@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "tailwindcss": "^3.3.5"
+    "tailwindcss": "^3.3.6"
   },
   "scripts": {
     "build:css": "tailwindcss build ./ShirtTee/input.css -o ./ShirtTee/dist/output.css",
@@ -9,6 +9,7 @@
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
     "preline": "^2.0.2"
   }
 }

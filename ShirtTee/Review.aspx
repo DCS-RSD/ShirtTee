@@ -203,8 +203,7 @@
         <div class="my-12 divide-y divide-gray-200">
           <div class="py-4 border-t border-b">
             <div class="flex items-center">
-              
-              <div class="">
+<img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="Emily Selman." class="h-12 w-12 rounded-full">              <div class="ml-4">
                 <h4 class="text-sm font-bold text-gray-900">Emily Selman</h4>
                 <div class="mt-1 flex items-center">
                   <!--
