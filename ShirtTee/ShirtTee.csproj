@@ -97,18 +97,18 @@
     <Content Include="App_Data\ShirtTeeDB_log.ldf">
       <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
     </Content>
-    <Content Include="auth\Login.aspx" />
-    <Content Include="auth\SignUp.aspx" />
-    <Content Include="Cart.aspx" />
-    <Content Include="Checkout.aspx" />
+    <Content Include="customer\Cart.aspx" />
+    <Content Include="customer\Checkout.aspx" />
+    <Content Include="customer\OrderDetails.aspx" />
+    <Content Include="customer\OrderHistory.aspx" />
+    <Content Include="customer\Profile.aspx" />
+    <Content Include="customer\WriteReview.aspx" />
     <Content Include="Homepage.aspx" />
     <Content Include="Image\clothes1.jpg" />
     <Content Include="Image\clothes2.jpg" />
     <Content Include="Image\clothes3.jpg" />
-    <Content Include="Men.aspx" />
-    <Content Include="OrderDetails.aspx" />
+    <Content Include="Products.aspx" />
     <Content Include="ProductDetails.aspx" />
-    <Content Include="OrderHistory.aspx" />
     <Content Include="Review.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -141,33 +141,47 @@
     <Compile Include="admin\SampleForm.aspx.designer.cs">
       <DependentUpon>SampleForm.aspx</DependentUpon>
     </Compile>
-    <Compile Include="auth\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="auth\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="auth\SignUp.aspx.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="auth\SignUp.aspx.designer.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Cart.aspx.cs">
+    <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Cart.aspx.designer.cs">
+    <Compile Include="customer\Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Checkout.aspx.cs">
+    <Compile Include="customer\Checkout.aspx.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Checkout.aspx.designer.cs">
+    <Compile Include="customer\Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\OrderDetails.aspx.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\OrderDetails.aspx.designer.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\OrderHistory.aspx.cs">
+      <DependentUpon>OrderHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\OrderHistory.aspx.designer.cs">
+      <DependentUpon>OrderHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\WriteReview.aspx.cs">
+      <DependentUpon>WriteReview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\WriteReview.aspx.designer.cs">
+      <DependentUpon>WriteReview.aspx</DependentUpon>
     </Compile>
     <Compile Include="Homepage.aspx.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
@@ -183,19 +197,12 @@
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
-    <Compile Include="Men.aspx.cs">
-      <DependentUpon>Men.aspx</DependentUpon>
+    <Compile Include="Products.aspx.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Men.aspx.designer.cs">
-      <DependentUpon>Men.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OrderDetails.aspx.cs">
-      <DependentUpon>OrderDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OrderDetails.aspx.designer.cs">
-      <DependentUpon>OrderDetails.aspx</DependentUpon>
+    <Compile Include="Products.aspx.designer.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductDetails.aspx.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
@@ -215,13 +222,6 @@
     <Compile Include="StripePublicKeyHandler.ashx.cs">
       <DependentUpon>StripePublicKeyHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="OrderHistory.aspx.cs">
-      <DependentUpon>OrderHistory.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OrderHistory.aspx.designer.cs">
-      <DependentUpon>OrderHistory.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
@@ -236,9 +236,7 @@
     </None>
     <Content Include="Web.sitemap" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="customer\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

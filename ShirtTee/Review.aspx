@@ -239,9 +239,15 @@
               </div>
             </div>
 
-            <div class="mt-4 space-y-6 text-base italic text-gray-600">
+            <div class="mt-4 text-base italic text-gray-600">
               <p>This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.</p>
-                  <p>XL | BLACK</p>
+
+                <div class="flex justify-between mt-4">
+                        <span id="ContentPlaceHolder1_lblSizeColor">XL | BLACK</span>
+                
+                
+                <span id="ContentPlaceHolder1_lblReviewDate" class="block">06/12/2023</span>
+    </div>
             </div>
           </div>
 

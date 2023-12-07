@@ -1,25 +1,23 @@
-﻿using System;
+﻿using Stripe.Checkout;
+using Stripe;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using PayPal.Api;
-using Stripe.Checkout;
-using Stripe;
-using System.Configuration;
-using System.Web.Services;
 
-namespace ShirtTee
+namespace ShirtTee.customer
 {
     public partial class Checkout : System.Web.UI.Page
     {
         public string sessionId = "";
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];     
+            StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
 
             var options = new SessionCreateOptions
             {
@@ -54,7 +52,6 @@ namespace ShirtTee
             var service = new SessionService();
             Session session = service.Create(options);
             sessionId = session.Id;
-            
         }
 
         protected void btnHidden_Click(object sender, EventArgs e)
@@ -111,12 +108,12 @@ namespace ShirtTee
                     Response.Redirect(link.href);
                 };
             }
+
         }
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
             btnHidden_Click(null, EventArgs.Empty);
         }
-
     }
 }

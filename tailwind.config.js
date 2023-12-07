@@ -2,7 +2,9 @@
 module.exports = {
     content: ["./ShirtTee/*.{aspx,Master}",
         'node_modules/preline/dist/*.js',
-        "./ShirtTee/admin/*.{aspx,Master}",],
+        "./ShirtTee/admin/*.{aspx,Master}",
+        "./ShirtTee/customer/*.{aspx,Master}",
+        "./node_modules/flowbite/**/*.js"],
     theme: {
         extend: {
             gridTemplateRows: {
@@ -15,6 +17,7 @@ module.exports = {
         require('@tailwindcss/forms'),
         require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/typography'),
+        require('flowbite/plugin'),
     ],
 }
 

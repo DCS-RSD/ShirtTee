@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "daisy": "^0.2.0",
+    "daisyui": "^4.4.19",
     "tailwindcss": "^3.3.6"
   },
   "scripts": {
@@ -10,6 +12,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
+    "flowbite": "^2.2.0",
     "preline": "^2.0.2"
   }
 }

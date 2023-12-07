@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShirtTee
+namespace ShirtTee.customer
 {
 
 
-    public partial class OrderDetails
+    public partial class WriteReview
     {
     }
 }

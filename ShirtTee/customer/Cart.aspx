@@ -1,7 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="ShirtTee.Cart" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="ShirtTee.customer.Cart" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="max-h-full bg-white pb-10 pt-5 xl:px-16 lg:px-12 px-8">
+        <div class="max-h-full bg-white pb-10 pt-5 xl:px-16 lg:px-12 px-8">
         <h1 class="mb-10 ml-20 max-lg:ml-0 text-left text-3xl font-bold">YOUR CART</h1>
         <div class="mx-16 justify-center md:flex max-lg:mx-auto md:space-x-6 xl:px-0">
             <div class="rounded-lg md:w-2/3">
@@ -106,4 +105,5 @@
           </div>            </div>
         </div>
     </div>
+
 </asp:Content>

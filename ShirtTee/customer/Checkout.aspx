@@ -1,8 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="ShirtTee.Checkout" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="ShirtTee.customer.Checkout" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
+        <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
         <div class="px-4 pt-4">
             <p class="text-xl font-medium">Order Summary</p>
 
@@ -33,7 +31,7 @@
                     <input class="peer hidden" id="radio_1" type="radio" name="radio" checked="">
                     <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                     <label class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_1">
-                        <img class="w-14 object-contain" src="./Image/fpxlogo.png" alt="">
+                        <img class="w-14 object-contain" src="../Image/fpxlogo.png" alt="">
                         <div class="ml-5">
                             <span class="mt-2 font-semibold">Online Banking</span>
                             <p class="text-slate-500 text-sm leading-6">FPX, GrabPay, Credit/Debit Card etc.</p>
@@ -44,7 +42,7 @@
                     <input class="peer hidden" id="radio_2" type="radio" name="radio" checked="">
                     <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                     <label class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_2">
-                        <img class="w-14 object-contain" src="./Image/paypal.png" alt="">
+                        <img class="w-14 object-contain" src="../Image/paypal.png" alt="">
                         <div class="ml-5">
                             <span class="mt-2 font-semibold">PayPal</span>
                             <p class="text-slate-500 text-sm leading-6">Credit/Debit Card</p>
@@ -67,18 +65,18 @@
                         </svg>
                     </div>
                 </div>
-                <label for="card-holder" class="mt-4 mb-2 block text-sm font-medium">Name</label>
+                <label for="name" class="mt-4 mb-2 block text-sm font-medium">Name</label>
 
                 <div class="relative">
-                    <input type="text" id="card-holder" name="card-holder" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Your full name here">
+                    <input type="text" id="name" name="name" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Your full name here">
                     <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"></path>
                         </svg>
                     </div>
                 </div>
-                <label for="card-holder" class="mt-4 mb-2 block text-sm font-medium">Address Line 1</label><div class="relative">
-                    <input type="text" id="card-holder" name="card-holder" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Address Line 1">
+                <label for="addressLine1" class="mt-4 mb-2 block text-sm font-medium">Address Line 1</label><div class="relative">
+                    <input type="text" id="addressLine1" name="addressLine1" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Address Line 1">
                     <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-geo-alt text-gray-400" viewBox="0 0 16 16">
@@ -87,9 +85,9 @@
                         </svg>
                     </div>
                 </div>
-                <label for="card-holder" class="mt-4 mb-2 block text-sm font-medium">Address Line 2 (optional)</label>
+                <label for="addressLine2" class="mt-4 mb-2 block text-sm font-medium">Address Line 2 (optional)</label>
                 <div class="relative">
-                    <input type="text" id="card-holder" name="card-holder" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Address Line 2">
+                    <input type="text" id="addressLine2" name="addressLine2" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Address Line 2">
                     <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-geo-alt text-gray-400" viewBox="0 0 16 16">
                             <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"></path>
@@ -99,23 +97,21 @@
                 </div>
 
 
-                <label for="billing-address" class="mt-4 mb-2 block text-sm font-medium">City / Postal Code</label>
+                <label for="city/postalCode" class="mt-4 mb-2 block text-sm font-medium">City / Postal Code</label>
                 <div class="flex flex-col sm:flex-row items-center sm:space-y-0 sm:space-x-4">
 
 
-                    <input type="text" name="billing-zip" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="City"><input type="text" name="billing-zip" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="Postal Code">
+                    <input type="text" name="city" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="City">
+                    <input type="text" name="postalCode" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="Postal Code">
                 </div>
-                <label for="billing-address" class="mt-4 mb-2 block text-sm font-medium">State / Country</label>
+                <label for="state/country" class="mt-4 mb-2 block text-sm font-medium">State / Country</label>
                 <div class="flex flex-col sm:flex-row items-center sm:space-y-0 sm:space-x-4">
 
-
-
-
-                    <select class="w-full sm:w-1/2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" name="billing-state" type="text">
+                    <select class="w-full sm:w-1/2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" name="state" type="text">
 
                         <option value="State">State</option>
                     </select>
-                    <input type="text" name="billing-zip" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="Country">
+                    <input type="text" name="country" class="w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="Country">
                 </div>
 
                 <!-- Total -->

@@ -1,9 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OrderHistory.aspx.cs" Inherits="ShirtTee.OrderHistory" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OrderHistory.aspx.cs" Inherits="ShirtTee.customer.OrderHistory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-
-    <body class="bg-gray-50 dark:bg-slate-900">
+        <div class="bg-gray-50 dark:bg-slate-900">
 
         <main id="content" role="main">
             <!-- Nav -->
@@ -82,19 +79,15 @@
                                             <div class="hidden origin-bottom-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-0-button" tabindex="-1">
                                                 <div class="py-1" role="none">
                                                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-0">View </a>
-                                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-1">Invoice </a>
+                                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-1">View Order</a>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4">
+
                                             <a href="#" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                 <span>View Order</span>
-                                                <span class="sr-only">WU88191111</span>
-                                            </a>
-                                            <a href="#" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                <span>View Invoice</span>
                                                 <span class="sr-only">for order WU88191111</span>
                                             </a>
                                         </div>
@@ -128,10 +121,10 @@
 
                                                 <div class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
                                                     <div class="flex-1 flex justify-center">
-                                                        <a href="#" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">View product</a>
+                                                        <a href="#" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">Write Review</a>
                                                     </div>
                                                     <div class="flex-1 pl-4 flex justify-center">
-                                                        <a href="#" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">Buy again</a>
+                                                        <a href="#" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">Buy Again</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,8 +142,7 @@
             </div>
 
         </main>
-    </body>
-
+    </div>
 
     <div id="hs-task-created-alert" class="flex items-center justify-center bg-black bg-opacity-50 w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
         <div class=" mt-0 sm:max-w-lg sm:w-full m-3 sm:mx-auto">
@@ -189,6 +181,7 @@
             </div>
         </div>
     </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Get the dropdown button and menu
@@ -212,6 +205,7 @@
             });
         });
     </script>
+    
     <script>
 
         var lblStatusValue = '<%= lblStatus.Text %>';
@@ -228,4 +222,5 @@
             failedIcon.classList.remove('hidden');
         }
     </script>
+
 </asp:Content>

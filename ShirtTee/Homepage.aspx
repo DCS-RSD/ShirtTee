@@ -52,8 +52,6 @@
         </div>
     </div>
 
-
-
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-18 lg:max-w-7xl lg:px-8">
             <h2 class="sr-only">Products</h2>
@@ -100,12 +98,14 @@
 
                 <div class="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
                     <div class="group relative">
+                  
                         <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
                             <img src="https://images.unsplash.com/photo-1622519407650-3df9883f76a5?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Men" class="h-full w-full object-cover object-center">
                         </div>
                         <h3 class="mt-6 text-sm text-gray-500"></h3>
 
                         <p class="text-xl font-semibold text-gray-900 text-center">MEN</p>
+                            
                     </div>
                     <div class="group relative">
                         <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">

@@ -8,11 +8,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ShirtTee
+namespace ShirtTee.customer
 {
     public partial class OrderHistory : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
             string sessionId = Request.QueryString["id"];
@@ -22,7 +21,7 @@ namespace ShirtTee
                 StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
                 var service = new SessionService();
                 var session = service.Get(sessionId);
-                
+
                 if (session != null)
                 {
                     if (session.PaymentStatus == "paid")
@@ -61,4 +60,4 @@ namespace ShirtTee
             }
         }
     }
- }
+}

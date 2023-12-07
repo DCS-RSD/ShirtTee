@@ -1,7 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OrderDetails.aspx.cs" Inherits="ShirtTee.OrderDetails" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OrderDetails.aspx.cs" Inherits="ShirtTee.customer.OrderDetails" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-<div class="bg-gray-50">
+    <div class="bg-gray-50">
   <div class=" mx-auto pt-8 pb-12 px-8 lg:max-w-7xl lg:px-12">
     <div class="px-4 space-y-2 sm:px-0 sm:flex sm:items-baseline sm:justify-between sm:space-y-0">
       <div class="flex sm:items-baseline sm:space-x-4">
@@ -130,5 +129,6 @@
     </div>
   </div>
 </div>
+
 
 </asp:Content>
