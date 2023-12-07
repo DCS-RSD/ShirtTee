@@ -169,8 +169,7 @@
 <%--                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>--%>
                                 </tr>
                             </thead>
-
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]"></asp:SqlDataSource>
 
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">

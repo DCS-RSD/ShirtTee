@@ -13,17 +13,5 @@ namespace ShirtTee.admin
         {
 
         }
-
-        protected void ListView1_ItemCommand(object sender, ListViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Details")
-            {
-                // Retrieve the product ID from the clicked row
-                string prodId = e.CommandArgument.ToString();
-
-                // Redirect to the product details page with the selected product ID
-                Response.Redirect($"ProductDetails.aspx?prodid={prodId}");
-            }
-        }
     }
 }
