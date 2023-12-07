@@ -67,12 +67,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admin\AddProductForm.aspx" />
     <Content Include="admin\Dashboard.aspx" />
+    <Content Include="admin\MainAdmin.Master" />
+    <Content Include="admin\OrderStatus.aspx" />
+    <Content Include="admin\OrderTracking.aspx" />
+    <Content Include="admin\Product.aspx" />
+    <Content Include="admin\ProductAddForm.aspx" />
+    <Content Include="admin\ProductDetails.aspx" />
     <Content Include="admin\SampleForm.aspx" />
-    <Content Include="App_Data\ShirtTeeDatabase.mdf" />
-    <Content Include="App_Data\ShirtTeeDatabase_log.ldf">
-      <DependentUpon>ShirtTeeDatabase.mdf</DependentUpon>
+    <Content Include="admin\ProductStockAddForm.aspx" />
+    <Content Include="App_Data\ShirtTeeDB.mdf" />
+    <Content Include="App_Data\ShirtTeeDB_log.ldf">
+      <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
     </Content>
     <Content Include="Homepage.aspx" />
     <Content Include="Image\clothes1.jpg" />
@@ -83,13 +89,6 @@
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="admin\AddProductForm.aspx.cs">
-      <DependentUpon>AddProductForm.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\AddProductForm.aspx.designer.cs">
-      <DependentUpon>AddProductForm.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -104,12 +103,54 @@
     <Compile Include="admin\MainAdmin.Master.designer.cs">
       <DependentUpon>MainAdmin.Master</DependentUpon>
     </Compile>
+    <Compile Include="admin\OrderStatus.aspx.cs">
+      <DependentUpon>OrderStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\OrderStatus.aspx.designer.cs">
+      <DependentUpon>OrderStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\OrderTracking.aspx.cs">
+      <DependentUpon>OrderTracking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\OrderTracking.aspx.designer.cs">
+      <DependentUpon>OrderTracking.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Product.aspx.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Product.aspx.designer.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductAddForm.aspx.cs">
+      <DependentUpon>ProductAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductAddForm.aspx.designer.cs">
+      <DependentUpon>ProductAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductDetails.aspx.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductDetails.aspx.designer.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\SampleForm.aspx.cs">
       <DependentUpon>SampleForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="admin\SampleForm.aspx.designer.cs">
       <DependentUpon>SampleForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductStockAddForm.aspx.cs">
+      <DependentUpon>ProductStockAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductStockAddForm.aspx.designer.cs">
+      <DependentUpon>ProductStockAddForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Homepage.aspx.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
@@ -150,7 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
-    <Content Include="admin\MainAdmin.Master" />
+    <Content Include="admin\WebAdmin.sitemap" />
     <None Include="packages.config" />
     <Content Include="testing.Master" />
     <None Include="Web.Debug.config">
