@@ -15,6 +15,33 @@ namespace ShirtTee.customer
     {
 
         /// <summary>
+        /// btnViewOrder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnViewOrder;
+
+        /// <summary>
+        /// btnViewOrder2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnViewOrder2;
+
+        /// <summary>
+        /// btnWriteReview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnWriteReview;
+
+        /// <summary>
         /// lblStatus control.
         /// </summary>
         /// <remarks>

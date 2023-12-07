@@ -13,5 +13,17 @@ namespace ShirtTee
         {
 
         }
+
+        protected void btnAddToBag_Click(object sender, EventArgs e)
+        {
+            string prodID = "";
+            Response.Redirect($"~/customer/Cart.aspx?customerid={prodID}");
+        }
+
+        protected void btnReview_Click(object sender, EventArgs e)
+        {
+            string prodID = "";
+            Response.Redirect($"~/Review.aspx?customerid={prodID}");
+        }
     }
 }

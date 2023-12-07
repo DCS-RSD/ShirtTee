@@ -149,7 +149,7 @@
 </svg>
             </div>
             <p class="sr-only">4 out of 5 stars</p>
-<a href="#" class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">117 reviews</a>
+<asp:Button runat="server" ID="btnReview" OnClick="btnReview_Click" class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500" Text="117 reviews"></asp:Button>
           </div>
         </div>
 
@@ -294,7 +294,7 @@
           
 
           <div class="mt-10 flex sm:flex-col1">
-            <button type="submit" class=" flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full">Add to bag</button>
+            <asp:Button runat="server" ID="btnAddToBag" OnClick="btnAddToBag_Click" class="flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full" Text="Add To Bag"></asp:Button>
 
             
           </div>

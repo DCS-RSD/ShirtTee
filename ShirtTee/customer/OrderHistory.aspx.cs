@@ -59,5 +59,17 @@ namespace ShirtTee.customer
                 lblStatus.Text = "error";
             }
         }
+
+        protected void btnViewOrder_Click(object sender, EventArgs e)
+        {
+            string cartID = "";
+            Response.Redirect($"~/customer/OrderDetails.aspx?customerid={cartID}");
+        }
+
+        protected void btnWriteReview_Click(object sender, EventArgs e)
+        {
+            string cartID = "";
+            Response.Redirect($"~/customer/WriteReview.aspx?customerid={cartID}");
+        }
     }
 }

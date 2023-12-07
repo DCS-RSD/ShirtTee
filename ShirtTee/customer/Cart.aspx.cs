@@ -13,5 +13,11 @@ namespace ShirtTee.customer
         {
 
         }
+
+        protected void btnCheckout_Click(object sender, EventArgs e)
+        {
+            string cartID = "";
+            Response.Redirect($"~/customer/Checkout.aspx?customerid={cartID}");
+        }
     }
 }

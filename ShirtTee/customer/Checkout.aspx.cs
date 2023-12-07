@@ -44,8 +44,8 @@ namespace ShirtTee.customer
                   },
                 },
                 Mode = "payment",
-                SuccessUrl = "https://localhost:44374/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
-                CancelUrl = "https://localhost:44374/Cancel.aspx",
+                SuccessUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
+                CancelUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
 
             };
 
@@ -91,8 +91,8 @@ namespace ShirtTee.customer
             var payer = new Payer();
             payer.payment_method = "paypal";
             var redirectUrls = new RedirectUrls();
-            redirectUrls.cancel_url = "https://localhost:44306/Cancel.aspx";
-            redirectUrls.return_url = "https://localhost:44306/CompletePurchase.aspx";
+            redirectUrls.cancel_url = "https://localhost:44374/customer/OrderHistory.aspx";
+            redirectUrls.return_url = "https://localhost:44374/customer/OrderHistory.aspx";
             var payment = Payment.Create(apiContext, new Payment
             {
                 intent = "sale",

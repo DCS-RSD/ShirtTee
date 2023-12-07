@@ -5,7 +5,7 @@
             <p class="text-xl font-medium">Order Summary</p>
 
             <div class="mt-5 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-                <div class="flex flex-col rounded-lg bg-white sm:flex-row">
+                <div class="flex flex-row rounded-lg bg-white ">
                     <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="">
                     <div class="flex w-full flex-col px-4 py-4">
                         <span class="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
@@ -14,7 +14,7 @@
                         <p class="text-lg font-bold">RM 138.99</p>
                     </div>
                 </div>
-                <div class="flex flex-col rounded-lg bg-white sm:flex-row">
+                <div class="flex flex-row rounded-lg bg-white ">
                     <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="">
                     <div class="flex w-full flex-col px-4 py-4">
                         <span class="font-semibold">Nike Air Max Pro 8888 - Super Light</span>

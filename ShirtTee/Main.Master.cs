@@ -13,5 +13,41 @@ namespace ShirtTee
         {
 
         }
+
+        protected void btnMen_Click(object sender, EventArgs e)
+        {
+            string categoryName = "men";
+            Response.Redirect($"~/Products.aspx?categoryname={categoryName}");
+        }
+
+        protected void btnWomen_Click(object sender, EventArgs e)
+        {
+            string categoryName = "women";
+            Response.Redirect($"~/Products.aspx?categoryname={categoryName}");
+        }
+
+        protected void btnKids_Click(object sender, EventArgs e)
+        {
+            string categoryName = "kids";
+            Response.Redirect($"~/Products.aspx?categoryname={categoryName}");
+        }
+
+        protected void btnOrderHis_Click(object sender, EventArgs e)
+        {
+            string customerID = "";
+            Response.Redirect($"~/customer/OrderHistory.aspx?customerid={customerID}");
+        }
+
+        protected void btnProfile_Click(object sender, EventArgs e)
+        {
+            string customerID = "";
+            Response.Redirect($"~/customer/Profile.aspx?customerid={customerID}");
+        }
+
+        protected void btnCart_Click(object sender, EventArgs e)
+        {
+            string customerID = "";
+            Response.Redirect($"~/customer/Cart.aspx?customerid={customerID}");
+        }
     }
 }
