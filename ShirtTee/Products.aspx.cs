@@ -7,11 +7,12 @@ using System.Web.UI.WebControls;
 
 namespace ShirtTee
 {
-    public partial class testing : System.Web.UI.MasterPage
+    public partial class Men : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
+
     }
 }

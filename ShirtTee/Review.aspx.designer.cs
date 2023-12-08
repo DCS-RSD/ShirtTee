@@ -11,7 +11,7 @@ namespace ShirtTee
 {
 
 
-    public partial class Homepage
+    public partial class Review
     {
     }
 }
