@@ -92,8 +92,9 @@
     <Content Include="admin\Product.aspx" />
     <Content Include="admin\ProductAddForm.aspx" />
     <Content Include="admin\ProductDetails.aspx" />
-    <Content Include="admin\SampleForm.aspx" />
     <Content Include="admin\ProductStockAddForm.aspx" />
+    <Content Include="admin\SampleForm.aspx" />
+    <Content Include="admin\WebAdmin.sitemap" />
     <Content Include="App_Data\ShirtTeeDB.mdf" />
     <Content Include="App_Data\ShirtTeeDB_log.ldf">
       <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
@@ -163,19 +164,19 @@
     <Compile Include="admin\ProductDetails.aspx.designer.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\SampleForm.aspx.cs">
-      <DependentUpon>SampleForm.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\SampleForm.aspx.designer.cs">
-      <DependentUpon>SampleForm.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\ProductStockAddForm.aspx.cs">
       <DependentUpon>ProductStockAddForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="admin\ProductStockAddForm.aspx.designer.cs">
       <DependentUpon>ProductStockAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.designer.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
@@ -261,7 +262,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
-    <Content Include="admin\WebAdmin.sitemap" />
     <None Include="packages.config" />
     <Content Include="StripePublicKeyHandler.ashx" />
     <None Include="Web.Debug.config">
