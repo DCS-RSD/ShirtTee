@@ -1,8 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+darkMode: 'media',
     content: ["./ShirtTee/*.{aspx,Master}",
         'node_modules/preline/dist/*.js',
-        "./ShirtTee/admin/*.{aspx,Master}",
+ 		 "./ShirtTee/admin/*.{aspx,Master,Master.*}",
         "./ShirtTee/customer/*.{aspx,Master}",
         "./node_modules/flowbite/**/*.js"],
     theme: {

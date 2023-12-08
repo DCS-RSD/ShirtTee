@@ -105,8 +105,8 @@
                 </div>
 
                 <div class="col-span-3">
-                    <asp:Image ID="Image1" runat="server" ClientIDMode="Static" />
-                    <asp:FileUpload CssClass="cInput" onchange="loadFile(event)"
+                    <asp:Image class="my-2" ID="Image1" runat="server" ClientIDMode="Static" />
+                    <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" onchange="loadFile(event)"
                         ID="fileImage1" runat="server" />
 
                     <asp:Panel ID="Panel1" runat="server"></asp:Panel>
