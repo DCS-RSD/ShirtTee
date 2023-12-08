@@ -11,7 +11,7 @@ namespace ShirtTee
 {
 
 
-    public partial class Men
+    public partial class Products
     {
 
         /// <summary>
