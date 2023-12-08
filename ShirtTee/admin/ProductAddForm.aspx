@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="ProductAddForm.aspx.cs" Inherits="ShirtTee.admin.AddProductForm" EnableViewState="true" %>
 
+<asp:Content ID="Head1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-xl shadow dark:bg-gray-800 p-8">
@@ -104,26 +107,23 @@
                     </label>
                 </div>
 
+
                 <div class="col-span-3">
                     <asp:Image class="my-2" ID="Image1" runat="server" ClientIDMode="Static" />
-                    <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" onchange="loadFile(event)"
-                        ID="fileImage1" runat="server" />
+                    <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        onchange="loadFile(event)"
+                        ID="fileImage1" runat="server" AllowMultiple="true" />
 
-                    <asp:Panel ID="Panel1" runat="server"></asp:Panel>
-                    <asp:Label ID="test" runat="server"></asp:Label>
-                    <p class="mt-3">
+                    <%--<asp:Panel ID="Panel1" runat="server"></asp:Panel>--%>
 
-                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M8 12h8" />
-                            <path d="M12 8v8" />
-                        </svg>
-                        <asp:Button runat="server" Text="Add More Image"
+                    <%-- <p class="mt-3">
+                        <asp:Button runat="server" Text="+ Add More Image"
                             ID="btnAddImageInput"
-                            class="inline-flex items-center gap-x-1 px-4 text-sm text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" 
-                            OnClick="btnAddImageInput_Click" UseSubmitBehavior="False" OnClientClick="return false">
+                            class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 cursor-pointer font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" 
+                            OnClick="btnAddImageInput_Click"
+                            >
                         </asp:Button>
-                    </p>
+                    </p>--%>
                 </div>
 
 
@@ -141,18 +141,20 @@
 
     <script>
         var loadFile = function (event) {
-
             var input = event.target;
             var file = input.files[0];
             var type = file.type;
-
             var output = document.getElementById('Image1');
 
-
             output.src = URL.createObjectURL(event.target.files[0]);
+            
             output.onload = function () {
                 URL.revokeObjectURL(output.src) // free memory
             }
+            output.classList.add("w-24");
+            output.classList.add("h-24");
+
+
         };
     </script>
 

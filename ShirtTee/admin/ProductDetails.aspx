@@ -44,8 +44,8 @@
                     </div>
                     <div class="col-span-3">
                         <asp:RadioButtonList ID="radProdGroup" runat="server" AutoPostBack="True" RepeatDirection="Horizontal">
-                            <asp:ListItem class="px-4" Value="man">  Man</asp:ListItem>
-                            <asp:ListItem class="px-4" Value="woman">  Woman</asp:ListItem>
+                            <asp:ListItem class="px-4" Value="men">  Men</asp:ListItem>
+                            <asp:ListItem class="px-4" Value="women">  Women</asp:ListItem>
                             <asp:ListItem class="px-4" Value="kid">  Kid</asp:ListItem>
                         </asp:RadioButtonList>
                     </div>
@@ -59,10 +59,10 @@
                     </div>
 
                     <div class="col-span-3">
-                        <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_name" Enabled="False">
+                        <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_ID">
                             <asp:ListItem>Select Product Category</asp:ListItem>
                         </asp:DropDownList>
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [category_name] FROM [Category] WHERE ([category_group] = @category_group)">
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [category_ID], [category_name] FROM [Category] WHERE ([category_group] = @category_group)">
                             <SelectParameters>
                                 <asp:ControlParameter ControlID="radProdGroup" Name="category_group" PropertyName="SelectedValue" Type="String" />
                             </SelectParameters>
@@ -110,22 +110,14 @@
                         </label>
                     </div>
 
+
                     <div class="col-span-3">
-                        <asp:Image ID="Image1" runat="server" ClientIDMode="Static" />
-                        <asp:FileUpload CssClass="cInput" onchange="loadFile(event)"
-                            ID="FileUpload1" runat="server" />
+                        <asp:Image class="my-2" ID="Image1" runat="server" ClientIDMode="Static" />
+                        <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            onchange="loadFile(event)"
+                            ID="fileImage1" runat="server" AllowMultiple="true" />
+
                     </div>
-
-                    <%--                <div class="col-span-1">
-                <label for="btnColor" class="block text-sm font-medium mb-2 dark:text-white">Color picker</label>
-            </div>
-
-            <div class="col-span-3">
-                <asp:TextBox type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer w-10 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700" 
-                    id="btnColor" value="#2563eb" title="Choose your color"
-                    runat="server">
-                </asp:TextBox>
-            </div>--%>
 
                     <%--Button--%>
                     <div class="col-start-3">
@@ -246,15 +238,12 @@
                                             <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-as-filters-dropdown-all" checked>
                                             <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">All</span>
                                         </label>
+                                        &nbsp;
                                         <label for="hs-as-filters-dropdown-published" class="flex py-2.5 px-3">
                                             <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-as-filters-dropdown-published">
                                             <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Published</span>
                                         </label>
-                                        <label for="hs-as-filters-dropdown-pending" class="flex py-2.5 px-3">
-                                            <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-as-filters-dropdown-pending">
-                                            <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Pending</span>
-                                        </label>
-                                    </div>
+                                    &nbsp;&nbsp;<label class="flex py-2.5 px-3" for="hs-as-filters-dropdown-pending"><input id="hs-as-filters-dropdown-pending" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" type="checkbox"> <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Pending</span> </input></label> &nbsp;</div>
                                 </div>
                             </div>
                         </div>

@@ -11,6 +11,7 @@ namespace ShirtTee.admin
 {
     public partial class ProductDetails : System.Web.UI.Page
     {
+        string selectedCategory;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -31,7 +32,7 @@ namespace ShirtTee.admin
                     SqlConnection conn = new SqlConnection(strCon);
                     conn.Open();
 
-                    string strRetrieve = "SELECT * FROM Product WHERE Product_ID=@ProductId";
+                    string strRetrieve = "SELECT P.*, C.* FROM Product AS P INNER JOIN Category AS C ON P.category_id = C.category_id WHERE Product_ID=@ProductId";
                     SqlCommand cmdRetrieve = new SqlCommand(strRetrieve, conn);
 
                     cmdRetrieve.Parameters.AddWithValue("@ProductId", Request.QueryString["product_id"]);
@@ -48,8 +49,19 @@ namespace ShirtTee.admin
                         txtProdName.Text = (string)productDetails["product_name"];
                         txtProdDesc.Text = (string)productDetails["description"];
                         txtPrice.Text = productDetails["price"].ToString();
-
-
+                        switch (productDetails["category_group"].ToString())
+                        {
+                            case "men":
+                                radProdGroup.Items[0].Selected = true;
+                                break;
+                            case "women":
+                                radProdGroup.Items[1].Selected = true;
+                                break;
+                            default:
+                                radProdGroup.Items[2].Selected = true;
+                                break;
+                        }
+                        ddlProdCategory.SelectedValue = productDetails["category_id"].ToString();
                     }
 
                     conn.Close();
