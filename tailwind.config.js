@@ -3,7 +3,7 @@ module.exports = {
 darkMode: 'media',
     content: ["./ShirtTee/*.{aspx,Master}",
         'node_modules/preline/dist/*.js',
- 		 "./ShirtTee/admin/*.{aspx,Master,Master.*}",
+ 		 "./ShirtTee/admin/*.{aspx,aspx.*,Master,Master.*}",
         "./ShirtTee/customer/*.{aspx,Master}",
         "./node_modules/flowbite/**/*.js"],
     theme: {

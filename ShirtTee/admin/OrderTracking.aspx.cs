@@ -13,5 +13,23 @@ namespace ShirtTee.admin
         {
 
         }
+
+        protected string GetStatusClass(string status)
+        {
+            switch (status)
+            {
+                case "Order Placed":
+                    return "border-blue-600 text-blue-600";
+                case "Preparing":
+                    return "border-yellow-500 text-yellow-500";
+                case "Shipped":
+                case "Delivered":
+                    return "border-teal-500 text-teal-500";
+                case "Cancelled":
+                    return "border-red-500 text-red-500";
+                default:
+                    return "border-gray-200";
+            }
+        }
     }
 }

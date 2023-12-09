@@ -10,7 +10,7 @@
 		</siteMapNode>
 
 		<siteMapNode url="~/admin/OrderTracking.aspx" title="Order Tracking">
-			<siteMapNode url="~/admin/OrderStatus.aspx" title="Order Status" />
+			<siteMapNode url="~/admin/OrderDetails.aspx" title="Order Details" />
 		</siteMapNode>
 		
 	</siteMapNode>

@@ -87,7 +87,7 @@
   <ItemGroup>
     <Content Include="admin\Dashboard.aspx" />
     <Content Include="admin\MainAdmin.Master" />
-    <Content Include="admin\OrderStatus.aspx" />
+    <Content Include="admin\OrderDetails.aspx" />
     <Content Include="admin\OrderTracking.aspx" />
     <Content Include="admin\Product.aspx" />
     <Content Include="admin\ProductAddForm.aspx" />
@@ -129,12 +129,12 @@
     <Compile Include="admin\MainAdmin.Master.designer.cs">
       <DependentUpon>MainAdmin.Master</DependentUpon>
     </Compile>
-    <Compile Include="admin\OrderStatus.aspx.cs">
-      <DependentUpon>OrderStatus.aspx</DependentUpon>
+    <Compile Include="admin\OrderDetails.aspx.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="admin\OrderStatus.aspx.designer.cs">
-      <DependentUpon>OrderStatus.aspx</DependentUpon>
+    <Compile Include="admin\OrderDetails.aspx.designer.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\OrderTracking.aspx.cs">
       <DependentUpon>OrderTracking.aspx</DependentUpon>

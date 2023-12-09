@@ -12,7 +12,7 @@
                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
                         <div class="mt-8 mb-4 mx-8 sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Product List
+                                <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Order List
                                 </h1>
                             </div>
                         </div>
@@ -133,58 +133,63 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                ID
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">ID
                                             </span>
                                         </div>
                                     </th>
 
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                Name
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Status
                                             </span>
                                         </div>
                                     </th>
 
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                Category
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Order At
                                             </span>
                                         </div>
                                     </th>
 
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                Price
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Updated At
                                             </span>
                                         </div>
                                     </th>
                                 </tr>
                             </thead>
 
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand='SELECT o.order_ID, s.status, o.order_date, MAX(s.update_date) AS latest_update_date
+FROM "Order" AS o
+INNER JOIN [Order_Status] AS s ON s.order_ID = o.order_ID
+GROUP BY o.order_ID, s.status, o.order_date
+HAVING MAX(s.update_date) = (
+  SELECT MAX(update_date)
+  FROM [Order_Status] WHERE order_ID = o.order_ID
+)
+'></asp:SqlDataSource>
 
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
 
                                     <ItemTemplate>
-                                        <tr onclick='<%# Eval("product_id", "window.location.href = \"ProductDetails.aspx?product_id={0}\";") %>'
+                                        <tr onclick='<%# Eval("order_ID", "window.location.href = \"OrderDetails.aspx?order_ID={0}\";") %>'
                                             class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 cursor-pointer">
-
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("product_id") %>
+                                                <%# Eval("order_ID") %>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("product_name") %>
+                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border <%# GetStatusClass(Eval("status").ToString()) %>  bg-white shadow-sm dark:bg-slate-900 dark:text-white">
+                                                    <%# Eval("status") %>
+                                                </span>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">Badge</span>
+                                                <%# Eval("order_date") %>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("price") %>
+                                                <%# Eval("latest_update_date") %>
                                             </td>
 
                                             <%--                                            <td class="relative whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
