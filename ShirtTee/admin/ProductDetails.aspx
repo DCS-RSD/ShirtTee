@@ -140,7 +140,8 @@
                     <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                         <asp:HyperLink
                             NavigateUrl="./ProductStockAddForm.aspx"
-                            runat="server" class=" justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                            target="_blank"
+                            runat="server" class="justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                     Add Stock
                         </asp:HyperLink>
                     </div>

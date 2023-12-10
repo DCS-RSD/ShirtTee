@@ -4631,6 +4631,10 @@ input:checked + .toggle-bg {
   display: none;
 }
 
+.open.hs-overlay-open\:mt-7 {
+  margin-top: 1.75rem;
+}
+
 .open.hs-overlay-open\:translate-x-0 {
   --tw-translate-x: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -4642,6 +4646,10 @@ input:checked + .toggle-bg {
 
 .open.hs-overlay-open\:duration-500 {
   transition-duration: 500ms;
+}
+
+.open .hs-overlay-open\:mt-7 {
+  margin-top: 1.75rem;
 }
 
 .open .hs-overlay-open\:translate-x-0 {
