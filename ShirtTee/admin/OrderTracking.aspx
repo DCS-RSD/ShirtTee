@@ -175,7 +175,7 @@ HAVING MAX(s.update_date) = (
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
 
                                     <ItemTemplate>
-                                        <tr onclick='<%# Eval("order_status_ID", "window.location.href = \"OrderDetails.aspx?order_status_id={0}\";") %>'
+                                        <tr onclick='<%# Eval("order_ID", "window.location.href = \"OrderDetails.aspx?order_id={0}\";") %>'
                                             class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 cursor-pointer">
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                                 <%# Eval("order_ID") %>

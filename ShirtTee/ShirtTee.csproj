@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminLogin.aspx" />
     <Content Include="admin\Dashboard.aspx" />
     <Content Include="admin\MainAdmin.Master" />
     <Content Include="admin\OrderDetails.aspx" />
@@ -150,6 +151,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminLogin.aspx.cs">
+      <DependentUpon>AdminLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminLogin.aspx.designer.cs">
+      <DependentUpon>AdminLogin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -255,6 +263,7 @@
     <Compile Include="customer\WriteReview.aspx.designer.cs">
       <DependentUpon>WriteReview.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DBconnection.cs" />
     <Compile Include="Homepage.aspx.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -3029,6 +3029,10 @@ input:checked + .toggle-bg {
   row-gap: 1.5rem;
 }
 
+.gap-y-8 {
+  row-gap: 2rem;
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -3551,6 +3555,11 @@ input:checked + .toggle-bg {
   padding-bottom: 1rem;
 }
 
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -3921,6 +3930,10 @@ input:checked + .toggle-bg {
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(194 120 3 / var(--tw-text-opacity));
+}
+
+.underline {
+  text-decoration-line: underline;
 }
 
 .decoration-2 {
@@ -5270,6 +5283,10 @@ input:checked + .toggle-bg {
     padding: 2.5rem;
   }
 
+  .sm\:p-24 {
+    padding: 6rem;
+  }
+
   .sm\:p-6 {
     padding: 1.5rem;
   }
@@ -5316,6 +5333,11 @@ input:checked + .toggle-bg {
   .sm\:py-6 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+  }
+
+  .sm\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .sm\:pb-40 {
