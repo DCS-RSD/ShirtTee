@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+ShirtTee/dist/output.css
+tailwind.config.js
+ShirtTee/ShirtTee.csproj

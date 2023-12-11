@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+	<siteMapNode url="~/admin/Dashboard.aspx" title="Dashboard"  description="">
+		
+		<siteMapNode url="~/admin/Product.aspx" title="Product"  description="">
+			<siteMapNode url="~/admin/ProductAddForm.aspx" title="Add New Product"  description="" />
+			<siteMapNode url="~/admin/ProductDetails.aspx" title="Product Details"  description="" >
+			</siteMapNode>
+		</siteMapNode>
+
+		<siteMapNode url="~/admin/ProductStockAddForm.aspx" title="Add Stock"  description="" />
+
+
+		<siteMapNode url="~/admin/OrderTracking.aspx" title="Order Tracking">
+			<siteMapNode url="~/admin/OrderDetails.aspx" title="Order Details" />
+		</siteMapNode>
+		
+	</siteMapNode>
+</siteMap>

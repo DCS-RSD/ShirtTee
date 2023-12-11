@@ -43,7 +43,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=43.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stripe.net.43.6.0\lib\net461\Stripe.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -67,11 +85,196 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminLogin.aspx" />
+    <Content Include="admin\Dashboard.aspx" />
+    <Content Include="admin\MainAdmin.Master" />
+    <Content Include="admin\OrderDetails.aspx" />
+    <Content Include="admin\OrderTracking.aspx" />
+    <Content Include="admin\Product.aspx" />
+    <Content Include="admin\ProductAddForm.aspx" />
+    <Content Include="admin\ProductDetails.aspx" />
+    <Content Include="admin\ProductStockAddForm.aspx" />
+    <Content Include="admin\SampleForm.aspx" />
+    <Content Include="admin\WebAdmin.sitemap" />
+    <Content Include="App_Data\ShirtTeeDB.mdf" />
+    <Content Include="App_Data\ShirtTeeDB_log.ldf">
+      <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="customer\Cart.aspx" />
+    <Content Include="customer\Checkout.aspx" />
+    <Content Include="customer\OrderDetails.aspx" />
+    <Content Include="customer\OrderHistory.aspx" />
+    <Content Include="customer\Profile.aspx" />
+    <Content Include="customer\WriteReview.aspx" />
+    <Content Include="Homepage.aspx" />
+    <Content Include="Image\cloth1.png" />
+    <Content Include="Image\cloth10.png" />
+    <Content Include="Image\cloth11.png" />
+    <Content Include="Image\cloth12.png" />
+    <Content Include="Image\cloth13.png" />
+    <Content Include="Image\cloth14.png" />
+    <Content Include="Image\cloth15.png" />
+    <Content Include="Image\cloth16.png" />
+    <Content Include="Image\cloth17.png" />
+    <Content Include="Image\cloth18.png" />
+    <Content Include="Image\cloth19.png" />
+    <Content Include="Image\cloth2.png" />
+    <Content Include="Image\cloth20.png" />
+    <Content Include="Image\cloth21.png" />
+    <Content Include="Image\cloth22.png" />
+    <Content Include="Image\cloth23.png" />
+    <Content Include="Image\cloth24.png" />
+    <Content Include="Image\cloth25.png" />
+    <Content Include="Image\cloth26.png" />
+    <Content Include="Image\cloth27.png" />
+    <Content Include="Image\cloth28.png" />
+    <Content Include="Image\cloth29.png" />
+    <Content Include="Image\cloth3.png" />
+    <Content Include="Image\cloth30.png" />
+    <Content Include="Image\cloth31.png" />
+    <Content Include="Image\cloth32.png" />
+    <Content Include="Image\cloth33.png" />
+    <Content Include="Image\cloth34.png" />
+    <Content Include="Image\cloth35.png" />
+    <Content Include="Image\cloth36.png" />
+    <Content Include="Image\cloth37.png" />
+    <Content Include="Image\cloth38.png" />
+    <Content Include="Image\cloth4.png" />
+    <Content Include="Image\cloth5.png" />
+    <Content Include="Image\cloth6.png" />
+    <Content Include="Image\cloth7.png" />
+    <Content Include="Image\cloth8.png" />
+    <Content Include="Image\cloth9.png" />
+    <Content Include="Image\clothes1.jpg" />
+    <Content Include="Image\clothes2.jpg" />
+    <Content Include="Image\clothes3.jpg" />
     <Content Include="Login.aspx" />
+    <Content Include="ProductDetails.aspx" />
+    <Content Include="Products.aspx" />
+    <Content Include="Review.aspx" />
     <Content Include="Web.config" />
-    <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminLogin.aspx.cs">
+      <DependentUpon>AdminLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminLogin.aspx.designer.cs">
+      <DependentUpon>AdminLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\MainAdmin.Master.cs">
+      <DependentUpon>MainAdmin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\MainAdmin.Master.designer.cs">
+      <DependentUpon>MainAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\OrderDetails.aspx.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\OrderDetails.aspx.designer.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\OrderTracking.aspx.cs">
+      <DependentUpon>OrderTracking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\OrderTracking.aspx.designer.cs">
+      <DependentUpon>OrderTracking.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Product.aspx.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Product.aspx.designer.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductAddForm.aspx.cs">
+      <DependentUpon>ProductAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductAddForm.aspx.designer.cs">
+      <DependentUpon>ProductAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductDetails.aspx.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductDetails.aspx.designer.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductStockAddForm.aspx.cs">
+      <DependentUpon>ProductStockAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductStockAddForm.aspx.designer.cs">
+      <DependentUpon>ProductStockAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\SampleForm.aspx.designer.cs">
+      <DependentUpon>SampleForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\OrderDetails.aspx.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\OrderDetails.aspx.designer.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\OrderHistory.aspx.cs">
+      <DependentUpon>OrderHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\OrderHistory.aspx.designer.cs">
+      <DependentUpon>OrderHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\WriteReview.aspx.cs">
+      <DependentUpon>WriteReview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\WriteReview.aspx.designer.cs">
+      <DependentUpon>WriteReview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DBconnection.cs" />
+    <Compile Include="Homepage.aspx.cs">
+      <DependentUpon>Homepage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Homepage.aspx.designer.cs">
+      <DependentUpon>Homepage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -86,25 +289,45 @@
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="ProductDetails.aspx.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="ProductDetails.aspx.designer.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Products.aspx.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Products.aspx.designer.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Review.aspx.cs">
+      <DependentUpon>Review.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Review.aspx.designer.cs">
+      <DependentUpon>Review.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StripePublicKeyHandler.ashx.cs">
+      <DependentUpon>StripePublicKeyHandler.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
     <None Include="packages.config" />
+    <Content Include="StripePublicKeyHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Web.sitemap" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

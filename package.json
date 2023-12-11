@@ -1,11 +1,18 @@
 {
   "devDependencies": {
-    "tailwindcss": "^3.3.5"
+    "daisy": "^0.2.0",
+    "daisyui": "^4.4.19",
+    "tailwindcss": "^3.3.6"
   },
   "scripts": {
-    "build:css": "tailwindcss build ./ShirtTee/input.css -o ./ShirtTee/dist/output.css"
+    "build:css": "tailwindcss build ./ShirtTee/input.css -o ./ShirtTee/dist/output.css",
+    "watch:css": "tailwindcss --watch -i ./ShirtTee/input.css -o ./ShirtTee/dist/output.css"
   },
   "dependencies": {
-    "@tailwindcss/forms": "^0.5.7"
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "flowbite": "^2.2.0",
+    "preline": "^2.0.2"
   }
 }
