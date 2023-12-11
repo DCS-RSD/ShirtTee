@@ -40,9 +40,7 @@
                 </div>
 
                 <div class="col-span-3">
-                    <asp:DropDownList ID="ddlColor" CssClass="cInput" runat="server" Enabled="False" DataSourceID="SqlDataSource2" DataTextField="color_name" DataValueField="color_ID">
-                        <asp:ListItem>Select Product Category</asp:ListItem>
-                    </asp:DropDownList>
+                    <asp:DropDownList ID="ddlColor" CssClass="cInput" runat="server" DataSourceID="SqlDataSource2" DataTextField="color_name" DataValueField="color_ID"/>
                     <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * 
 FROM Color
 WHERE color_ID NOT IN 
@@ -51,7 +49,12 @@ SELECT s.color_ID
 FROM Stock AS s
 INNER JOIN Color AS c 
 ON c.color_ID = s.color_ID
-)" />
+WHERE size_ID = @size_ID
+)">
+                        <SelectParameters>
+                            <asp:ControlParameter ControlID="ddlSize" PropertyName="SelectedValue" Name="size_ID"></asp:ControlParameter>
+                        </SelectParameters>
+                    </asp:SqlDataSource>
 
                 </div>
 
