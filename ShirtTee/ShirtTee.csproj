@@ -145,6 +145,10 @@
     <Content Include="Image\cloth7.png" />
     <Content Include="Image\cloth8.png" />
     <Content Include="Image\cloth9.png" />
+    <Content Include="Image\clothes1.jpg" />
+    <Content Include="Image\clothes2.jpg" />
+    <Content Include="Image\clothes3.jpg" />
+    <Content Include="Login.aspx" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="Review.aspx" />
@@ -270,6 +274,13 @@
     </Compile>
     <Compile Include="Homepage.aspx.designer.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
