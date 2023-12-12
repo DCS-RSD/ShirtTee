@@ -4,7 +4,7 @@
 
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">MEN</h2>
+            <asp:Label runat="server" class="text-2xl font-bold tracking-tight text-gray-900" ID="lblProduct" Text=""></asp:Label>
 
             <div class="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' ProviderName='<%$ ConnectionStrings:ConnectionString.ProviderName %>' SelectCommand="SELECT * FROM [Product]"></asp:SqlDataSource>

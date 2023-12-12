@@ -15,7 +15,7 @@
       <h2 class="sr-only">Products purchased</h2>
 
       <div class="space-y-8">
-        <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg">
+        <div class="bg-white border-gray-200 shadow-sm border rounded-lg">
 
           <div class=" border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
             <h4 class="sr-only">Status</h4>
