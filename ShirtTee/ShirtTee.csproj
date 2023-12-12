@@ -187,7 +187,6 @@
     <Content Include="Review.aspx" />
     <Content Include="Signup.aspx" />
     <Content Include="Web.config" />
-    <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminLogin.aspx.cs">
@@ -356,13 +355,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="StripePublicKeyHandler.ashx.cs">
       <DependentUpon>StripePublicKeyHandler.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
