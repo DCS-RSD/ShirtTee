@@ -11,52 +11,70 @@ namespace ShirtTee
 {
 
 
-    public partial class Login
+    public partial class Signup
     {
 
         /// <summary>
-        /// formLogin control.
+        /// linkHomepage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formLogin;
+        protected global::System.Web.UI.WebControls.HyperLink linkHomepage;
 
         /// <summary>
-        /// signinEmail control.
+        /// formSignup control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox signinEmail;
+        protected global::System.Web.UI.HtmlControls.HtmlForm formSignup;
 
         /// <summary>
-        /// signInPassword control.
+        /// signupEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox signInPassword;
+        protected global::System.Web.UI.WebControls.TextBox signupEmail;
 
         /// <summary>
-        /// rememberMe control.
+        /// signupPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox rememberMe;
+        protected global::System.Web.UI.WebControls.TextBox signupPassword;
 
         /// <summary>
-        /// btnLogin control.
+        /// signupConfirmPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.TextBox signupConfirmPassword;
+
+        /// <summary>
+        /// tandc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox tandc;
+
+        /// <summary>
+        /// btnSignup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSignup;
     }
 }

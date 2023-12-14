@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OrderHistory.aspx.cs" Inherits="ShirtTee.customer.OrderHistory" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <div class="bg-gray-50 dark:bg-slate-900">
+    <div class="bg-gray-50 dark:bg-slate-900">
 
         <main id="content" role="main">
             <!-- Nav -->
@@ -79,15 +80,14 @@
                                             <div class="hidden origin-bottom-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-0-button" tabindex="-1">
                                                 <div class="py-1" role="none">
                                                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                                    <asp:Button runat="server" ID="btnViewOrder" OnClick="btnViewOrder_Click" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"  Text="View Order"></asp:Button>
+                                                    <asp:Button runat="server" ID="btnViewOrder" OnClick="btnViewOrder_Click" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" TabIndex="-1" Text="View Order"></asp:Button>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4">
 
-                                            <asp:Button runat="server" ID="btnViewOrder2" OnClick="btnViewOrder_Click" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="View Order">
-                                            </asp:Button>
+                                            <asp:Button runat="server" ID="btnViewOrder2" OnClick="btnViewOrder_Click" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="View Order"></asp:Button>
                                         </div>
                                     </div>
 
@@ -105,6 +105,9 @@
                                                         <p class="mt-2 sm:mt-0">$70.00</p>
                                                     </div>
                                                     <p class="hidden text-gray-500 sm:block sm:mt-2">Are you a minimalist looking for a compact carry option? The Micro Backpack is the perfect size for your essential everyday carry items. Wear it like a backpack or carry it like a satchel for all-day use.</p>
+                                                    <p class="mt-2 text-gray-500 ">Quantity: 1</p>
+                                                    <p class="mt-1 text-gray-500">XL / BLACK</p>
+                                                    <p class="mt-3 text-sm font-bold text-gray-900">Total: RM 300.00</p>
                                                 </div>
                                             </div>
 
@@ -121,9 +124,11 @@
                                                     <div class="flex-1 flex justify-center">
                                                         <asp:Button runat="server" ID="btnWriteReview" OnClick="btnWriteReview_Click" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500" Text="Write Review"></asp:Button>
                                                     </div>
+                                                    <!--
                                                     <div class="flex-1 pl-4 flex justify-center">
                                                         <a href="#" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">Buy Again</a>
                                                     </div>
+                                                        -->
                                                 </div>
                                             </div>
                                         </li>
@@ -142,11 +147,11 @@
         </main>
     </div>
 
-    <div id="hs-task-created-alert" class="flex items-center justify-center bg-black bg-opacity-50 w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
+    <div id="paymentStatusDiv" runat="server" class="flex items-center justify-center bg-black bg-opacity-50 w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
         <div class=" mt-0 sm:max-w-lg sm:w-full m-3 sm:mx-auto">
             <div class=" relative flex flex-col bg-white shadow-lg rounded-xl dark:bg-gray-800">
                 <div class="absolute top-2 end-2">
-                    <button type="button" class="flex justify-center items-center w-7 h-7 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-transparent dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-task-created-alert">
+                    <button type="button" class="flex justify-center items-center w-7 h-7 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-transparent dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#<%= paymentStatusDiv.ClientID %>">
                         <span class="sr-only">Close</span>
                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 6 6 18" />
@@ -158,12 +163,12 @@
                 <div class="p-4 sm:p-10 text-center overflow-y-auto">
                     <asp:Label ID="lblStatus" class="hidden" runat="server" Text="Label"></asp:Label>
                     <!-- Icon -->
-                    <span id="successIcon" class="mb-4 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100">
+                    <span id="successIcon" runat="server" class="mb-4 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                             <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
                         </svg>
                     </span>
-                    <span id="failedIcon" class="mb-4 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border-4 border-red-50 bg-red-100 text-red-500 dark:bg-red-700 dark:border-red-600 dark:text-red-100">
+                    <span id="failedIcon" runat="server" class="mb-4 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border-4 border-red-50 bg-red-100 text-red-500 dark:bg-red-700 dark:border-red-600 dark:text-red-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
                         </svg>
@@ -172,14 +177,11 @@
                     <asp:Label ID="lblPaymentTitle" class="block mb-2 text-xl font-bold text-gray-800 dark:text-gray-200" runat="server" Text="Payment Success !"></asp:Label>
                     <asp:Label ID="lblPaymentDesc" class="text-gray-500 block" runat="server" Text="You can see the progress of your order in Order History. You will be notified of its completion."></asp:Label>
 
-                    <div class="mt-6 flex justify-center gap-x-4">
-                        <asp:Button ID="btnOK" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-task-created-alert" runat="server" Text="Proceed" />
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Get the dropdown button and menu
@@ -203,7 +205,7 @@
             });
         });
     </script>
-    
+
     <script>
 
         var lblStatusValue = '<%= lblStatus.Text %>';

@@ -3,7 +3,9 @@ using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,6 +19,8 @@ namespace ShirtTee.customer
             string sessionId = Request.QueryString["id"];
             if (!string.IsNullOrEmpty(sessionId))
             {
+                paymentStatusDiv.Visible = true;
+                
                 // Use the sessionId to retrieve the session and check its status
                 StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
                 var service = new SessionService();
@@ -28,23 +32,20 @@ namespace ShirtTee.customer
                     {
                         // Payment successful
                         // You can perform additional actions here
+                        successIcon.Visible = true;
+                        failedIcon.Visible = false;
                         lblStatus.Text = session.PaymentIntentId;
 
                     }
-                    else if (session.PaymentStatus == "canceled")
+                    else
                     {
+                        successIcon.Visible = false;
+                        failedIcon.Visible = true;
                         // Payment canceled
                         // You can handle this case as needed
                         lblStatus.Text = "Payment Cancelled";
                         lblPaymentTitle.Text = "Payment Failed !";
                         lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
-
-                    }
-                    else
-                    {
-                        // Payment failed or in another state
-                        // You can handle this case as needed
-                        lblStatus.Text = "Payment Failed";
                     }
                 }
                 else
@@ -57,7 +58,9 @@ namespace ShirtTee.customer
             {
                 // No session ID in the query parameters, handle accordingly
                 lblStatus.Text = "error";
+                paymentStatusDiv.Visible = false;
             }
+            
         }
 
         protected void btnViewOrder_Click(object sender, EventArgs e)

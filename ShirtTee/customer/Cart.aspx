@@ -70,19 +70,26 @@
                     </div>
                 </div>
                 <div class="flex items-center  pt-5 pb-3">
-                    <input type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="Apply Promo Code">
+                    <asp:TextBox runat="server" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="Apply Promo Code"/>
                 </div>
-                <button type="button" class="flex justify-between py-3 px-4 w-full inline-flex items-center gap-x-2 text-sm font-bold rounded-lg border-2 border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                <div id="applyDiv" class="flex justify-between py-3 px-4 w-full inline-flex items-center gap-x-2 text-sm font-bold rounded-lg border-2 border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                     APPLY
  <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
      <path d="M5 12h14" />
      <path d="m12 5 7 7-7 7" />
  </svg>
-                </button>
+                    <asp:Button runat="server" class="hidden" ID="btnApply"/>
+                </div>
 <div class="mt-6">
             <asp:Button runat="server" ID="btnCheckout" OnClick="btnCheckout_Click" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500" Text="Checkout"></asp:Button>
           </div>            </div>
         </div>
     </div>
 
+    <script>
+        document.getElementById('applyDiv').addEventListener('click', function () {
+            document.getElementById('<%= btnApply.ClientID %>').click();
+    });
+
+    </script>
 </asp:Content>

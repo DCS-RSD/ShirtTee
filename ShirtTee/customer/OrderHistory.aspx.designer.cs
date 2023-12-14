@@ -42,6 +42,15 @@ namespace ShirtTee.customer
         protected global::System.Web.UI.WebControls.Button btnWriteReview;
 
         /// <summary>
+        /// paymentStatusDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl paymentStatusDiv;
+
+        /// <summary>
         /// lblStatus control.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,24 @@ namespace ShirtTee.customer
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStatus;
+
+        /// <summary>
+        /// successIcon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl successIcon;
+
+        /// <summary>
+        /// failedIcon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl failedIcon;
 
         /// <summary>
         /// lblPaymentTitle control.
@@ -67,14 +94,5 @@ namespace ShirtTee.customer
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPaymentDesc;
-
-        /// <summary>
-        /// btnOK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOK;
     }
 }
