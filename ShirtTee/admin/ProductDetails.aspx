@@ -121,7 +121,7 @@
 
                     <%--Button--%>
                     <div class="col-start-3">
-                        <asp:Button ID="btnSubmit" runat="server" Text="Confirm" class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
+                        <asp:Button ID="btnSubmit" runat="server" Text="Save Changes" class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
                     </div>
                     <div class="col-span-1">
                         <input type="reset" value="Reset" class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" />
@@ -140,7 +140,7 @@
                     <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                         <asp:HyperLink
                             NavigateUrl="./ProductStockAddForm.aspx"
-                            target="_blank"
+                            Target="_blank"
                             runat="server" class="justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                     Add Stock
                         </asp:HyperLink>
@@ -244,7 +244,10 @@
                                             <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-as-filters-dropdown-published">
                                             <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Published</span>
                                         </label>
-                                    &nbsp;&nbsp;<label class="flex py-2.5 px-3" for="hs-as-filters-dropdown-pending"><input id="hs-as-filters-dropdown-pending" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" type="checkbox"> <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Pending</span> </input></label> &nbsp;</div>
+                                        &nbsp;&nbsp;<label class="flex py-2.5 px-3" for="hs-as-filters-dropdown-pending"><input id="hs-as-filters-dropdown-pending" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" type="checkbox"> <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Pending</span> </input>
+                                        </label>
+                                        &nbsp;
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -295,7 +298,7 @@
                         </asp:SqlDataSource>
 
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource2">
+                            <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource2" OnItemUpdated="ListView1_ItemUpdated">
                                 <ItemTemplate>
                                     <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
 
@@ -311,15 +314,23 @@
                                             </span>
                                         </td>
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                            <%# Eval("quantity") %>
+                                            <asp:TextBox TextMode="Number"
+                                                ID="txtQty"
+                                                runat="server"
+                                                CssClass="cInput"
+                                                Text='<%# Eval("quantity") %>'></asp:TextBox>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
                             </asp:ListView>
                         </tbody>
                     </table>
-                </div>
 
+
+                </div>
+                <div class="flex justify-end mt-4">
+                    <asp:Button ID="btnUpdateStockQty" runat="server" Text="Save Changes" class=" py-2 px-3 inline-flex gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
+                </div>
                 <!-- End Table -->
 
 
