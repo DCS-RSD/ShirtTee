@@ -130,6 +130,9 @@
     <Content Include="admin\ProductDetails.aspx" />
     <Content Include="admin\ProductStockAddForm.aspx" />
     <Content Include="admin\SampleForm.aspx" />
+    <Content Include="admin\Voucher.aspx" />
+    <Content Include="admin\VoucherAddForm.aspx" />
+    <Content Include="admin\VoucherDetails.aspx" />
     <Content Include="admin\WebAdmin.sitemap" />
     <Content Include="App_Data\ShirtTeeDB.mdf" />
     <Content Include="App_Data\ShirtTeeDB_log.ldf">
@@ -267,6 +270,27 @@
     </Compile>
     <Compile Include="admin\SampleForm.aspx.designer.cs">
       <DependentUpon>SampleForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Voucher.aspx.cs">
+      <DependentUpon>Voucher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Voucher.aspx.designer.cs">
+      <DependentUpon>Voucher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\VoucherAddForm.aspx.cs">
+      <DependentUpon>VoucherAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\VoucherAddForm.aspx.designer.cs">
+      <DependentUpon>VoucherAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\VoucherDetails.aspx.cs">
+      <DependentUpon>VoucherDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\VoucherDetails.aspx.designer.cs">
+      <DependentUpon>VoucherDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
