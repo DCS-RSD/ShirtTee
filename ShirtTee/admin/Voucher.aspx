@@ -1,6 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="ShirtTee.admin.Dashboard" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <!-- Table Section -->
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="Voucher.aspx.cs" Inherits="ShirtTee.admin.Voucher" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <!-- Table Section -->
     <div class="max-w-[85rem] mx-auto">
         <!-- Card -->
         <div class="flex flex-col">
@@ -9,14 +12,14 @@
                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
                         <div class="mt-8 mb-4 mx-8 sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Announcement
+                                <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Voucher List
                                 </h1>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                                 <asp:HyperLink
-                                    NavigateUrl="./NoticeAddForm.aspx"
+                                    NavigateUrl="./VoucherAddForm.aspx"
                                     runat="server" class=" justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                    Add Notice
+                                    Add Voucher
                                 </asp:HyperLink>
                             </div>
                         </div>
@@ -137,38 +140,71 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Title
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">ID
                                             </span>
                                         </div>
                                     </th>
-
-                                  
 
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Date
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Name
                                             </span>
                                         </div>
                                     </th>
 
-<%--                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>--%>
+                                    <th scope="col" class="px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Description
+                                            </span>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col" class="px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Discount Rate
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Min Spend
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Cap At
+                                            </span>
+                                        </div>
+                                    </th>
                                 </tr>
                             </thead>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [notice_date] FROM [Notice]">
-                            </asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Voucher]"></asp:SqlDataSource>
 
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
 
                                     <ItemTemplate>
-                                        <tr onclick='<%# Eval("notice_id", "window.location.href = \"NoticeDetails.aspx?notice_id={0}\";") %>'
+                                        <tr onclick='<%# Eval("voucher_id", "window.location.href = \"VoucherDetails.aspx?voucher_id={0}\";") %>'
                                             class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 cursor-pointer">
 
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("notice_title") %>
+                                                <%# Eval("voucher_id") %>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("notice_date") %>
+                                                <%# Eval("voucher_name") %>
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                                                <%# Eval("voucher_description") %>
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                                                <%# Eval("discount_rate") %>
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                                                <%# Eval("min_spend") %>
+                                            </td>
+                                            <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                                                <%# Eval("cap_at") %>
                                             </td>
                                         </tr>
                                     </ItemTemplate>

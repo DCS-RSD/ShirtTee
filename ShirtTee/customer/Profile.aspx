@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <form class="space-y-8 divide-y divide-gray-200 ">
+    <div class="space-y-8 divide-y divide-gray-200 ">
 
         <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5 mx-12 lg:mx-40 mt-4 mb-8">
 
@@ -210,7 +210,7 @@
             </div>
         </div>
 
-    </form>
+    </div>
 
     <div id="hs-change-password" class="flex justify-center items-center hs-overlay w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto open hidden" aria-overlay="true" tabindex="-1">
         <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 ease-out transition-all max-w-lg w-full mx-auto my-auto">

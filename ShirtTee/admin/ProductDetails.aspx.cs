@@ -65,5 +65,31 @@ namespace ShirtTee.admin
 
 
         }
+
+        protected void ListView1_ItemUpdating(object sender, ListViewUpdateEventArgs e)
+        {
+            // Get the updated quantity value from the TextBox
+            TextBox quantityTextBox = (TextBox)ListView1.Items[e.ItemIndex].FindControl("QuantityTextBox");
+            string updatedQuantity = quantityTextBox.Text;
+
+            // Update the data source with the new quantity
+            SqlDataSource2.UpdateParameters["UpdatedQuantity"].DefaultValue = updatedQuantity;
+
+            // You may also need to set other parameters like the primary key for the update
+
+            // Perform the update
+            SqlDataSource2.Update();
+
+            // Cancel the update operation to prevent the default behavior
+            e.Cancel = true;
+
+            // Rebind the data to the ListView to reflect the changes
+            ListView1.DataBind();
+        }
+
+        protected void ListView1_ItemUpdated(object sender, ListViewUpdatedEventArgs e)
+        {
+
+        }
     }
 }

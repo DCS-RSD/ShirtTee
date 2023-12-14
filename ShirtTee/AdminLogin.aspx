@@ -63,16 +63,19 @@
                             <!-- Checkbox -->
                             <div class="flex items-center">
                                 <div class="flex">
-                                    <input id="remember-me" name="remember-me" type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                                    <asp:RadioButton ID="radRemember" runat="server"
+                                        class="mb-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+
+
                                 </div>
                                 <div class="ms-3">
-                                    <label for="remember-me" class="text-sm dark:text-white">Remember me</label>
+                                    <label for="radRemember" class="text-sm dark:text-white">Remember me</label>
                                 </div>
                             </div>
                             <!-- End Checkbox -->
 
                             <asp:Button runat="server" ID="btnSignIn" Text="Sign in"
-                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" OnClick="btnSignIn_Click"/>
+                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" OnClick="btnSignIn_Click" />
 
 
                         </div>

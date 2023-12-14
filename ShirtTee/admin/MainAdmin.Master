@@ -10,6 +10,90 @@
     <link href="../dist/output.css" rel="stylesheet" />
     <script src="../dist/preline.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <script>
+        const HSThemeAppearance = {
+            init() {
+                const defaultTheme = 'default'
+                let theme = localStorage.getItem('hs_theme') || defaultTheme
+
+                if (document.querySelector('html').classList.contains('dark')) return
+                this.setAppearance(theme)
+            },
+            _resetStylesOnLoad() {
+                const $resetStyles = document.createElement('style')
+                $resetStyles.innerText = `*{transition: unset !important;}`
+                $resetStyles.setAttribute('data-hs-appearance-onload-styles', '')
+                document.head.appendChild($resetStyles)
+                return $resetStyles
+            },
+            setAppearance(theme, saveInStore = true, dispatchEvent = true) {
+                const $resetStylesEl = this._resetStylesOnLoad()
+
+                if (saveInStore) {
+                    localStorage.setItem('hs_theme', theme)
+                }
+
+                if (theme === 'auto') {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
+                }
+
+                document.querySelector('html').classList.remove('dark')
+                document.querySelector('html').classList.remove('default')
+                document.querySelector('html').classList.remove('auto')
+
+                document.querySelector('html').classList.add(this.getOriginalAppearance())
+
+                setTimeout(() => {
+                    $resetStylesEl.remove()
+                })
+
+                if (dispatchEvent) {
+                    window.dispatchEvent(new CustomEvent('on-hs-appearance-change', { detail: theme }))
+                }
+            },
+            getAppearance() {
+                let theme = this.getOriginalAppearance()
+                if (theme === 'auto') {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
+                }
+                return theme
+            },
+            getOriginalAppearance() {
+                const defaultTheme = 'default'
+                return localStorage.getItem('hs_theme') || defaultTheme
+            }
+        }
+        HSThemeAppearance.init()
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (HSThemeAppearance.getOriginalAppearance() === 'auto') {
+                HSThemeAppearance.setAppearance('auto', false)
+            }
+        })
+
+        window.addEventListener('load', () => {
+            const $clickableThemes = document.querySelectorAll('[data-hs-theme-click-value]')
+            const $switchableThemes = document.querySelectorAll('[data-hs-theme-switch]')
+
+            $clickableThemes.forEach($item => {
+                $item.addEventListener('click', () => HSThemeAppearance.setAppearance($item.getAttribute('data-hs-theme-click-value'), true, $item))
+            })
+
+            $switchableThemes.forEach($item => {
+                $item.addEventListener('change', (e) => {
+                    HSThemeAppearance.setAppearance(e.target.checked ? 'dark' : 'default')
+                })
+
+                $item.checked = HSThemeAppearance.getAppearance() === 'dark'
+            })
+
+            window.addEventListener('on-hs-appearance-change', e => {
+                $switchableThemes.forEach($item => {
+                    $item.checked = e.detail === 'dark'
+                })
+            })
+        })
+    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -22,7 +106,7 @@
                     <a class="flex-none text-xl font-semibold dark:text-white" href="Dashboard.aspx" aria-label="ShirtTee">ShirtTee</a>
                 </div>
 
-                <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
+                <v class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
                     <%-- SiteMapPath --%>
 
                     <div class="hidden sm:block">
@@ -34,11 +118,24 @@
                     </div>
 
                     <div class="flex flex-row items-center justify-end gap-2">
-                        <%-- notification button --%>
-                        <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                        <%-- dark mode button --%>
+                        <button type="button" class="w-[2rem] h-[2.375rem] inline-flex hs-dark-mode-active:hidden block hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-gray-400 dark:hover:text-gray-500" data-hs-theme-click-value="dark">
                             <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="w-[2rem] h-[2.375rem] inline-flex hs-dark-mode-active:block hidden hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-gray-400 dark:hover:text-gray-500" data-hs-theme-click-value="light">
+                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="4" />
+                                <path d="M12 8a2 2 0 1 0 4 4" />
+                                <path d="M12 2v2" />
+                                <path d="M12 20v2" />
+                                <path d="m4.93 4.93 1.41 1.41" />
+                                <path d="m17.66 17.66 1.41 1.41" />
+                                <path d="M2 12h2" />
+                                <path d="M20 12h2" />
+                                <path d="m6.34 17.66-1.41 1.41" />
+                                <path d="m19.07 4.93-1.41 1.41" />
                             </svg>
                         </button>
 
@@ -60,38 +157,25 @@
                                 </div>
                                 <%-- dropdown menu items --%>
                                 <div class="mt-2 py-2 first:pt-0 last:pb-0">
-                                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
-                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-                                        </svg>
-                                        Newsletter
-                                    </a>
-                                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
-                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                                            <path d="M3 6h18" />
-                                            <path d="M16 10a4 4 0 0 1-8 0" />
-                                        </svg>
-                                        Purchases
-                                    </a>
-                                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
-                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-                                            <path d="M12 12v9" />
-                                            <path d="m8 17 4 4 4-4" />
-                                        </svg>
-                                        Downloads
-                                    </a>
-                                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+                                    <div id="profileDiv" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
                                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                                             <circle cx="9" cy="7" r="4" />
                                             <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                                             <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                                         </svg>
-                                        Team Account
-                                    </a>
+                                        <asp:HyperLink ID="btnProfile" runat="server" Text="Profile" NavigateUrl="~/customer/Profile.aspx" />
+                                    </div>
+
+                                    <asp:HyperLink runat="server" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                                        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                    </svg>
+                                        Log Out
+                                    </asp:HyperLink>
+
+
                                 </div>
                             </div>
                         </div>
@@ -138,7 +222,7 @@
                         </asp:HyperLink>
                     </li>
 
-<%--                    <li>
+                    <%--                    <li>
                         <asp:HyperLink ID="customerLink" runat="server" NavigateUrl=""
                             class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                             <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -166,6 +250,17 @@
                     </li>
 
                     <li>
+                        <asp:HyperLink ID="voucherLink" runat="server" NavigateUrl="~/admin/Voucher.aspx"
+                            class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Ticket_Voucher"> <path id="Vector" d="M14 6H6C5.06812 6 4.60192 6 4.23438 6.15224C3.74432 6.35523 3.35523 6.74481 3.15224 7.23486C3 7.60241 3 8.06835 3 9.00023C4.65685 9.00023 6 10.3429 6 11.9998C6 13.6566 4.65685 15 3 15C3 15.9319 3 16.3978 3.15224 16.7654C3.35523 17.2554 3.74432 17.6447 4.23438 17.8477C4.60192 17.9999 5.06812 18 6 18H14M14 6H18C18.9319 6 19.3978 6 19.7654 6.15224C20.2554 6.35523 20.6447 6.74481 20.8477 7.23486C20.9999 7.6024 20.9999 8.06835 20.9999 9.00023C19.343 9.00023 18 10.3431 18 12C18 13.6569 19.343 15 20.9999 15C20.9999 15.9319 20.9999 16.3978 20.8477 16.7654C20.6447 17.2554 20.2554 17.6447 19.7654 17.8477C19.3978 17.9999 18.9319 18 18 18H14M14 6V18"></path> </g> </g>
+                            </svg>
+                             Voucher
+                        </asp:HyperLink>
+                    </li>
+
+
+                    <li>
                         <asp:HyperLink ID="orderLink" runat="server" NavigateUrl="~/admin/OrderTracking.aspx"
                             class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                             <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -177,12 +272,12 @@
                     </li>
 
                     <li>
-                        <asp:HyperLink ID="analyseLink" runat="server" NavigateUrl="~/admin/Analyse.aspx"
+                        <asp:HyperLink ID="analyzeLink" runat="server" NavigateUrl="~/admin/Analyze.aspx"
                             class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                             <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                             </svg>
-                            Analyse
+                            Analyze
                         </asp:HyperLink>
                     </li>
 

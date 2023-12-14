@@ -95,6 +95,7 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -119,8 +120,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLogin.aspx" />
+    <Content Include="admin\Analyze.aspx" />
     <Content Include="admin\Dashboard.aspx" />
     <Content Include="admin\MainAdmin.Master" />
+    <Content Include="admin\NoticeAddForm.aspx" />
+    <Content Include="admin\NoticeDetails.aspx" />
     <Content Include="admin\OrderDetails.aspx" />
     <Content Include="admin\OrderTracking.aspx" />
     <Content Include="admin\Product.aspx" />
@@ -128,6 +132,9 @@
     <Content Include="admin\ProductDetails.aspx" />
     <Content Include="admin\ProductStockAddForm.aspx" />
     <Content Include="admin\SampleForm.aspx" />
+    <Content Include="admin\Voucher.aspx" />
+    <Content Include="admin\VoucherAddForm.aspx" />
+    <Content Include="admin\VoucherDetails.aspx" />
     <Content Include="admin\WebAdmin.sitemap" />
     <Content Include="App_Data\ShirtTeeDB.mdf" />
     <Content Include="App_Data\ShirtTeeDB_log.ldf">
@@ -184,7 +191,7 @@
     <Content Include="Login.aspx" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="Products.aspx" />
-    <Content Include="Review.aspx" />
+    <Content Include="customer\Review.aspx" />
     <Content Include="Signup.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -195,6 +202,13 @@
     </Compile>
     <Compile Include="AdminLogin.aspx.designer.cs">
       <DependentUpon>AdminLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Analyze.aspx.cs">
+      <DependentUpon>Analyze.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Analyze.aspx.designer.cs">
+      <DependentUpon>Analyze.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
@@ -209,6 +223,20 @@
     </Compile>
     <Compile Include="admin\MainAdmin.Master.designer.cs">
       <DependentUpon>MainAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\NoticeAddForm.aspx.cs">
+      <DependentUpon>NoticeAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\NoticeAddForm.aspx.designer.cs">
+      <DependentUpon>NoticeAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\NoticeDetails.aspx.cs">
+      <DependentUpon>NoticeDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\NoticeDetails.aspx.designer.cs">
+      <DependentUpon>NoticeDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\OrderDetails.aspx.cs">
       <DependentUpon>OrderDetails.aspx</DependentUpon>
@@ -258,6 +286,27 @@
     </Compile>
     <Compile Include="admin\SampleForm.aspx.designer.cs">
       <DependentUpon>SampleForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Voucher.aspx.cs">
+      <DependentUpon>Voucher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Voucher.aspx.designer.cs">
+      <DependentUpon>Voucher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\VoucherAddForm.aspx.cs">
+      <DependentUpon>VoucherAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\VoucherAddForm.aspx.designer.cs">
+      <DependentUpon>VoucherAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\VoucherDetails.aspx.cs">
+      <DependentUpon>VoucherDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\VoucherDetails.aspx.designer.cs">
+      <DependentUpon>VoucherDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
@@ -338,11 +387,11 @@
       <DependentUpon>Products.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Review.aspx.cs">
+    <Compile Include="customer\Review.aspx.cs">
       <DependentUpon>Review.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Review.aspx.designer.cs">
+    <Compile Include="customer\Review.aspx.designer.cs">
       <DependentUpon>Review.aspx</DependentUpon>
     </Compile>
     <Compile Include="Signup.aspx.cs">

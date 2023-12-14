@@ -21,15 +21,17 @@ namespace ShirtTee.admin
                 case "Dashboard":
                     dashboardLink.Attributes["class"] = activeNavClass;
                     break;
-                //case "AnotherPage":
-                //    customerLink.Attributes["class"] = activeNavClass;
-                //    break;
+                case "Analyze":
+                    analyzeLink.Attributes["class"] = activeNavClass;
+                    break;
                 case var productPage when productPage.StartsWith("Product"):
                     productLink.Attributes["class"] = activeNavClass;
                     break;
-                // Add cases for other pages as needed
                 case var orderPage when orderPage.StartsWith("Order"):
                     orderLink.Attributes["class"] = activeNavClass;
+                    break;
+                case var voucherPage when voucherPage.StartsWith("Voucher"):
+                    voucherLink.Attributes["class"] = activeNavClass;
                     break;
             }
         }

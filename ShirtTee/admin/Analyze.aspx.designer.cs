@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShirtTee
+namespace ShirtTee.admin
 {
 
 
-    public partial class Review
+    public partial class Analyze
     {
     }
 }

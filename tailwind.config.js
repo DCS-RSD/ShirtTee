@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-darkMode: 'media',
+darkMode: 'class',
     content: ["./ShirtTee/*.{aspx,Master}",
         'node_modules/preline/dist/*.js',
  		 "./ShirtTee/admin/*.{aspx,aspx.*,Master,Master.*}",

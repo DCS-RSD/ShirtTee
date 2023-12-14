@@ -91,8 +91,8 @@ namespace ShirtTee.customer
             var payer = new Payer();
             payer.payment_method = "paypal";
             var redirectUrls = new RedirectUrls();
-            redirectUrls.cancel_url = "https://localhost:44374/customer/OrderHistory.aspx";
-            redirectUrls.return_url = "https://localhost:44374/customer/OrderHistory.aspx";
+            redirectUrls.cancel_url = "https://localhost:44374/customer/OrderHistory.aspx" + "?cancel=true";
+            redirectUrls.return_url = "https://localhost:44374/customer/OrderHistory.aspx" + "?cancel=false";
             var payment = Payment.Create(apiContext, new Payment
             {
                 intent = "sale",
