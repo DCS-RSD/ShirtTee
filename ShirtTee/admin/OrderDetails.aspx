@@ -29,7 +29,6 @@
                     <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg">
 
                         <div class=" border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
-                            <%--                            <p class="text-sm font-medium text-gray-900">Preparing to ship on <time datetime="2021-03-24">March 24, 2021</time></p>--%>
                             <div class="mt-6" aria-hidden="true">
                                 <div class="bg-gray-200 rounded-full overflow-hidden">
                                     <div runat="server" id="progressBar"
