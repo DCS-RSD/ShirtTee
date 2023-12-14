@@ -15,5 +15,7 @@
 			<siteMapNode url="~/admin/OrderDetails.aspx" title="Order Details" />
 		</siteMapNode>
 		
+		<siteMapNode url="~/admin/Analyze.aspx" title="Analyze"  description="" />
+		
 	</siteMapNode>
 </siteMap>

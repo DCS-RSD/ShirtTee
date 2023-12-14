@@ -23,21 +23,7 @@ namespace ShirtTee.admin
                 SqlDataReader orderDetails = dbconnection.ExecuteQuery("GetOrderDetails", parameterUrl)
                     .ExecuteReader();
 
-                SqlDataReader orderStatus = dbconnection.ExecuteQuery("GetOrderStatus", parameterUrl)
-                    .ExecuteReader();
 
-                int width = 3;
-
-                while (orderStatus.HasRows)
-                {
-                    switch (orderStatus["status_name"].ToString())
-                    {
-                        default:
-                            break;
-                    }
-                    progressBar.Attributes["style"] = "width: calc((" + width + ") / 8 * 100%)";
-
-                }
 
                 if (orderDetails.HasRows)
                 {
@@ -70,6 +56,39 @@ namespace ShirtTee.admin
                     hypContactNo.Attributes.Add("href", "tel:" + orderDetails["phone_number"].ToString());
 
                 }
+
+                DBconnection dbconnection2 = new DBconnection();
+                SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                 new SqlParameter("@order_id", Request.QueryString["order_id"])
+                };
+                SqlDataReader orderStatus = dbconnection2.ExecuteQuery("GetOrderStatus", parameterUrl2)
+                    .ExecuteReader();
+                int width;
+                while (orderStatus.Read())
+                {
+                    
+                    switch (orderStatus["status"].ToString().ToLower())
+                    {
+                        case "order placed":
+                            width = 0;
+                            break;
+                        case "preparing":
+                            width = 3;
+                            break;
+                        case "shipped":
+                            width = 5;
+                            break;
+                        default:
+                            width = 8;
+                            btnNext.Enabled = false;
+                            btnCancel.Enabled = false;
+                            btnCancel.Visible = false;
+                            btnNext.Visible = false;
+                            break;
+                    }
+                    progressBar.Attributes["style"] = "width: calc((" + width + ") / 8 * 100%)";
+                }
+
             }
         }
     }

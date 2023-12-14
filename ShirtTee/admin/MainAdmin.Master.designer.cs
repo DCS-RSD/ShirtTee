@@ -78,13 +78,13 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.HyperLink orderLink;
 
         /// <summary>
-        /// analyseLink control.
+        /// analyzeLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink analyseLink;
+        protected global::System.Web.UI.WebControls.HyperLink analyzeLink;
 
         /// <summary>
         /// ContentPlaceHolder1 control.
