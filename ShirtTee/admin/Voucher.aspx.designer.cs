@@ -11,7 +11,7 @@ namespace ShirtTee.admin
 {
 
 
-    public partial class Product
+    public partial class Voucher
     {
 
         /// <summary>
