@@ -26,7 +26,7 @@
             <div class="mt-6">
 
                 <div class="space-y-8">
-                    <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg">
+                    <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg dark:bg-transparent dark:border-transparent">
 
                         <div class=" border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
                             <div class="mt-6" aria-hidden="true">
