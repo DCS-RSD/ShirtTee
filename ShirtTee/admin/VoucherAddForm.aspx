@@ -14,7 +14,7 @@
                 <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Voucher
                 </h2>
                 <p class="text-sm text-gray-600 dark:text-gray-400">
-                    Add new voucher to products.
+                    Add new voucher.
                 </p>
             </div>
             <%--End Title--%>
@@ -126,42 +126,6 @@
                     </div>
                 </div>
 
-                <%--Voucher Image--%>
-
-                <div class="col-span-1">
-                    <label
-                        for="txtProdDescription"
-                        class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                        Voucher Image
-                    </label>
-                </div>
-
-                <div class="col-span-3">
-                    <asp:Image
-                        class="my-2"
-                        ID="Image1"
-                        runat="server"
-                        ClientIDMode="Static" />
-                    <asp:FileUpload
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        onchange="loadFile(event)"
-                        ID="fileImage1"
-                        runat="server"
-                        AllowMultiple="true" />
-
-                    <%--<asp:Panel ID="Panel1" runat="server"></asp:Panel>--%> <%--
-          <p class="mt-3">
-            <asp:Button
-              runat="server"
-              Text="+ Add More Image"
-              ID="btnAddImageInput"
-              class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 cursor-pointer font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              OnClick="btnAddImageInput_Click"
-            >
-            </asp:Button>
-          </p>
-                    --%>
-                </div>
 
                 <div class="col-start-3">
                     <asp:Button
@@ -179,21 +143,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var loadFile = function (event) {
-            var input = event.target;
-            var file = input.files[0];
-            var type = file.type;
-            var output = document.getElementById("Image1");
-
-            output.src = URL.createObjectURL(event.target.files[0]);
-
-            output.onload = function () {
-                URL.revokeObjectURL(output.src); // free memory
-            };
-            output.classList.add("w-24");
-            output.classList.add("h-24");
-        };
-    </script>
 </asp:Content>

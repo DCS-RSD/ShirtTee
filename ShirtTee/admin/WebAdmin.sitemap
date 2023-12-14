@@ -16,6 +16,10 @@
 		</siteMapNode>
 		
 		<siteMapNode url="~/admin/Analyze.aspx" title="Analyze"  description="" />
-		
+
+		<siteMapNode url="~/admin/Voucher.aspx" title="Voucher">
+			<siteMapNode url="~/admin/VoucherAddForm.aspx" title="Add New Voucher"  description="" />
+			<siteMapNode url="~/admin/VoucherDetails.aspx" title="Voucehr Details"  description="" />
+		</siteMapNode>
 	</siteMapNode>
 </siteMap>
