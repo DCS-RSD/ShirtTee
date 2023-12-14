@@ -25,7 +25,7 @@ namespace ShirtTee
                 " INNER JOIN [Payment] AS p ON p.payment_ID = o.payment_ID" +
                 " WHERE order_ID = @order_ID");
                 queryList.Add("GetOrderStatus", "SELECT * FROM [Order] AS o INNER JOIN [Order_Status] AS os ON o.order_id = os.order_id WHERE o.order_ID = @order_ID");
-
+                queryList.Add("GetNoticeDetails", "SELECT * FROM [Notice] AS n INNER JOIN [Staff] AS s ON s.staff_ID = n.staff_ID WHERE n.notice_ID = @notice_ID");
                 //"SELECT *" +
                 //    " FROM [Order_Status] AS os" +
                 //    " INNER JOIN [Order] AS o ON o.order_ID = os.order_ID" +

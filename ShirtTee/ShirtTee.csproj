@@ -123,6 +123,8 @@
     <Content Include="admin\Analyze.aspx" />
     <Content Include="admin\Dashboard.aspx" />
     <Content Include="admin\MainAdmin.Master" />
+    <Content Include="admin\NoticeAddForm.aspx" />
+    <Content Include="admin\NoticeDetails.aspx" />
     <Content Include="admin\OrderDetails.aspx" />
     <Content Include="admin\OrderTracking.aspx" />
     <Content Include="admin\Product.aspx" />
@@ -221,6 +223,20 @@
     </Compile>
     <Compile Include="admin\MainAdmin.Master.designer.cs">
       <DependentUpon>MainAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\NoticeAddForm.aspx.cs">
+      <DependentUpon>NoticeAddForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\NoticeAddForm.aspx.designer.cs">
+      <DependentUpon>NoticeAddForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\NoticeDetails.aspx.cs">
+      <DependentUpon>NoticeDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\NoticeDetails.aspx.designer.cs">
+      <DependentUpon>NoticeDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\OrderDetails.aspx.cs">
       <DependentUpon>OrderDetails.aspx</DependentUpon>

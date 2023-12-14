@@ -38,9 +38,9 @@ namespace ShirtTee.admin
                     lblPaymentMethod.Text = orderDetails["payment_name"].ToString();
                     lblPaymentDate.Text = orderDetails["payment_date"].ToString();
 
-                    //lblSubtotal.Text = "RM " + orderDetails["subtotal"].ToString();
+                    lblSubtotal.Text = "RM " + orderDetails["subtotal"].ToString();
                     lblShippingFee.Text = "RM " + orderDetails["shipping_fee"].ToString();
-                    //lblDiscount.Text = "- RM " + orderDetails["discount"].ToString();
+                    lblDiscount.Text = "- RM " + orderDetails["discount"].ToString();
                     lblVoucher.Text = orderDetails["voucher_name"].ToString() + "#" +
                         orderDetails["voucher_ID"].ToString();
 
