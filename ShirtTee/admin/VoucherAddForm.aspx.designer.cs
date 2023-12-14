@@ -11,97 +11,79 @@ namespace ShirtTee.admin
 {
 
 
-    public partial class MainAdmin
+    public partial class AddVoucherForm
     {
 
         /// <summary>
-        /// head control.
+        /// txtProdName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.TextBox txtProdName;
 
         /// <summary>
-        /// form1 control.
+        /// txtProdDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox txtProdDesc;
 
         /// <summary>
-        /// SiteMapPath1 control.
+        /// txtPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SiteMapPath SiteMapPath1;
+        protected global::System.Web.UI.WebControls.TextBox txtPrice;
 
         /// <summary>
-        /// SiteMapDataSource1 control.
+        /// TextBox1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SiteMapDataSource SiteMapDataSource1;
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
 
         /// <summary>
-        /// dashboardLink control.
+        /// TextBox2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink dashboardLink;
+        protected global::System.Web.UI.WebControls.TextBox TextBox2;
 
         /// <summary>
-        /// productLink control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink productLink;
+        protected global::System.Web.UI.WebControls.Image Image1;
 
         /// <summary>
-        /// voucherLink control.
+        /// fileImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink voucherLink;
+        protected global::System.Web.UI.WebControls.FileUpload fileImage1;
 
         /// <summary>
-        /// orderLink control.
+        /// btnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink orderLink;
-
-        /// <summary>
-        /// analyseLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink analyseLink;
-
-        /// <summary>
-        /// ContentPlaceHolder1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
     }
 }
