@@ -27,7 +27,7 @@ namespace ShirtTee
             if (user != null)
             {
                 LogUserIn(manager, user);
-                Response.Redirect($"~/Homepage.aspx?");
+                Response.Redirect($"~/Homepage.aspx");
             }
             else { 
             //error;

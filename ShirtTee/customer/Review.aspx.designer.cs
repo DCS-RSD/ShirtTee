@@ -11,43 +11,34 @@ namespace ShirtTee.customer
 {
 
 
-    public partial class WriteReview
+    public partial class Review
     {
 
         /// <summary>
-        /// hs_feedback_post_comment_textarea_1 control.
+        /// btnViewOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox hs_feedback_post_comment_textarea_1;
+        protected global::System.Web.UI.WebControls.Button btnViewOrder;
 
         /// <summary>
-        /// Label1 control.
+        /// btnViewOrder2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Button btnViewOrder2;
 
         /// <summary>
-        /// htmlLabel control.
+        /// btnWriteReview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label htmlLabel;
-
-        /// <summary>
-        /// btnSubmitReview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSubmitReview;
+        protected global::System.Web.UI.WebControls.Button btnWriteReview;
     }
 }

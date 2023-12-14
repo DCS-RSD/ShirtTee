@@ -139,6 +139,15 @@
 
                                     </div>
 
+                                    <div id="myReviewDiv" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg>
+                                        <asp:HyperLink NavigateUrl="~/customer/Review.aspx" runat="server" Text="Review" ID="btnReview" />
+
+                                    </div>
+
                                     <div id="profileDiv" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
                                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
@@ -398,7 +407,7 @@
 
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
-        <footer class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+        <footer class="bg-gray-50 w-full py-10 px-4 sm:px-6 lg:px-8 mx-auto">
             <!-- Grid -->
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-10">
                 <div class="col-span-full hidden lg:col-span-1 lg:block">
@@ -673,12 +682,15 @@
     document.getElementById('orderHisDiv').addEventListener('click', function () {
         document.getElementById('<%= btnOrderHis.ClientID %>').click();
     });
+    document.getElementById('myReviewDiv').addEventListener('click', function () {
+        document.getElementById('<%= btnReview.ClientID %>').click();
+    });
     document.getElementById('cartDiv').addEventListener('click', function () {
         document.getElementById('<%= btnCart.ClientID %>').click();
     });
     document.getElementById('loginDiv').addEventListener('click', function () {
         document.getElementById('<%= btnLogin.ClientID %>').click();
-        });
+    });
 </script>
 <script>
     let notification = document.getElementById("notification");

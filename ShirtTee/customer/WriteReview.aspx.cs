@@ -16,7 +16,8 @@ namespace ShirtTee.customer
 
         protected void btnSubmitReview_Click(object sender, EventArgs e)
         {
-            Response.Redirect($"~/Review.aspx?productid=");
+            Response.Redirect($"~/customer/Review.aspx");
+            //string editorContent = Label1.Text;
         }
     }
 }

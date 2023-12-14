@@ -1,38 +1,21 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OrderHistory.aspx.cs" Inherits="ShirtTee.customer.OrderHistory" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Review.aspx.cs" Inherits="ShirtTee.customer.Review" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="bg-gray-50 dark:bg-slate-900">
 
         <main id="content" role="main">
-            <!-- Nav -->
-            <nav class="px-8 sticky -top-px bg-white text-sm font-medium text-black ring-1 ring-gray-900 ring-opacity-5 shadow-sm shadow-gray-100 pt-6 md:pb-6 -mt-px dark:bg-slate-900 dark:border-gray-800 dark:shadow-slate-700/[.7]" aria-label="Jump links">
-                <div class="max-w-7xl snap-x w-full flex items-center overflow-x-auto px-4 sm:px-6 lg:px-8 pb-4 md:pb-0 mx-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-slate-900">
-                    <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last-pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">To Ship</a>
-                    </div>
-                    <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">To Receive</a>
-                    </div>
-                    <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">Completed</a>
-                    </div>
-                    <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">Cancelled</a>
-                    </div>
-
-                </div>
-            </nav>
-            <!-- End Nav -->
             <div class="bg-white">
-                <div class="max-w-7xl mx-auto sm:px-2 lg:px-8 pt-8">
+                <div class="max-w-7xl mx-auto sm:px-2 lg:px-8 pt-2">
                     <div class="px-16 space-y-8 sm:px-8">
-                        <h2 class="text-2xl text-gray-800 font-bold sm:text-3xl dark:text-white">Order History</h2>
+                        <h2 class="text-2xl text-gray-800 font-bold sm:text-3xl dark:text-white">My Reviews</h2>
                     </div>
                 </div>
 
                 <div class="pb-14">
                     <div class="mt-8">
                         <h2 class="sr-only">Recent orders</h2>
+
                         <div class="max-w-7xl mx-auto sm:px-2 lg:px-8">
                             <div class="px-16 space-y-8 sm:px-8">
                                 <div class="bg-white border-t border-b border-gray-200 shadow-sm rounded-lg border">
@@ -43,16 +26,6 @@
                                             <div>
                                                 <dt class="font-medium text-gray-900">Order number</dt>
                                                 <dd class="mt-1 text-gray-500">WU88191111</dd>
-                                            </div>
-                                            <div class="hidden sm:block">
-                                                <dt class="font-medium text-gray-900">Date placed</dt>
-                                                <dd class="mt-1 text-gray-500">
-                                                    <time datetime="2021-07-06">Jul 6, 2021</time>
-                                                </dd>
-                                            </div>
-                                            <div>
-                                                <dt class="font-medium text-gray-900">Total amount</dt>
-                                                <dd class="mt-1 font-medium text-gray-900">$160.00</dd>
                                             </div>
                                         </dl>
 
@@ -80,14 +53,14 @@
                                             <div class="hidden origin-bottom-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-0-button" tabindex="-1">
                                                 <div class="py-1" role="none">
                                                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                                    <asp:Button runat="server" ID="btnViewOrder" OnClick="btnViewOrder_Click" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" TabIndex="-1" Text="View Order"></asp:Button>
+                                                    <asp:Button runat="server" ID="btnViewOrder" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" TabIndex="-1" Text="Delete Review"></asp:Button>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4">
 
-                                            <asp:Button runat="server" ID="btnViewOrder2" OnClick="btnViewOrder_Click" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="View Order"></asp:Button>
+                                            <asp:Button runat="server" ID="btnViewOrder2" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="Delete Review"></asp:Button>
                                         </div>
                                     </div>
 
@@ -104,7 +77,6 @@
                                                         <h5>Micro Backpack</h5>
                                                         <p class="mt-2 sm:mt-0">$70.00</p>
                                                     </div>
-                                                    <p class="hidden text-gray-500 sm:block sm:mt-2">Are you a minimalist looking for a compact carry option? The Micro Backpack is the perfect size for your essential everyday carry items. Wear it like a backpack or carry it like a satchel for all-day use.</p>
                                                     <p class="mt-2 text-gray-500 ">Quantity: 1</p>
                                                     <p class="mt-1 text-gray-500">XL / BLACK</p>
                                                     <p class="mt-3 text-sm font-bold text-gray-900">Total: RM 300.00</p>
@@ -117,22 +89,82 @@
                                                     <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                     </svg>
-                                                    <p class="ml-2 text-sm font-medium text-gray-500">Delivered on <time datetime="2021-07-12">July 12, 2021</time></p>
+                                                    <p class="ml-2 text-sm font-medium text-gray-500">Reviewed on <time datetime="2021-07-12">26-10-2023 17:04</time></p>
                                                 </div>
-
+                                                <!--
                                                 <div class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                                                    
                                                     <div class="flex-1 flex justify-center">
-                                                        <asp:Button runat="server" ID="btnWriteReview" OnClick="btnWriteReview_Click" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500" Text="Write Review"></asp:Button>
+                                                        <asp:Button runat="server" ID="btnWriteReview" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500" Text="Write Review"></asp:Button>
                                                     </div>
-                                                    <!--
+                                                    
                                                     <div class="flex-1 pl-4 flex justify-center">
                                                         <a href="#" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">Buy Again</a>
                                                     </div>
-                                                        -->
+                                                      
+                                                </div>
+                                                      -->
+                                            </div>
+                                        </li>
+                                        <li class="p-4 sm:p-6">
+                                            <div class="bg-white">
+                                                <div>
+
+                                                    <div>
+                                                        <div class="flex">
+                                                            <div class="">
+                                                                <div class="flex items-center">
+                                                                    <div class="flex items-center">
+                                                                        <!--
+                Heroicon name: solid/star
+
+                Active: "text-yellow-400", Inactive: "text-gray-200"
+              -->
+                                                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                                        </svg>
+
+                                                                        <!-- Heroicon name: solid/star -->
+                                                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                                        </svg>
+
+                                                                        <!-- Heroicon name: solid/star -->
+                                                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                                        </svg>
+
+                                                                        <!-- Heroicon name: solid/star -->
+                                                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                                        </svg>
+
+                                                                        <!-- Heroicon name: solid/star -->
+                                                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                                        </svg>
+                                                                    </div>
+                                                                    <p class="ml-3 text-sm text-gray-700">5<span class="sr-only"> out of 5 stars</span></p>
+                                                                </div>
+
+                                                                <div class="mt-4">
+
+
+                                                                    <div class=" space-y-6 text-sm text-gray-500">
+
+                                                                        <p>The product quality is amazing, it looks and feel even better than I had anticipated. Brilliant stuff! I would gladly recommend this store to my friends. And, now that I think of it... I actually have, many times!</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <!-- More reviews... -->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </li>
-
                                         <!-- More products... -->
                                     </ul>
                                 </div>
@@ -147,40 +179,8 @@
         </main>
     </div>
 
-    <div id="paymentStatusDiv" runat="server" class="flex items-center justify-center bg-black bg-opacity-50 w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
-        <div class=" mt-0 sm:max-w-lg sm:w-full m-3 sm:mx-auto">
-            <div class=" relative flex flex-col bg-white shadow-lg rounded-xl dark:bg-gray-800">
-                <div class="absolute top-2 end-2">
-                    <button type="button" class="flex justify-center items-center w-7 h-7 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-transparent dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#<%= paymentStatusDiv.ClientID %>">
-                        <span class="sr-only">Close</span>
-                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 6 6 18" />
-                            <path d="m6 6 12 12" />
-                        </svg>
-                    </button>
-                </div>
 
-                <div class="p-4 sm:p-10 text-center overflow-y-auto">
-                    <asp:Label ID="lblStatus" class="hidden" runat="server" Text="Label"></asp:Label>
-                    <!-- Icon -->
-                    <span id="successIcon" runat="server" class="mb-4 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
-                        </svg>
-                    </span>
-                    <span id="failedIcon" runat="server" class="mb-4 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border-4 border-red-50 bg-red-100 text-red-500 dark:bg-red-700 dark:border-red-600 dark:text-red-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </span>
-                    <!-- End Icon -->
-                    <asp:Label ID="lblPaymentTitle" class="block mb-2 text-xl font-bold text-gray-800 dark:text-gray-200" runat="server" Text="Payment Success !"></asp:Label>
-                    <asp:Label ID="lblPaymentDesc" class="text-gray-500 block" runat="server" Text="You can see the progress of your order in Order History. You will be notified of its completion."></asp:Label>
 
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -206,21 +206,6 @@
         });
     </script>
 
-    <script>
 
-        var lblStatusValue = '<%= lblStatus.Text %>';
-
-
-        var successIcon = document.getElementById('successIcon');
-        var failedIcon = document.getElementById('failedIcon');
-
-        if (lblStatusValue === 'paid') {
-            successIcon.classList.remove('hidden');
-            failedIcon.classList.add('hidden');
-        } else if (lblStatusValue === 'error') {
-            successIcon.classList.add('hidden');
-            failedIcon.classList.remove('hidden');
-        }
-    </script>
 
 </asp:Content>
