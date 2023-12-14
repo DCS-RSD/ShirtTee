@@ -16,11 +16,12 @@ namespace ShirtTee.customer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string sessionId = Request.QueryString["id"];
+            string sessionId = Request.QueryString["id"]; //stripe
+            string cancel = Request.QueryString["cancel"]; //paypal
             if (!string.IsNullOrEmpty(sessionId))
             {
                 paymentStatusDiv.Visible = true;
-                
+
                 // Use the sessionId to retrieve the session and check its status
                 StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
                 var service = new SessionService();
@@ -52,6 +53,25 @@ namespace ShirtTee.customer
                 {
                     // Unable to retrieve session, handle accordingly
                     lblStatus.Text = "Error: Unable to retrieve payment information.";
+                }
+            }
+            else if (!string.IsNullOrEmpty(cancel)) { 
+                paymentStatusDiv.Visible = true;
+                if (cancel == "false")
+                {
+                    // Payment successful
+                    // You can perform additional actions here
+                    successIcon.Visible = true;
+                    failedIcon.Visible = false;
+
+                }
+                else
+                {
+                    successIcon.Visible = false;
+                    failedIcon.Visible = true;
+                    lblStatus.Text = "Payment Cancelled";
+                    lblPaymentTitle.Text = "Payment Failed !";
+                    lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
                 }
             }
             else
