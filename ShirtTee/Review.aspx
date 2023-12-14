@@ -7,7 +7,7 @@
     
     <div class="px-4 space-y-2 sm:px-0 sm:flex sm:items-baseline sm:justify-between sm:space-y-0">
       <div class="flex sm:items-baseline sm:space-x-4">
-        <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Reviews &amp; Rating</h1>
+        <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Reviews &amp; Rating</h1>
         
       </div>
       

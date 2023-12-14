@@ -24,6 +24,7 @@ namespace ShirtTee
                 " INNER JOIN [Voucher] AS v ON v.voucher_ID = o.voucher_ID" +
                 " INNER JOIN [Payment] AS p ON p.payment_ID = o.payment_ID" +
                 " WHERE order_ID = @order_ID");
+                queryList.Add("GetOrderStatus", "SEKECT * FROM [Order] AS o INNER JOIN [Order_Status] AS os ON o.order_id = os.order_id WHERE o.order_ID = @order_ID");
 
                 //"SELECT *" +
                 //    " FROM [Order_Status] AS os" +

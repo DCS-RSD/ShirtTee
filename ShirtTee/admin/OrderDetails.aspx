@@ -30,7 +30,8 @@
                             <%--                            <p class="text-sm font-medium text-gray-900">Preparing to ship on <time datetime="2021-03-24">March 24, 2021</time></p>--%>
                             <div class="mt-6" aria-hidden="true">
                                 <div class="bg-gray-200 rounded-full overflow-hidden">
-                                    <div class="h-2 bg-indigo-600 rounded-full" style="width: calc((1 * 2 + 3) / 8 * 100%)"></div>
+                                    <div runat="server" id="progressBar"
+                                        class="h-2 bg-indigo-600 rounded-full"></div>
                                 </div>
                                 <div class="hidden sm:grid grid-cols-4 text-sm font-medium text-gray-600 mt-6">
                                     <div class="text-indigo-600">Order placed</div>

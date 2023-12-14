@@ -23,6 +23,21 @@ namespace ShirtTee.admin
                 SqlDataReader orderDetails = dbconnection.ExecuteQuery("GetOrderDetails", parameterUrl)
                     .ExecuteReader();
 
+                SqlDataReader orderStatus = dbconnection.ExecuteQuery("GetOrderStatus", parameterUrl)
+                    .ExecuteReader();
+
+                int width = 3;
+
+                while (orderStatus.HasRows)
+                {
+                    switch (orderStatus["status_name"].ToString())
+                    {
+                        default:
+                            break;
+                    }
+                    progressBar.Attributes["style"] = "width: calc((" + width + ") / 8 * 100%)";
+
+                }
 
                 if (orderDetails.HasRows)
                 {
@@ -39,11 +54,11 @@ namespace ShirtTee.admin
 
                     lblSubtotal.Text = "RM " + orderDetails["subtotal"].ToString();
                     lblShippingFee.Text = "RM " + orderDetails["shipping_fee"].ToString();
-                    lblDiscount.Text = "- RM "+orderDetails["discount"].ToString();
+                    lblDiscount.Text = "- RM " + orderDetails["discount"].ToString();
                     lblVoucher.Text = orderDetails["voucher_name"].ToString() + "#" +
                         orderDetails["voucher_ID"].ToString();
 
-                    lblOrderTotal.Text = "RM " + orderDetails["order_total"].ToString(); 
+                    lblOrderTotal.Text = "RM " + orderDetails["order_total"].ToString();
                     lblPoint.Text = orderDetails["member_points_earned"].ToString();
 
                     lblCustId.Text = orderDetails["customer_ID"].ToString();
