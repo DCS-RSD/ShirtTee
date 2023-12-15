@@ -81,8 +81,6 @@ namespace ShirtTee.admin
                         case "delivered":
                             width = 8;
                             break;
-                        default:
-                            width = 8;
                     }
 
                     if (string.Equals(status,"delivered") || string.Equals(status, "cancel"))
