@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="space-y-8 divide-y divide-gray-200 ">
+    <div class="space-y-8  ">
 
         <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5 mx-12 lg:mx-40 mt-4 mb-8">
 
@@ -204,9 +204,9 @@
         </div>
 
         <div class=" pb-5">
-            <div class="mx-12 lg:mx-64 flex justify-center ">
+            <div class="mx-12 lg:mx-64 flex flex-col sm:flex-row justify-center ">
                 <asp:Button runat="server" class="bg-white w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="Cancel"></asp:Button>
-                <asp:Button runat="server" class="ml-3 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="Save"></asp:Button>
+                <asp:Button runat="server" class="mt-3 sm:mt-0 sm:ml-3 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="Save"></asp:Button>
             </div>
         </div>
 
