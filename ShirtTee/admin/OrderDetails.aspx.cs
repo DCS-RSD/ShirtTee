@@ -66,8 +66,8 @@ namespace ShirtTee.admin
                 int width;
                 while (orderStatus.Read())
                 {
-                    
-                    switch (orderStatus["status"].ToString().ToLower())
+                    string status = orderStatus["status"].ToString().ToLower();
+                    switch (status)
                     {
                         case "order placed":
                             width = 0;
@@ -78,15 +78,23 @@ namespace ShirtTee.admin
                         case "shipped":
                             width = 5;
                             break;
+                        case "delivered":
+                            width = 8;
+                            break;
                         default:
                             width = 8;
-                            btnNext.Enabled = false;
-                            btnCancel.Enabled = false;
-                            btnCancel.Visible = false;
-                            btnNext.Visible = false;
-                            break;
                     }
+
+                    if (string.Equals(status,"delivered") || string.Equals(status, "cancel"))
+                    {
+                        btnNext.Enabled = false;
+                        btnCancel.Enabled = false;
+                        btnCancel.Visible = false;
+                        btnNext.Visible = false;
+                    }
+
                     progressBar.Attributes["style"] = "width: calc((" + width + ") / 8 * 100%)";
+                    progressBar.Attributes["class"] += " bg-indigo-600";
                 }
 
             }

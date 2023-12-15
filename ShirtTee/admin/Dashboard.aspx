@@ -186,7 +186,8 @@
                             <div class="inline-flex gap-x-2">
                                 <asp:DataPager ID="DataPager2" runat="server" PagedControlID="ListView1" PageSize="10">
                                     <Fields>
-                                        <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowPreviousPageButton="True" ShowNextPageButton="False" ShowLastPageButton="False" />
+                                        <asp:NextPreviousPagerField
+                                            ButtonType="Button" ShowFirstPageButton="True" ShowPreviousPageButton="True" ShowNextPageButton="False" ShowLastPageButton="False" />
                                         <asp:NumericPagerField ButtonType="Button" />
                                         <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="False" ShowPreviousPageButton="False" ShowNextPageButton="True" ShowLastPageButton="True" />
                                     </Fields>
