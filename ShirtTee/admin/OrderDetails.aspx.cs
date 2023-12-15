@@ -63,7 +63,7 @@ namespace ShirtTee.admin
                 };
                 SqlDataReader orderStatus = dbconnection2.ExecuteQuery("GetOrderStatus", parameterUrl2)
                     .ExecuteReader();
-                int width;
+                int width = 0;
                 while (orderStatus.Read())
                 {
                     string status = orderStatus["status"].ToString().ToLower();
