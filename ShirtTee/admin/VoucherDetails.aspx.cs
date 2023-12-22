@@ -26,7 +26,7 @@ namespace ShirtTee.admin
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@voucher_ID", Request.QueryString["voucher_id"])
                 };
-                SqlDataReader voucherDetails = dbconnection.ExecuteQuery("GetVoucherDetails", parameterUrl)
+                SqlDataReader voucherDetails = dbconnection.ExecuteQuery("SELECT * FROM [Voucher] WHERE voucher_ID = @voucher_ID", parameterUrl)
                     .ExecuteReader();
 
 

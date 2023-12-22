@@ -31,8 +31,9 @@ namespace ShirtTee.admin
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@ProductId", Request.QueryString["product_id"])
                 };
-                SqlDataReader productDetails = dbconnection.ExecuteQuery("GetProductDetails", parameterUrl)
-                    .ExecuteReader();
+                SqlDataReader productDetails = dbconnection.ExecuteQuery(
+                    "SELECT P.*, C.* FROM Product AS P INNER JOIN Category AS C ON P.category_id = C.category_id WHERE Product_ID=@ProductId", 
+                    parameterUrl).ExecuteReader();
 
 
                 if (productDetails.HasRows)

@@ -26,8 +26,8 @@ namespace ShirtTee.admin
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@notice_ID", Request.QueryString["notice_id"])
                 };
-                SqlDataReader noticeDetails = dbconnection.ExecuteQuery("GetNoticeDetails", parameterUrl)
-                    .ExecuteReader();
+                SqlDataReader noticeDetails = dbconnection.ExecuteQuery("SELECT * FROM [Notice] AS n INNER JOIN [Staff] AS s ON s.staff_ID = n.staff_ID WHERE n.notice_ID = @notice_ID",
+                    parameterUrl).ExecuteReader();
 
 
                 if (noticeDetails.HasRows)

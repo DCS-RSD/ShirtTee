@@ -1,6 +1,7 @@
 ﻿using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -23,6 +24,13 @@ namespace ShirtTee.admin
             ddlProdCategory.Enabled = true;
         }
 
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            DBconnection dbconnection = new DBconnection();
+            if(dbconnection.ExecuteNonQuery("SELECT * FROM [Voucher] WHERE voucher_ID = @voucher_ID"))
+            {
 
+            }
+        }
     }
 }

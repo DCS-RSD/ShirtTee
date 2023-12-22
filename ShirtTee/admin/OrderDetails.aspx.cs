@@ -20,9 +20,13 @@ namespace ShirtTee.admin
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@order_id", Request.QueryString["order_id"])
                 };
-                SqlDataReader orderDetails = dbconnection.ExecuteQuery("GetOrderDetails", parameterUrl)
-                    .ExecuteReader();
-
+                SqlDataReader orderDetails = dbconnection.ExecuteQuery(
+                    "SELECT * FROM [Order] AS o" 
+                    +" INNER JOIN [Customer] AS c ON c.customer_ID = o.customer_ID" 
+                    +" INNER JOIN [Voucher] AS v ON v.voucher_ID = o.voucher_ID" 
+                    +" INNER JOIN [Payment] AS p ON p.payment_ID = o.payment_ID" 
+                    +" WHERE order_ID = @order_ID", 
+                    parameterUrl).ExecuteReader();
 
 
                 if (orderDetails.HasRows)
@@ -61,8 +65,8 @@ namespace ShirtTee.admin
                 SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@order_id", Request.QueryString["order_id"])
                 };
-                SqlDataReader orderStatus = dbconnection2.ExecuteQuery("GetOrderStatus", parameterUrl2)
-                    .ExecuteReader();
+                SqlDataReader orderStatus = dbconnection2.ExecuteQuery("SELECT * FROM [Order] AS o INNER JOIN [Order_Status] AS os ON o.order_id = os.order_id WHERE o.order_ID = @order_ID",
+                    parameterUrl2).ExecuteReader();
                 int width = 0;
                 while (orderStatus.Read())
                 {
