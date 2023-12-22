@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
+            <div class="mt-5 p-4 z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
 
 
 

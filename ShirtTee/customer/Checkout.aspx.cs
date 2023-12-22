@@ -17,6 +17,21 @@ namespace ShirtTee.customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+            {
+                Page.Validate();
+
+                if (Page.IsValid)
+                {
+                    callFPX();
+                }
+            }
+
+
+        }
+
+        protected void callFPX()
+        {
             StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
 
             var options = new SessionCreateOptions

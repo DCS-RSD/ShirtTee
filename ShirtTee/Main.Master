@@ -14,54 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/datepicker.min.js"></script>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get all radio buttons
-            const sizeButtons = document.querySelectorAll('input[name="size-choice"]');
-
-            // Add click event listener to each radio button
-            sizeButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    // Remove 'border-indigo-500' class from all labels
-                    document.querySelectorAll('.group').forEach(function (label) {
-                        label.classList.remove('border-black');
-                        label.classList.remove('bg-gray-300');
-                        label.classList.add('bg-white');
-                    });
-
-                    // Add 'border-indigo-500' class to the selected label
-                    const selectedLabel = button.closest('label');
-                    selectedLabel.classList.add('border-black');
-                    selectedLabel.classList.remove('bg-white');
-                    selectedLabel.classList.add('bg-gray-300');
-
-                });
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get all radio buttons for color choices
-            const colorButtons = document.querySelectorAll('input[name="color-choice"]');
-
-            // Add click event listener to each color button
-            colorButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    // Remove 'selected-border' class from all labels
-                    document.querySelectorAll('.color_grp').forEach(function (label) {
-                        label.classList.remove('ring');
-                        label.classList.remove('ring-offset-1');
-                    });
-
-                    // Add 'selected-border' class to the selected label
-                    const selectedLabel = button.closest('label');
-                    selectedLabel.classList.add('ring');
-                    selectedLabel.classList.add('ring-offset-1');
-                });
-            });
-        });
-    </script>
+    
 
     <style>
         @layer utilities {
