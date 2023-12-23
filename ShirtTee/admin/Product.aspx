@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <!-- Table Section -->
     <div class="max-w-[85rem] mx-auto">
         <!-- Card -->
@@ -166,7 +167,7 @@
                                         </div>
                                     </th>
 
-<%--                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>--%>
+                                    <%--                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>--%>
                                 </tr>
                             </thead>
                             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]
@@ -195,7 +196,7 @@ ON Product.category_id = Category.category_id"></asp:SqlDataSource>
                                                 <%# Eval("price") %>
                                             </td>
 
-<%--                                            <td class="relative whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                                            <%--                                            <td class="relative whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                                 <div class="hs-tooltip inline-block">
                                                     <a class="hs-tooltip-toggle w-10 h-10 inline-flex justify-center items-center gap-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/[.05] dark:hover:border-white/[.1] dark:hover:text-white">
                                                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -209,7 +210,6 @@ ON Product.category_id = Category.category_id"></asp:SqlDataSource>
                                                     </a>
                                                 </div>
                                             </td>--%>
-
                                         </tr>
                                     </ItemTemplate>
                                 </asp:ListView>

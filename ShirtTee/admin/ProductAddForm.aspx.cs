@@ -41,6 +41,7 @@ namespace ShirtTee.admin
 
             if (dbconnection.ExecuteNonQuery(sqlCommand,parameters))
             {
+                Session["ProducAdded"] = true;
                 Response.Redirect(ResolveUrl("~/admin/Product.aspx").ToString());
             }
             else
