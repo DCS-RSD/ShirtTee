@@ -46,7 +46,7 @@ FROM Color
 WHERE color_ID NOT IN 
 (
 SELECT s.color_ID 
-FROM Stock AS s
+FROM Product_Details AS s
 INNER JOIN Color AS c 
 ON c.color_ID = s.color_ID
 WHERE size_ID = @size_ID
