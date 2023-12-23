@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,6 +15,7 @@ namespace ShirtTee
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
 
             if (Request.QueryString["product_ID"] != null)
             {
@@ -50,10 +53,10 @@ namespace ShirtTee
         protected void radColor_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton radioButton = (RadioButton)sender;
-            string colorName = radioButton.Attributes["value"];
+            string colorID = radioButton.Attributes["value"];
 
-
-            Label1.Text = colorName;
+            lblColor.Text = colorID;
+            lblMsg.Visible = false;
 
         }
 
@@ -71,7 +74,33 @@ namespace ShirtTee
                 if (radColor != null && dataItem != null)
                 {
                     radColor.Attributes["value"] = dataItem["color_ID"].ToString();
-                    radColor.Attributes["onclick"] = "handleRadioButtonClick(this);";
+                    radColor.Attributes["onclick"] = "handleColorRadioClick(this);";
+                }
+            }
+        }
+
+        protected void radSize_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+            string sizeID = radioButton.Attributes["value"];
+
+        }
+
+        protected void Repeater2_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                // Find the RadioButton in the current Repeater item
+                RadioButton radSize = (RadioButton)e.Item.FindControl("radSize");
+
+                // Get the data item for the current Repeater item
+                DataRowView dataItem = (DataRowView)e.Item.DataItem;
+
+                // Set the value attribute dynamically based on the data
+                if (radSize != null && dataItem != null)
+                {
+                    radSize.Attributes["value"] = dataItem["size_ID"].ToString();
+                    radSize.Attributes["onclick"] = "handleSizeRadioClick(this);";
                 }
             }
         }

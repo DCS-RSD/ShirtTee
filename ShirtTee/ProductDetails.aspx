@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="ProductDetails.aspx.cs" Inherits="ShirtTee.ProductDetails" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="ProductDetails.aspx.cs" Inherits="ShirtTee.ProductDetails" MaintainScrollPositionOnPostback="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="bg-white mt-4">
@@ -130,10 +130,11 @@
                         <fieldset class="mt-4">
                             <legend class="sr-only">Choose a color</legend>
                             <div class="flex items-center space-x-3">
-                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Stock] AS s
+                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.color_ID, color_name, hex_color FROM [Stock] AS s
 INNER JOIN [Color] AS c ON
 s.color_ID = c.color_ID
-WHERE product_ID = @product_ID">
+WHERE product_ID = @product_ID
+GROUP BY s.color_ID, color_name, hex_color">
                                     <SelectParameters>
                                         <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
                                     </SelectParameters>
@@ -141,14 +142,13 @@ WHERE product_ID = @product_ID">
                                 <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
                                     <ItemTemplate>
                                         <label class="color_grp relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
-                                            <asp:RadioButton ID="radColor" OnCheckedChanged="radColor_CheckedChanged" value="" runat="server" name="color-choice"  class="sr-only" aria-labelledby="color-choice-0-label" AutoPostBack="True"  />
+                                            <asp:RadioButton ID="radColor" OnCheckedChanged="radColor_CheckedChanged" value="" runat="server" name="color-choice" class="sr-only" aria-labelledby="color-choice-0-label" AutoPostBack="True" />
                                             <span id="color-choice-0-label" class="sr-only"><%# Eval("color_name") %></span>
                                             <span aria-hidden="true" class="h-8 w-8 bg-[<%# Eval("hex_color") %>] rounded-full border border-black border-opacity-10"></span>
                                         </label>
                                     </ItemTemplate>
                                 </asp:Repeater>
-                             
-                                <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                                <asp:Label ID="lblColor" runat="server" Text="" Visible="false"></asp:Label>
                             </div>
                         </fieldset>
                     </div>
@@ -157,90 +157,27 @@ WHERE product_ID = @product_ID">
                             <h3 class="text-sm font-medium text-gray-900">Size</h3>
                             <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
                         </div>
+                                                        <asp:Label ID="lblMsg" runat="server" Text="Select Color To View Available Size." class="italic" Visible="true"></asp:Label>
 
                         <fieldset class="mt-4">
                             <legend class="sr-only">Choose a size</legend>
                             <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6 cursor-not-allowed bg-gray-50 text-gray-200">
-                                    <input type="radio" name="size-choice" value="XXS" disabled="" class="sr-only" aria-labelledby="size-choice-0-label">
-                                    <span id="size-choice-0-label">XXS</span>
-                                    <span aria-hidden="true" class="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200">
-                                        <svg class="absolute inset-0 h-full w-full stroke-2 text-gray-200" viewBox="0 0 100 100" preserveAspectRatio="none" stroke="currentColor">
-                                            <line x1="0" y1="100" x2="100" y2="0" vector-effect="non-scaling-stroke"></line>
-                                        </svg>
-                                    </span>
-                                </label>
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
-                                    <input type="radio" name="size-choice" value="XS" class="sr-only" aria-labelledby="size-choice-1-label">
-                                    <span id="size-choice-1-label">XS</span>
-                                    <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                                    <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
-                                </label>
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
-                                    <input type="radio" name="size-choice" value="S" class="sr-only" aria-labelledby="size-choice-2-label">
-                                    <span id="size-choice-2-label">S</span>
-                                    <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                                    <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
-                                </label>
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
-                                    <input type="radio" name="size-choice" value="M" class="sr-only" aria-labelledby="size-choice-3-label">
-                                    <span id="size-choice-3-label">M</span>
-                                    <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                                    <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
-                                </label>
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
-                                    <input type="radio" name="size-choice" value="L" class="sr-only" aria-labelledby="size-choice-4-label">
-                                    <span id="size-choice-4-label">L</span>
-                                    <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                                    <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
-                                </label>
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
-                                    <input type="radio" name="size-choice" value="XL" class="sr-only" aria-labelledby="size-choice-5-label">
-                                    <span id="size-choice-5-label">XL</span>
-                                    <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                                    <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
-                                </label>
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
-                                    <input type="radio" name="size-choice" value="2XL" class="sr-only" aria-labelledby="size-choice-6-label">
-                                    <span id="size-choice-6-label">2XL</span>
-                                    <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                                    <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
-                                </label>
-                                <!-- Active: "ring-2 ring-indigo-500" -->
-                                <label class="group relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
-                                    <input type="radio" name="size-choice" value="3XL" class="sr-only" aria-labelledby="size-choice-7-label">
-                                    <span id="size-choice-7-label">3XL</span>
-                                    <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                                    <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
-                                </label>
+                                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT i.size_ID, size_name FROM [Stock] AS s INNER JOIN [Size] AS i ON s.size_ID = i.size_ID WHERE product_ID = @product_ID AND color_ID = @color_ID AND quantity > 0 GROUP BY i.size_ID, size_name">
+                                    <SelectParameters>
+                                        <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
+                                        <asp:ControlParameter ControlID="lblColor" PropertyName="Text" Name="color_ID"></asp:ControlParameter>
+                                    </SelectParameters>
+                                </asp:SqlDataSource>
+                                <asp:Repeater ID="Repeater2" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
+                                    <ItemTemplate>
+                                        <label class="size_grp relative flex items-center justify-center rounded-md border-2 py-3 px-4 text-sm font-medium uppercase hover:bg-gray-300 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm">
+                                            <asp:RadioButton ID="radSize" OnCheckedChanged="radSize_CheckedChanged" value="" name="size-choice" runat="server" class="sr-only" aria-labelledby="size-choice-1-label" AutoPostBack="True" />
+                                            <span id="size-choice-1-label"><%# Eval("size_name") %></span>
+                                            <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
+                                        </label>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+
                             </div>
                         </fieldset>
                     </div>
@@ -492,10 +429,9 @@ WHERE product_ID = @product_ID">
     </div>
 
     <script> 
-        function handleRadioButtonClick(radioButton) {
-            console.log("sds");
-            const colorSpans = document.querySelectorAll('span[name="color-choice"]');
-            colorSpans.forEach(function (span) {
+        function handleSizeRadioClick(radioButton) {
+            const sizeSpans = document.querySelectorAll('span[name="size-choice"]');
+            sizeSpans.forEach(function (span) {
                 const radioBtn = span.querySelector('input[type="radio"]');
                 if (radioBtn !== radioButton) {
                     radioBtn.checked = false;
@@ -507,28 +443,39 @@ WHERE product_ID = @product_ID">
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Get all radio buttons
-            const sizeButtons = document.querySelectorAll('input[name="size-choice"]');
+            // Get all radio buttons for color choices
+            const sizeSpans = document.querySelectorAll('span[name="size-choice"]');
 
-            // Add click event listener to each radio button
-            sizeButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    // Remove 'border-indigo-500' class from all labels
-                    document.querySelectorAll('.group').forEach(function (label) {
+            // Add click event listener to each color span
+            sizeSpans.forEach(function (span) {
+                const radioBtn = span.querySelector('input[type="radio"]');
+                if (radioBtn.checked) {
+                    document.querySelectorAll('.size_grp').forEach(function (label) {
                         label.classList.remove('border-black');
                         label.classList.remove('bg-gray-300');
                         label.classList.add('bg-white');
                     });
-
-                    // Add 'border-indigo-500' class to the selected label
-                    const selectedLabel = button.closest('label');
+                    const selectedLabel = span.closest('label');
                     selectedLabel.classList.add('border-black');
                     selectedLabel.classList.remove('bg-white');
                     selectedLabel.classList.add('bg-gray-300');
-
-                });
+                }
             });
+
         });
+    </script>
+
+    <script> 
+        function handleColorRadioClick(radioButton) {
+            const colorSpans = document.querySelectorAll('span[name="color-choice"]');
+            colorSpans.forEach(function (span) {
+                const radioBtn = span.querySelector('input[type="radio"]');
+                if (radioBtn !== radioButton) {
+                    radioBtn.checked = false;
+                }
+            });
+            radioButton.checked = true;
+        }
     </script>
 
     <script>
@@ -548,9 +495,6 @@ WHERE product_ID = @product_ID">
                     selectedLabel.classList.add('ring');
                     selectedLabel.classList.add('ring-offset-1');
                 }
-                //radioBtn.addEventListener('click', function () {
-
-                //});
             });
 
         });
