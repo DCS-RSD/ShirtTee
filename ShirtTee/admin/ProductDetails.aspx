@@ -53,6 +53,11 @@
                             placeholder="Enter product name"
                             class="cInput">
                         </asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvProdName" class="text-sm italic"
+                        runat="server" ControlToValidate="txtProdName"
+                        ErrorMessage="*Please enter product name." 
+                        Display="Dynamic" ForeColor="Red">
+                    </asp:RequiredFieldValidator>
                     </div>
 
                     <%--Product Group--%>
