@@ -27,9 +27,26 @@ namespace ShirtTee.admin
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             DBconnection dbconnection = new DBconnection();
-            if(dbconnection.ExecuteNonQuery("SELECT * FROM [Voucher] WHERE voucher_ID = @voucher_ID"))
-            {
 
+            string sqlCommand = "INSERT INTO Product (category_ID, product_name, description, price, thumbnail) " +
+                           "VALUES (@category_ID, @product_name, @description, @price, @thumbnail)";
+
+            SqlParameter[] parameters = {
+                new SqlParameter("@category_ID", ddlProdCategory.SelectedValue), 
+                new SqlParameter("@product_name", txtProdName.Text),
+                new SqlParameter("@description", txtProdDesc.Text),
+                new SqlParameter("@price", Convert.ToDouble(txtPrice.Text)),
+                new SqlParameter("@thumbnail", (object)fileThumbnail.FileBytes??DBNull.Value)
+            };
+
+            if (dbconnection.ExecuteNonQuery(sqlCommand,parameters))
+            {
+                Session["ProducAdded"] = true;
+                Response.Redirect(ResolveUrl("~/admin/Product.aspx").ToString());
+            }
+            else
+            {
+                Response.Write("Error");
             }
         }
     }

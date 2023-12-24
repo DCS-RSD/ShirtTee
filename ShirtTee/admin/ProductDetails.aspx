@@ -291,9 +291,14 @@
                             </tr>
                         </thead>
 
-                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT Product.product_ID, Stock.stock_ID, Color.color_name, Size.size_name, Stock.quantity FROM Stock INNER JOIN Product ON Product.product_ID = Stock.product_ID INNER JOIN Color ON Stock.color_ID = Color.color_ID INNER JOIN Size ON Stock.size_ID = Size.size_ID WHERE (Product.product_ID = @product_ID)">
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT Product.product_ID, Product_Details.product_details_ID, Color.color_name, Size.size_name, Product_Details.stock_available
+FROM Product_Details 
+INNER JOIN Product ON Product.product_ID = Product_Details.product_ID 
+INNER JOIN Color ON Product_Details.color_ID = Color.color_ID 
+INNER JOIN Size ON Product_Details.size_ID = Size.size_ID 
+WHERE (Product.product_ID = @product_ID)">
                             <SelectParameters>
-                                <asp:QueryStringParameter QueryStringField="product_id" Name="product_ID"></asp:QueryStringParameter>
+                                <asp:QueryStringParameter QueryStringField="product_id" Name="product_ID" DefaultValue=""></asp:QueryStringParameter>
                             </SelectParameters>
                         </asp:SqlDataSource>
 
@@ -303,7 +308,7 @@
                                     <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
 
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                            <%# Eval("stock_ID") %>
+                                            <%# Eval("product_details_ID") %>
                                         </td>
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                             <%# Eval("size_name") %>
@@ -318,7 +323,7 @@
                                                 ID="txtQty"
                                                 runat="server"
                                                 CssClass="cInput"
-                                                Text='<%# Eval("quantity") %>'></asp:TextBox>
+                                                Text='<%# Eval("stock_available") %>'></asp:TextBox>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
