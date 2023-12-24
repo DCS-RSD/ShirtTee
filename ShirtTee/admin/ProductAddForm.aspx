@@ -22,7 +22,7 @@
 
                 <div class="col-span-1">
                     <label for="txtProdName" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                        Product Name
+                         Name
                     </label>
                 </div>
 
@@ -36,7 +36,7 @@
                 <%--Product Group--%>
                 <div class="col-span-1">
                     <label for="radProdGroup" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                        Product Group
+                         Group
                     </label>
                 </div>
                 <div class="col-span-3">
@@ -51,15 +51,15 @@
 
                 <div class="col-span-1">
                     <label for="ddlProdCategory" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                        Product Category
+                         Category
                     </label>
                 </div>
 
                 <div class="col-span-3">
-                    <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_name" Enabled="False">
+                    <asp:DropDownList ID="ddlProdCategory" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="category_name" DataValueField="category_ID" Enabled="False">
                         <asp:ListItem>Select Product Category</asp:ListItem>
                     </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [category_name] FROM [Category] WHERE ([category_group] = @category_group)">
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Category] WHERE ([category_group] = @category_group)">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="radProdGroup" Name="category_group" PropertyName="SelectedValue" Type="String" />
                         </SelectParameters>
@@ -70,7 +70,7 @@
 
                 <div class="col-span-1">
                     <label for="txtPrice" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                        Product Price
+                         Price
                     </label>
                 </div>
 
@@ -88,7 +88,7 @@
 
                 <div class="col-span-1">
                     <label for="txtProdDescription" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                        Product Description
+                         Description
                     </label>
                 </div>
 
@@ -103,7 +103,7 @@
 
                 <div class="col-span-1">
                     <label for="txtProdDescription" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                        Product Image
+                       Thumbnail
                     </label>
                 </div>
 
@@ -112,18 +112,7 @@
                     <asp:Image class="my-2" ID="Image1" runat="server" ClientIDMode="Static" />
                     <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                         onchange="loadFile(event)"
-                        ID="fileImage1" runat="server" />
-
-                    <%--<asp:Panel ID="Panel1" runat="server"></asp:Panel>--%>
-
-                    <%-- <p class="mt-3">
-                        <asp:Button runat="server" Text="+ Add More Image"
-                            ID="btnAddImageInput"
-                            class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 cursor-pointer font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" 
-                            OnClick="btnAddImageInput_Click"
-                            >
-                        </asp:Button>
-                    </p>--%>
+                        ID="fileThumbnail" runat="server" />
                 </div>
 
 

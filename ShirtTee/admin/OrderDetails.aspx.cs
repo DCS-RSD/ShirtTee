@@ -22,7 +22,7 @@ namespace ShirtTee.admin
                 };
                 SqlDataReader orderDetails = dbconnection.ExecuteQuery(
                     "SELECT * FROM [Order] AS o" 
-                    +" INNER JOIN [Customer] AS c ON c.customer_ID = o.customer_ID" 
+                    +" INNER JOIN [AspNetUsers] AS c ON c.id = o.user_ID" 
                     +" INNER JOIN [Voucher] AS v ON v.voucher_ID = o.voucher_ID" 
                     +" INNER JOIN [Payment] AS p ON p.payment_ID = o.payment_ID" 
                     +" WHERE order_ID = @order_ID", 
@@ -51,13 +51,13 @@ namespace ShirtTee.admin
                     lblOrderTotal.Text = "RM " + orderDetails["order_total"].ToString();
                     lblPoint.Text = orderDetails["member_points_earned"].ToString();
 
-                    lblCustId.Text = orderDetails["customer_ID"].ToString();
-                    lblCustName.Text = orderDetails["customer_name"].ToString();
-                    hypCustEmail.Text = orderDetails["email"].ToString();
-                    hypCustEmail.Attributes.Add("href", "mailto:" + orderDetails["email"].ToString());
+                    lblCustId.Text = orderDetails["user_ID"].ToString();
+                    lblCustName.Text = orderDetails["UserName"].ToString();
+                    hypCustEmail.Text = orderDetails["Email"].ToString();
+                    hypCustEmail.Attributes.Add("href", "mailto:" + orderDetails["Email"].ToString());
 
-                    hypContactNo.Text = orderDetails["phone_number"].ToString();
-                    hypContactNo.Attributes.Add("href", "tel:" + orderDetails["phone_number"].ToString());
+                    hypContactNo.Text = orderDetails["PhoneNumber"].ToString();
+                    hypContactNo.Attributes.Add("href", "tel:" + orderDetails["PhoneNumber"].ToString());
 
                 }
 

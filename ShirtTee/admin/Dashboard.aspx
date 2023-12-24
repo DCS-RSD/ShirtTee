@@ -154,7 +154,7 @@
 <%--                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>--%>
                                 </tr>
                             </thead>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [notice_date] FROM [Notice]">
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [created_at] FROM [Notice]">
                             </asp:SqlDataSource>
 
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -168,7 +168,7 @@
                                                 <%# Eval("notice_title") %>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                                <%# Eval("notice_date") %>
+                                                <%# Eval("created_at") %>
                                             </td>
                                         </tr>
                                     </ItemTemplate>

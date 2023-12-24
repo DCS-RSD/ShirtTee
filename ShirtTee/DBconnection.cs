@@ -35,7 +35,7 @@ namespace ShirtTee
 
         public Boolean ExecuteNonQuery(string nonQuery, SqlParameter[] parameters = null)
         {
-            SqlConnection connection = new SqlConnection();
+            SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = new SqlCommand(nonQuery, connection);
 

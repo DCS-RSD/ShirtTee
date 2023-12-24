@@ -98,7 +98,7 @@
                                     <div class="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
                                         <div class="sm:flex lg:col-span-7">
                                             <div class="flex-shrink-0 w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-none sm:w-40 sm:h-40">
-                                                <img src='<%# ResolveUrl(Eval("image").ToString()) %>' alt="" class="w-full h-full object-center object-cover sm:w-full sm:h-full">
+                                                <img src='<%# ResolveUrl(Eval("thumbnail").ToString()) %>' alt="" class="w-full h-full object-center object-cover sm:w-full sm:h-full">
                                             </div>
 
                                             <div class="mt-6 sm:mt-0 sm:ml-6">
@@ -137,7 +137,7 @@
                         </div>
                         <asp:SqlDataSource runat="server" ID="SqlDataSource2" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Order] AS o
 INNER JOIN [Order_Details] AS od ON od.order_ID = o.order_ID
-INNER JOIN [Stock] AS s ON s.stock_ID= od.stock_ID
+INNER JOIN [Product_Details] AS s ON s.product_details_ID= od.product_details_ID
 INNER JOIN [Size] AS sz ON sz.size_ID= s.size_ID
 INNER JOIN [Color] AS co ON co.color_ID= s.color_ID
 INNER JOIN [Product] AS pd ON pd.product_ID= s.product_ID
