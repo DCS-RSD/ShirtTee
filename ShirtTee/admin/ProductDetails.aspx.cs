@@ -32,7 +32,7 @@ namespace ShirtTee.admin
                  new SqlParameter("@ProductId", Request.QueryString["product_id"])
                 };
                 SqlDataReader productDetails = dbconnection.ExecuteQuery(
-                    "SELECT P.*, C.* FROM Product AS P INNER JOIN Category AS C ON P.category_id = C.category_id WHERE Product_ID=@ProductId", 
+                    "SELECT P.*, C.* FROM Product AS P INNER JOIN Category AS C ON P.category_id = C.category_id WHERE Product_ID=@ProductId",
                     parameterUrl).ExecuteReader();
 
 
@@ -46,6 +46,12 @@ namespace ShirtTee.admin
                     txtProdName.Text = (string)productDetails["product_name"];
                     txtProdDesc.Text = (string)productDetails["description"];
                     txtPrice.Text = productDetails["price"].ToString();
+
+                    if (productDetails["thumbnail"] != null)
+                    {
+                        Image1.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])productDetails["thumbnail"]);
+                    }
+
                     switch (productDetails["category_group"].ToString())
                     {
                         case "men":

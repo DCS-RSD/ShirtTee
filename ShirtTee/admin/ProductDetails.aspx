@@ -116,7 +116,6 @@
                         <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                             onchange="loadFile(event)"
                             ID="fileImage1" runat="server" AllowMultiple="true" />
-
                     </div>
 
                     <%--Button--%>
@@ -344,4 +343,20 @@ WHERE (Product.product_ID = @product_ID)">
 
         </div>
     </div>
+
+    
+    <script>
+        var loadFile = function (event) {
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
+            var output = document.getElementById('Image1');
+
+            output.src = URL.createObjectURL(event.target.files[0]);
+            
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
 </asp:Content>
