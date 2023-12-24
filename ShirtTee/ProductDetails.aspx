@@ -33,16 +33,32 @@
                     <!-- Image selector -->
                     <div class=" mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
                         <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
-                            <button id="tabs-1-tab-1" data-hs-overlay="#hs-subscription-with-image" class="relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
-                                <span class="sr-only">Angled view </span>
-                                <span class="absolute inset-0 rounded-md overflow-hidden">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg" alt="" class="w-full h-full object-center object-cover">
-                                </span>
-                                <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
-                                <span class="ring-transparent absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
-                            </button>
+                            <asp:Repeater ID="Repeater6" runat="server" DataSourceID="SqlDataSource3">
+                                <ItemTemplate>
+                                    <button id="tabs-1-tab-1" data-src='<%# ResolveUrl(Eval("image").ToString()) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
+                                        <span class="sr-only">Angled view </span>
+                                        <span class="absolute inset-0 rounded-md overflow-hidden">
+                                            <img src="<%# ResolveUrl(Eval("image").ToString()) %>" alt="" class="w-full h-full object-center object-cover" />
+                                        </span>
+                                        <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
+                                        <span class="ring-transparent absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
+                                    </button>
+                                </ItemTemplate>
+                            </asp:Repeater>
 
-                            <!-- More images... -->
+                            <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource4">
+                                <ItemTemplate>
+                                    <button id="tabs-1-tab-1" data-src='<%# ResolveUrl(Eval("image").ToString()) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
+                                        <span class="sr-only">Angled view </span>
+                                        <span class="absolute inset-0 rounded-md overflow-hidden">
+                                            <img src="<%# ResolveUrl(Eval("image").ToString()) %>" alt="" class="w-full h-full object-center object-cover" />
+                                        </span>
+                                        <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
+                                        <span class="ring-transparent absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
+                                    </button>
+                                </ItemTemplate>
+                            </asp:Repeater>
+
                         </div>
                     </div>
 
@@ -55,23 +71,46 @@
     &quot;isAutoPlay&quot;: true
   }"
                             class="relative init">
-                            <div class="hs-carousel relative overflow-hidden w-full min-h-[350px] bg-white rounded-lg">
+                            <div class="hs-carousel relative overflow-hidden w-full min-h-[500px] bg-white rounded-lg">
                                 <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700" style="width: 1872px; transform: translate(-624px, 0px);">
-                                    <div class="hs-carousel-slide" style="width: 624px;">
-                                        <div class="flex justify-center h-full bg-gray-100 p-6">
-                                            <span class="self-center text-4xl transition duration-700">First slide</span>
-                                        </div>
-                                    </div>
-                                    <div class="hs-carousel-slide active" style="width: 624px;">
-                                        <div class="flex justify-center h-full bg-gray-200 p-6">
-                                            <span class="self-center text-4xl transition duration-700">Second slide</span>
-                                        </div>
-                                    </div>
-                                    <div class="hs-carousel-slide" style="width: 624px;">
-                                        <div class="flex justify-center h-full bg-gray-300 p-6">
-                                            <span class="self-center text-4xl transition duration-700">Third slide</span>
-                                        </div>
-                                    </div>
+                                    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Product] WHERE ([product_ID] = @product_ID)">
+                                        <SelectParameters>
+                                            <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID" Type="Int32"></asp:QueryStringParameter>
+                                        </SelectParameters>
+                                    </asp:SqlDataSource>
+                                    <asp:Repeater ID="Repeater3" runat="server" DataSourceID="SqlDataSource3">
+                                        <ItemTemplate>
+                                            <div class="hs-carousel-slide" style="width: 500px;">
+                                                <div class="flex justify-center h-full bg-gray-100 p-6">
+                                                    <span class="self-center text-4xl transition duration-700">First slide
+                                                        <img src="<%# ResolveUrl(Eval("image").ToString()) %>" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+
+
+                                    <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.image FROM [Product_Details] AS s
+INNER JOIN [Product] AS p ON
+s.product_ID = p.product_ID
+WHERE p.product_ID = @product_ID">
+                                        <SelectParameters>
+                                            <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
+                                        </SelectParameters>
+                                    </asp:SqlDataSource>
+                                    <asp:Repeater ID="Repeater4" runat="server" DataSourceID="SqlDataSource4">
+                                        <ItemTemplate>
+                                            <div class="hs-carousel-slide" style="width: 624px;">
+                                                <div class="flex justify-center h-full bg-gray-100 p-6">
+                                                    <span class="self-center text-4xl transition duration-700">First slide
+                                                        <img src="<%# ResolveUrl(Eval("image").ToString()) %>" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+
                                 </div>
                             </div>
 
@@ -94,8 +133,11 @@
 
                             <div class="hs-carousel-pagination flex justify-center absolute bottom-3 start-0 end-0 space-x-2">
                                 <span class="hs-carousel-active:bg-blue-700 hs-carousel-active:border-blue-700 w-3 h-3 border border-gray-400 rounded-full cursor-pointer"></span>
-                                <span class="hs-carousel-active:bg-blue-700 hs-carousel-active:border-blue-700 w-3 h-3 border border-gray-400 rounded-full cursor-pointer active"></span>
-                                <span class="hs-carousel-active:bg-blue-700 hs-carousel-active:border-blue-700 w-3 h-3 border border-gray-400 rounded-full cursor-pointer"></span>
+                                <asp:Repeater ID="Repeater5" runat="server" DataSourceID="SqlDataSource4">
+                                    <ItemTemplate>
+                                        <span class="hs-carousel-active:bg-blue-700 hs-carousel-active:border-blue-700 w-3 h-3 border border-gray-400 rounded-full cursor-pointer active"></span>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </div>
                         </div>
                         <!-- End Slider -->
@@ -130,7 +172,7 @@
                         <fieldset class="mt-4">
                             <legend class="sr-only">Choose a color</legend>
                             <div class="flex items-center space-x-3">
-                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.color_ID, color_name, hex_color FROM [Stock] AS s
+                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.color_ID, color_name, hex_color FROM [Product_Details] AS s
 INNER JOIN [Color] AS c ON
 s.color_ID = c.color_ID
 WHERE product_ID = @product_ID
@@ -157,12 +199,12 @@ GROUP BY s.color_ID, color_name, hex_color">
                             <h3 class="text-sm font-medium text-gray-900">Size</h3>
                             <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
                         </div>
-                                                        <asp:Label ID="lblMsg" runat="server" Text="Select Color To View Available Size." class="italic" Visible="true"></asp:Label>
+                        <asp:Label ID="lblMsg" runat="server" Text="Select Color To View Available Size." class="italic" Visible="true"></asp:Label>
 
                         <fieldset class="mt-4">
                             <legend class="sr-only">Choose a size</legend>
                             <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT i.size_ID, size_name FROM [Stock] AS s INNER JOIN [Size] AS i ON s.size_ID = i.size_ID WHERE product_ID = @product_ID AND color_ID = @color_ID AND quantity > 0 GROUP BY i.size_ID, size_name">
+                                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT i.size_ID, size_name FROM [Product_Details] AS s INNER JOIN [Size] AS i ON s.size_ID = i.size_ID WHERE product_ID = @product_ID AND color_ID = @color_ID AND stock_available > 0 GROUP BY i.size_ID, size_name">
                                     <SelectParameters>
                                         <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
                                         <asp:ControlParameter ControlID="lblColor" PropertyName="Text" Name="color_ID"></asp:ControlParameter>
@@ -234,9 +276,8 @@ GROUP BY s.color_ID, color_name, hex_color">
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                             </svg>
                         </div>
-                        <p class="sr-only">4 out of 5 stars</p>
                     </div>
-                    <p class="ml-2 text-sm text-gray-900">4 stars based on 1624 reviews</p>
+                    <p class="ml-2 text-sm text-gray-900"><asp:Label runat="server" ID="lblTotalRating" Text=""></asp:Label> stars based on <asp:Label runat="server" ID="lblTotalReviews" Text=""></asp:Label> reviews</p>
                 </div>
 
                 <div class="mt-6">
@@ -259,7 +300,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">63%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblFivePer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -278,7 +319,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">10%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblFourPer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -297,7 +338,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">6%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblThreePer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -316,7 +357,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">12%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblTwoPer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -335,7 +376,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">9%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblOnePer" Text=""></asp:Label>%</dd>
                         </div>
                     </dl>
                 </div>
@@ -348,57 +389,48 @@ GROUP BY s.color_ID, color_name, hex_color">
 
                 <div class="flow-root">
                     <div class=" divide-y divide-gray-200">
-                        <div class="py-4 border-t border-b">
-                            <div class="flex items-center">
-                                <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="Emily Selman." class="h-12 w-12 rounded-full">
-                                <div class="ml-4">
-                                    <h4 class="text-sm font-bold text-gray-900">Emily Selman</h4>
-                                    <div class="mt-1 flex items-center">
-                                        <!--
-                    Heroicon name: solid/star
+                        <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Review] AS r
+INNER JOIN [Product_Details] AS p ON
+r.product_details_ID = p.product_details_ID
+INNER JOIN [AspNetUsers] AS u ON
+r.user_ID = Id 
+INNER JOIN [Color] AS c ON
+p.color_ID = c.color_ID 
+INNER JOIN [Size] AS s ON
+p.size_ID = s.size_ID 
+WHERE product_ID = @product_ID">
+                            <SelectParameters>
+                                <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                        <asp:Repeater ID="Repeater8" runat="server" DataSourceID="SqlDataSource5">
+                            <ItemTemplate>
+                                <div class="py-4 border-t border-b">
+                                    <div class="flex items-center">
+                                        <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="Emily Selman." class="h-12 w-12 rounded-full">
+                                        <div class="ml-4">
+                                            <h4 class="text-sm font-bold text-gray-900"><%# Eval("UserName") %></h4>
+                                            <div class="mt-1 flex items-center">
 
-                    Active: "text-yellow-400", Default: "text-gray-300"
-                  -->
-                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
+                                                 <%# GenerateStars(Convert.ToInt32(Eval("rating"))) %>
 
-                                        <!-- Heroicon name: solid/star -->
-                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-
-                                        <!-- Heroicon name: solid/star -->
-                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-
-                                        <!-- Heroicon name: solid/star -->
-                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-
-                                        <!-- Heroicon name: solid/star -->
-                                        <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="sr-only">5 out of 5 stars</p>
+
+                                    <div class="mt-4 text-base italic text-gray-600">
+                                        <p><%# Eval("review_description") %></p>
+
+                                        <div class="flex justify-between mt-4">
+                                            <p><%# Eval("size_name") %> | <%# Eval("color_name") %></p>
+
+
+                                            <p class="block"><%# Eval("review_date") %></p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="mt-4 text-base italic text-gray-600">
-                                <p>This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.</p>
-
-                                <div class="flex justify-between mt-4">
-                                    <span id="ContentPlaceHolder1_lblSizeColor">XL | BLACK</span>
-
-
-                                    <span id="ContentPlaceHolder1_lblReviewDate" class="block">06/12/2023</span>
-                                </div>
-                            </div>
-                        </div>
-
+                            </ItemTemplate>
+                        </asp:Repeater>
                         <!-- More reviews... -->
                     </div>
                 </div>
@@ -408,20 +440,21 @@ GROUP BY s.color_ID, color_name, hex_color">
 
 
     <div id="hs-subscription-with-image" class="flex justify-center items-center hidden w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
-        <div class=" hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full sm:mx-auto">
+        <div class="h-full hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full sm:mx-auto">
+            <div class="absolute top-2 end-2 z-[10]">
+                <button type="button" class="inline-flex justify-center items-center w-8 h-8 text-sm font-semibold rounded-lg border border-transparent bg-white/10 text-black hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-subscription-with-image">
+                    <span class="sr-only">Close</span>
+                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
             <div class="relative flex flex-col bg-white shadow-lg rounded-xl dark:bg-gray-800">
-                <div class="absolute top-2 end-2 z-[10]">
-                    <button type="button" class="inline-flex justify-center items-center w-8 h-8 text-sm font-semibold rounded-lg border border-transparent bg-white/10 text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-subscription-with-image">
-                        <span class="sr-only">Close</span>
-                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 6 6 18" />
-                            <path d="m6 6 12 12" />
-                        </svg>
-                    </button>
-                </div>
+
 
                 <div>
-                    <img class="w-full object-cover rounded-xl" src="https://images.unsplash.com/photo-1648747067020-73f77da74e8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3425&q=80" alt="Image Description">
+                    <img class="w-full object-cover rounded-xl" src="" alt="Image Description">
                 </div>
 
             </div>
@@ -499,6 +532,20 @@ GROUP BY s.color_ID, color_name, hex_color">
 
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handler for image button click
+            $('.image-button').on('click', function () {
+                // Get the image source from the data-src attribute
+                var imageSrc = $(this).data('src');
 
+                // Update the modal's image source
+                $('#hs-subscription-with-image img').attr('src', imageSrc);
+
+            });
+
+        });
+    </script>
 
 </asp:Content>

@@ -19,7 +19,7 @@ WHERE category_group = @category">
                     <ItemTemplate>
                         <div onclick='<%# Eval("product_id", "window.location.href = \"ProductDetails.aspx?product_ID={0}\";") %>' class="group relative">
                             <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                                <img src="<%# Eval("image") %>" alt="<%# Eval("product_name") %>" class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                                <img src="<%# ResolveUrl(Eval("image").ToString()) %>" alt="<%# Eval("product_name") %>" class="h-full w-full object-cover object-center lg:h-full lg:w-full">
                             </div>
                             <div class="mt-4 flex justify-between">
                                 <div>
