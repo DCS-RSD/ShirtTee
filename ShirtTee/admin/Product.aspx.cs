@@ -17,6 +17,7 @@ namespace ShirtTee.admin
                 //display toast message after add new product
                 if (Session["ProductAdded"] != null && (bool)Session["ProductAdded"])
                 {
+
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
                     Session["ProductAdded"] = false;
                 }

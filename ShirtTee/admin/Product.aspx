@@ -3,6 +3,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%-- Toast --%>
+    <script>
+        function showSuccessToast() {
+            toastr["success"]("Product Added Successfully")
+        }
+    </script>
+    <asp:Label ID="a" runat="server"></asp:Label>
     <!-- Table Section -->
     <div class="max-w-[85rem] mx-auto">
         <!-- Card -->
