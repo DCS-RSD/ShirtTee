@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -31,7 +32,7 @@ namespace ShirtTee.admin
 
             string sqlCommand = "INSERT INTO Product (category_ID, product_name, description, price, thumbnail) " +
                            "VALUES (@category_ID, @product_name, @description, @price, @thumbnail)";
-
+            byte[] defaultImage = File.ReadAllBytes(Server.MapPath("~/Image/noimage.png"));
 
             SqlParameter[] parameters = {
                 new SqlParameter("@category_ID", ddlProdCategory.SelectedValue),
@@ -39,7 +40,7 @@ namespace ShirtTee.admin
                 new SqlParameter("@description", txtProdDesc.Text),
                 new SqlParameter("@price", Convert.ToDouble(txtPrice.Text)),
                 new SqlParameter("@thumbnail", SqlDbType.VarBinary) {
-                    Value = fileThumbnail.HasFile?(object)fileThumbnail.FileBytes: DBNull.Value
+                    Value = fileThumbnail.HasFile?(object)fileThumbnail.FileBytes: defaultImage
                 }
         };
 
