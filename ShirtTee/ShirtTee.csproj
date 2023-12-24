@@ -130,6 +130,7 @@
     <Content Include="admin\Product.aspx" />
     <Content Include="admin\ProductAddForm.aspx" />
     <Content Include="admin\ProductDetails.aspx" />
+    <Content Include="admin\ProductStock.aspx" />
     <Content Include="admin\ProductStockAddForm.aspx" />
     <Content Include="admin\SampleForm.aspx" />
     <Content Include="admin\Voucher.aspx" />
@@ -270,6 +271,13 @@
     </Compile>
     <Compile Include="admin\ProductDetails.aspx.designer.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductStock.aspx.cs">
+      <DependentUpon>ProductStock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductStock.aspx.designer.cs">
+      <DependentUpon>ProductStock.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\ProductStockAddForm.aspx.cs">
       <DependentUpon>ProductStockAddForm.aspx</DependentUpon>

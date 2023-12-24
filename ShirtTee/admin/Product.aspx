@@ -10,7 +10,7 @@
             console.log(status)
             if (status !== null && status !== undefined) {
                 if (status == "success") {
-                    toastr["success"]("Product added successfully");
+                    toastr["success"]("Product added successfully.");
                 } else {
                     toastr["error"]("Something went wrong.");
                 }
