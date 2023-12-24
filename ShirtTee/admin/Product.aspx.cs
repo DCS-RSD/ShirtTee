@@ -13,13 +13,10 @@ namespace ShirtTee.admin
         {
             if (!IsPostBack)
             {
-
-                //display toast message after add new product
-                if (Session["ProductAdded"] != null && (bool)Session["ProductAdded"])
+                if (Session["ProductAdded"] != null)
                 {
 
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
-                    Session["ProductAdded"] = false;
                 }
             }
 

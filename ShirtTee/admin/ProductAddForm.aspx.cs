@@ -28,31 +28,38 @@ namespace ShirtTee.admin
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            DBconnection dbconnection = new DBconnection();
+            try
+            {
+                DBconnection dbconnection = new DBconnection();
 
-            string sqlCommand = "INSERT INTO Product (category_ID, product_name, description, price, thumbnail) " +
-                           "VALUES (@category_ID, @product_name, @description, @price, @thumbnail)";
-            byte[] defaultImage = File.ReadAllBytes(Server.MapPath("~/Image/noimage.png"));
+                string sqlCommand = "INSERT INTO Product (category_ID, product_name, description, price, thumbnail) " +
+                               "VALUES (@category_ID, @product_name, @description, @price, @thumbnail)";
+                byte[] defaultImage = File.ReadAllBytes(Server.MapPath("~/Image/noimage.png"));
 
-            SqlParameter[] parameters = {
+                SqlParameter[] parameters = {
                 new SqlParameter("@category_ID", ddlProdCategory.SelectedValue),
                 new SqlParameter("@product_name", txtProdName.Text),
                 new SqlParameter("@description", txtProdDesc.Text),
                 new SqlParameter("@price", Convert.ToDouble(txtPrice.Text)),
                 new SqlParameter("@thumbnail", SqlDbType.VarBinary) {
                     Value = fileThumbnail.HasFile?(object)fileThumbnail.FileBytes: defaultImage
-                }
-        };
+                  }
+                };
 
-            if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                {
+                    Session["ProductAdded"] = "success";
+                }
+            }
+            catch (Exception ex)
             {
-                Session["ProductAdded"] = true;
+                Session["ProductAdded"] = "error";
+            }
+            finally
+            {
                 Response.Redirect(ResolveUrl("~/admin/Product.aspx").ToString());
             }
-            else
-            {
-                Response.Write("Error");
-            }
+
         }
     }
 }

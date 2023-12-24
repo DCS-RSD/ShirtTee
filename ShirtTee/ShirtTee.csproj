@@ -185,9 +185,6 @@
     <Content Include="Image\cloth7.png" />
     <Content Include="Image\cloth8.png" />
     <Content Include="Image\cloth9.png" />
-    <Content Include="Image\clothes1.jpg" />
-    <Content Include="Image\clothes2.jpg" />
-    <Content Include="Image\clothes3.jpg" />
     <Content Include="Image\noimage.png" />
     <Content Include="Login.aspx" />
     <Content Include="ProductDetails.aspx" />

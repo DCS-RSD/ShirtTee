@@ -6,7 +6,16 @@
     <%-- Toast --%>
     <script>
         function showSuccessToast() {
-            toastr["success"]("Product Added Successfully")
+            var status = '<%= Session["ProductAdded"] %>'; // Enclose the session variable in quotes
+            console.log(status)
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Product added successfully");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("ProductAdded"); %>
         }
     </script>
     <asp:Label ID="a" runat="server"></asp:Label>
