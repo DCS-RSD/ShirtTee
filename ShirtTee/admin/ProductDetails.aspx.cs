@@ -47,10 +47,10 @@ namespace ShirtTee.admin
                     txtProdDesc.Text = (string)productDetails["description"];
                     txtPrice.Text = productDetails["price"].ToString();
 
-                    if (productDetails["thumbnail"] != null)
-                    {
-                        Image1.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])productDetails["thumbnail"]);
-                    }
+
+                    Image1.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])productDetails["thumbnail"]);
+
+
 
                     switch (productDetails["category_group"].ToString())
                     {

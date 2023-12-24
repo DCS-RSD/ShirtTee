@@ -112,7 +112,7 @@
 
 
                     <div class="col-span-3">
-                        <asp:Image class="my-2" ID="Image1" runat="server" ClientIDMode="Static" />
+                        <asp:Image class="my-2 h-24 w-24" ID="Image1" runat="server" ClientIDMode="Static" />
                         <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                             onchange="loadFile(event)"
                             ID="fileImage1" runat="server" AllowMultiple="true" />

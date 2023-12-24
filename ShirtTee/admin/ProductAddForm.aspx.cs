@@ -1,6 +1,7 @@
 ﻿using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -31,15 +32,18 @@ namespace ShirtTee.admin
             string sqlCommand = "INSERT INTO Product (category_ID, product_name, description, price, thumbnail) " +
                            "VALUES (@category_ID, @product_name, @description, @price, @thumbnail)";
 
+
             SqlParameter[] parameters = {
-                new SqlParameter("@category_ID", ddlProdCategory.SelectedValue), 
+                new SqlParameter("@category_ID", ddlProdCategory.SelectedValue),
                 new SqlParameter("@product_name", txtProdName.Text),
                 new SqlParameter("@description", txtProdDesc.Text),
                 new SqlParameter("@price", Convert.ToDouble(txtPrice.Text)),
-                new SqlParameter("@thumbnail", (object)fileThumbnail.FileBytes??DBNull.Value)
-            };
+                new SqlParameter("@thumbnail", SqlDbType.VarBinary) {
+                    Value = fileThumbnail.HasFile?(object)fileThumbnail.FileBytes: DBNull.Value
+                }
+        };
 
-            if (dbconnection.ExecuteNonQuery(sqlCommand,parameters))
+            if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
             {
                 Session["ProductAdded"] = true;
                 Response.Redirect(ResolveUrl("~/admin/Product.aspx").ToString());
