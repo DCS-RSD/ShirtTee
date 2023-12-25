@@ -11,17 +11,26 @@ namespace ShirtTee.admin
 {
 
 
-    public partial class Product
+    public partial class ProductStock
     {
 
         /// <summary>
-        /// a control.
+        /// lblError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label a;
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
 
         /// <summary>
         /// txtSearch control.
@@ -33,13 +42,13 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
 
         /// <summary>
-        /// SqlDataSource1 control.
+        /// SqlDataSource2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
 
         /// <summary>
         /// ListView1 control.
@@ -49,14 +58,5 @@ namespace ShirtTee.admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView ListView1;
-
-        /// <summary>
-        /// DataPager2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DataPager DataPager2;
     }
 }

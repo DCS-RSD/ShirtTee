@@ -3,6 +3,22 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%-- Toast --%>
+    <script>
+        function showSuccessToast() {
+            var status = '<%= Session["ProductAdded"] %>'; // Enclose the session variable in quotes
+            console.log(status)
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Product added successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("ProductAdded"); %>
+        }
+    </script>
+    <asp:Label ID="a" runat="server"></asp:Label>
     <!-- Table Section -->
     <div class="max-w-[85rem] mx-auto">
         <!-- Card -->

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
@@ -27,68 +28,106 @@ namespace ShirtTee.admin
             }
             else
             {
-                DBconnection dbconnection = new DBconnection();
-                SqlParameter[] parameterUrl = new SqlParameter[]{
-                 new SqlParameter("@ProductId", Request.QueryString["product_id"])
-                };
-                SqlDataReader productDetails = dbconnection.ExecuteQuery(
-                    "SELECT P.*, C.* FROM Product AS P INNER JOIN Category AS C ON P.category_id = C.category_id WHERE Product_ID=@ProductId", 
-                    parameterUrl).ExecuteReader();
+                hypToStock.NavigateUrl = ResolveUrl("~/admin/ProductStock.aspx").ToString() +
+                    "?product_id=" + Request.QueryString["product_id"].ToString();
 
-
-                if (productDetails.HasRows)
+                if (!IsPostBack)
                 {
-                    productDetails.Read();
-                    lblTitle.Text = (string)productDetails["product_name"];
-                    lblSubTitle.Text = productDetails["product_id"].ToString();
-
-
-                    txtProdName.Text = (string)productDetails["product_name"];
-                    txtProdDesc.Text = (string)productDetails["description"];
-                    txtPrice.Text = productDetails["price"].ToString();
-                    switch (productDetails["category_group"].ToString())
-                    {
-                        case "men":
-                            radProdGroup.Items[0].Selected = true;
-                            break;
-                        case "women":
-                            radProdGroup.Items[1].Selected = true;
-                            break;
-                        default:
-                            radProdGroup.Items[2].Selected = true;
-                            break;
-                    }
-                    ddlProdCategory.SelectedValue = productDetails["category_id"].ToString();
+                    FetchData();
                 }
-
             }
 
 
 
         }
 
-        protected void ListView1_ItemUpdating(object sender, ListViewUpdateEventArgs e)
+        private void FetchData()
         {
-            // Get the updated quantity value from the TextBox
-            TextBox quantityTextBox = (TextBox)ListView1.Items[e.ItemIndex].FindControl("QuantityTextBox");
-            string updatedQuantity = quantityTextBox.Text;
+            DBconnection dbconnection = new DBconnection();
+            SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@ProductId", Request.QueryString["product_id"])
+                };
+            SqlDataReader productDetails = dbconnection.ExecuteQuery(
+                "SELECT P.*, C.* FROM Product AS P INNER JOIN Category AS C ON P.category_id = C.category_id WHERE Product_ID=@ProductId",
+                parameterUrl).ExecuteReader();
 
-            // Update the data source with the new quantity
-            SqlDataSource2.UpdateParameters["UpdatedQuantity"].DefaultValue = updatedQuantity;
 
-            // You may also need to set other parameters like the primary key for the update
+            if (productDetails.HasRows)
+            {
+                productDetails.Read();
+                lblTitle.Text = (string)productDetails["product_name"];
+                lblSubTitle.Text = productDetails["product_id"].ToString();
 
-            // Perform the update
-            SqlDataSource2.Update();
 
-            // Cancel the update operation to prevent the default behavior
-            e.Cancel = true;
+                txtProdName.Text = (string)productDetails["product_name"];
+                txtProdDesc.Text = (string)productDetails["description"];
+                txtPrice.Text = productDetails["price"].ToString();
 
-            // Rebind the data to the ListView to reflect the changes
-            ListView1.DataBind();
+
+                Image1.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])productDetails["thumbnail"]);
+
+
+                switch (productDetails["category_group"].ToString())
+                {
+                    case "men":
+                        radProdGroup.Items[0].Selected = true;
+                        break;
+                    case "women":
+                        radProdGroup.Items[1].Selected = true;
+                        break;
+                    default:
+                        radProdGroup.Items[2].Selected = true;
+                        break;
+                }
+                ddlProdCategory.SelectedValue = productDetails["category_id"].ToString();
+            }
         }
 
-        protected void ListView1_ItemUpdated(object sender, ListViewUpdatedEventArgs e)
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DBconnection dbconnection = new DBconnection();
+
+                string sqlCommand = "UPDATE Product SET " +
+                       "category_ID = @category_ID, " +
+                       "product_name = @product_name, " +
+                       "description = @description, " +
+                       "price = @price " +
+                       (fileThumbnail.HasFile ? ", thumbnail = @thumbnail " : "") +
+                       "WHERE product_ID = @product_ID";
+
+                SqlParameter[] parameters = {
+                new SqlParameter("@category_ID", ddlProdCategory.SelectedValue),
+                new SqlParameter("@product_name", txtProdName.Text),
+                new SqlParameter("@description", txtProdDesc.Text),
+                new SqlParameter("@price", Convert.ToDouble(txtPrice.Text)),
+                new SqlParameter("@product_ID",Request.QueryString["product_id"].ToString())
+                };
+
+                if (fileThumbnail.HasFile)
+                {
+                    parameters = parameters.Append(new SqlParameter("@thumbnail", (object)fileThumbnail.FileBytes)).ToArray();
+                }
+
+                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                {
+                    Session["ProductUpdated"] = "success";
+                    FetchData();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Session["ProductUpdated"] = "error";
+            }
+            finally
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+            }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
         {
 
         }

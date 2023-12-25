@@ -51,6 +51,15 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.Label lblSubTitle;
 
         /// <summary>
+        /// hypToStock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink hypToStock;
+
+        /// <summary>
         /// txtProdName control.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace ShirtTee.admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtProdName;
+
+        /// <summary>
+        /// rfvProdName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProdName;
 
         /// <summary>
         /// radProdGroup control.
@@ -114,13 +132,13 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.Image Image1;
 
         /// <summary>
-        /// fileImage1 control.
+        /// fileThumbnail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileImage1;
+        protected global::System.Web.UI.WebControls.FileUpload fileThumbnail;
 
         /// <summary>
         /// btnSubmit control.
@@ -132,39 +150,12 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.Button btnSubmit;
 
         /// <summary>
-        /// txtSearch control.
+        /// btnDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearch;
-
-        /// <summary>
-        /// SqlDataSource2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
-
-        /// <summary>
-        /// ListView1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ListView1;
-
-        /// <summary>
-        /// btnUpdateStockQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpdateStockQty;
+        protected global::System.Web.UI.WebControls.Button btnDelete;
     }
 }
