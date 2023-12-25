@@ -43,7 +43,7 @@
                     <asp:RadioButtonList ID="radProdGroup" runat="server" AutoPostBack="True" RepeatDirection="Horizontal" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
                         <asp:ListItem class="px-4" Value="men">  Men</asp:ListItem>
                         <asp:ListItem class="px-4" Value="women">  Women</asp:ListItem>
-                        <asp:ListItem class="px-4" Value="kid">  Kid</asp:ListItem>
+                        <asp:ListItem class="px-4" Value="kids">  Kids</asp:ListItem>
                     </asp:RadioButtonList>
                 </div>
 

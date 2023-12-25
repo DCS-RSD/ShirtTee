@@ -35,10 +35,11 @@
                         <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
                             <asp:Repeater ID="Repeater6" runat="server" DataSourceID="SqlDataSource3">
                                 <ItemTemplate>
-                                    <button id="tabs-1-tab-1" data-src='<%# ResolveUrl(Eval("image").ToString()) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
+                                    <button id="tabs-1-tab-1" data-src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
                                         <span class="sr-only">Angled view </span>
                                         <span class="absolute inset-0 rounded-md overflow-hidden">
-                                            <img src="<%# ResolveUrl(Eval("image").ToString()) %>" alt="" class="w-full h-full object-center object-cover" />
+                                            <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>'
+                                                alt="" class="w-full h-full object-center object-cover" />
                                         </span>
                                         <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
                                         <span class="ring-transparent absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
@@ -46,21 +47,27 @@
                                 </ItemTemplate>
                             </asp:Repeater>
 
-                            <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource4">
+                            <%-- Stock Image (pending) --%>
+                            <%--                            <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource4">
                                 <ItemTemplate>
-                                    <button id="tabs-1-tab-1" data-src='<%# ResolveUrl(Eval("image").ToString()) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
+                                    <button id="tabs-1-tab-1" data-src='<%#%>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
                                         <span class="sr-only">Angled view </span>
                                         <span class="absolute inset-0 rounded-md overflow-hidden">
-                                            <img src="<%# ResolveUrl(Eval("image").ToString()) %>" alt="" class="w-full h-full object-center object-cover" />
+                                            <img src="<%# %>" alt="" class="w-full h-full object-center object-cover" />
                                         </span>
                                         <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
                                         <span class="ring-transparent absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
                                     </button>
                                 </ItemTemplate>
-                            </asp:Repeater>
-
+                            </asp:Repeater>--%>
                         </div>
                     </div>
+
+                    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Product] WHERE ([product_ID] = @product_ID)">
+                        <SelectParameters>
+                            <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID" Type="Int32"></asp:QueryStringParameter>
+                        </SelectParameters>
+                    </asp:SqlDataSource>
 
                     <div class="w-full aspect-w-1 ">
                         <!-- Tab panel, show/hide based on tab state. -->
@@ -73,24 +80,20 @@
                             class="relative init">
                             <div class="hs-carousel relative overflow-hidden w-full min-h-[500px] bg-white rounded-lg">
                                 <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700" style="width: 1872px; transform: translate(-624px, 0px);">
-                                    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Product] WHERE ([product_ID] = @product_ID)">
-                                        <SelectParameters>
-                                            <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID" Type="Int32"></asp:QueryStringParameter>
-                                        </SelectParameters>
-                                    </asp:SqlDataSource>
+
                                     <asp:Repeater ID="Repeater3" runat="server" DataSourceID="SqlDataSource3">
                                         <ItemTemplate>
                                             <div class="hs-carousel-slide" style="width: 500px;">
                                                 <div class="flex justify-center h-full bg-gray-100 p-6">
                                                     <span class="self-center text-4xl transition duration-700">First slide
-                                                        <img src="<%# ResolveUrl(Eval("image").ToString()) %>" />
+                                                        <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' />
                                                     </span>
                                                 </div>
                                             </div>
                                         </ItemTemplate>
                                     </asp:Repeater>
 
-
+                                    <%-- Stock Image(pending) --%>
                                     <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.image FROM [Product_Details] AS s
 INNER JOIN [Product] AS p ON
 s.product_ID = p.product_ID
@@ -277,7 +280,12 @@ GROUP BY s.color_ID, color_name, hex_color">
                             </svg>
                         </div>
                     </div>
-                    <p class="ml-2 text-sm text-gray-900"><asp:Label runat="server" ID="lblTotalRating" Text=""></asp:Label> stars based on <asp:Label runat="server" ID="lblTotalReviews" Text=""></asp:Label> reviews</p>
+                    <p class="ml-2 text-sm text-gray-900">
+                        <asp:Label runat="server" ID="lblTotalRating" Text=""></asp:Label>
+                        stars based on
+                        <asp:Label runat="server" ID="lblTotalReviews" Text=""></asp:Label>
+                        reviews
+                    </p>
                 </div>
 
                 <div class="mt-6">
@@ -300,7 +308,8 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblFivePer" Text=""></asp:Label>%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
+                                <asp:Label runat="server" ID="lblFivePer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -319,7 +328,8 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblFourPer" Text=""></asp:Label>%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
+                                <asp:Label runat="server" ID="lblFourPer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -338,7 +348,8 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblThreePer" Text=""></asp:Label>%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
+                                <asp:Label runat="server" ID="lblThreePer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -357,7 +368,8 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblTwoPer" Text=""></asp:Label>%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
+                                <asp:Label runat="server" ID="lblTwoPer" Text=""></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -376,7 +388,8 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     </div>
                                 </div>
                             </dt>
-                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900"><asp:Label runat="server" ID="lblOnePer" Text=""></asp:Label>%</dd>
+                            <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
+                                <asp:Label runat="server" ID="lblOnePer" Text=""></asp:Label>%</dd>
                         </div>
                     </dl>
                 </div>
@@ -412,8 +425,7 @@ WHERE product_ID = @product_ID">
                                             <h4 class="text-sm font-bold text-gray-900"><%# Eval("UserName") %></h4>
                                             <div class="mt-1 flex items-center">
 
-                                                 <%# GenerateStars(Convert.ToInt32(Eval("rating"))) %>
-
+                                                <%# GenerateStars(Convert.ToInt32(Eval("rating"))) %>
                                             </div>
                                         </div>
                                     </div>
