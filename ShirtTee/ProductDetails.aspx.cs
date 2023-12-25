@@ -90,6 +90,11 @@ namespace ShirtTee
                 threePer = threeStar / (double)totalReview * 100; 
                 fourPer = fourStar / (double)totalReview * 100;   
                 fivePer = fiveStar / (double)totalReview * 100;
+                starBar1.Attributes["style"] = "width: calc((" + onePer + ") / 100 * 100%)";
+                starBar2.Attributes["style"] = "width: calc((" + twoPer + ") / 100 * 100%)";
+                starBar3.Attributes["style"] = "width: calc((" + threePer + ") / 100 * 100%)";
+                starBar4.Attributes["style"] = "width: calc((" + fourPer + ") / 100 * 100%)";
+                starBar5.Attributes["style"] = "width: calc((" + fivePer + ") / 100 * 100%)";
                 lblOnePer.Text = onePer.ToString("F0");
                 lblTwoPer.Text = twoPer.ToString("F0");
                 lblThreePer.Text = threePer.ToString("F0");

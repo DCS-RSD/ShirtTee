@@ -186,6 +186,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.Label lblTotalReviews;
 
         /// <summary>
+        /// starBar5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl starBar5;
+
+        /// <summary>
         /// lblFivePer control.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,15 @@ namespace ShirtTee
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFivePer;
+
+        /// <summary>
+        /// starBar4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl starBar4;
 
         /// <summary>
         /// lblFourPer control.
@@ -204,6 +222,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.Label lblFourPer;
 
         /// <summary>
+        /// starBar3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl starBar3;
+
+        /// <summary>
         /// lblThreePer control.
         /// </summary>
         /// <remarks>
@@ -213,6 +240,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.Label lblThreePer;
 
         /// <summary>
+        /// starBar2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl starBar2;
+
+        /// <summary>
         /// lblTwoPer control.
         /// </summary>
         /// <remarks>
@@ -220,6 +256,15 @@ namespace ShirtTee
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTwoPer;
+
+        /// <summary>
+        /// starBar1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl starBar1;
 
         /// <summary>
         /// lblOnePer control.

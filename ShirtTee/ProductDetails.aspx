@@ -296,7 +296,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     <div class="ml-3 relative flex-1">
                                         <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
 
-                                        <div style="width: calc(1019 / 1624 * 100%)" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                        <div id="starBar5" runat="server" style="" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
                                     </div>
                                 </div>
                             </dt>
@@ -315,7 +315,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     <div class="ml-3 relative flex-1">
                                         <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
 
-                                        <div style="width: calc(162 / 1624 * 100%)" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                        <div id="starBar4" runat="server" style="" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
                                     </div>
                                 </div>
                             </dt>
@@ -334,7 +334,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     <div class="ml-3 relative flex-1">
                                         <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
 
-                                        <div style="width: calc(97 / 1624 * 100%)" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                        <div id="starBar3" runat="server" style="" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
                                     </div>
                                 </div>
                             </dt>
@@ -353,7 +353,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     <div class="ml-3 relative flex-1">
                                         <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
 
-                                        <div style="width: calc(199 / 1624 * 100%)" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                        <div id="starBar2" runat="server" style="" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
                                     </div>
                                 </div>
                             </dt>
@@ -372,7 +372,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                     <div class="ml-3 relative flex-1">
                                         <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
 
-                                        <div style="width: calc(147 / 1624 * 100%)" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                        <div id="starBar1" runat="server" style="" class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
                                     </div>
                                 </div>
                             </dt>
