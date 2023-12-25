@@ -3,6 +3,21 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%-- Toast --%>
+    <script>
+        function showSuccessToast() {
+            var status = '<%= Session["StockAdded"] %>'; // Enclose the session variable in quotes
+            console.log(status)
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Product added successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("StockAdded"); %>
+        }
+    </script>
     <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-xl shadow dark:bg-gray-800 p-8">
             <asp:Label runat="server" ID="lblError" Visible="false"></asp:Label>
@@ -10,15 +25,15 @@
                 <%--Stock--%>
                 <div class=" sm:flex sm:items-center">
                     <div class="sm:flex-auto">
-                        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Stock Details
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Stock List
                         </h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Available stock for sale of this product.
-                        </p>
+                        <asp:HyperLink ID="hypProduct" runat="server"
+                            class="text-sm font-medium text-indigo-600 hover:text-indigo-500 hover:cursor-pointer hover:underline">
+                        </asp:HyperLink>
                     </div>
                     <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                         <asp:HyperLink
-                            NavigateUrl="./ProductStockAddForm.aspx"
+                            ID="hypAddStock"
                             runat="server" class="justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                     Add Stock
                         </asp:HyperLink>
@@ -139,12 +154,6 @@
                     <table class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
                         <thead class="bg-gray-50 dark:bg-slate-800">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-start">
-                                    <div class="flex items-center gap-x-2">
-                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">ID
-                                        </span>
-                                    </div>
-                                </th>
 
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
@@ -184,10 +193,6 @@ WHERE (Product.product_ID = @product_ID)">
                             <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource2">
                                 <ItemTemplate>
                                     <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
-
-                                        <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                            <%# Eval("product_details_ID") %>
-                                        </td>
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                             <%# Eval("size_name") %>
                                         </td>
@@ -197,11 +202,7 @@ WHERE (Product.product_ID = @product_ID)">
                                             </span>
                                         </td>
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                            <asp:TextBox TextMode="Number"
-                                                ID="txtQty"
-                                                runat="server"
-                                                CssClass="cInput"
-                                                Text='<%# Eval("stock_available") %>'></asp:TextBox>
+                                            <%#Eval("stock_available") %>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
