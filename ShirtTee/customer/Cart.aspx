@@ -71,6 +71,7 @@
                 </div>
                 <div class="flex items-center  pt-5 pb-3">
                     <asp:TextBox runat="server" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="Apply Promo Code"/>
+                
                 </div>
                 <div id="applyDiv" class="flex justify-between py-3 px-4 w-full inline-flex items-center gap-x-2 text-sm font-bold rounded-lg border-2 border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                     APPLY
