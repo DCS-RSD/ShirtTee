@@ -75,19 +75,22 @@ namespace ShirtTee.admin
 
                     TextBox txtQty = (TextBox)ListView1.Items[itemIndex].FindControl("txtQty");
                     FileUpload fileImage = (FileUpload)ListView1.Items[itemIndex].FindControl("fileImage");
+                    CheckBox chkOnSales = (CheckBox)ListView1.Items[itemIndex].FindControl("chkOnSales");
 
                     try
                     {
                         DBconnection dbconnection = new DBconnection();
 
                         string sqlCommand = "UPDATE Product_Details SET " +
-                               "stock_available = @qty " +
+                               "stock_available = @qty," +
+                               "on_sale = @on_sale "+
                                (fileImage.HasFile ? ", image = @image " : "") +
                                "WHERE product_details_ID = @id";
 
                         SqlParameter[] parameters = {
                             new SqlParameter("@qty", Convert.ToInt32(txtQty.Text)),
-                            new SqlParameter("@id",id)
+                            new SqlParameter("@on_sale",chkOnSales.Checked),
+                            new SqlParameter("@id",id),
                         };
 
                         if (fileImage.HasFile)
@@ -107,7 +110,7 @@ namespace ShirtTee.admin
                     }
                     finally
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showUpdatedSuccessToast();", true);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showUpdateSuccessToast();", true);
                     }
                 }
 
