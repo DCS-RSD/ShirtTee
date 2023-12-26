@@ -68,7 +68,6 @@
                     </div>
 
                 </div>
-                <asp:RequiredFieldValidator ID="rfvEmail" ControlToValidate="txtEmail" class="text-sm" runat="server" ErrorMessage="Please fill in your email." Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
                 <label for="name" class="mt-4 mb-2 block text-sm font-medium">Name</label>
 
@@ -159,9 +158,9 @@
 
                 if (isFPXChecked()) {
 
-                    Page_ClientValidate();
+                    //Page_ClientValidate();
 
-                    if (Page_IsValid) {
+                    //if (Page_IsValid) {
                         e.preventDefault();
 
                         // Make an AJAX request to your server handler to get the Stripe public key
@@ -180,10 +179,10 @@
                                 });
                             })
                             .catch(error => console.error('Error fetching Stripe public key:', error));
-                    }
-                    else {
-                        console.log("error");
-                    }
+                    //}
+                    //else {
+                     //   console.log("error");
+                    //}
 
                 }
 

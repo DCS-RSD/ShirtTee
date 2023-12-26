@@ -95,7 +95,7 @@
                                 <!-- Checkbox -->
                                 <div class="flex items-center">
                                     <div>
-                                        <asp:CheckBox runat="server" id="rememberMe" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+                                        <asp:CheckBox runat="server" id="chkRememberMe" OnCheckedChanged="chkRememberMe_CheckedChanged" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
                                     </div>
                                     <div class="ms-3">
                                         <asp:Label runat="server" for="remember-me" class="text-sm dark:text-white">Remember me</asp:Label>
