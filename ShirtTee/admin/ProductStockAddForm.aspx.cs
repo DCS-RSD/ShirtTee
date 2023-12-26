@@ -48,10 +48,10 @@ namespace ShirtTee.admin
             try
             {
                 DBconnection dbconnection = new DBconnection();
-                string sqlCommand = "INSERT INTO Product_Details (product_ID, size_ID, color_ID, stock_available, updated_at " +
+                string sqlCommand = "INSERT INTO Product_Details (product_ID, size_ID, color_ID, stock_available, updated_at, on_sale " +
                                    (fileImage.HasFile ? ",image" : "") +
                                     ") " +
-                                    "VALUES (@product_ID, @size_ID, @color_ID, @stock_available, @updated_at" +
+                                    "VALUES (@product_ID, @size_ID, @color_ID, @stock_available, @updated_at, @on_sale" +
                                     (fileImage.HasFile ? ",@image" : "") +
                                     ")";
 
@@ -62,7 +62,7 @@ namespace ShirtTee.admin
                     new SqlParameter("@color_ID", ddlColor.SelectedValue),
                     new SqlParameter("@stock_available",  Convert.ToDouble(txtQty.Text)),
                     new SqlParameter("@updated_at", DateTime.Now),
-
+                    new SqlParameter("@on_sale", chkOnSales.Checked),
                 };
 
 

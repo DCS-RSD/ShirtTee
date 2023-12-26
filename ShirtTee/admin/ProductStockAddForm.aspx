@@ -90,6 +90,16 @@ AND size_ID = @size_ID
                             ID="fileImage" runat="server" />
                     </div>
 
+                    <div class="col-start-3 col-span-2 sm:col-start-4 sm:col-span-1">
+                        <div class="hs-tooltip flex items-center">
+                            <asp:CheckBox ID="chkOnSales" runat="server" ClientIDMode="Static" />
+                            <label for="chkOnSales" class="text-sm text-gray-500 ms-3 dark:text-gray-400">Activate Sales</label>
+                            <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700" role="tooltip">
+                                Start Selling This Product.
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="col-start-3">
                         <asp:Button ID="btnSubmit" runat="server" Text="Confirm" class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" OnClick="btnSubmit_Click"></asp:Button>
@@ -102,23 +112,27 @@ AND size_ID = @size_ID
         </div>
     </div>
 
-     <script>
-     var loadFile = function (event) {
-         var input = event.target;
-         var file = input.files[0];
-         var type = file.type;
-         var output = document.getElementById('Image1');
+    <script>
+        var loadFile = function (event) {
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
+            var output = document.getElementById('Image1');
 
-         output.src = URL.createObjectURL(event.target.files[0]);
-         
-         output.onload = function () {
-             URL.revokeObjectURL(output.src) // free memory
-         }
-         output.classList.add("w-24");
-         output.classList.add("h-24");
+            output.src = URL.createObjectURL(event.target.files[0]);
+
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+            output.classList.add("w-24");
+            output.classList.add("h-24");
 
 
-     };
-     </script>
+        };
+
+
+        var checkbox = document.getElementById('chkOnSales');
+        checkbox.classList.add('hs-tooltip-toggle', 'relative', 'w-[3.25rem]', 'h-7', 'p-px', 'bg-gray-100', 'border-transparent', 'text-transparent', 'rounded-full', 'cursor-pointer', 'transition-colors', 'ease-in-out', 'duration-200', 'focus:ring-blue-600', 'disabled:opacity-50', 'disabled:pointer-events-none', 'checked:bg-none', 'checked:text-blue-600', 'checked:border-blue-600', 'focus:checked:border-blue-600', 'dark:bg-gray-800', 'dark:border-gray-700', 'dark:checked:bg-blue-500', 'dark:checked:border-blue-500', 'dark:focus:ring-offset-gray-600', 'before:inline-block', 'before:w-6', 'before:h-6', 'before:bg-white', 'checked:before:bg-blue-200', 'before:translate-x-0', 'checked:before:translate-x-full', 'before:rounded-full', 'before:shadow', 'before:transform', 'before:ring-0', 'before:transition', 'before:ease-in-out', 'before:duration-200', 'dark:before:bg-gray-400', 'dark:checked:before:bg-blue-200');
+    </script>
 
 </asp:Content>

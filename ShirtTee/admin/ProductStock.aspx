@@ -178,7 +178,7 @@
                             </tr>
                         </thead>
 
-                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT Product.product_ID, Product_Details.product_details_ID, Color.color_name, Size.size_name, Product_Details.stock_available
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT Product.product_ID, Product_Details.product_details_ID, Color.color_name, Size.size_name, Product_Details.stock_available, on_sale
 FROM Product_Details 
 INNER JOIN Product ON Product.product_ID = Product_Details.product_ID 
 INNER JOIN Color ON Product_Details.color_ID = Color.color_ID 
@@ -195,6 +195,18 @@ WHERE (Product.product_ID = @product_ID)">
                                     <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                             <%# Eval("size_name") %>
+                                            <%# ((bool)Eval("on_sale")) ? "" :
+                                     "<div class='hs-tooltip inline-block'>" +
+                                    "<span class='py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-100 text-gray-800 rounded-full dark:bg-slate-500/20 dark:text-slate-400'>" +
+                                    "  <svg class='flex-shrink-0 w-3 h-3' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>" +
+                                    "    <path d='M18.36 6.64a9 9 0 1 1-12.73 0' />" +
+                                    "    <line x1='12' x2='12' y1='2' y2='12' />" +
+                                    "  </svg>" +
+                                    "   Disabled" +
+                                    "</span>"+
+                                    "<div class='hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700' role='tooltip'>  "+
+                                    "This Stock Is Not Ready For Sales. </div>"+
+                                    "</div>" %>
                                         </td>
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                             <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
