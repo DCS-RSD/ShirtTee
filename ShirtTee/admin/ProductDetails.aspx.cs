@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace ShirtTee.admin
@@ -80,6 +82,8 @@ namespace ShirtTee.admin
                         break;
                 }
                 ddlProdCategory.SelectedValue = productDetails["category_id"].ToString();
+
+               
             }
         }
 
@@ -129,7 +133,33 @@ namespace ShirtTee.admin
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
+            try
+            {
+                DBconnection dbconnection = new DBconnection();
 
+                string sqlCommand = "UPDATE Product SET " +
+                       "deleted_at = @deleted_at " +
+                       "WHERE product_ID = @product_ID";
+
+                SqlParameter[] parameters = {
+                new SqlParameter("@deleted_at", DateTime.Now),
+                new SqlParameter("@product_id",Request.QueryString["product_id"])
+                };
+
+
+                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                {
+                    Session["ProductDeleted"] = "success";
+                }
+            }
+            catch (Exception)
+            {
+                Session["ProductDeleted"] = "error";
+            }
+            finally
+            {
+                Response.Redirect(ResolveUrl("~/admin/product.aspx").ToString());
+            }
         }
     }
 }
