@@ -252,7 +252,7 @@ WHERE (Product.product_ID = @product_ID)">
                                                                         ImageUrl='<%# Eval("image") ==DBNull.Value?"": "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' />
                                                                     <asp:FileUpload
                                                                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                                                        onchange='<%# "loadFile(event, &#39;imagePreview" + Eval("product_details_ID")+ "&#39;)"%>'
+                                                                        onchange="loadFile(event)"
                                                                         ID="fileImage" runat="server" />
                                                                 </div>
                                                             </div>
@@ -294,14 +294,11 @@ WHERE (Product.product_ID = @product_ID)">
         </div>
     </div>
     <script>
-        var loadFile = function (event, imageId) {
-            console.log("HERE" + imageId)
+        var loadFile = function (event) {
             var input = event.target;
             var file = input.files[0];
             var type = file.type;
-            var output = document.getElementById(imageId);
-            console.log(output)
-
+            var output = document.getElementById("imagePreview");
             output.src = URL.createObjectURL(event.target.files[0]);
 
             output.onload = function () {

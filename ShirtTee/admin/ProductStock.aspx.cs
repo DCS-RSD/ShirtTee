@@ -30,11 +30,11 @@ namespace ShirtTee.admin
             }
             else
             {
-              
+
 
                 if (!IsPostBack)
                 {
-                    
+
                     if (Session["StockAdded"] != null)
                     {
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
@@ -73,13 +73,44 @@ namespace ShirtTee.admin
                     int itemIndex = Convert.ToInt32(arguments[0]);
                     int id = Convert.ToInt32(arguments[1]);
 
-
-
+                    TextBox txtQty = (TextBox)ListView1.Items[itemIndex].FindControl("txtQty");
                     FileUpload fileImage = (FileUpload)ListView1.Items[itemIndex].FindControl("fileImage");
-                    System.Diagnostics.Debug.WriteLine("---" + (fileImage == null ? "Fuck" : "jibai"));
-                    System.Diagnostics.Debug.WriteLine(itemIndex+"-"+id);
+
+                    try
+                    {
+                        DBconnection dbconnection = new DBconnection();
+
+                        string sqlCommand = "UPDATE Product_Details SET " +
+                               "stock_available = @qty " +
+                               (fileImage.HasFile ? ", image = @image " : "") +
+                               "WHERE product_details_ID = @id";
+
+                        SqlParameter[] parameters = {
+                            new SqlParameter("@qty", Convert.ToInt32(txtQty.Text)),
+                            new SqlParameter("@id",id)
+                        };
+
+                        if (fileImage.HasFile)
+                        {
+                            parameters = parameters.Append(new SqlParameter("@image", (object)fileImage.FileBytes)).ToArray();
+                        }
+
+                        if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                        {
+                            Session["StockUpdated"] = "success";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex.Message);
+                        Session["StockUpdated"] = "error";
+                    }
+                    finally
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showUpdatedSuccessToast();", true);
+                    }
                 }
-                
+
             }
         }
 
