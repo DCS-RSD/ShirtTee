@@ -178,7 +178,7 @@
                             </tr>
                         </thead>
 
-                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT Product.product_ID, Product_Details.product_details_ID, Color.color_name, Size.size_name, Product_Details.stock_available, on_sale
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT Product.product_ID,Product.product_name, Product_Details.product_details_ID, Color.color_name, Size.size_name, Product_Details.stock_available, on_sale,image
 FROM Product_Details 
 INNER JOIN Product ON Product.product_ID = Product_Details.product_ID 
 INNER JOIN Color ON Product_Details.color_ID = Color.color_ID 
@@ -190,9 +190,11 @@ WHERE (Product.product_ID = @product_ID)">
                         </asp:SqlDataSource>
 
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource2">
+                            <asp:ListView ID="ListView1" runat="server" OnItemCommand="ListView1_ItemCommand">
                                 <ItemTemplate>
-                                    <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
+
+                                    <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800"
+                                        data-hs-overlay='<%# "#hs-modal-stock-details" + Eval("product_details_ID") %>'>
                                         <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                             <%# Eval("size_name") %>
                                             <%# ((bool)Eval("on_sale")) ? "" :
@@ -217,6 +219,67 @@ WHERE (Product.product_ID = @product_ID)">
                                             <%#Eval("stock_available") %>
                                         </td>
                                     </tr>
+                                    <div id='<%# "hs-modal-stock-details" + Eval("product_details_ID") %>' class="hs-overlay hidden w-full h-full fixed top-0 start-0 z-[61] overflow-x-hidden overflow-y-auto">
+                                        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                                            <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                                                <div class="p-4 sm:p-7">
+                                                    <div class="text-center">
+                                                        <h2 class="block text-2xl font-bold text-gray-800 dark:text-gray-200">Update Stock
+                                                        </h2>
+                                                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                                            <%# Eval("product_name") %>
+                                                        </p>
+                                                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                                            <%# Eval("size_name") %> | <%# Eval("color_name") %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="mt-5">
+                                                        <div class="grid gap-y-4">
+                                                            <!-- Form Group -->
+                                                            <div>
+                                                                <label class="block text-sm mb-2 dark:text-white">Stock Quantity</label>
+                                                                <div class="relative">
+                                                                    <asp:TextBox runat="server" ID="txtQty" Text='<%# Eval("stock_available") %>'
+                                                                        class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" />
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Form Group -->
+                                                            <!-- Form Group -->
+                                                            <div>
+                                                                <label class="block text-sm mb-2 dark:text-white">Image</label>
+                                                                <div class="relative">
+                                                                    <asp:Image class="my-2 w-24 h-24" ID="imagePreview" runat="server" ClientIDMode="Static"
+                                                                        ImageUrl='<%# Eval("image") ==DBNull.Value?"": "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' />
+                                                                    <asp:FileUpload
+                                                                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                                                        onchange='<%# "loadFile(event, &#39;imagePreview" + Eval("product_details_ID")+ "&#39;)"%>'
+                                                                        ID="fileImage" runat="server" />
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Form Group -->
+
+                                                        </div>
+
+                                                        <div class="mt-5">
+                                                            <div class="grid gap-y-4">
+                                                                <div class="flex justify-end items-center gap-x-2 py-3 px-2">
+                                                                    <asp:Button runat="server"
+                                                                        Text="Save Changes"
+                                                                        ID="btnUpdateStock" CommandName="updateStock"
+                                                                        CommandArgument='<%# string.Format("{0}|{1}", Container.DisplayIndex,Eval("product_details_ID") ) %>'
+                                                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
+                                                                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                                                        data-hs-overlay='<%# "#hs-modal-stock-details" + Eval("product_details_ID") %>'>
+                                                                        Close
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </ItemTemplate>
                             </asp:ListView>
                         </tbody>
@@ -230,4 +293,21 @@ WHERE (Product.product_ID = @product_ID)">
             </asp:Panel>
         </div>
     </div>
+    <script>
+        var loadFile = function (event, imageId) {
+            console.log("HERE" + imageId)
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
+            var output = document.getElementById(imageId);
+            console.log(output)
+
+            output.src = URL.createObjectURL(event.target.files[0]);
+
+            output.onload = function () {
+                URL.revokeObjectURL(output.src); // free memory
+            };
+
+        };
+    </script>
 </asp:Content>
