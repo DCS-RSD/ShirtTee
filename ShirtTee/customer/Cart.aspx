@@ -19,13 +19,13 @@ WHERE user_ID = @user_ID">
                         <asp:SessionParameter SessionField="user_ID" Name="user_ID"></asp:SessionParameter>
                     </SelectParameters>
                 </asp:SqlDataSource>
-                <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
+                <asp:Repeater ID="Repeater1" runat="server"  OnItemDataBound="Repeater1_ItemDataBound" EnableViewState="True">
                     <ItemTemplate>
                         <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
                             <asp:Label runat="server" ID="lblProductID" Text='<%# Eval("product_ID") %>' Visible="False" />
                                            <asp:Label runat="server" ID="lblProductDetailsID" Text='<%# Eval("product_details_ID") %>' Visible="False" />
 
-                            <asp:Image runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>'  AlternateText='<%# Eval("product_name") %>' class="w-full rounded-lg sm:w-40 sm:h-24" />
+                            <asp:Image runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>'  AlternateText='<%# Eval("product_name") %>' class="w-full rounded-lg sm:w-40 sm:h-40" />
                             <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                                 <div class="mt-5 sm:mt-0">
                                     <h2 class="text-lg font-bold text-gray-900"><%# Eval("product_name") %></h2>
@@ -81,14 +81,14 @@ WHERE user_ID = @user_ID">
                     <p class="text-gray-700">Subtotal</p>
                     <p class="text-gray-700">
                         RM
-                        <asp:Label ID="lblSubtotal" runat="server" Text="" />
+                        <asp:Label ID="lblSubtotal" runat="server" Text="0.00" />
                     </p>
                 </div>
                 <div class="flex justify-between">
                     <p class="text-gray-700">Shipping</p>
                     <p class="text-gray-700">
                         RM
-                        <asp:Label ID="lblShipping" runat="server" Text="" />
+                        <asp:Label ID="lblShipping" runat="server" Text="0.00" />
                     </p>
                 </div>
                 <div class="flex justify-between">
@@ -110,7 +110,7 @@ WHERE user_ID = @user_ID">
                     <div>
                         <p class="mb-1 text-lg font-bold">
                             RM 
-                            <asp:Label ID="lblTotal" runat="server" Text="" />
+                            <asp:Label ID="lblTotal" runat="server" Text="0.00" />
                         </p>
 
                     </div>
@@ -153,7 +153,8 @@ WHERE user_ID = @user_ID">
                     </div>
                 </div>
                 <div class="mt-6">
-                    <asp:Button runat="server" ID="btnCheckout" OnClick="btnCheckout_Click" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500" Text="Checkout"></asp:Button>
+                    <asp:Button runat="server" Visible="true" ID="btnCheckout"  OnClick="btnCheckout_Click" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 " Text="Checkout"></asp:Button>
+                    <asp:Button runat="server" Visible="false" ID="btnDisabledChkOut" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed" disabled Text="Checkout"></asp:Button>
                 </div>
             </div>
         </div>

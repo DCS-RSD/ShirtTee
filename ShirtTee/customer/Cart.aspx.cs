@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -12,11 +13,94 @@ namespace ShirtTee.customer
 {
     public partial class Cart : System.Web.UI.Page
     {
+        protected override void OnPreRender(EventArgs e)
+        {
+            Repeater1.DataSource = SqlDataSource1;
+            Repeater1.DataBind();
+            //Because empty item call databind will not perform some function, so need to do here
+            if (Repeater1.Items.Count == 0)
+            {
+                lblSubtotal.Text = "0.00";
+                lblTotal.Text = "0.00";
+                lblShipping.Text = "0.00";
+                txtVoucherCode.Text = "";
+                successDiv.Style["display"] = "none";
+                failedDiv.Style["display"] = "none";
+                lblDisplayVoucher.Visible = false;
+                lblDiscountCode.Text = "";
+                lblDiscount.Text = "0.00";
+                btnCheckout.Visible = false;
+                btnDisabledChkOut.Visible = true;
+            }
+            else 
+            {
+                btnCheckout.Visible = true;
+                btnDisabledChkOut.Visible = false;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+
+        }
+
+        protected void btnCheckout_Click(object sender, EventArgs e)
+        {
+        
             if (Session["user_ID"] != null)
             {
                 DBconnection dbconnection = new DBconnection();
+                SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"]),
+                };
+
+                SqlDataReader cartDetails = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [Cart] AS c"
+                  + " WHERE user_ID = @user_ID",
+                    parameterUrl).ExecuteReader();
+
+                if (cartDetails.HasRows)
+                {
+
+                }
+                else 
+                {
+                    
+                }
+            }
+            Response.Redirect($"~/customer/Checkout.aspx");
+        }
+
+        protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {           
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                DropDownList ddlQty = (DropDownList)e.Item.FindControl("ddlQty");
+                Label lblEachSubtotal = (Label)e.Item.FindControl("lblEachSubtotal");
+                Label lblPrice = (Label)e.Item.FindControl("lblPrice");
+
+                DataRowView dataItem = (DataRowView)e.Item.DataItem;
+
+                if (ddlQty != null && dataItem != null)
+                {
+                    ddlQty.SelectedValue = dataItem["quantity"].ToString();
+                    double price = Convert.ToDouble(dataItem["price"].ToString());
+                    lblPrice.Text = price.ToString("F2");
+                    double eachSubtotal = Convert.ToDouble(dataItem["subtotal"].ToString());
+                    lblEachSubtotal.Text = eachSubtotal.ToString("F2");
+                }
+            }
+
+            calculateSubtotal();
+            calculateTotal(Convert.ToDouble(lblDiscount.Text.ToString()));
+        }
+
+        protected void calculateSubtotal()
+        {
+            DBconnection dbconnection = new DBconnection();
+            //calculate shipping
+            if (Session["user_ID"] != null)
+            {
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"])
                 };
@@ -46,52 +130,36 @@ namespace ShirtTee.customer
                         lblShipping.Text = "12.00";
                     }
                 }
-
-
             }
 
+            double subtotal = 0;
+            SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"]),
+            };
 
-        }
+            SqlDataReader cartDetails = dbconnection.ExecuteQuery(
+                " SELECT * FROM [Cart] AS c"
+              + " WHERE user_ID = @user_ID",
+                parameterUrl2).ExecuteReader();
 
-
-        protected void btnCheckout_Click(object sender, EventArgs e)
-        {
-            string cartID = "";
-            Response.Redirect($"~/customer/Checkout.aspx?customerid={cartID}");
-        }
-        double subtotal = 0;
-        protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (cartDetails.HasRows)
             {
-
-                DropDownList ddlQty = (DropDownList)e.Item.FindControl("ddlQty");
-                Label lblEachSubtotal = (Label)e.Item.FindControl("lblEachSubtotal");
-                Label lblPrice = (Label)e.Item.FindControl("lblPrice");
-
-                DataRowView dataItem = (DataRowView)e.Item.DataItem;
-
-                if (ddlQty != null && dataItem != null)
+                while (cartDetails.Read())
                 {
-                    ddlQty.SelectedValue = dataItem["quantity"].ToString();
-                    double price = Convert.ToDouble(dataItem["price"].ToString());
-                    lblPrice.Text = price.ToString("F2");
-                    double eachSubtotal = Convert.ToDouble(dataItem["subtotal"].ToString());
-                    lblEachSubtotal.Text = eachSubtotal.ToString("F2");
-                    subtotal += Convert.ToDouble(lblEachSubtotal.Text);
+                    subtotal += Convert.ToDouble(cartDetails["subtotal"].ToString());
                 }
             }
+            else 
+            {
+                subtotal = 0;
+            }
+
             lblSubtotal.Text = subtotal.ToString("F2");
-            subtotal = 0;
-            calculateTotal(Convert.ToDouble(lblDiscount.Text.ToString()));
-
         }
-
 
         protected void calculateTotal(double discountValue)
         {
-            subtotal = Convert.ToDouble(lblSubtotal.Text.ToString());
+            double subtotal = Convert.ToDouble(lblSubtotal.Text.ToString());
             double shipping = Convert.ToDouble(lblShipping.Text.ToString());
             double total = subtotal + shipping - discountValue;
             lblTotal.Text = total.ToString("F2");
@@ -108,6 +176,7 @@ namespace ShirtTee.customer
 
         protected void btnApply_Click(object sender, EventArgs e)
         {
+            calculateSubtotal();
             DBconnection dbconnection = new DBconnection();
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
@@ -133,9 +202,7 @@ namespace ShirtTee.customer
                 {
                     usedDate = Convert.ToDateTime(voucherDetails["used_date"]);
                 }
-
-
-                if (expiryDate < DateTime.Now)
+                else if (expiryDate < DateTime.Now)
                 {
                     //voucher expired
                     invalidVoucher();
@@ -189,7 +256,7 @@ namespace ShirtTee.customer
             Label lblProductID = (Label)repeaterItem.FindControl("lblProductID");
             Label lblProductDetailsID = (Label)repeaterItem.FindControl("lblProductDetailsID");
 
-            try 
+            try
             {
                 DBconnection dBconnection = new DBconnection();
                 string sqlcommand =
@@ -207,9 +274,10 @@ namespace ShirtTee.customer
 
                 if (dBconnection.ExecuteNonQuery(sqlcommand, parameters))
                 {
-                    Repeater1.DataBind();
+
+                    //Repeater1.DataBind();
                     btnApply_Click(sender, e);
-                    if (txtVoucherCode.Text == "") 
+                    if (txtVoucherCode.Text == "")
                     {
                         successDiv.Style["display"] = "none";
                         failedDiv.Style["display"] = "none";
@@ -221,7 +289,7 @@ namespace ShirtTee.customer
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
 
-            
+
         }
 
         protected void btnRemoveItem_Click(object sender, EventArgs e)
@@ -242,7 +310,21 @@ namespace ShirtTee.customer
                 };
                 if (dBconnection.ExecuteNonQuery(sqlcommand, parameters))
                 {
-                    Repeater1.DataBind();
+                    SqlParameter[] parameterUrl = new SqlParameter[]{
+                        new SqlParameter("@user_ID", Session["user_ID"]),
+                    };
+
+                    SqlDataReader cartDetails = dBconnection.ExecuteQuery(
+                        " SELECT * FROM [Cart] AS c"
+                      + " WHERE user_ID = @user_ID",
+                        parameterUrl).ExecuteReader();
+
+                    //if (!cartDetails.HasRows)
+                    //{
+                    //    lblSubtotal.Text = "0.00";
+                    //}
+
+                    //Repeater1.DataBind();
                     btnApply_Click(sender, e);
                     if (txtVoucherCode.Text == "")
                     {
