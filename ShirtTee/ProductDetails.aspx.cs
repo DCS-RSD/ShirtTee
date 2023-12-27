@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Data.Odbc;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -17,7 +19,6 @@ namespace ShirtTee
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
             if (Request.QueryString["product_ID"] != null)
             {
                 DBconnection dbconnection = new DBconnection();
@@ -26,7 +27,7 @@ namespace ShirtTee
                 };
 
                 SqlDataReader productDetails = dbconnection.ExecuteQuery(
-                    "SELECT * FROM [Product_Details] AS s"
+                    " SELECT * FROM [Product_Details] AS s"
                   + " INNER JOIN [Product] AS p ON s.product_ID = p.product_ID"
                   + " INNER JOIN [Color] AS c ON s.color_ID = c.color_ID"
                   + " INNER JOIN [Size] AS i ON s.size_ID = i.size_ID"
@@ -63,7 +64,7 @@ namespace ShirtTee
                         totalReview++;
                         int rating = Convert.ToInt32(reviewDetails["rating"]);
                         totalRating += rating;
-                        switch (rating) 
+                        switch (rating)
                         {
                             case 1:
                                 oneStar++;
@@ -85,10 +86,10 @@ namespace ShirtTee
                     }
                 }
                 avgRating = totalRating / (double)totalReview;
-                onePer = oneStar / (double)totalReview * 100; 
-                twoPer = twoStar / (double)totalReview * 100; 
-                threePer = threeStar / (double)totalReview * 100; 
-                fourPer = fourStar / (double)totalReview * 100;   
+                onePer = oneStar / (double)totalReview * 100;
+                twoPer = twoStar / (double)totalReview * 100;
+                threePer = threeStar / (double)totalReview * 100;
+                fourPer = fourStar / (double)totalReview * 100;
                 fivePer = fiveStar / (double)totalReview * 100;
                 starBar1.Attributes["style"] = "width: calc((" + onePer + ") / 100 * 100%)";
                 starBar2.Attributes["style"] = "width: calc((" + twoPer + ") / 100 * 100%)";
@@ -123,8 +124,134 @@ namespace ShirtTee
 
         protected void btnAddToBag_Click(object sender, EventArgs e)
         {
-            string prodID = "";
-            Response.Redirect($"~/customer/Cart.aspx?customerid={prodID}");
+            if (Session["user_ID"] != null)
+            {
+                DBconnection dbconnection = new DBconnection();
+                SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"]),
+                 new SqlParameter("@product_ID", Request.QueryString["product_ID"])
+                };
+
+                SqlDataReader cartDetails = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [Cart] AS c" +
+                    " INNER JOIN [Product_Details] AS p ON c.product_details_ID = p.product_details_ID"
+                  + " WHERE user_ID = @user_ID AND product_ID = @product_ID",
+                    parameterUrl).ExecuteReader();
+
+                SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                 new SqlParameter("@product_ID", Request.QueryString["product_ID"]),
+                 new SqlParameter("@size_ID", lblSize.Text),
+                 new SqlParameter("@color_ID", lblColor.Text)
+                };
+
+                SqlDataReader productDetails = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [Product_Details] AS d" +
+                    " INNER JOIN [Product] AS p ON d.product_ID = p.product_ID" +
+                    " WHERE d.product_ID = @product_ID AND" +
+                    " size_ID = @size_ID AND" +
+                    " color_ID = @color_ID",
+                    parameterUrl2).ExecuteReader();
+
+
+                if (productDetails.HasRows)
+                {
+                    productDetails.Read();
+
+                    if (cartDetails.HasRows)
+                    {
+                        while (cartDetails.Read())
+                        {
+                            if (cartDetails["product_details_ID"].Equals(productDetails["product_details_ID"]))
+                            {
+                                //product already in cart
+                                int qty = Convert.ToInt32(cartDetails["quantity"].ToString());
+
+                                if (qty < 9)
+                                {
+                                    try
+                                    {
+                                        string sqlcommand =
+                                            "UPDATE Cart SET " +
+                                            "quantity = @quantity, " +
+                                            "subtotal = @quantity * (SELECT price FROM [Product] WHERE product_ID = @product_ID) " +
+                                            "WHERE user_ID = @user_ID AND " +
+                                            "product_details_ID = @product_details_ID";
+                                        SqlParameter[] parameters = {
+                                            new SqlParameter("@quantity", qty + 1),
+                                            new SqlParameter("@product_ID", productDetails["product_ID"]),
+                                            new SqlParameter("@user_ID", Session["user_ID"]),
+                                            new SqlParameter("@product_details_ID", cartDetails["product_details_ID"]),
+                                        };
+                                        if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+                                        {
+                                            //product add to cart sucess
+                                            Response.Redirect($"~/customer/Cart.aspx");
+                                        }
+                                        return;
+                                    }
+                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "1"); }
+
+                                }
+                                else 
+                                {
+                                    //max qty
+                                }
+                            }
+                            else
+                            {
+                                //add product into cart
+                                try
+                                {
+                                    string sqlcommand =
+                                        "INSERT INTO Cart (user_ID, product_details_ID, quantity, subtotal) " +
+                                        "VALUES (@user_ID, @product_details_ID, 1, @subtotal)";
+                                    SqlParameter[] parameters = {
+                                        new SqlParameter("@user_ID", Session["user_ID"]),
+                                        new SqlParameter("@product_details_ID", productDetails["product_details_ID"]),
+                                        new SqlParameter("@subtotal", productDetails["price"])
+                                    };
+                                    if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+                                    {
+                                        //product add to cart sucess
+                                        Response.Redirect($"~/customer/Cart.aspx");
+                                    }
+                                    return;
+                                }
+                                catch (Exception ex)
+                                {
+                                    System.Diagnostics.Debug.WriteLine(ex.Message + "2");
+                                }
+                            }
+                        }
+                    }
+                    else 
+                    {
+                        //add product into cart
+                        try
+                        {
+                            string sqlcommand =
+                                "INSERT INTO Cart (user_ID, product_details_ID, quantity, subtotal) " +
+                                "VALUES (@user_ID, @product_details_ID, 1, @subtotal)";
+                            SqlParameter[] parameters = {
+                                        new SqlParameter("@user_ID", Session["user_ID"]),
+                                        new SqlParameter("@product_details_ID", productDetails["product_details_ID"]),
+                                        new SqlParameter("@subtotal", productDetails["price"])
+                                    };
+                            if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+                            {
+                                //product add to cart sucess
+                                Response.Redirect($"~/customer/Cart.aspx");
+                            }
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine(ex.Message + "3");
+                        }
+                    }
+                }
+            }
+
         }
 
         protected void radColor_CheckedChanged(object sender, EventArgs e)
@@ -132,7 +259,7 @@ namespace ShirtTee
             RadioButton radioButton = (RadioButton)sender;
             string colorID = radioButton.Attributes["value"];
 
-            lblColor.Text = colorID;
+            lblColor.Text = colorID.ToString();
             lblMsg.Visible = false;
 
         }
@@ -160,6 +287,7 @@ namespace ShirtTee
         {
             RadioButton radioButton = (RadioButton)sender;
             string sizeID = radioButton.Attributes["value"];
+            lblSize.Text = sizeID.ToString();
 
         }
 

@@ -224,7 +224,7 @@ INNER JOIN [Category] AS cat ON cat.category_ID= pd.category_ID
                     <div class="mt-5">
                         <div class="grid gap-y-4">
                             <div>
-                                <label for="email" class="block text-sm mb-2 dark:text-white">Description <i class="font-light">*visible to customer</i></label>
+                                <label for="txtUpdateStatusDesc" class="block text-sm mb-2 dark:text-white">Description <i class="font-light">*visible to customer</i></label>
                                 <div class="relative">
                                     <asp:TextBox runat="server"
                                         ID="txtUpdateStatusDesc"
@@ -232,7 +232,6 @@ INNER JOIN [Category] AS cat ON cat.category_ID= pd.category_ID
                                         TextMode="MultiLine"
                                         Rows="3" />
                                 </div>
-                                <p class="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p>
                             </div>
                             <div class="flex justify-end items-center gap-x-2 py-3 px-2">
                                 <asp:Button runat="server"

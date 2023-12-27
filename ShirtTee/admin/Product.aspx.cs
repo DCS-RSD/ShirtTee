@@ -15,8 +15,11 @@ namespace ShirtTee.admin
             {
                 if (Session["ProductAdded"] != null)
                 {
-
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+                }
+                if (Session["ProductDeleted"] != null)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessDeleteToast", "showSuccessDeleteToast();", true);
                 }
             }
 

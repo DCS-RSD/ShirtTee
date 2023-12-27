@@ -6,8 +6,8 @@
     <%-- Toast --%>
     <script>
         function showSuccessToast() {
-            var status = '<%= Session["ProductAdded"] %>'; // Enclose the session variable in quotes
-            console.log(status)
+            var status = '<%= Session["ProductAdded"] %>';
+            /*            console.log(status)*/
             if (status !== null && status !== undefined) {
                 if (status == "success") {
                     toastr["success"]("Product added successfully.");
@@ -17,6 +17,18 @@
             }
             <% Session.Remove("ProductAdded"); %>
         }
+        function showSuccessDeleteToast() {
+            var status = '<%= Session["ProductDeleted"] %>';
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Product deleted successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("ProductDeleted"); %>
+        }
+
     </script>
     <asp:Label ID="a" runat="server"></asp:Label>
     <!-- Table Section -->
@@ -187,7 +199,8 @@
                             </thead>
                             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Product]
 INNER JOIN [Category]
-ON Product.category_id = Category.category_id"></asp:SqlDataSource>
+ON Product.category_id = Category.category_id
+                                WHERE deleted_at IS NULL"></asp:SqlDataSource>
 
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
