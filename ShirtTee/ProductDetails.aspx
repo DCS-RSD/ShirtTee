@@ -222,6 +222,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                         </label>
                                     </ItemTemplate>
                                 </asp:Repeater>
+                                <asp:Label ID="lblSize" runat="server" Text="" Visible="false"></asp:Label>
 
                             </div>
                         </fieldset>

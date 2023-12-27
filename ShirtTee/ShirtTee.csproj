@@ -147,6 +147,7 @@
     <Content Include="customer\OrderHistory.aspx" />
     <Content Include="customer\Profile.aspx" />
     <Content Include="customer\WriteReview.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Homepage.aspx" />
     <Content Include="Image\cloth1.png" />
     <Content Include="Image\cloth10.png" />
@@ -357,6 +358,9 @@
       <DependentUpon>WriteReview.aspx</DependentUpon>
     </Compile>
     <Compile Include="DBconnection.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Homepage.aspx.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

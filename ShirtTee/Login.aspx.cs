@@ -27,7 +27,26 @@ namespace ShirtTee
             if (user != null)
             {
                 LogUserIn(manager, user);
-                Response.Redirect($"~/Homepage.aspx");
+
+                if (chkRememberMe.Checked) 
+                {
+                    var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+                    var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    authenticationManager.SignIn(
+                        new AuthenticationProperties
+                        {
+                            IsPersistent = true,
+                            ExpiresUtc = DateTime.UtcNow.AddDays(30)
+                        },
+                        userIdentity
+                    );
+
+                    // Also, store the user ID in a persistent cookie
+                    Response.Cookies["user_ID"].Value = user.Id;
+                    Response.Cookies["user_ID"].Expires = DateTime.UtcNow.AddDays(30);
+                }
+
+                Response.Redirect($"~/Homepage.aspx", false);
             }
             else { 
             //error;
@@ -38,10 +57,12 @@ namespace ShirtTee
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             var userIdentity = usermanager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
-
+            Session["user_ID"] = user.Id;
         }
 
+        protected void chkRememberMe_CheckedChanged(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }

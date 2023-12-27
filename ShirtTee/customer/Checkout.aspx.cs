@@ -17,15 +17,15 @@ namespace ShirtTee.customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
-            {
-                Page.Validate();
+            //if (IsPostBack)
+            //{
+            //    Page.Validate();
 
-                if (Page.IsValid)
-                {
+            //    if (Page.IsValid)
+            //    {
                     callFPX();
-                }
-            }
+            //    }
+            //}
 
 
         }
