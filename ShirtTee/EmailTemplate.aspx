@@ -81,7 +81,7 @@
 
         <main>
             <h2>Hi [User]</h2>
-            <p>Your Order #aaa is Updated</p>
+            <p>Your Order #aaa is Updated.</p>
 
             <p>
                 Thanks,

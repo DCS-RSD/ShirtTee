@@ -31,15 +31,14 @@ namespace ShirtTee.admin
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("--", Session["OrderStatusUpdated"]);
-
                 if (Session["OrderStatusUpdated"] != null && !IsPostBack)
                 {
-                    System.Diagnostics.Debug.WriteLine("1111");
 
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
                 }
+
                 FetchData();
+
             }
         }
 
@@ -100,6 +99,7 @@ namespace ShirtTee.admin
             SqlDataReader orderStatus = dbconnection2.ExecuteQuery("SELECT * FROM [Order] AS o INNER JOIN [Order_Status] AS os ON o.order_id = os.order_id WHERE o.order_ID = @order_ID",
                 parameterUrl2).ExecuteReader();
             int width = 0;
+            string tempStr = txtUpdateStatusDesc.Text;
             while (orderStatus.Read())
             {
                 string status = orderStatus["status"].ToString().ToLower();
@@ -107,17 +107,26 @@ namespace ShirtTee.admin
                 {
                     case "order placed":
                         width = 0;
-                        txtUpdateStatusDesc.Text = "We are preparing your order.";
+                        if (!IsPostBack)
+                        {
+                            txtUpdateStatusDesc.Text = "We are preparing your order.";
+                        }
                         nextStatus = "Preparing";
                         break;
                     case "preparing":
                         width = 3;
-                        txtUpdateStatusDesc.Text = "Your order is out of delivery";
+                        if (!IsPostBack)
+                        {
+                            txtUpdateStatusDesc.Text = "Your order is out of delivery";
+                        }
                         nextStatus = "Shipped";
                         break;
                     case "shipped":
                         width = 5;
-                        txtUpdateStatusDesc.Text = "Your order has been delivered.";
+                        if (!IsPostBack)
+                        {
+                            txtUpdateStatusDesc.Text = "Your order has been delivered.";
+                        }
                         nextStatus = "Delivered";
                         break;
                     case "delivered":
@@ -197,12 +206,14 @@ namespace ShirtTee.admin
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
-                    EmailManager.sendEmail(toEmail, receiverName);
+                    EmailManager.sendEmail(toEmail, receiverName, id);
                     Session["OrderStatusUpdated"] = "success";
                 }
             }
             catch (Exception ex)
             {
+                throw;
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 Session["OrderStatusUpdated"] = "error";
             }
             finally
