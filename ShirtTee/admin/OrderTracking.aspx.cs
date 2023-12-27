@@ -19,12 +19,13 @@ namespace ShirtTee.admin
             switch (status)
             {
                 case "Order Placed":
-                    return "border-blue-600 text-blue-600";
+                    return "border-black text-gray-800 dark:border-gray-200 dark:text-white";
                 case "Preparing":
                     return "border-yellow-500 text-yellow-500";
                 case "Shipped":
-                case "Delivered":
                     return "border-teal-500 text-teal-500";
+                case "Delivered":
+                    return "border-blue-600 text-blue-600";
                 case "Cancelled":
                     return "border-red-500 text-red-500";
                 default:
