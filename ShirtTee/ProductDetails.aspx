@@ -1,6 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="ProductDetails.aspx.cs" Inherits="ShirtTee.ProductDetails" MaintainScrollPositionOnPostback="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="ProductDetails.aspx.cs" Inherits="ShirtTee.ProductDetails" MaintainScrollPositionOnPostback="true" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager runat="server"></asp:ScriptManager>
+
     <div class="bg-white mt-4">
         <nav aria-label="Breadcrumb">
             <ol role="list" class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -47,19 +49,19 @@
                                 </ItemTemplate>
                             </asp:Repeater>
 
-                            <%-- Stock Image (pending) --%>
-                            <%--                            <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource4">
+                            <%-- Stock Image --%>
+                            <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource4">
                                 <ItemTemplate>
-                                    <button id="tabs-1-tab-1" data-src='<%#%>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
+                                    <button id="tabs-1-tab-1" data-src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
                                         <span class="sr-only">Angled view </span>
                                         <span class="absolute inset-0 rounded-md overflow-hidden">
-                                            <img src="<%# %>" alt="" class="w-full h-full object-center object-cover" />
+                                            <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' alt="" class="w-full h-full object-center object-cover" />
                                         </span>
                                         <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
                                         <span class="ring-transparent absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
                                     </button>
                                 </ItemTemplate>
-                            </asp:Repeater>--%>
+                            </asp:Repeater>
                         </div>
                     </div>
 
@@ -97,7 +99,8 @@
                                     <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.image FROM [Product_Details] AS s
 INNER JOIN [Product] AS p ON
 s.product_ID = p.product_ID
-WHERE p.product_ID = @product_ID">
+WHERE p.product_ID = @product_ID AND
+s.image IS NOT NULL">
                                         <SelectParameters>
                                             <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
                                         </SelectParameters>
@@ -107,7 +110,7 @@ WHERE p.product_ID = @product_ID">
                                             <div class="hs-carousel-slide" style="width: 624px;">
                                                 <div class="flex justify-center h-full bg-gray-100 p-6">
                                                     <span class="self-center text-4xl transition duration-700">First slide
-                                                        <img src="<%# ResolveUrl(Eval("image").ToString()) %>" />
+                                                        <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' />
                                                     </span>
                                                 </div>
                                             </div>
@@ -171,14 +174,14 @@ WHERE p.product_ID = @product_ID">
                     <!-- Colors -->
                     <div class="mt-4">
                         <h3 class="text-sm font-medium text-gray-900">Color</h3>
-
                         <fieldset class="mt-4">
                             <legend class="sr-only">Choose a color</legend>
                             <div class="flex items-center space-x-3">
                                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.color_ID, color_name, hex_color FROM [Product_Details] AS s
 INNER JOIN [Color] AS c ON
 s.color_ID = c.color_ID
-WHERE product_ID = @product_ID
+WHERE product_ID = @product_ID AND
+on_sale = 1
 GROUP BY s.color_ID, color_name, hex_color">
                                     <SelectParameters>
                                         <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
@@ -189,11 +192,11 @@ GROUP BY s.color_ID, color_name, hex_color">
                                         <label class="color_grp relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
                                             <asp:RadioButton ID="radColor" OnCheckedChanged="radColor_CheckedChanged" value="" runat="server" name="color-choice" class="sr-only" aria-labelledby="color-choice-0-label" AutoPostBack="True" />
                                             <span id="color-choice-0-label" class="sr-only"><%# Eval("color_name") %></span>
-                                            <span aria-hidden="true" class="h-8 w-8 bg-[<%# Eval("hex_color") %>] rounded-full border border-black border-opacity-10"></span>
+                                            <span aria-hidden="true" style='<%# "background-color: "+Eval("hex_color")+";" %>' class="h-8 w-8 rounded-full border border-black border-opacity-10"></span>
                                         </label>
                                     </ItemTemplate>
                                 </asp:Repeater>
-                                <asp:Label ID="lblColor" runat="server" Text="" Visible="false"></asp:Label>
+                                <asp:Label ID="lblColor" runat="server" Text=""></asp:Label>
                             </div>
                         </fieldset>
                     </div>
@@ -207,7 +210,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                         <fieldset class="mt-4">
                             <legend class="sr-only">Choose a size</legend>
                             <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT i.size_ID, size_name FROM [Product_Details] AS s INNER JOIN [Size] AS i ON s.size_ID = i.size_ID WHERE product_ID = @product_ID AND color_ID = @color_ID AND stock_available > 0 GROUP BY i.size_ID, size_name">
+                                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT i.size_ID, size_name FROM [Product_Details] AS s INNER JOIN [Size] AS i ON s.size_ID = i.size_ID WHERE product_ID = @product_ID AND color_ID = @color_ID AND stock_available > 0 AND on_sale = 1 GROUP BY i.size_ID, size_name">
                                     <SelectParameters>
                                         <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
                                         <asp:ControlParameter ControlID="lblColor" PropertyName="Text" Name="color_ID"></asp:ControlParameter>
@@ -222,7 +225,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                         </label>
                                     </ItemTemplate>
                                 </asp:Repeater>
-                                <asp:Label ID="lblSize" runat="server" Text="" Visible="false"></asp:Label>
+                                <asp:Label ID="lblSize" runat="server" Text=""></asp:Label>
 
                             </div>
                         </fieldset>
@@ -234,7 +237,10 @@ GROUP BY s.color_ID, color_name, hex_color">
 
 
                     </div>
+                    <div class="text-center mt-2">
+                           <asp:Label ID="lblErrAdd" runat="server" Text="" class="italic text-red-600 font-semibold "></asp:Label>
 
+                    </div>
 
 
                 </div>
@@ -282,9 +288,9 @@ GROUP BY s.color_ID, color_name, hex_color">
                         </div>
                     </div>
                     <p class="ml-2 text-sm text-gray-900">
-                        <asp:Label runat="server" ID="lblTotalRating" Text=""></asp:Label>
+                        <asp:Label runat="server" ID="lblTotalRating" Text="0"></asp:Label>
                         stars based on
-                        <asp:Label runat="server" ID="lblTotalReviews" Text=""></asp:Label>
+                        <asp:Label runat="server" ID="lblTotalReviews" Text="0"></asp:Label>
                         reviews
                     </p>
                 </div>
@@ -310,7 +316,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                 </div>
                             </dt>
                             <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
-                                <asp:Label runat="server" ID="lblFivePer" Text=""></asp:Label>%</dd>
+                                <asp:Label runat="server" ID="lblFivePer" Text="0"></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -330,7 +336,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                 </div>
                             </dt>
                             <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
-                                <asp:Label runat="server" ID="lblFourPer" Text=""></asp:Label>%</dd>
+                                <asp:Label runat="server" ID="lblFourPer" Text="0"></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -350,7 +356,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                 </div>
                             </dt>
                             <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
-                                <asp:Label runat="server" ID="lblThreePer" Text=""></asp:Label>%</dd>
+                                <asp:Label runat="server" ID="lblThreePer" Text="0"></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -370,7 +376,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                 </div>
                             </dt>
                             <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
-                                <asp:Label runat="server" ID="lblTwoPer" Text=""></asp:Label>%</dd>
+                                <asp:Label runat="server" ID="lblTwoPer" Text="0"></asp:Label>%</dd>
                         </div>
 
                         <div class="flex items-center text-sm">
@@ -390,7 +396,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                 </div>
                             </dt>
                             <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">
-                                <asp:Label runat="server" ID="lblOnePer" Text=""></asp:Label>%</dd>
+                                <asp:Label runat="server" ID="lblOnePer" Text="0"></asp:Label>%</dd>
                         </div>
                     </dl>
                 </div>
