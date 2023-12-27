@@ -6,24 +6,35 @@
             <p class="text-xl font-medium">Order Summary</p>
 
             <div class="mt-5 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-                <div class="flex flex-row rounded-lg bg-white ">
-                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="">
-                    <div class="flex w-full flex-col px-4 py-4">
-                        <span class="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                        <span class="float-right text-gray-400">XL - BLUE</span>
-                        <span class="float-right text-gray-400">Quantity: 1</span>
-                        <p class="text-lg font-bold">RM 138.99</p>
-                    </div>
-                </div>
-                <div class="flex flex-row rounded-lg bg-white ">
-                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="">
-                    <div class="flex w-full flex-col px-4 py-4">
-                        <span class="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                        <span class="float-right text-gray-400">L</span>
-                        <span class="float-right text-gray-400">Quantity: 1</span>
-                        <p class="mt-auto text-lg font-bold">$238.99</p>
-                    </div>
-                </div>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Cart] AS c
+INNER JOIN [Product_Details] AS d
+ON c.product_details_ID = d.product_details_ID
+INNER JOIN [Product] AS p
+ON d.product_ID = p.product_ID
+INNER JOIN [Color] AS o
+ON d.color_ID = o.color_ID
+INNER JOIN [Size] AS s
+ON d.size_ID = s.size_ID
+WHERE user_ID = @user_ID">
+                    <SelectParameters>
+                        <asp:SessionParameter SessionField="user_ID" Name="user_ID"></asp:SessionParameter>
+                    </SelectParameters>
+                </asp:SqlDataSource>
+                <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
+                    <ItemTemplate>
+                        <div class="flex flex-row rounded-lg bg-white ">
+                            <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' alt="<%# Eval("product_name") %>">
+                            <div class="flex w-full flex-col px-4 py-4">
+                                <span class="font-semibold"><%# Eval("product_name") %></span>
+                                <span class="float-right text-gray-400"><%# Eval("size_name") %> - <%# Eval("color_name") %></span>
+                                <span class="float-right text-gray-400">Price: RM <asp:Label ID="lblPrice" runat="server" Text="" /></span>
+                                <span class="float-right text-gray-400">Quantity: <%# Eval("quantity") %></span>
+                                <p class="text-lg font-bold">RM <asp:Label ID="lblSubtotal" runat="server" Text="" /></p>
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+
             </div>
 
             <p class="mt-8 text-lg font-medium">Payment Methods</p>
@@ -121,6 +132,7 @@
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-medium text-gray-900">Subtotal</p>
                         <p class="font-semibold text-gray-900">RM 399.00</p>
+                        <asp:Label runat="server" ID="lbl1" Text="ddd"></asp:Label>
                     </div>
 
                     <div class="flex items-center justify-between">
@@ -161,27 +173,27 @@
                     //Page_ClientValidate();
 
                     //if (Page_IsValid) {
-                        e.preventDefault();
+                    e.preventDefault();
 
-                        // Make an AJAX request to your server handler to get the Stripe public key
-                        fetch('/StripePublicKeyHandler.ashx', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                // Include any necessary authentication headers if required
-                            },
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                var stripe = Stripe(data.stripePublicKey);
-                                stripe.redirectToCheckout({
-                                    sessionId: "<%= sessionId %>"
+                    // Make an AJAX request to your server handler to get the Stripe public key
+                    fetch('/StripePublicKeyHandler.ashx', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Include any necessary authentication headers if required
+                        },
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            var stripe = Stripe(data.stripePublicKey);
+                            stripe.redirectToCheckout({
+                                sessionId: "<%= sessionId %>"
                                 });
                             })
-                            .catch(error => console.error('Error fetching Stripe public key:', error));
+                        .catch(error => console.error('Error fetching Stripe public key:', error));
                     //}
                     //else {
-                     //   console.log("error");
+                    //   console.log("error");
                     //}
 
                 }

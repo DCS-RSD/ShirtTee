@@ -239,7 +239,6 @@ GROUP BY s.color_ID, color_name, hex_color">
                     </div>
                     <div class="text-center mt-2">
                            <asp:Label ID="lblErrAdd" runat="server" Text="" class="italic text-red-600 font-semibold "></asp:Label>
-
                     </div>
 
 

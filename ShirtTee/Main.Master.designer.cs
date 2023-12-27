@@ -51,6 +51,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
 
         /// <summary>
+        /// lblCartNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCartNumber;
+
+        /// <summary>
         /// btnCart control.
         /// </summary>
         /// <remarks>

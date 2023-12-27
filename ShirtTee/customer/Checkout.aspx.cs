@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using PayPal.Api;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace ShirtTee.customer
 {
@@ -15,17 +18,25 @@ namespace ShirtTee.customer
     {
         public string sessionId = "";
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            Repeater1.DataBind();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            //lbl1.Text = Session["voucherApplied"].ToString();
             //if (IsPostBack)
             //{
             //    Page.Validate();
 
             //    if (Page.IsValid)
             //    {
-                    callFPX();
+
             //    }
             //}
+
+            callFPX();
 
 
         }
@@ -129,6 +140,24 @@ namespace ShirtTee.customer
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
             btnHidden_Click(null, EventArgs.Empty);
+        }
+
+        protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Label lblSubtotal = (Label)e.Item.FindControl("lblSubtotal");
+                Label lblPrice = (Label)e.Item.FindControl("lblPrice");
+
+                DataRowView dataItem = (DataRowView)e.Item.DataItem;
+
+                double price = Convert.ToDouble(dataItem["price"].ToString());
+                lblPrice.Text = price.ToString("F2");
+                double subtotal = Convert.ToDouble(dataItem["subtotal"].ToString());
+                lblSubtotal.Text = subtotal.ToString("F2");
+
+            }
+
         }
     }
 }

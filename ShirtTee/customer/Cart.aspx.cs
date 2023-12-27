@@ -46,28 +46,7 @@ namespace ShirtTee.customer
 
         protected void btnCheckout_Click(object sender, EventArgs e)
         {
-        
-            if (Session["user_ID"] != null)
-            {
-                DBconnection dbconnection = new DBconnection();
-                SqlParameter[] parameterUrl = new SqlParameter[]{
-                 new SqlParameter("@user_ID", Session["user_ID"]),
-                };
-
-                SqlDataReader cartDetails = dbconnection.ExecuteQuery(
-                    " SELECT * FROM [Cart] AS c"
-                  + " WHERE user_ID = @user_ID",
-                    parameterUrl).ExecuteReader();
-
-                if (cartDetails.HasRows)
-                {
-
-                }
-                else 
-                {
-                    
-                }
-            }
+                   
             Response.Redirect($"~/customer/Checkout.aspx");
         }
 
@@ -172,6 +151,8 @@ namespace ShirtTee.customer
             lblDiscount.Text = "0.00";
             successDiv.Style["display"] = "none";
             failedDiv.Style["display"] = "block";
+            Session["voucherApplied"] = "";
+            Session["discountValue"] = "0.00";
         }
 
         protected void btnApply_Click(object sender, EventArgs e)
@@ -236,6 +217,8 @@ namespace ShirtTee.customer
                     lblDiscount.Text = discountValue.ToString("F2");
                     successDiv.Style["display"] = "block";
                     failedDiv.Style["display"] = "none";
+                    Session["voucherApplied"] = voucherDetails["voucher_name"].ToString();
+                    Session["discountValue"] = discountValue.ToString();
                     lblVoucherMsg.Text = "The voucher is successfully applied !";
                 }
 
