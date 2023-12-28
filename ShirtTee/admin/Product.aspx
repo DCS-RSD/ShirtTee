@@ -250,16 +250,31 @@ ON Product.category_id = Category.category_id
                         <!-- End Table -->
 
                         <!-- Footer -->
-                        <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-                            <div class="inline-flex gap-x-2">
-                                <asp:DataPager ID="DataPager2" runat="server" PagedControlID="ListView1" PageSize="10">
-                                    <Fields>
-                                        <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowPreviousPageButton="True" ShowNextPageButton="False" ShowLastPageButton="False" />
-                                        <asp:NumericPagerField ButtonType="Button" />
-                                        <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="False" ShowPreviousPageButton="False" ShowNextPageButton="True" ShowLastPageButton="True" />
-                                    </Fields>
-                                </asp:DataPager>
-                            </div>
+                        <div class="px-6 py-4 flex justify-end items-center">
+                            <asp:DataPager ID="DataPager2" runat="server" PagedControlID="ListView1" PageSize="10">
+                               <Fields>
+                                 <asp:NextPreviousPagerField
+                                     ButtonCssClass="cursor-pointer min-h-[38px] min-w-[38px] py-2 px-2.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+                                     ButtonType="Button" 
+                                     ShowFirstPageButton="True" 
+                                     ShowPreviousPageButton="True" 
+                                     ShowNextPageButton="False" 
+                                     ShowLastPageButton="False"
+                                     RenderNonBreakingSpacesBetweenControls="false" />
+                                 <asp:NumericPagerField
+                                     NumericButtonCssClass="cursor-pointer min-h-[38px] min-w-[38px] text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+                                     ButtonType="Button"
+                                     CurrentPageLabelCssClass="text-center inline-block min-h-[38px] min-w-[38px] bg-gray-200 text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-600 dark:text-white dark:focus:bg-gray-500"
+                                     ButtonCount="10" />
+                                 <asp:NextPreviousPagerField
+                                     ButtonCssClass="cursor-pointer  min-h-[38px] min-w-[38px] py-2 px-2.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+                                     ButtonType="Button"
+                                     ShowFirstPageButton="False"
+                                     ShowPreviousPageButton="False"
+                                     ShowNextPageButton="True"
+                                     ShowLastPageButton="True" />
+                                </Fields>
+                            </asp:DataPager>
                         </div>
                         <!-- End Footer -->
 

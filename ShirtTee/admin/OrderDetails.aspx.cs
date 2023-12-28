@@ -212,7 +212,6 @@ namespace ShirtTee.admin
             }
             catch (Exception ex)
             {
-                throw;
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 Session["OrderStatusUpdated"] = "error";
             }
