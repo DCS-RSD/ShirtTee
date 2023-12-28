@@ -27,9 +27,13 @@ WHERE user_ID = @user_ID">
                             <div class="flex w-full flex-col px-4 py-4">
                                 <span class="font-semibold"><%# Eval("product_name") %></span>
                                 <span class="float-right text-gray-400"><%# Eval("size_name") %> - <%# Eval("color_name") %></span>
-                                <span class="float-right text-gray-400">Price: RM <asp:Label ID="lblPrice" runat="server" Text="" /></span>
+                                <span class="float-right text-gray-400">Price: RM
+                                    <asp:Label ID="lblPrice" runat="server" Text="" /></span>
                                 <span class="float-right text-gray-400">Quantity: <%# Eval("quantity") %></span>
-                                <p class="text-lg font-bold">RM <asp:Label ID="lblSubtotal" runat="server" Text="" /></p>
+                                <p class="text-lg font-bold">
+                                    RM
+                                    <asp:Label ID="lblEachSubtotal" runat="server" Text="" />
+                                </p>
                             </div>
                         </div>
                     </ItemTemplate>
@@ -65,7 +69,7 @@ WHERE user_ID = @user_ID">
             </div>
         </div>
 
-        <div class="mt-10 mx-4 rounded bg-gray-50 px-6 pt-6 lg:mt-0">
+        <div class="mt-10 mb-8 mx-4 rounded bg-gray-50 px-6 pt-6 lg:mt-0">
             <p class="text-xl font-medium">Shipping Details</p>
             <p class="text-gray-400">Complete your order by providing your shipping details.</p>
             <div class="">
@@ -131,22 +135,25 @@ WHERE user_ID = @user_ID">
                 <div class="mt-6 border-t border-b py-2">
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-medium text-gray-900">Subtotal</p>
-                        <p class="font-semibold text-gray-900">RM 399.00</p>
-                        <asp:Label runat="server" ID="lbl1" Text="ddd"></asp:Label>
+                        <p class="font-semibold text-gray-900">RM
+                            <asp:Label ID="lblSubtotal" runat="server" Text="" /></p>
                     </div>
 
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-medium text-gray-900">Shipping</p>
-                        <p class="font-semibold text-gray-900">RM 8.00</p>
+                        <p class="font-semibold text-gray-900">RM
+                            <asp:Label ID="lblShipping" runat="server" Text="" /></p>
                     </div>
                     <div class="flex items-center justify-between">
-                        <p class="text-sm font-medium text-gray-900">Discount</p>
-                        <p class="font-semibold text-gray-900">- RM 8.00</p>
+                        <p class="text-sm font-medium text-gray-900">Discount <asp:Label ID="lblVoucherCode" runat="server" Text="" /></p>
+                        <p class="font-semibold text-gray-900">- RM
+                            <asp:Label ID="lblDiscount" runat="server" Text="" /></p>
                     </div>
                 </div>
                 <div class="mt-6 flex items-center justify-between">
                     <p class="text-sm font-medium text-gray-900">Total</p>
-                    <p class="text-2xl font-semibold text-gray-900">RM 408.00</p>
+                    <p class="text-2xl font-semibold text-gray-900">RM
+                        <asp:Label ID="lblTotal" runat="server" Text="" /></p>
                 </div>
             </div>
             <asp:Button ID="btnHidden" runat="server" CssClass="hidden" OnClick="btnHidden_Click" Visible="False" />
@@ -188,8 +195,8 @@ WHERE user_ID = @user_ID">
                             var stripe = Stripe(data.stripePublicKey);
                             stripe.redirectToCheckout({
                                 sessionId: "<%= sessionId %>"
-                                });
-                            })
+                            });
+                        })
                         .catch(error => console.error('Error fetching Stripe public key:', error));
                     //}
                     //else {

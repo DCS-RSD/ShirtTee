@@ -23,12 +23,15 @@ namespace ShirtTee.customer
                 lblSubtotal.Text = "0.00";
                 lblTotal.Text = "0.00";
                 lblShipping.Text = "0.00";
+                Session["shipping"] = "0.00";
                 txtVoucherCode.Text = "";
                 successDiv.Style["display"] = "none";
                 failedDiv.Style["display"] = "none";
                 lblDisplayVoucher.Visible = false;
                 lblDiscountCode.Text = "";
                 lblDiscount.Text = "0.00";
+                Session["discountCode"] = "";
+                Session["discountValue"] = "0.00";
                 btnCheckout.Visible = false;
                 btnDisabledChkOut.Visible = true;
             }
@@ -41,7 +44,12 @@ namespace ShirtTee.customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack) 
+            {
+                Session["shipping"] = "";
+                Session["discountCode"] = "";
+                Session["discountValue"] = "0.00";
+            }
         }
 
         protected void btnCheckout_Click(object sender, EventArgs e)
@@ -98,15 +106,18 @@ namespace ShirtTee.customer
                         if (Convert.ToInt32(userDetails["member_points"]) >= 1000)
                         {
                             lblShipping.Text = "0.00";
+                            Session["shipping"] = "0.00";
                         }
                         else
                         {
                             lblShipping.Text = "12.00";
+                            Session["shipping"] = "12.00";
                         }
                     }
                     else
                     {
                         lblShipping.Text = "12.00";
+                        Session["shipping"] = "12.00";
                     }
                 }
             }
@@ -151,7 +162,7 @@ namespace ShirtTee.customer
             lblDiscount.Text = "0.00";
             successDiv.Style["display"] = "none";
             failedDiv.Style["display"] = "block";
-            Session["voucherApplied"] = "";
+            Session["discountCode"] = "";
             Session["discountValue"] = "0.00";
         }
 
@@ -217,7 +228,7 @@ namespace ShirtTee.customer
                     lblDiscount.Text = discountValue.ToString("F2");
                     successDiv.Style["display"] = "block";
                     failedDiv.Style["display"] = "none";
-                    Session["voucherApplied"] = voucherDetails["voucher_name"].ToString();
+                    Session["discountCode"] = voucherDetails["voucher_name"].ToString();
                     Session["discountValue"] = discountValue.ToString();
                     lblVoucherMsg.Text = "The voucher is successfully applied !";
                 }
