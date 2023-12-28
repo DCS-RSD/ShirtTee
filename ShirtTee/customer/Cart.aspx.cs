@@ -304,14 +304,6 @@ namespace ShirtTee.customer
                 };
                 if (dBconnection.ExecuteNonQuery(sqlcommand, parameters))
                 {
-                    SqlParameter[] parameterUrl = new SqlParameter[]{
-                        new SqlParameter("@user_ID", Session["user_ID"]),
-                    };
-
-                    SqlDataReader cartDetails = dBconnection.ExecuteQuery(
-                        " SELECT * FROM [Cart] AS c"
-                      + " WHERE user_ID = @user_ID",
-                        parameterUrl).ExecuteReader();
 
                     //if (!cartDetails.HasRows)
                     //{
