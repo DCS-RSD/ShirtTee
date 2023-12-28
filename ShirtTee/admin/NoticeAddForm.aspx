@@ -54,13 +54,14 @@
                 </div>
                 <div class="col-span-3">
                     <asp:RadioButtonList ID="radVisibility" runat="server"  RepeatDirection="Horizontal">
-                        <asp:ListItem class="px-4" Value="is_all">  To everyone</asp:ListItem>
+                        <asp:ListItem class="px-4" Value="is_all" Selected="True">  To everyone</asp:ListItem>
                         <asp:ListItem class="px-4" Value="is_staff_only">  To staff only</asp:ListItem>
                     </asp:RadioButtonList>
                 </div>
 
                 <div class="col-start-3">
-                    <asp:Button ID="btnSubmit" runat="server" Text="Confirm" class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
+                    <asp:Button ID="btnSubmit" runat="server" Text="Confirm" OnClick="btnSubmit_Click"
+                        class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
                 </div>
                 <div class="col-span-1">
                     <input type="reset" value="Reset" class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" />

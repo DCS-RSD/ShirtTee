@@ -11,7 +11,18 @@ namespace ShirtTee.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["NoticeAdded"] != null)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+                }
 
+                if (Session["NoticeDeleted"] != null)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowDeleteSuccessToast", "showDeleteSuccessToast();", true);
+                }
+            }
         }
     }
 }
