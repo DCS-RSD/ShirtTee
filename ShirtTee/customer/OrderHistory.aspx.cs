@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using System.Data.Odbc;
 using System.Data.SqlClient;
 using System.EnterpriseServices.CompensatingResourceManager;
 using System.Linq;
@@ -347,6 +348,7 @@ namespace ShirtTee.customer
                 Label lblOrderID = (Label)e.Item.FindControl("lblOrderID");
                 Label lblOrderDate = (Label)e.Item.FindControl("lblOrderDate");
                 Label lblOrderTotal = (Label)e.Item.FindControl("lblOrderTotal");
+                Label lblOrderStatus = (Label)e.Item.FindControl("lblOrderStatus");
 
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
 
@@ -357,6 +359,20 @@ namespace ShirtTee.customer
                     lblOrderDate.Text = orderDate.ToString("dd MMM yyyy");
                     double orderTotal = Convert.ToDouble(dataItem["order_total"].ToString());
                     lblOrderTotal.Text = orderTotal.ToString("F2");
+                    DBconnection dBconnection = new DBconnection();
+                    SqlParameter[] parameter = new SqlParameter[]{
+                         new SqlParameter("@order_ID", dataItem["order_ID"].ToString())
+                    };
+                    SqlDataReader orderStatus = dBconnection.ExecuteQuery(
+                        "SELECT * FROM [Order_Status] " +
+                        "WHERE order_ID = @order_ID AND " +
+                        "update_date = (SELECT MAX(update_date) FROM [Order_Status] WHERE order_ID = @order_ID)",
+                    parameter).ExecuteReader();
+                    if (orderStatus.HasRows) 
+                    {
+                        orderStatus.Read();
+                        lblOrderStatus.Text = orderStatus["status"].ToString();
+                    }
                 }
             }
         }

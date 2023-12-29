@@ -107,7 +107,7 @@ WHERE order_ID = @order_ID">
                                             </asp:SqlDataSource>
                                             <asp:Repeater ID="Repeater2" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
                                                 <ItemTemplate>
-                                                    <li class="p-4 sm:p-6">
+                                                    <li class="p-4 sm:pt-6 sm:ps-6 sm:pe-6 sm:pb-4">
                                                         <div class="flex items-center sm:items-start">
                                                             <div class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg overflow-hidden sm:w-40 sm:h-40">
                                                                 <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' alt='<%# Eval("product_name") %>' class="w-full h-full object-center object-cover">
@@ -116,14 +116,18 @@ WHERE order_ID = @order_ID">
                                                                 <div class="font-medium text-gray-900 sm:flex sm:justify-between">
                                                                     <asp:Label runat="server" Visible="false" ID="lblProductID" Text='<%# Eval("product_ID") %>' />
                                                                     <h5><%# Eval("product_name") %></h5>
-                                                                    <p class="mt-2 sm:mt-0">RM
-                                                                        <asp:Label runat="server" ID="lblPrice" Text="" /></p>
+                                                                    <p class="mt-2 sm:mt-0">
+                                                                        RM
+                                                                        <asp:Label runat="server" ID="lblPrice" Text="" />
+                                                                    </p>
                                                                 </div>
                                                                 <p class="hidden text-gray-500 sm:block sm:mt-2"><%# Eval("description") %></p>
                                                                 <p class="mt-2 text-gray-500 ">Quantity: <%# Eval("quantity") %></p>
                                                                 <p class="mt-1 text-gray-500"><%# Eval("color_name") %> / <%# Eval("size_name") %></p>
-                                                                <p class="mt-3 text-sm font-bold text-gray-900">Total: RM
-                                                                    <asp:Label runat="server" ID="lblTotal" Text="" /></p>
+                                                                <p class="mt-3 text-sm font-bold text-gray-900">
+                                                                    Total: RM
+                                                                    <asp:Label runat="server" ID="lblTotal" Text="" />
+                                                                </p>
                                                             </div>
                                                         </div>
 
@@ -131,7 +135,7 @@ WHERE order_ID = @order_ID">
                                                             <div class="flex items-center">
                                                             </div>
 
-                                                            <div class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                                                            <div class="mt-4 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
                                                                 <div class="flex-1 flex justify-center">
                                                                     <asp:Button runat="server" ID="btnWriteReview" OnClick="btnWriteReview_Click" class="text-indigo-600 whitespace-nowrap hover:text-indigo-500" Text="Write Review"></asp:Button>
                                                                 </div>
@@ -148,6 +152,15 @@ WHERE order_ID = @order_ID">
                                             </asp:Repeater>
 
                                         </ul>
+                                        <div class="ms-4 mb-3 ">
+                                        <span class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                            <svg class="flex-shrink-0 w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                                                <path d="m9 12 2 2 4-4" />
+                                            </svg>
+                                            <asp:Label runat="server" ID="lblOrderStatus" Text=""/>
+                                        </span>
+                                            </div>
                                     </div>
 
                                 </div>
@@ -192,7 +205,6 @@ WHERE order_ID = @order_ID">
                     <!-- End Icon -->
                     <asp:Label ID="lblPaymentTitle" class="block mb-2 text-xl font-bold text-gray-800 dark:text-gray-200" runat="server" Text="Payment Success !"></asp:Label>
                     <asp:Label ID="lblPaymentDesc" class="text-gray-500 block" runat="server" Text="You can see the progress of your order in Order History. You will be notified of its completion."></asp:Label>
-
                 </div>
             </div>
         </div>
