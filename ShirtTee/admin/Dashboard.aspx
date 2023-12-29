@@ -1,6 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="ShirtTee.admin.Dashboard" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <!-- Table Section -->
+    <script>
+        function showSuccessToast() {
+            var status = '<%= Session["NoticeAdded"] %>';
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Notice added successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("NoticeAdded"); %>
+        }
+
+        function showDeleteSuccessToast() {
+            var status = '<%= Session["NoticeDeleted"] %>';
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Notice deleted successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("NoticeDeleted"); %>
+        }
+    </script>
+    <!-- Table Section -->
     <div class="max-w-[85rem] mx-auto">
         <!-- Card -->
         <div class="flex flex-col">
@@ -142,8 +168,6 @@
                                         </div>
                                     </th>
 
-                                  
-
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">Date
@@ -151,11 +175,9 @@
                                         </div>
                                     </th>
 
-<%--                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0"></th>--%>
                                 </tr>
                             </thead>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [created_at] FROM [Notice]">
-                            </asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice]"></asp:SqlDataSource>
 
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
@@ -166,6 +188,7 @@
 
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                                 <%# Eval("notice_title") %>
+<%# (bool)Eval("is_private") ? showPrivateLogo() : "" %>
                                             </td>
                                             <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                                 <%# Eval("created_at") %>

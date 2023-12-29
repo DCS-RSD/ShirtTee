@@ -16,9 +16,79 @@ namespace ShirtTee
 {
     public partial class ProductDetails : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected string SelectedColor        
+        {
+            get { return ViewState["SelectedColor"] as string;  }
+            set { ViewState["SelectedColor"] = value; }
+        }
+        protected string SelectedSize
+        {
+            get { return ViewState["SelectedSize"] as string; }
+            set { ViewState["SelectedSize"] = value; }
+        }
+        protected override void OnPreRender(EventArgs e)
+        {
+            Repeater1.DataBind();
+            Repeater2.DataBind();
+            restoreRadioState();
+        }
+
+        private void saveColorState(string colorID) 
+        {
+            SelectedColor = colorID;
+            
+        }
+
+        private void saveSizeState(string sizeID)
+        {
+            SelectedSize = sizeID;
+        }
+
+        private void restoreRadioState() 
         {
 
+            foreach (RepeaterItem item in Repeater1.Items) 
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    RadioButton radColor = item.FindControl("radColor") as RadioButton;
+                    if (radColor.Attributes["value"].Equals(SelectedColor)) 
+                    {
+                        EventArgs eventArgs = new EventArgs();
+                        radColor_CheckedChanged(radColor, eventArgs);
+                        string script = $"handleColorRadioClick({radColor.ClientID});";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "colorScript", script, true);                       
+                        foreach (RepeaterItem item2 in Repeater2.Items)
+                        {
+                            if (item2.ItemType == ListItemType.Item || item2.ItemType == ListItemType.AlternatingItem)
+                            {
+                                RadioButton radSize = item2.FindControl("radSize") as RadioButton;
+                                if (radSize.Attributes["value"].Equals(SelectedSize))
+                                {
+                                    EventArgs eventArgs2 = new EventArgs();
+                                    radSize_CheckedChanged(radSize, eventArgs2);                                   
+                                    string script2 = $"handleSizeRadioClick({radSize.ClientID});";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "sizeScript", script2, true);
+                                    return;
+                                }
+                                else
+                                {
+                                    lblSize.Text = "No";
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            lblErrAdd.Text = "";
             if (Request.QueryString["product_ID"] != null)
             {
                 DBconnection dbconnection = new DBconnection();
@@ -46,7 +116,7 @@ namespace ShirtTee
                 int totalRating = 0;
                 double avgRating = 0.0;
                 int oneStar = 0, twoStar = 0, threeStar = 0, fourStar = 0, fiveStar = 0;
-                double onePer, twoPer, threePer, fourPer, fivePer;
+                double onePer = 0, twoPer = 0, threePer = 0, fourPer = 0, fivePer = 0;
                 SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@product_ID", Request.QueryString["product_ID"])
                 };
@@ -84,13 +154,15 @@ namespace ShirtTee
                         }
 
                     }
+                    avgRating = totalRating / (double)totalReview;
+                    onePer = oneStar / (double)totalReview * 100;
+                    twoPer = twoStar / (double)totalReview * 100;
+                    threePer = threeStar / (double)totalReview * 100;
+                    fourPer = fourStar / (double)totalReview * 100;
+                    fivePer = fiveStar / (double)totalReview * 100;
                 }
-                avgRating = totalRating / (double)totalReview;
-                onePer = oneStar / (double)totalReview * 100;
-                twoPer = twoStar / (double)totalReview * 100;
-                threePer = threeStar / (double)totalReview * 100;
-                fourPer = fourStar / (double)totalReview * 100;
-                fivePer = fiveStar / (double)totalReview * 100;
+
+
                 starBar1.Attributes["style"] = "width: calc((" + onePer + ") / 100 * 100%)";
                 starBar2.Attributes["style"] = "width: calc((" + twoPer + ") / 100 * 100%)";
                 starBar3.Attributes["style"] = "width: calc((" + threePer + ") / 100 * 100%)";
@@ -192,7 +264,7 @@ namespace ShirtTee
                                     catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "1"); }
 
                                 }
-                                else 
+                                else
                                 {
                                     //max qty
                                 }
@@ -224,7 +296,7 @@ namespace ShirtTee
                             }
                         }
                     }
-                    else 
+                    else
                     {
                         //add product into cart
                         try
@@ -250,6 +322,10 @@ namespace ShirtTee
                         }
                     }
                 }
+                else
+                {
+                    lblErrAdd.Text = "Please Select Color/Size Before Adding To Cart.";
+                }
             }
 
         }
@@ -258,10 +334,11 @@ namespace ShirtTee
         {
             RadioButton radioButton = (RadioButton)sender;
             string colorID = radioButton.Attributes["value"];
-
+          
             lblColor.Text = colorID.ToString();
+            saveColorState(colorID);
             lblMsg.Visible = false;
-
+            
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -287,8 +364,9 @@ namespace ShirtTee
         {
             RadioButton radioButton = (RadioButton)sender;
             string sizeID = radioButton.Attributes["value"];
+            saveSizeState(sizeID);
             lblSize.Text = sizeID.ToString();
-
+            
         }
 
         protected void Repeater2_ItemDataBound(object sender, RepeaterItemEventArgs e)

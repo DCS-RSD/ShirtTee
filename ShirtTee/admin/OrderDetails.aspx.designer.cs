@@ -15,6 +15,24 @@ namespace ShirtTee.admin
     {
 
         /// <summary>
+        /// lblError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
+
+        /// <summary>
         /// lblTitle control.
         /// </summary>
         /// <remarks>
@@ -213,12 +231,12 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.Button btnSubmitNewStatus;
 
         /// <summary>
-        /// Button1 control.
+        /// btnCancelOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnCancelOrder;
     }
 }
