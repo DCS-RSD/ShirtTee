@@ -342,8 +342,8 @@ namespace ShirtTee.customer
         {
             Button btnWriteReview = (Button)sender;
             RepeaterItem repeaterItem = (RepeaterItem)btnWriteReview.NamingContainer;
-            Label lblOrderID = (Label)repeaterItem.FindControl("lblOrderID");
-            //Session[""]
+            Label lblProductDetailsID = (Label)repeaterItem.FindControl("lblProductDetailsID");
+            Session["product_details_ID"] = lblProductDetailsID.Text;
             Response.Redirect($"~/customer/WriteReview.aspx");
         }
 
