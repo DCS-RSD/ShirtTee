@@ -14,6 +14,11 @@ namespace ShirtTee.customer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["OrderStatusUpdated"] != null && !IsPostBack)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+            }
+
             FetchData();
         }
 

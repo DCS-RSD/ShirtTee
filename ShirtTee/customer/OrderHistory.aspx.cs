@@ -340,8 +340,11 @@ namespace ShirtTee.customer
 
         protected void btnWriteReview_Click(object sender, EventArgs e)
         {
-            string cartID = "";
-            Response.Redirect($"~/customer/WriteReview.aspx?customerid={cartID}");
+            Button btnWriteReview = (Button)sender;
+            RepeaterItem repeaterItem = (RepeaterItem)btnWriteReview.NamingContainer;
+            Label lblOrderID = (Label)repeaterItem.FindControl("lblOrderID");
+            //Session[""]
+            Response.Redirect($"~/customer/WriteReview.aspx");
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
