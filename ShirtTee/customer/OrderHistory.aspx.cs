@@ -184,7 +184,7 @@ namespace ShirtTee.customer
 
                                 if (orderCreated)
                                 {
-
+                 
                                     //add member points
                                     try
                                     {
@@ -331,8 +331,11 @@ namespace ShirtTee.customer
 
         protected void btnViewOrder_Click(object sender, EventArgs e)
         {
-            string cartID = "";
-            Response.Redirect($"~/customer/OrderDetails.aspx?customerid={cartID}");
+            Button btnViewOrder = (Button)sender;
+            RepeaterItem repeaterItem = (RepeaterItem)btnViewOrder.NamingContainer;
+            Label lblOrderID = (Label)repeaterItem.FindControl("lblOrderID");
+            Session["order_ID"] = lblOrderID.Text;
+            Response.Redirect($"~/customer/OrderDetails.aspx");
         }
 
         protected void btnWriteReview_Click(object sender, EventArgs e)
@@ -407,19 +410,20 @@ namespace ShirtTee.customer
             switch (status)
             {
                 case "Order Placed":
-                    lblDisplayStatus.CssClass = $"{existingClass} bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500";
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-teal-200 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500";
                     break;
                 case "Preparing":
                     lblDisplayStatus.CssClass = $"{existingClass} bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500";
                     break;
                 case "Shipped":
-                    lblDisplayStatus.CssClass = $"{existingClass} bg-blue-100 text-blue-800 dark:bg-blue-500/10 dark:text-blue-500";
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-blue-100 text-blue-600 dark:bg-blue-600/10 dark:text-blue-500";
                     break;
                 case "Delivered":
-                    lblDisplayStatus.CssClass = $"{existingClass} bg-gray-100 text-gray-800 dark:bg-slate-500/20 dark:text-slate-400";
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-gray-200 text-gray-800 dark:bg-slate-500/20 dark:text-slate-400";
                     break;
                 case "Cancelled":
-                    lblDisplayStatus.CssClass = $"{existingClass} bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500";
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-red-200 text-red-800 dark:bg-red-500/10 dark:text-red-500";
+
                     break;
                 default:
                     break;
