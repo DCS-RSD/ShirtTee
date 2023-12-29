@@ -151,7 +151,7 @@ namespace ShirtTee.admin
             }
             finally
             {
-                Response.Redirect(ResolveUrl("~/admin/product.aspx").ToString());
+                Response.Redirect(ResolveUrl("~/admin/Product.aspx").ToString());
             }
         }
     }

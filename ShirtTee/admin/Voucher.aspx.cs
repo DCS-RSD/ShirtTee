@@ -11,7 +11,17 @@ namespace ShirtTee.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                if (Session["VoucherAdded"] != null)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+                }
+                if (Session["VoucherDeleted"] != null)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessDeleteToast", "showSuccessDeleteToast();", true);
+                }
+            }
         }
     }
 }

@@ -3,6 +3,33 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%-- Toast --%>
+    <script>
+        function showSuccessToast() {
+            var status = '<%= Session["VoucherAdded"] %>';
+            /*            console.log(status)*/
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Voucher added successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("VoucherAdded"); %>
+        }
+        function showSuccessDeleteToast() {
+            var status = '<%= Session["VoucherDeleted"] %>';
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Voucher deleted successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
+            <% Session.Remove("VoucherDeleted"); %>
+        }
+
+    </script>
     <!-- Table Section -->
     <div class="max-w-[85rem] mx-auto">
         <!-- Card -->
@@ -246,7 +273,7 @@
                                 </asp:DataPager>
                             </div>
                         </div>
-                    <!-- End Footer -->
+                        <!-- End Footer -->
 
                     </div>
                 </div>
