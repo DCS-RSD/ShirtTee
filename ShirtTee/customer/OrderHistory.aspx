@@ -114,7 +114,7 @@ WHERE order_ID = @order_ID">
                                                             </div>
                                                             <div class="flex-1 ml-6 text-sm">
                                                                 <div class="font-medium text-gray-900 sm:flex sm:justify-between">
-                                                                    <asp:Label runat="server" Visible="false" ID="lblProductID" Text='<%# Eval("product_ID") %>' />
+                                                                    <asp:Label runat="server" Visible="false" ID="lblProductDetailsID" Text='<%# Eval("product_details_ID") %>' />
                                                                     <h5><%# Eval("product_name") %></h5>
                                                                     <p class="mt-2 sm:mt-0">
                                                                         RM
@@ -152,15 +152,23 @@ WHERE order_ID = @order_ID">
                                             </asp:Repeater>
 
                                         </ul>
-                                        <div class="ms-4 mb-3 ">
-                                        <span class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
-                                            <svg class="flex-shrink-0 w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                                                <path d="m9 12 2 2 4-4" />
-                                            </svg>
-                                            <asp:Label runat="server" ID="lblOrderStatus" Text=""/>
-                                        </span>
+                                        <div class="flex flex-row">
+                                            <div class="ms-4 mb-3 ">
+                                                <asp:Label ID="lblDisplayStatus" runat="server" CssClass="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium rounded-full ">
+                                                    <asp:Label runat="server" ID="lblOrderStatus" Text="" />
+                                                </asp:Label>
                                             </div>
+                                            <div class="ms-3 mb-3 ">
+                                                <asp:Label ID="lblDisplayVoucher" Visible="false" runat="server" class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-200 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                    <svg class="flex-shrink-0 w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                                                        <path d="m9 12 2 2 4-4" />
+                                                    </svg>
+                                                      <asp:Label runat="server" ID="lblVoucherCode" Text="" />
+                                                </asp:Label>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                 </div>
