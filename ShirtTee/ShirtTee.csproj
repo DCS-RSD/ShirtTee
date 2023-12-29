@@ -175,6 +175,9 @@
     <Content Include="customer\Profile.aspx" />
     <Content Include="customer\WriteReview.aspx" />
     <Content Include="EmailTemplate.aspx" />
+    <Content Include="errors\403.aspx" />
+    <Content Include="errors\404.aspx" />
+    <Content Include="errors\500.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Homepage.aspx" />
     <Content Include="Image\cloth1.png" />
@@ -393,6 +396,27 @@
     </Compile>
     <Compile Include="EmailTemplate.aspx.designer.cs">
       <DependentUpon>EmailTemplate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="errors\403.aspx.cs">
+      <DependentUpon>403.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="errors\403.aspx.designer.cs">
+      <DependentUpon>403.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="errors\404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="errors\404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="errors\500.aspx.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="errors\500.aspx.designer.cs">
+      <DependentUpon>500.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
