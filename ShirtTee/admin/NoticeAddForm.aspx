@@ -54,8 +54,8 @@
                 </div>
                 <div class="col-span-3">
                     <asp:RadioButtonList ID="radVisibility" runat="server"  RepeatDirection="Horizontal">
-                        <asp:ListItem class="px-4" Value="is_all" Selected="True">  To everyone</asp:ListItem>
-                        <asp:ListItem class="px-4" Value="is_staff_only">  To staff only</asp:ListItem>
+                        <asp:ListItem class="px-4 text-sm text-gray-800 dark:text-gray-200" Value="is_all" Selected="True">  To everyone</asp:ListItem>
+                        <asp:ListItem class="px-4 text-sm text-gray-800 dark:text-gray-200" Value="is_staff_only">  To staff only</asp:ListItem>
                     </asp:RadioButtonList>
                 </div>
 
