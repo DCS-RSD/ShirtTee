@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ShirtTee.admin
+namespace ShirtTee.errors
 {
-    public partial class SampleForm : System.Web.UI.Page
+    public partial class _404 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

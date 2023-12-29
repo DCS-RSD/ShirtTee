@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Stripe;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -10,6 +12,8 @@ namespace ShirtTee.admin
 {
     public partial class VoucherDetails : System.Web.UI.Page
     {
+        static string voucherName;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["voucher_id"] == null)
@@ -22,6 +26,19 @@ namespace ShirtTee.admin
             }
             else
             {
+                if (!IsPostBack)
+                {
+                    fetchData();
+                }
+
+
+            }
+        }
+
+        private void fetchData()
+        {
+            try
+            {
                 DBconnection dbconnection = new DBconnection();
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@voucher_ID", Request.QueryString["voucher_id"])
@@ -29,21 +46,121 @@ namespace ShirtTee.admin
                 SqlDataReader voucherDetails = dbconnection.ExecuteQuery("SELECT * FROM [Voucher] WHERE voucher_ID = @voucher_ID", parameterUrl)
                     .ExecuteReader();
 
-
                 if (voucherDetails.HasRows)
                 {
                     voucherDetails.Read();
+                    voucherName = voucherDetails["voucher_name"].ToString();
 
                     lblSubTitle.Text = voucherDetails["voucher_ID"].ToString();
                     lblTitle.Text = voucherDetails["voucher_name"].ToString();
-                    txtCap.Text = voucherDetails["cap_at"].ToString();
-                    txtDiscount.Text = voucherDetails["discount_rate"].ToString();
-                    txtMin.Text = voucherDetails["min_spend"].ToString();
+                    txtCapAt.Text = voucherDetails["cap_at"].ToString();
+
+                    txtDiscount.Text = ((double)voucherDetails["discount_rate"] * 100).ToString();
+
+                    txtMinSpend.Text = voucherDetails["min_spend"].ToString();
                     txtVoucherDesc.Text = voucherDetails["voucher_description"].ToString();
                     txtVoucherName.Text = voucherDetails["voucher_name"].ToString();
-
+                    txtDate.Text = ((DateTime)voucherDetails["expiry_date"]).ToString("yyyy-MM-dd");
                 }
+            }
+            catch (Exception)
+            {
+            }
+        }
 
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DBconnection dbconnection = new DBconnection();
+
+                string sqlCommand = "UPDATE Voucher SET " +
+                       "deleted_at = @deleted_at " +
+                       "WHERE voucher_ID = @voucher_ID";
+
+                SqlParameter[] parameters = {
+                new SqlParameter("@deleted_at", DateTime.Now),
+                new SqlParameter("@voucher_ID",Request.QueryString["voucher_id"])
+                };
+
+
+                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                {
+                    Session["VoucherDeleted"] = "success";
+
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    var service = new CouponService();
+                    service.Delete(voucherName);
+                }
+            }
+            catch (Exception)
+            {
+                Session["VoucherDeleted"] = "error";
+            }
+            finally
+            {
+                Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
+            }
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DBconnection dbconnection = new DBconnection();
+
+                string sqlCommand = "UPDATE Voucher SET" +
+                    " voucher_name = @voucher_name," +
+                    " voucher_description = @voucher_description," +
+                    " discount_rate = @discount_rate, " +
+                    " min_spend = @min_spend, " +
+                    " cap_at = @cap_at," +
+                    " expiry_date = @expiry_date " +
+                    " WHERE voucher_ID = @voucher_ID";
+
+                double discount = Convert.ToDouble(txtDiscount.Text) / 100;
+                SqlParameter[] parameters = {
+                new SqlParameter("@voucher_name", txtVoucherName.Text),
+                new SqlParameter("@voucher_description", txtVoucherDesc.Text),
+                new SqlParameter("@discount_rate", discount),
+                new SqlParameter("@min_spend", Convert.ToDouble(txtMinSpend.Text)),
+                new SqlParameter("@expiry_date", txtDate.Text),
+                new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text)),
+                new SqlParameter("@voucher_ID", Request.QueryString["voucher_id"])
+                };
+
+                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                {
+                    Session["VoucherUpdated"] = "success";
+
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    var service = new CouponService();
+                    service.Delete(voucherName);
+
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    var options = new CouponCreateOptions
+                    {
+                        Duration = "once",
+                        Name = txtVoucherName.Text,
+                        Id = txtVoucherName.Text,
+                        PercentOff = (decimal)discount,
+                        RedeemBy = DateTime.Parse(txtDate.Text)
+                    };
+
+                    var service2 = new CouponService();
+                    service2.Create(options);
+
+                    fetchData();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message+"\n>>"+ voucherName);
+                Session["VoucherUpdated"] = "error";
+            }
+            finally
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
             }
         }
     }
