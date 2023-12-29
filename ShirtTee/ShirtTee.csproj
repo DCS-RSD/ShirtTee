@@ -215,11 +215,7 @@
     <Content Include="Image\cloth7.png" />
     <Content Include="Image\cloth8.png" />
     <Content Include="Image\cloth9.png" />
-    <Content Include="Image\first_page.svg" />
-    <Content Include="Image\last_page.svg" />
-    <Content Include="Image\next_page.svg" />
     <Content Include="Image\noimage.png" />
-    <Content Include="Image\prev_page.svg" />
     <Content Include="Login.aspx" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="Products.aspx" />
