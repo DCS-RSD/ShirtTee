@@ -349,6 +349,9 @@ namespace ShirtTee.customer
                 Label lblOrderDate = (Label)e.Item.FindControl("lblOrderDate");
                 Label lblOrderTotal = (Label)e.Item.FindControl("lblOrderTotal");
                 Label lblOrderStatus = (Label)e.Item.FindControl("lblOrderStatus");
+                Label lblDisplayStatus = (Label)e.Item.FindControl("lblDisplayStatus");
+                Label lblVoucherCode = (Label)e.Item.FindControl("lblVoucherCode");
+                Label lblDisplayVoucher = (Label)e.Item.FindControl("lblDisplayVoucher");
 
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
 
@@ -372,8 +375,54 @@ namespace ShirtTee.customer
                     {
                         orderStatus.Read();
                         lblOrderStatus.Text = orderStatus["status"].ToString();
+                        GetStatusClass(orderStatus["status"].ToString(), lblDisplayStatus);
+                    }
+                    
+                    if (dataItem["voucher_ID"] != null) 
+                    {
+                        SqlParameter[] p = new SqlParameter[]{
+                         new SqlParameter("@voucher_ID", dataItem["voucher_ID"].ToString())
+                        };
+                        string v = dataItem["voucher_ID"].ToString();
+                        SqlDataReader voucher = dBconnection.ExecuteQuery(
+                            "SELECT * FROM [Voucher] " +
+                            "WHERE voucher_ID = @voucher_ID ",
+                        p).ExecuteReader();
+                        if (voucher.HasRows) 
+                        {
+                            voucher.Read();
+                            lblDisplayVoucher.Visible = true;
+                            lblVoucherCode.Text = voucher["voucher_name"].ToString();
+                        }
+
                     }
                 }
+            }
+        }
+
+        protected void GetStatusClass(string status, Label lblDisplayStatus)
+        {
+            string existingClass = lblDisplayStatus.CssClass;
+
+            switch (status)
+            {
+                case "Order Placed":
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500";
+                    break;
+                case "Preparing":
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500";
+                    break;
+                case "Shipped":
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-blue-100 text-blue-800 dark:bg-blue-500/10 dark:text-blue-500";
+                    break;
+                case "Delivered":
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-gray-100 text-gray-800 dark:bg-slate-500/20 dark:text-slate-400";
+                    break;
+                case "Cancelled":
+                    lblDisplayStatus.CssClass = $"{existingClass} bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500";
+                    break;
+                default:
+                    break;
             }
         }
 
