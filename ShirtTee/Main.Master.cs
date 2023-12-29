@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,16 +10,40 @@ namespace ShirtTee
 {
     public partial class Main : System.Web.UI.MasterPage
     {
-        protected void Page_Load(object sender, EventArgs e)
+
+        protected override void OnPreRender(EventArgs e)
         {
-            if (!IsPostBack) {
-                if (HttpContext.Current.User.Identity.IsAuthenticated) {
-                    lblUsername.Text = string.Format("{0}", HttpContext.Current.User.Identity.GetUserName());
-                }
+            DBconnection dbconnection = new DBconnection();
+            SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"])
+                };
+
+            SqlDataReader cartDetails = dbconnection.ExecuteQuery(
+                " SELECT SUM(quantity) AS qty FROM [Cart]"
+              + " WHERE user_ID = @user_ID",
+            parameterUrl).ExecuteReader();
+
+            if (cartDetails.HasRows)
+            {
+                cartDetails.Read();
+                lblCartNumber.Text = cartDetails["qty"].ToString();
             }
         }
 
- 
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    lblUsername.Text = string.Format("{0}", HttpContext.Current.User.Identity.GetUserName());
+                }
+            }
+
+
+        }
+
+
 
 
 

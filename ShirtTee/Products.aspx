@@ -10,7 +10,8 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Product] AS p
 INNER JOIN [Category] AS c ON
 c.category_ID = p.category_ID
-WHERE category_group = @category">
+WHERE category_group = @category AND
+deleted_at IS NULL">
                     <SelectParameters>
                         <asp:QueryStringParameter QueryStringField="category" Name="category"></asp:QueryStringParameter>
                     </SelectParameters>
