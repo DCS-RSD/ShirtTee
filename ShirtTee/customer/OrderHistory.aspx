@@ -107,6 +107,7 @@ WHERE order_ID = @order_ID">
                                             </asp:SqlDataSource>
                                             <asp:Repeater ID="Repeater2" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
                                                 <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("order_ID") %>' ID="lblOrderID2" Visible="false"/>
                                                     <li class="p-4 sm:pt-6 sm:ps-6 sm:pe-6 sm:pb-4">
                                                         <div class="flex items-center sm:items-start">
                                                             <div class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg overflow-hidden sm:w-40 sm:h-40">
