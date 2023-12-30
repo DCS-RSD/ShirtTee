@@ -117,7 +117,7 @@ namespace ShirtTee.admin
                         width = 3;
                         if (!IsPostBack)
                         {
-                            txtUpdateStatusDesc.Text = "Your order is out of delivery";
+                            txtUpdateStatusDesc.Text = "Your order is out of delivery.";
                         }
                         nextStatus = "Shipped";
                         break;
