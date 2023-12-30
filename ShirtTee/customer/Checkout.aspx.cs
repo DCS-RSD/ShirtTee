@@ -235,76 +235,10 @@ namespace ShirtTee.customer
 
         }
 
-        protected void btnHidden_Click(object sender, EventArgs e)
-        {
-            decimal shipping = Convert.ToDecimal(lblShipping.Text.ToString());
-            decimal discount = Convert.ToDecimal(lblDiscount.Text.ToString());
-            decimal subtotal = Convert.ToDecimal(lblSubtotal.Text.ToString()) - discount;
-            int quantity = 1;
-            decimal total = subtotal + shipping;
-
-            // Authenticate with PayPal
-            var config = ConfigManager.Instance.GetProperties();
-            var accessToken = new OAuthTokenCredential(config).GetAccessToken();
-            //Get APIContext Object
-            var apiContext = new APIContext(accessToken);
-
-            var cartItem = new Item();
-            cartItem.name = "ShirtTee";
-            cartItem.currency = "MYR";
-            cartItem.price = subtotal.ToString();
-            cartItem.sku = "SHIRTEE";
-            cartItem.quantity = quantity.ToString();
-
-            var transactionDetails = new Details();
-            transactionDetails.tax = "0";
-            transactionDetails.shipping = shipping.ToString();
-            transactionDetails.subtotal = subtotal.ToString("0.00");
-
-            var transactionAmount = new Amount();
-            transactionAmount.currency = "MYR";
-            transactionAmount.total = total.ToString("0.00");
-            transactionAmount.details = transactionDetails;
-
-            var transaction = new Transaction();
-            transaction.description = "Your order at SHIRTTEE";
-            transaction.invoice_number = Guid.NewGuid().ToString(); //this should ideally be the id of a record storing the order
-            transaction.amount = transactionAmount;
-            transaction.item_list = new ItemList
-            {
-                items = new List<Item> { cartItem }
-            };
-            var payer = new Payer();
-            payer.payment_method = "paypal";
-            var redirectUrls = new RedirectUrls();
-            redirectUrls.cancel_url = "https://localhost:44374/customer/OrderHistory.aspx" + "?cancel=true";
-            redirectUrls.return_url = "https://localhost:44374/customer/OrderHistory.aspx" + "?cancel=false";
-            var payment = Payment.Create(apiContext, new Payment
-            {
-                intent = "sale",
-                payer = payer,
-                transactions = new List<Transaction> { transaction },
-                redirect_urls = redirectUrls
-            });
-            Session["paymentId"] = payment.id;
-            foreach (var link in payment.links)
-            {
-                if (link.rel.ToLower().Trim().Equals("approval_url"))
-                {
-                    Response.Redirect(link.href);
-                };
-            }
-
-        }
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
 
-            if (lblWarning.Visible == false) 
-            {
-                btnHidden_Click(null, EventArgs.Empty);
-
-            }
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)

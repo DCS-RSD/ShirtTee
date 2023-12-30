@@ -16,6 +16,8 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
+using Org.BouncyCastle.Asn1.Ocsp;
+
 namespace ShirtTee.customer
 {
     public partial class OrderHistory : System.Web.UI.Page
@@ -25,7 +27,6 @@ namespace ShirtTee.customer
 
             paymentStatusDiv.Visible = false;
             string sessionId = Request.QueryString["id"]; //stripe
-            string cancel = Request.QueryString["cancel"]; //paypal
             if (!string.IsNullOrEmpty(sessionId))
             {
                 try
@@ -77,8 +78,8 @@ namespace ShirtTee.customer
                                         loop = false;
 
                                         SqlParameter[] parameterUrl = new SqlParameter[]{
-                            new SqlParameter("@order_date", orderDate),
-                            };
+                                        new SqlParameter("@order_date", orderDate),
+                                        };
 
                                         SqlDataReader order = dBconnection.ExecuteQuery(
                                             " SELECT order_ID FROM [Order]"
@@ -102,9 +103,14 @@ namespace ShirtTee.customer
                                     decimal total = Convert.ToDecimal(session.AmountTotal) / 100m;
                                     string paymentID = session.PaymentIntentId;
                                     string voucherID = null;
+                                    string tempCode = "";
+                                    if (Session["discountCode"] != null) 
+                                    {
+                                        tempCode = Session["discountCode"].ToString();
+                                    }
                                     SqlParameter[] parameter = new SqlParameter[]{
-                           new SqlParameter("@voucher_name", Session["discountCode"].ToString()),
-                        };
+                                       new SqlParameter("@voucher_name", tempCode),
+                                    };
                                     SqlDataReader voucher = dBconnection.ExecuteQuery(
                                        " SELECT * FROM [Voucher]"
                                      + " WHERE voucher_name = @voucher_name",
@@ -299,7 +305,7 @@ namespace ShirtTee.customer
                             }
                         }
                     }
-                    else 
+                    else
                     {
                         paymentStatusDiv.Visible = true;
                         successIcon.Visible = false;
@@ -314,36 +320,10 @@ namespace ShirtTee.customer
                 {
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                 }
-             
+
 
             }
-            else if (!string.IsNullOrEmpty(cancel))
-            {
-                paymentStatusDiv.Visible = true;
-                if (cancel == "false")
-                {
-                    // Payment successful
-                    // You can perform additional actions here
-                    successIcon.Visible = true;
-                    failedIcon.Visible = false;
-                    lblStatus.Text = "paid";
-
-                }
-                else
-                {
-                    successIcon.Visible = false;
-                    failedIcon.Visible = true;
-                    lblStatus.Text = "error";
-                    lblPaymentTitle.Text = "Payment Failed !";
-                    lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
-                }
-            }
-            else
-            {
-                // No session ID in the query parameters, handle accordingly
-                lblStatus.Text = "error";
-                paymentStatusDiv.Visible = false;
-            }
+ 
 
 
             displayStatus();
@@ -656,5 +636,7 @@ namespace ShirtTee.customer
 
             }
         }
+
+
     }
 }
