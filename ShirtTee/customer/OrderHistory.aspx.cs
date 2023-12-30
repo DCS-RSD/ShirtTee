@@ -343,7 +343,9 @@ namespace ShirtTee.customer
             Button btnWriteReview = (Button)sender;
             RepeaterItem repeaterItem = (RepeaterItem)btnWriteReview.NamingContainer;
             Label lblProductDetailsID = (Label)repeaterItem.FindControl("lblProductDetailsID");
+            Label lblOrderID = (Label)repeaterItem.FindControl("lblOrderID2");
             Session["product_details_ID"] = lblProductDetailsID.Text;
+            Session["order_ID_review"] = lblOrderID.Text;
             Response.Redirect($"~/customer/WriteReview.aspx");
         }
 
@@ -358,7 +360,7 @@ namespace ShirtTee.customer
                 Label lblDisplayStatus = (Label)e.Item.FindControl("lblDisplayStatus");
                 Label lblVoucherCode = (Label)e.Item.FindControl("lblVoucherCode");
                 Label lblDisplayVoucher = (Label)e.Item.FindControl("lblDisplayVoucher");
-
+                
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
 
                 if (dataItem != null)
@@ -439,6 +441,7 @@ namespace ShirtTee.customer
             {
                 Label lblPrice = (Label)e.Item.FindControl("lblPrice");
                 Label lblTotal = (Label)e.Item.FindControl("lblTotal");
+                Button btnWriteReview = (Button)e.Item.FindControl("btnWriteReview");
 
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
 
@@ -449,6 +452,64 @@ namespace ShirtTee.customer
                     double total = Convert.ToDouble(dataItem["total"].ToString());
                     lblTotal.Text = total.ToString("F2");
                 }
+
+                DBconnection dBconnection = new DBconnection();
+                SqlParameter[] parameter = new SqlParameter[]{
+                         new SqlParameter("@order_ID", dataItem["order_ID"].ToString())
+                    };
+                SqlDataReader orderStatus = dBconnection.ExecuteQuery(
+                    "SELECT * FROM [Order_Status] " +
+                    "WHERE order_ID = @order_ID AND " +
+                    "update_date = (SELECT MAX(update_date) FROM [Order_Status] WHERE order_ID = @order_ID)",
+                parameter).ExecuteReader();
+                if (orderStatus.HasRows)
+                {
+                    orderStatus.Read();
+                    if (!orderStatus["status"].ToString().Equals("Delivered"))
+                    {
+                        btnWriteReview.Visible = false;
+                    }
+                    else
+                    {
+                        btnWriteReview.Visible = true;
+                        SqlParameter[] parameterUrl = new SqlParameter[]{
+                            new SqlParameter("@user_ID", Session["user_ID"]),
+                            new SqlParameter("@product_details_ID", dataItem["product_details_ID"]),
+                            new SqlParameter("@order_ID", dataItem["order_ID"]),
+                        };
+                        SqlDataReader review = dBconnection.ExecuteQuery(
+                          "SELECT * FROM [Review] AS r"
+                        + " INNER JOIN [Product_Details] AS pd ON r.product_details_ID = pd.product_details_ID"
+                        + " INNER JOIN [Order] AS o ON r.order_ID = o.order_ID"
+                        + " WHERE r.user_ID = @user_ID AND"
+                        + " r.product_details_ID = @product_details_ID AND"
+                        + " r.order_ID = @order_ID",
+                            parameterUrl).ExecuteReader();
+                        if (review.HasRows)
+                        {
+                            int rowCount = 0;
+                            while (review.Read()) 
+                            {
+                                rowCount++;
+                            }
+                            if (rowCount == 1)
+                            {
+                                btnWriteReview.Text = "Edit Review";
+                            }
+                            else 
+                            {
+                                btnWriteReview.Text = "View Review";
+                            }
+                            
+                        }
+                        else 
+                        {
+                            btnWriteReview.Text = "Write Review";
+                        }
+                    }
+                }
+
+
             }
         }
     }
