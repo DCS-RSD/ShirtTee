@@ -17,7 +17,15 @@ namespace ShirtTee
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Login.aspx")
+                LoginPath = new PathString("/Login.aspx"),
+                Provider = new CookieAuthenticationProvider
+                {
+                    OnApplyRedirect = context =>
+                    {
+                        context.Response.StatusCode = 401;
+                        context.RedirectUri = null;
+                    }
+                }
             });
         }
     }

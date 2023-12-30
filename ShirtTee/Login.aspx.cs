@@ -60,7 +60,6 @@ namespace ShirtTee
                 }
                 else
                 {
-                    manager.AddToRole(user.Id, "customer");
                     Response.Redirect($"~/Homepage.aspx", false);
                 }
 
