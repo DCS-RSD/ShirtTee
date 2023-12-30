@@ -675,15 +675,15 @@ nav .menu .menu_icon:hover .icon:after {
                     </div>
                 </div>
 
-                <p class="p404" data-depth="0.50">403</p>
-                <p class="p404" data-depth="0.10">403</p>
+                <p class="p404" data-depth="0.50">401</p>
+                <p class="p404" data-depth="0.10">401</p>
 
             </div>
 
             <div class="text">
                 <article>
                     <p>Uh oh! You are not allow to access. <br>Go back to the homepage if you dare!</p>
-                    <button><a href="../Homepage.aspx">i dare!</a></button>
+                    <a href="../Homepage.aspx"><button>i dare!</button></a>
                 </article>
             </div>
 

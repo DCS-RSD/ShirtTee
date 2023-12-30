@@ -89,7 +89,7 @@
         </g>
     </svg>
     <h1>You are not allowed to enter here</h1>
-    <h2>Go <a href="">Home!</a></h2>
+    <h2>Go <a href="../Homepage.aspx">Home!</a></h2>
     <script>
         var root = document.documentElement;
         var eyef = document.getElementById('eyef');

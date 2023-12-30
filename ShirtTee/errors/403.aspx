@@ -128,7 +128,7 @@
             </b>...]
         </p>
         <p>
-            > <span>SOME PAGES ON THIS SERVER THAT YOU DO HAVE PERMISSION TO ACCESS</span>: [<a href="">
+            > <span>SOME PAGES ON THIS SERVER THAT YOU DO HAVE PERMISSION TO ACCESS</span>: [<a href="../Homepage.aspx">
                 Home
                 Page
             </a>...]

@@ -20,11 +20,12 @@
                 <div class="p-4 md:p-5 flex justify-between gap-x-3">
                     <div>
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Order Received
+                            Order Received / Month
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
-                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">353
-                            </h3>
+                            <asp:Label ID="lblTotalOrder" runat="server"
+                                class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">
+                            </asp:Label>
                         </div>
                     </div>
                     <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
@@ -51,8 +52,9 @@
                             New Users
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
-                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">1214
-                            </h3>
+                            <asp:Label ID="lblTotalUser" runat="server"
+                                class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">
+                            </asp:Label>
                         </div>
                     </div>
                     <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
@@ -78,11 +80,12 @@
                 <div class="p-4 md:p-5 flex justify-between gap-x-3">
                     <div>
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Sales (RM)
+                            Sales (RM) / Month
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
-                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">92,913
-                            </h3>
+                            <asp:Label ID="lblTotalSales" runat="server"
+                                class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">
+                            </asp:Label>
                         </div>
                     </div>
                     <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
