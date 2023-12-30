@@ -31,7 +31,7 @@
                     <p class="text-sm text-gray-600 dark:text-gray-400">
                         <asp:Label ID="lblSubTitle" runat="server"></asp:Label>
                     </p>
-                    <asp:HyperLink ID="hypToStock" runat="server" Target="_blank"
+                    <asp:HyperLink ID="hypToStock" runat="server"
                         class="text-sm font-medium text-indigo-600 hover:text-indigo-500 hover:cursor-pointer hover:underline">
                         View Stock<span> &rarr;</span>
                     </asp:HyperLink>

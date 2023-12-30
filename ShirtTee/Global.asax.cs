@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using WingtipToys.Logic;
 
 namespace ShirtTee
 {
@@ -12,7 +13,33 @@ namespace ShirtTee
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
+            siteMapProvider.SiteMapResolve += SiteMap_SiteMapResolve;
 
+            RoleActions roleActions = new RoleActions();
+            roleActions.AddUserAndRole();
+        }
+
+        SiteMapNode SiteMap_SiteMapResolve(object sender, SiteMapResolveEventArgs e)
+        {
+            SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
+            SiteMapNode currentNode = siteMapProvider.CurrentNode.Clone(true);
+            SiteMapNode tempNode = currentNode;
+
+            string queryString= "?product_id=" + e.Context.Request["product_id"];
+
+            if (currentNode.Title.Equals("Stock"))
+            {
+                currentNode.ParentNode.Url += queryString;
+            }
+
+            if (currentNode.Title.Equals("Add Stock"))
+            {
+                currentNode.ParentNode.Url += queryString;
+                currentNode.ParentNode.ParentNode.Url += queryString;
+            }
+
+            return currentNode;
         }
 
         protected void Session_Start(object sender, EventArgs e)

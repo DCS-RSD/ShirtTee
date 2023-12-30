@@ -23,12 +23,20 @@ namespace ShirtTee
 
             var userStore = new UserStore<IdentityUser>(identityDbContext);
             var manager = new UserManager<IdentityUser>(userStore);
-            var user = manager.Find(signinEmail.Text, signInPassword.Text);
+
+            var userEmail = manager.FindByEmail(signinEmail.Text);
+            if (userEmail ==null)
+            {
+                //error
+                return;
+            }
+            var user = manager.Find(userEmail.UserName, signInPassword.Text);
             if (user != null)
             {
+
                 LogUserIn(manager, user);
 
-                if (chkRememberMe.Checked) 
+                if (chkRememberMe.Checked)
                 {
                     var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
                     var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
@@ -45,15 +53,25 @@ namespace ShirtTee
                     Response.Cookies["user_ID"].Value = user.Id;
                     Response.Cookies["user_ID"].Expires = DateTime.UtcNow.AddDays(30);
                 }
+                if (manager.IsInRole(user.Id, "admin"))
+                {
 
-                Response.Redirect($"~/Homepage.aspx", false);
+                    Response.Redirect($"~/admin/Dashboard.aspx", false);
+                }
+                else
+                {
+                    Response.Redirect($"~/Homepage.aspx", false);
+                }
+
             }
-            else { 
-            //error;
+            else
+            {
+                
             }
         }
 
-        private void LogUserIn(UserManager<IdentityUser> usermanager, IdentityUser user) {
+        private void LogUserIn(UserManager<IdentityUser> usermanager, IdentityUser user)
+        {
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             var userIdentity = usermanager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
