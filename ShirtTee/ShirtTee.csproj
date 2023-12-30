@@ -175,6 +175,7 @@
     <Content Include="customer\Profile.aspx" />
     <Content Include="customer\WriteReview.aspx" />
     <Content Include="EmailTemplate.aspx" />
+    <Content Include="errors\401.aspx" />
     <Content Include="errors\403.aspx" />
     <Content Include="errors\404.aspx" />
     <Content Include="errors\500.aspx" />
@@ -396,6 +397,13 @@
     </Compile>
     <Compile Include="EmailTemplate.aspx.designer.cs">
       <DependentUpon>EmailTemplate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="errors\401.aspx.cs">
+      <DependentUpon>401.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="errors\401.aspx.designer.cs">
+      <DependentUpon>401.aspx</DependentUpon>
     </Compile>
     <Compile Include="errors\403.aspx.cs">
       <DependentUpon>403.aspx</DependentUpon>

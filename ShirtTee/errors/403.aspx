@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>403 | Unauthorise</title>
+    <title>403 | Forbidden</title>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Share+Tech+Mono|Montserrat:700");
 
