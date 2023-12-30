@@ -464,6 +464,7 @@
     <Compile Include="customer\Review.aspx.designer.cs">
       <DependentUpon>Review.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RoleActions.cs" />
     <Compile Include="Signup.aspx.cs">
       <DependentUpon>Signup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -478,6 +479,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
+    <Content Include="admin\Web.config" />
+    <Content Include="customer\Web.config" />
     <None Include="packages.config" />
     <Content Include="StripePublicKeyHandler.ashx" />
     <None Include="Web.Debug.config">

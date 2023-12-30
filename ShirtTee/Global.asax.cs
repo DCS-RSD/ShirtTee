@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using WingtipToys.Logic;
 
 namespace ShirtTee
 {
@@ -14,6 +15,9 @@ namespace ShirtTee
         {
             SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
             siteMapProvider.SiteMapResolve += SiteMap_SiteMapResolve;
+
+            RoleActions roleActions = new RoleActions();
+            roleActions.AddUserAndRole();
         }
 
         SiteMapNode SiteMap_SiteMapResolve(object sender, SiteMapResolveEventArgs e)

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ShirtTee.admin
 {
@@ -11,6 +8,8 @@ namespace ShirtTee.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            lblUsername.Text = HttpContext.Current.User.Identity.GetUserName();
+
             string activeNavClass = "flex items-center gap-x-3.5 py-2 px-2.5  text-sm bg-gray-100 text-slate-700 rounded-lg dark:bg-gray-900  dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600";
             // Get the current page name without the path and extension
             string currentPage = System.IO.Path.GetFileNameWithoutExtension(Request.Url.AbsolutePath);
@@ -37,5 +36,11 @@ namespace ShirtTee.admin
             }
         }
 
+        protected void btnSignout_Click(object sender, EventArgs e)
+        {
+            var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            authenticationManager.SignOut();
+            Response.Redirect("~/Login.aspx");
+        }
     }
 }

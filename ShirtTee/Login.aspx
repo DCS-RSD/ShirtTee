@@ -23,7 +23,7 @@
 <body>
     <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b text-sm py-4 dark:bg-slate-900 dark:border-gray-700">
         <nav class="flex items-center justify-center w-full " aria-label="Global">
-            <div class="me-5 md:me-8">
+            <div class="m-auto">
                 <a id="linkHomepage" class="flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" aria-label="Brand" href="Homepage.aspx">SHIRTTEE</a>
             </div>
 
