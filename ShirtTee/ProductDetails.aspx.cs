@@ -16,9 +16,9 @@ namespace ShirtTee
 {
     public partial class ProductDetails : System.Web.UI.Page
     {
-        protected string SelectedColor        
+        protected string SelectedColor
         {
-            get { return ViewState["SelectedColor"] as string;  }
+            get { return ViewState["SelectedColor"] as string; }
             set { ViewState["SelectedColor"] = value; }
         }
         protected string SelectedSize
@@ -30,13 +30,15 @@ namespace ShirtTee
         {
             Repeater1.DataBind();
             Repeater2.DataBind();
+            Repeater8.DataBind();
             restoreRadioState();
+            calculateOverallRating();
         }
 
-        private void saveColorState(string colorID) 
+        private void saveColorState(string colorID)
         {
             SelectedColor = colorID;
-            
+
         }
 
         private void saveSizeState(string sizeID)
@@ -44,20 +46,20 @@ namespace ShirtTee
             SelectedSize = sizeID;
         }
 
-        private void restoreRadioState() 
+        private void restoreRadioState()
         {
 
-            foreach (RepeaterItem item in Repeater1.Items) 
+            foreach (RepeaterItem item in Repeater1.Items)
             {
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
                     RadioButton radColor = item.FindControl("radColor") as RadioButton;
-                    if (radColor.Attributes["value"].Equals(SelectedColor)) 
+                    if (radColor.Attributes["value"].Equals(SelectedColor))
                     {
                         EventArgs eventArgs = new EventArgs();
                         radColor_CheckedChanged(radColor, eventArgs);
                         string script = $"handleColorRadioClick({radColor.ClientID});";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "colorScript", script, true);                       
+                        ScriptManager.RegisterStartupScript(this, GetType(), "colorScript", script, true);
                         foreach (RepeaterItem item2 in Repeater2.Items)
                         {
                             if (item2.ItemType == ListItemType.Item || item2.ItemType == ListItemType.AlternatingItem)
@@ -66,7 +68,7 @@ namespace ShirtTee
                                 if (radSize.Attributes["value"].Equals(SelectedSize))
                                 {
                                     EventArgs eventArgs2 = new EventArgs();
-                                    radSize_CheckedChanged(radSize, eventArgs2);                                   
+                                    radSize_CheckedChanged(radSize, eventArgs2);
                                     string script2 = $"handleSizeRadioClick({radSize.ClientID});";
                                     ScriptManager.RegisterStartupScript(this, GetType(), "sizeScript", script2, true);
                                     return;
@@ -112,69 +114,6 @@ namespace ShirtTee
                     lblPrice.Text = "RM" + productDetails["price"].ToString();
                 }
 
-                int totalReview = 0;
-                int totalRating = 0;
-                double avgRating = 0.0;
-                int oneStar = 0, twoStar = 0, threeStar = 0, fourStar = 0, fiveStar = 0;
-                double onePer = 0, twoPer = 0, threePer = 0, fourPer = 0, fivePer = 0;
-                SqlParameter[] parameterUrl2 = new SqlParameter[]{
-                 new SqlParameter("@product_ID", Request.QueryString["product_ID"])
-                };
-
-                SqlDataReader reviewDetails = dbconnection.ExecuteQuery(
-                    " SELECT * FROM [Review] AS r"
-                  + " INNER JOIN [Product_Details] AS p ON r.product_details_ID = p.product_details_ID"
-                  + " WHERE p.product_ID = @product_ID",
-                parameterUrl2).ExecuteReader();
-
-                if (reviewDetails.HasRows)
-                {
-                    while (reviewDetails.Read())
-                    {
-                        totalReview++;
-                        int rating = Convert.ToInt32(reviewDetails["rating"]);
-                        totalRating += rating;
-                        switch (rating)
-                        {
-                            case 1:
-                                oneStar++;
-                                break;
-                            case 2:
-                                twoStar++;
-                                break;
-                            case 3:
-                                threeStar++;
-                                break;
-                            case 4:
-                                fourStar++;
-                                break;
-                            case 5:
-                                fiveStar++;
-                                break;
-                        }
-
-                    }
-                    avgRating = totalRating / (double)totalReview;
-                    onePer = oneStar / (double)totalReview * 100;
-                    twoPer = twoStar / (double)totalReview * 100;
-                    threePer = threeStar / (double)totalReview * 100;
-                    fourPer = fourStar / (double)totalReview * 100;
-                    fivePer = fiveStar / (double)totalReview * 100;
-                }
-
-
-                starBar1.Attributes["style"] = "width: calc((" + onePer + ") / 100 * 100%)";
-                starBar2.Attributes["style"] = "width: calc((" + twoPer + ") / 100 * 100%)";
-                starBar3.Attributes["style"] = "width: calc((" + threePer + ") / 100 * 100%)";
-                starBar4.Attributes["style"] = "width: calc((" + fourPer + ") / 100 * 100%)";
-                starBar5.Attributes["style"] = "width: calc((" + fivePer + ") / 100 * 100%)";
-                lblOnePer.Text = onePer.ToString("F0");
-                lblTwoPer.Text = twoPer.ToString("F0");
-                lblThreePer.Text = threePer.ToString("F0");
-                lblFourPer.Text = fourPer.ToString("F0");
-                lblFivePer.Text = fivePer.ToString("F0");
-                lblTotalRating.Text = avgRating.ToString("F1");
-                lblTotalReviews.Text = totalReview.ToString();
 
             }
 
@@ -334,11 +273,11 @@ namespace ShirtTee
         {
             RadioButton radioButton = (RadioButton)sender;
             string colorID = radioButton.Attributes["value"];
-          
+
             lblColor.Text = colorID.ToString();
             saveColorState(colorID);
             lblMsg.Visible = false;
-            
+
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -366,7 +305,7 @@ namespace ShirtTee
             string sizeID = radioButton.Attributes["value"];
             saveSizeState(sizeID);
             lblSize.Text = sizeID.ToString();
-            
+
         }
 
         protected void Repeater2_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -385,6 +324,126 @@ namespace ShirtTee
                     radSize.Attributes["value"] = dataItem["size_ID"].ToString();
                     radSize.Attributes["onclick"] = "handleSizeRadioClick(this);";
                 }
+            }
+        }
+
+        private void calculateOverallRating() 
+        {
+            int totalReview = 0;
+            int totalRating = 0;
+            double avgRating = 0.0;
+            int oneStar = 0, twoStar = 0, threeStar = 0, fourStar = 0, fiveStar = 0;
+            double onePer = 0, twoPer = 0, threePer = 0, fourPer = 0, fivePer = 0;
+
+            foreach (RepeaterItem item in Repeater8.Items)
+            {
+                Label lblRating = (Label)item.FindControl("lblRating");
+                if (item.Visible == true)
+                {
+                    totalReview++;
+                    int rating = Convert.ToInt32(lblRating.Text.ToString());
+                    totalRating += rating;
+                    switch (rating)
+                    {
+                        case 1:
+                            oneStar++;
+                            break;
+                        case 2:
+                            twoStar++;
+                            break;
+                        case 3:
+                            threeStar++;
+                            break;
+                        case 4:
+                            fourStar++;
+                            break;
+                        case 5:
+                            fiveStar++;
+                            break;
+
+
+                    }
+                    avgRating = totalRating / (double)totalReview;
+                    onePer = oneStar / (double)totalReview * 100;
+                    twoPer = twoStar / (double)totalReview * 100;
+                    threePer = threeStar / (double)totalReview * 100;
+                    fourPer = fourStar / (double)totalReview * 100;
+                    fivePer = fiveStar / (double)totalReview * 100;
+                }
+
+            }
+
+
+
+            starBar1.Attributes["style"] = "width: calc((" + onePer + ") / 100 * 100%)";
+            starBar2.Attributes["style"] = "width: calc((" + twoPer + ") / 100 * 100%)";
+            starBar3.Attributes["style"] = "width: calc((" + threePer + ") / 100 * 100%)";
+            starBar4.Attributes["style"] = "width: calc((" + fourPer + ") / 100 * 100%)";
+            starBar5.Attributes["style"] = "width: calc((" + fivePer + ") / 100 * 100%)";
+            lblOnePer.Text = onePer.ToString("F0");
+            lblTwoPer.Text = twoPer.ToString("F0");
+            lblThreePer.Text = threePer.ToString("F0");
+            lblFourPer.Text = fourPer.ToString("F0");
+            lblFivePer.Text = fivePer.ToString("F0");
+            lblTotalRating.Text = avgRating.ToString("F1");
+            lblTotalReviews.Text = totalReview.ToString();
+
+            int aVGRating = Convert.ToInt32(avgRating);
+
+            int grayStars = 5 - aVGRating;
+
+            StringBuilder svgBuilder = new StringBuilder();
+
+            for (int i = 0; i < aVGRating; i++)
+            {
+                svgBuilder.Append("<svg class=\"flex-shrink-0 h-5 w-5 text-yellow-400\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\" fill=\"currentColor\" aria-hidden=\"true\">\r\n                                <path d=\"M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z\"></path>\r\n                            </svg>");
+            }
+
+            for (int i = 0; i < grayStars; i++)
+            {
+                svgBuilder.Append("<svg class=\"flex-shrink-0 h-5 w-5 text-gray-400\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\" fill=\"currentColor\" aria-hidden=\"true\">\r\n                                <path d=\"M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z\"></path>\r\n                            </svg>");
+            }
+
+            ratingStars.InnerHtml = svgBuilder.ToString();
+        }
+
+        protected void Repeater8_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+
+
+
+                DataRowView dataItem = (DataRowView)e.Item.DataItem;
+
+                DBconnection dbconnection = new DBconnection();
+                SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@product_details_ID", dataItem["product_details_ID"].ToString()),
+                 new SqlParameter("@order_ID", dataItem["order_ID"].ToString()),
+                };
+
+                SqlDataReader review = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [Review] AS r"
+                  + " WHERE product_details_ID = @product_details_ID AND"
+                  + " order_ID = @order_ID",
+                parameterUrl).ExecuteReader();
+
+                if (review.HasRows)
+                {
+                    int reviewCount = 0;
+                    while (review.Read())
+                    {
+                        reviewCount++;
+                    }
+                    if (reviewCount > 1)
+                    {
+                        if (dataItem["edited_at"] == DBNull.Value)
+                        {
+                            e.Item.Visible = false;
+                        }
+                    }
+                }
+
             }
         }
     }

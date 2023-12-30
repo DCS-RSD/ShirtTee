@@ -92,7 +92,31 @@ namespace ShirtTee.customer
             lblTotal.Text = total.ToString("F2");
 
 
-            callFPX();
+            SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"]),
+            };
+
+            SqlDataReader cartInfo = dbconnection.ExecuteQuery(
+                " SELECT * FROM [Cart] AS c" +
+                " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
+                " WHERE user_ID = @user_ID",
+            parameterUrl2).ExecuteReader();
+            bool cont = true;
+            if (cartInfo.HasRows)
+            {
+                while (cartInfo.Read())
+                {
+                    if (Convert.ToInt32(cartInfo["quantity"].ToString()) > Convert.ToInt32(cartInfo["stock_available"].ToString()))
+                    {
+                        cont = false;
+                    }
+                }
+                if (cont) 
+                {
+                    callFPX();
+                }
+            }
+
 
         }
 
@@ -139,7 +163,7 @@ namespace ShirtTee.customer
                 //shipping free
                 shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OS2AVFglGOSlsymaAj05Mih" });
             }
-            else 
+            else
             {
                 //shipping RM 12.00
                 shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OS1yRFglGOSlsym0DVPXvEB" });
@@ -210,7 +234,7 @@ namespace ShirtTee.customer
             decimal subtotal = Convert.ToDecimal(lblSubtotal.Text.ToString()) - discount;
             int quantity = 1;
             decimal total = subtotal + shipping;
-            
+
             // Authenticate with PayPal
             var config = ConfigManager.Instance.GetProperties();
             var accessToken = new OAuthTokenCredential(config).GetAccessToken();
@@ -267,6 +291,8 @@ namespace ShirtTee.customer
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
+
+
             btnHidden_Click(null, EventArgs.Empty);
         }
 

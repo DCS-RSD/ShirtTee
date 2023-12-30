@@ -25,7 +25,8 @@ INNER JOIN [Product] AS p ON pd.product_ID = p.product_ID
 INNER JOIN [Color] AS c ON pd.color_ID = c.color_ID
 INNER JOIN [Size] AS s ON pd.size_ID = s.size_ID
 WHERE r.user_ID = @user_ID AND
-review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = r.order_ID AND product_details_ID = r.product_details_ID)">
+review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = r.order_ID AND product_details_ID = r.product_details_ID)
+ORDER BY review_date DESC">
                                     <SelectParameters>
                                         <asp:SessionParameter SessionField="user_ID" Name="user_ID"></asp:SessionParameter>
                                     </SelectParameters>

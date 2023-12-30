@@ -8,16 +8,19 @@
             <nav class="px-8 sticky -top-px bg-white text-sm font-medium text-black ring-1 ring-gray-900 ring-opacity-5 shadow-sm shadow-gray-100 pt-6 md:pb-6 -mt-px dark:bg-slate-900 dark:border-gray-800 dark:shadow-slate-700/[.7]" aria-label="Jump links">
                 <div class="max-w-7xl snap-x w-full flex items-center overflow-x-auto px-4 sm:px-6 lg:px-8 pb-4 md:pb-0 mx-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-slate-900">
                     <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last-pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">To Ship</a>
+                        <asp:HyperLink runat="server" CssClass="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="OrderHistory.aspx?status=OrderPlaced" ID="linkOrderPlaced">Order Placed</asp:HyperLink>
                     </div>
                     <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">To Receive</a>
+                        <asp:HyperLink runat="server" CssClass="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="OrderHistory.aspx?status=Preparing" ID="linkPreparing">Preparing</asp:HyperLink>
                     </div>
                     <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">Completed</a>
+                        <asp:HyperLink runat="server" CssClass="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="OrderHistory.aspx?status=Shipped" ID="linkShipped">Shipped</asp:HyperLink>
                     </div>
                     <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-                        <a class="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">Cancelled</a>
+                        <asp:HyperLink runat="server" CssClass="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="OrderHistory.aspx?status=Delivered" ID="linkDelivered">Delivered</asp:HyperLink>
+                    </div>
+                    <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
+                        <asp:HyperLink runat="server" CssClass="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="OrderHistory.aspx?status=Cancelled" ID="linkCancelled">Cancelled</asp:HyperLink>
                     </div>
 
                 </div>
@@ -33,14 +36,15 @@
                 <div class="mt-8">
                     <h2 class="sr-only">Recent orders</h2>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Order]
-WHERE user_ID = @user_ID">
+WHERE user_ID = @user_ID
+ORDER BY order_date DESC">
                         <SelectParameters>
                             <asp:SessionParameter SessionField="user_ID" Name="user_ID"></asp:SessionParameter>
                         </SelectParameters>
                     </asp:SqlDataSource>
                     <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
                         <ItemTemplate>
-                            <div class="mb-12 max-w-7xl mx-auto sm:px-2 lg:px-8">
+                            <div runat="server" id="divHistory" class="mb-12 max-w-7xl mx-auto sm:px-2 lg:px-8">
                                 <div class="px-16 space-y-8 sm:px-8">
                                     <div class="bg-white border-t border-b border-gray-200 shadow-sm rounded-lg border">
                                         <div class="flex items-center p-4 border-b border-gray-200 sm:p-6 sm:grid sm:grid-cols-4 sm:gap-x-6">
@@ -107,7 +111,7 @@ WHERE order_ID = @order_ID">
                                             </asp:SqlDataSource>
                                             <asp:Repeater ID="Repeater2" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
                                                 <ItemTemplate>
-                                                    <asp:Label runat="server" Text='<%# Eval("order_ID") %>' ID="lblOrderID2" Visible="false"/>
+                                                    <asp:Label runat="server" Text='<%# Eval("order_ID") %>' ID="lblOrderID2" Visible="false" />
                                                     <li class="p-4 sm:pt-6 sm:ps-6 sm:pe-6 sm:pb-4">
                                                         <div class="flex items-center sm:items-start">
                                                             <div class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg overflow-hidden sm:w-40 sm:h-40">
@@ -165,7 +169,7 @@ WHERE order_ID = @order_ID">
                                                         <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                                                         <path d="m9 12 2 2 4-4" />
                                                     </svg>
-                                                      <asp:Label runat="server" ID="lblVoucherCode" Text="" />
+                                                    <asp:Label runat="server" ID="lblVoucherCode" Text="" />
                                                 </asp:Label>
                                             </div>
                                         </div>
