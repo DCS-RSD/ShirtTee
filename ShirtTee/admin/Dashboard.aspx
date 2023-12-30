@@ -55,7 +55,7 @@
                             <div class="sm:col-span-1">
                                 <label for="txtSearch" class="sr-only">Search</label>
                                 <div class="relative">
-                                    <asp:TextBox runat="server" placeholder="Search" ID="txtSearch"
+                                    <asp:TextBox runat="server" placeholder="Search" ID="txtSearch" AutoPostBack="true"
                                         class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
                                     </asp:TextBox>
                                     <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
@@ -69,44 +69,33 @@
 
                             <div class="sm:col-span-2 md:grow">
                                 <div class="flex justify-end gap-x-2">
-                                    <div class="hs-dropdown relative inline-block [--placement:bottom-right]" data-hs-dropdown-auto-close="inside">
-                                        <button id="hs-as-table-table-filter-dropdown" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                            <svg class="flex-shrink-0 w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M3 6h18" />
-                                                <path d="M7 12h10" />
-                                                <path d="M10 18h4" />
-                                            </svg>
-                                            Filter
-                                        </button>
-                                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[12rem] z-10 bg-white shadow-md rounded-lg mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-as-table-table-filter-dropdown">
-                                            <div class="divide-y divide-gray-200 dark:divide-gray-700">
-                                                <label for="hs-as-filters-dropdown-all" class="flex py-2.5 px-3">
-                                                    <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-as-filters-dropdown-all" checked>
-                                                    <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">All</span>
-                                                </label>
-                                                <label for="hs-as-filters-dropdown-published" class="flex py-2.5 px-3">
-                                                    <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-as-filters-dropdown-published">
-                                                    <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Published</span>
-                                                </label>
-                                                <label for="hs-as-filters-dropdown-pending" class="flex py-2.5 px-3">
-                                                    <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-as-filters-dropdown-pending">
-                                                    <span class="ms-3 text-sm text-gray-800 dark:text-gray-200">Pending</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <asp:DropDownList runat="server" ID="ddlNoticeType" OnSelectedIndexChanged="ddlNoticeType_SelectedIndexChanged"
+                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" AutoPostBack="True">
+                                        <asp:ListItem Value="">All</asp:ListItem>
+                                        <asp:ListItem Value="True">Private</asp:ListItem>
+                                        <asp:ListItem Value="False">Public</asp:ListItem>
+                                    </asp:DropDownList>
                                 </div>
                             </div>
                         </div>
                         <!-- End Header -->
 
                         <!-- Table -->
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice]"></asp:SqlDataSource>
-                        <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1" DataKeyNames="notice_ID">
+                        <asp:SqlDataSource ID="SqlDataSourceFiltered" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice] WHERE (([is_private] = @is_private))">
+                            <SelectParameters>
+                                <asp:ControlParameter ControlID="ddlNoticeType" PropertyName="SelectedValue" Name="is_private" Type="Boolean"  ConvertEmptyStringToNull="true"></asp:ControlParameter>
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice] WHERE ([notice_title] LIKE '%' + @notice_title + '%')">
+                            <SelectParameters>
+                                <asp:ControlParameter ControlID="txtSearch" PropertyName="Text" Name="notice_title" Type="String"></asp:ControlParameter>
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                        <asp:ListView ID="ListView1" DataSourceID="SqlDataSource1" runat="server" DataKeyNames="notice_ID">
                             <EmptyDataTemplate>
-                                <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
-                                    <tr>
-                                        <td>No data was returned.</td>
+                                <table runat="server" class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
+                                    <tr class="text-center whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
+                                        <td>Empty!</td>
                                     </tr>
                                 </table>
                             </EmptyDataTemplate>
@@ -156,7 +145,7 @@
                         <!-- End Table -->
 
                         <!-- Footer -->
-                          <div class="px-6 py-4 flex justify-end items-center">
+                        <div class="px-6 py-4 flex justify-end items-center">
                             <div class="inline-flex gap-x-2">
                                 <asp:DataPager ID="DataPager2" runat="server" PagedControlID="ListView1" PageSize="10">
                                     <Fields>
