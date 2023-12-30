@@ -14,15 +14,6 @@ namespace ShirtTee.admin
     {
         protected override void OnPreRender(EventArgs e)
         {
-            // Get the site map provider
-            SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
-
-            SiteMapNode node = siteMapProvider.CurrentNode; //product details
-
-            System.Diagnostics.Debug.WriteLine(node.ParentNode.Url);
-
-
-
             // Bind your ListView data here
             ListView1.DataSource = SqlDataSource2;
             ListView1.DataBind();

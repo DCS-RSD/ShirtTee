@@ -19,18 +19,21 @@ namespace ShirtTee
 
         SiteMapNode SiteMap_SiteMapResolve(object sender, SiteMapResolveEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("113331222");
             SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
-
             SiteMapNode currentNode = siteMapProvider.CurrentNode.Clone(true);
             SiteMapNode tempNode = currentNode;
 
-            if (currentNode.ParentNode.Url.Contains("/admin/ProductDetails.aspx"))
-            {
-                System.Diagnostics.Debug.WriteLine("111222");
+            string queryString= "?product_id=" + e.Context.Request["product_id"];
 
-                currentNode.ParentNode.Url += "?product_id=" + e.Context.Request["product_id"];
-                currentNode.ParentNode.Title += "sss";
+            if (currentNode.Title.Equals("Stock"))
+            {
+                currentNode.ParentNode.Url += queryString;
+            }
+
+            if (currentNode.Title.Equals("Add Stock"))
+            {
+                currentNode.ParentNode.Url += queryString;
+                currentNode.ParentNode.ParentNode.Url += queryString;
             }
 
             return currentNode;
