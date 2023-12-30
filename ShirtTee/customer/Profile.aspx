@@ -25,22 +25,22 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question" viewBox="0 0 16 16">
                                                 <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94" />
                                             </svg>
-                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700 hidden" role="tooltip" style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(814.4px, -472.8px, 0px);" data-popper-placement="top">Level 1 Benefits: Free delivery for all your purchases.
-                                            </span>
+                                            <asp:Label Text="" runat="server" ID="lblMemberInfo" class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700 hidden" role="tooltip" style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(814.4px, -472.8px, 0px);" data-popper-placement="top" >
+                                            </asp:Label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="text-right">653 points</div>
+                            <div class="text-right"><asp:Label runat="server" ID="lblMemberPoints" Text="" /> points</div>
                         </div>
                         <div class="mt-4" aria-hidden="true">
                             <div class="bg-gray-200 rounded-full overflow-hidden">
                                 <div class="h-2 bg-indigo-600 rounded-full" style="width: calc((1 * 2 + 1) / 8 * 100%)"></div>
                             </div>
                             <div class="grid grid-cols-2 text-sm font-medium text-gray-600 mt-4">
-                                <div class="text-indigo-600">Level 1</div>
-                                <div class="text-right">Level 2</div>
+                                <div class="text-indigo-600">Level <asp:Label runat="server" ID="lblLvNow" Text="" /></div>
+                                <div class="text-right">Level <asp:Label runat="server" ID="lblLvNext" Text="" /></div>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="email" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Email address </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <asp:TextBox runat="server" id="email" autocomplete="email" class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"/>
+                            <asp:TextBox runat="server" ID="txtEmail" Text="" autocomplete="email" class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"/>
                         </div>
                     </div>
 
@@ -66,7 +66,7 @@
                                         <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                     </svg>
                                 </span>
-                                <asp:Button runat="server" Text="Change" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <asp:Button runat="server" Text="Change" ID="btnChangeAvatar" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                
 
                                 </asp:Button>
@@ -85,23 +85,15 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="first_name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">First name </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <asp:TextBox runat="server" id="first_name" autocomplete="given-name" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                            <asp:TextBox runat="server" id="txtUsername" Text="" autocomplete="given-name" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                         </div>
                     </div>
-
-                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Last name </label>
-                        <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <asp:TextBox runat="server"  id="last_name" autocomplete="family-name" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
-                        </div>
-                    </div>
-
 
 
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="country" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Gender</label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <asp:DropDownList runat="server" autocomplete="country-name" class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                            <asp:DropDownList runat="server" ID="ddlGender" autocomplete="country-name" class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                                 <asp:ListItem>Male</asp:ListItem>
                                 <asp:ListItem>Female</asp:ListItem>
                             </asp:DropDownList>
@@ -118,7 +110,7 @@
                                         <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"></path>
                                     </svg>
                                 </div>
-                                <asp:TextBox runat="server" datepicker="" datepicker-autohide="" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date"/>
+                                <asp:TextBox runat="server" ID="txtDOB" Text="" datepicker="" datepicker-autohide="" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date"/>
                             </div>
                         </div>
                     </div>
@@ -126,17 +118,11 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="city" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Phone</label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <asp:TextBox runat="server" id="city" autocomplete="address-level2" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                            <asp:TextBox runat="server" id="txtPhone" Text="" autocomplete="address-level2" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                         </div>
                     </div>
 
-                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                        <label for="region" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Password</label>
-                        <div class="mt-1 sm:mt-0 flex">
-                            <asp:TextBox runat="server" autocomplete="address-level1" class="max-w-lg block shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" TextMode="Password" />
-                            <div class="ml-5 bg-white py-2.5 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" data-hs-overlay="#hs-change-password">Change</div>
-                        </div>
-                    </div>
+
 
                 </div>
 
