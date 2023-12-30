@@ -25,12 +25,36 @@ namespace ShirtTee.customer
                 Label lblQuantity = (Label)e.Item.FindControl("lblQuantity");
                 Label lblTotal = (Label)e.Item.FindControl("lblTotal");
                 HtmlGenericControl ratingStars = (HtmlGenericControl)e.Item.FindControl("ratingStars");
+                Label lblReviewDesc = (Label)e.Item.FindControl("lblReviewDesc");
+                Label lblReviewDate = (Label)e.Item.FindControl("lblReviewDate");
+                Button btnEditReview = (Button)e.Item.FindControl("btnEditReview");
+                Button btnEditReview2 = (Button)e.Item.FindControl("btnEditReview2");
 
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
+                if (dataItem["review_description"] == DBNull.Value)
+                {
+                    lblReviewDesc.Text = "No Review";
+                }
+                else 
+                {
+                    lblReviewDesc.Text = dataItem["review_description"].ToString();
+                }
 
+                if (dataItem["edited_at"] == DBNull.Value)
+                {
+                    btnEditReview.Visible = true;
+                    btnEditReview2.Visible = true;
+                    lblReviewDate.Text = "Reviewed on " + dataItem["review_date"].ToString();
+                }
+                else 
+                {
+                    btnEditReview.Visible = false;
+                    btnEditReview2.Visible = false;
+                    lblReviewDate.Text = "Review edited on " + dataItem["review_date"].ToString();
+                }
 
                 if (dataItem != null)
-                {
+                {                  
                     DBconnection dBconnection = new DBconnection();
                     SqlParameter[] parameter = new SqlParameter[]{
                          new SqlParameter("@order_ID", dataItem["order_ID"].ToString()),
@@ -68,5 +92,17 @@ namespace ShirtTee.customer
                 }
             }
         }
+
+        protected void btnEditReview_Click(object sender, EventArgs e)
+        {
+            Button btnEditReview = (Button)sender;
+            RepeaterItem repeaterItem = (RepeaterItem)btnEditReview.NamingContainer;
+            Label lblProductDetailsID = (Label)repeaterItem.FindControl("lblProductDetailsID");
+            Label lblOrderID = (Label)repeaterItem.FindControl("lblOrderID");
+            Session["product_details_ID"] = lblProductDetailsID.Text;
+            Session["order_ID_review"] = lblOrderID.Text;
+            Response.Redirect($"~/customer/WriteReview.aspx");
+        }
+
     }
 }

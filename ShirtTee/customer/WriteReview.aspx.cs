@@ -132,6 +132,10 @@ namespace ShirtTee.customer
             if (review.HasRows)
             {
                 review.Read();
+                if (rating == Convert.ToInt32(review["rating"].ToString()) && reviewDesc.Equals("<p class=\"text-gray-600 dark:text-gray-400\"></p>") && (review["review_description"] == DBNull.Value)) 
+                {
+                    return true;
+                }
                 if (rating == Convert.ToInt32(review["rating"].ToString()) && reviewDesc.Equals(review["review_description"].ToString()))
                 {
                     return true;
@@ -168,10 +172,27 @@ namespace ShirtTee.customer
                     else
                     {
                         DateTime dateNow = DateTime.Now;
-                        string createReview =
-    "INSERT INTO [Review] (user_ID, product_details_ID, rating, review_description, review_date, edited_at, order_ID) " +
-    "VALUES (@user_ID, @product_details_ID, @rating, @review_description, @review_date, @edited_at, @order_ID)";
-                        SqlParameter[] parameters = {
+                        if (reviewDesc.Equals("<p class=\"text-gray-600 dark:text-gray-400\"></p>"))
+                        {
+                            string createReview =
+"INSERT INTO [Review] (user_ID, product_details_ID, rating, review_date, edited_at, order_ID) " +
+"VALUES (@user_ID, @product_details_ID, @rating, @review_date, @edited_at, @order_ID)";
+                            SqlParameter[] parameters = {
+                                new SqlParameter("@user_ID", Session["user_ID"]),
+                                new SqlParameter("@product_details_ID", Session["product_details_ID"]),
+                                new SqlParameter("@rating", rating),
+                                new SqlParameter("@review_date", dateNow),
+                                new SqlParameter("@edited_at", dateNow),
+                                new SqlParameter("order_ID", Session["order_ID_review"])
+                            };
+                            dbconnection.ExecuteNonQuery(createReview, parameters);
+                        }
+                        else 
+                        {
+                            string createReview =
+"INSERT INTO [Review] (user_ID, product_details_ID, rating, review_description, review_date, edited_at, order_ID) " +
+"VALUES (@user_ID, @product_details_ID, @rating, @review_description, @review_date, @edited_at, @order_ID)";
+                            SqlParameter[] parameters = {
                                 new SqlParameter("@user_ID", Session["user_ID"]),
                                 new SqlParameter("@product_details_ID", Session["product_details_ID"]),
                                 new SqlParameter("@rating", rating),
@@ -180,7 +201,10 @@ namespace ShirtTee.customer
                                 new SqlParameter("@edited_at", dateNow),
                                 new SqlParameter("order_ID", Session["order_ID_review"])
                             };
-                        dbconnection.ExecuteNonQuery(createReview, parameters);
+                            dbconnection.ExecuteNonQuery(createReview, parameters);
+                        }
+                        
+
                         Response.Redirect($"~/customer/Review.aspx");
 
                     }
@@ -189,10 +213,26 @@ namespace ShirtTee.customer
                 else
                 {
                     DateTime dateNow = DateTime.Now;
-                    string createReview =
-    "INSERT INTO [Review] (user_ID, product_details_ID, rating, review_description, review_date, order_ID) " +
-    "VALUES (@user_ID, @product_details_ID, @rating, @review_description, @review_date, @order_ID)";
-                    SqlParameter[] parameters = {
+                    if (reviewDesc.Equals("<p class=\"text-gray-600 dark:text-gray-400\"></p>"))
+                    {
+                        string createReview =
+"INSERT INTO [Review] (user_ID, product_details_ID, rating, review_date, order_ID) " +
+"VALUES (@user_ID, @product_details_ID, @rating, @review_date, @order_ID)";
+                        SqlParameter[] parameters = {
+                                new SqlParameter("@user_ID", Session["user_ID"]),
+                                new SqlParameter("@product_details_ID", Session["product_details_ID"]),
+                                new SqlParameter("@rating", rating),
+                                new SqlParameter("@review_date", dateNow),
+                                new SqlParameter("order_ID", Session["order_ID_review"])
+                            };
+                        dbconnection.ExecuteNonQuery(createReview, parameters);
+                    }
+                    else 
+                    {
+                        string createReview =
+"INSERT INTO [Review] (user_ID, product_details_ID, rating, review_description, review_date, order_ID) " +
+"VALUES (@user_ID, @product_details_ID, @rating, @review_description, @review_date, @order_ID)";
+                        SqlParameter[] parameters = {
                                 new SqlParameter("@user_ID", Session["user_ID"]),
                                 new SqlParameter("@product_details_ID", Session["product_details_ID"]),
                                 new SqlParameter("@rating", rating),
@@ -200,7 +240,9 @@ namespace ShirtTee.customer
                                 new SqlParameter("@review_date", dateNow),
                                 new SqlParameter("order_ID", Session["order_ID_review"])
                             };
-                    dbconnection.ExecuteNonQuery(createReview, parameters);
+                        dbconnection.ExecuteNonQuery(createReview, parameters);
+                    }
+
                     Session["ReviewSubmitted"] = "success";
                     FetchData();
                     Response.Redirect(Request.Url.AbsoluteUri);

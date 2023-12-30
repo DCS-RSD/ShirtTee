@@ -39,6 +39,9 @@ review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = r.order_I
                                                     <div>
                                                         <dt class="font-medium text-gray-900">Order number</dt>
                                                         <dd class="mt-1 text-gray-500"><%# Eval("order_ID") %></dd>
+                                                        <asp:Label runat="server" Text='<%# Eval("order_ID") %>' ID="lblOrderID" Visible="false" />
+                                                        <asp:Label runat="server" Visible="false" ID="lblProductDetailsID" Text='<%# Eval("product_details_ID") %>' />
+
                                                     </div>
                                                 </dl>
 
@@ -53,14 +56,14 @@ review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = r.order_I
 
                                                     <div class="hidden origin-bottom-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-0-button" tabindex="-1">
                                                         <div class="py-1" role="none">
-                                                            <asp:Button runat="server" ID="btnViewOrder" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" TabIndex="-1" Text="Delete Review"></asp:Button>
+                                                            <asp:Button runat="server" ID="btnEditReview" Visible="false" OnClick="btnEditReview_Click" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" TabIndex="-1" Text="Edit Review"></asp:Button>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4">
 
-                                                    <asp:Button runat="server" ID="btnViewOrder2" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="Delete Review"></asp:Button>
+                                                    <asp:Button runat="server" ID="btnEditReview2" Visible="false" OnClick="btnEditReview_Click" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" Text="Edit Review"></asp:Button>
                                                 </div>
                                             </div>
 
@@ -77,9 +80,15 @@ review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = r.order_I
                                                                 <h5><%# Eval("product_name") %></h5>
                                                                 <p class="mt-2 sm:mt-0">RM <%# Eval("price") %></p>
                                                             </div>
-                                                            <p class="mt-2 text-gray-500 ">Quantity: <asp:Label runat="server" ID="lblQuantity" Text="" /></p>
+                                                            <p class="mt-2 text-gray-500 ">
+                                                                Quantity:
+                                                                <asp:Label runat="server" ID="lblQuantity" Text="" />
+                                                            </p>
                                                             <p class="mt-1 text-gray-500"><%# Eval("color_name") %> / <%# Eval("size_name") %></p>
-                                                            <p class="mt-3 text-sm font-bold text-gray-900">Total: RM <asp:Label runat="server" ID="lblTotal" Text=""/></p>
+                                                            <p class="mt-3 text-sm font-bold text-gray-900">
+                                                                Total: RM
+                                                                <asp:Label runat="server" ID="lblTotal" Text="" />
+                                                            </p>
                                                         </div>
                                                     </div>
 
@@ -89,7 +98,7 @@ review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = r.order_I
                                                             <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                             </svg>
-                                                            <p class="ml-2 text-sm font-medium text-gray-500">Reviewed on <%# Eval("review_date") %></p>
+                                                            <asp:Label runat="server" ID="lblReviewDate" class="ml-2 text-sm font-medium text-gray-500" Text=""></asp:Label>
                                                         </div>
                                                         <!--
                                                 <div class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
@@ -124,7 +133,7 @@ review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = r.order_I
 
                                                                             <div class=" space-y-6 text-sm text-gray-500">
 
-                                                                                <asp:Label runat="server" ID="lblReviewDesc" Text='<%# Eval("review_description") %>'/>
+                                                                                <asp:Label runat="server" ID="lblReviewDesc" Text='' />
                                                                             </div>
                                                                         </div>
                                                                     </div>
