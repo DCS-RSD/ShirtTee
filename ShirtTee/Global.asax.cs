@@ -12,7 +12,28 @@ namespace ShirtTee
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
+            // Code that runs on application startup
+            siteMapProvider.SiteMapResolve += SiteMap_SiteMapResolve;
+        }
 
+        SiteMapNode SiteMap_SiteMapResolve(object sender, SiteMapResolveEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("113331222");
+            SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
+
+            SiteMapNode currentNode = siteMapProvider.CurrentNode.Clone(true);
+            SiteMapNode tempNode = currentNode;
+
+            if (currentNode.ParentNode.Url.Contains("/admin/ProductDetails.aspx"))
+            {
+                System.Diagnostics.Debug.WriteLine("111222");
+
+                currentNode.ParentNode.Url += "?product_id=" + e.Context.Request["product_id"];
+                currentNode.ParentNode.Title += "sss";
+            }
+
+            return currentNode;
         }
 
         protected void Session_Start(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration.Provider;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,6 +14,15 @@ namespace ShirtTee.admin
     {
         protected override void OnPreRender(EventArgs e)
         {
+            // Get the site map provider
+            SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
+
+            SiteMapNode node = siteMapProvider.CurrentNode; //product details
+
+            System.Diagnostics.Debug.WriteLine(node.ParentNode.Url);
+
+
+
             // Bind your ListView data here
             ListView1.DataSource = SqlDataSource2;
             ListView1.DataBind();
@@ -83,7 +93,7 @@ namespace ShirtTee.admin
 
                         string sqlCommand = "UPDATE Product_Details SET " +
                                "stock_available = @qty," +
-                               "on_sale = @on_sale "+
+                               "on_sale = @on_sale " +
                                (fileImage.HasFile ? ", image = @image " : "") +
                                "WHERE product_details_ID = @id";
 
