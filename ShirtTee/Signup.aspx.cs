@@ -27,6 +27,7 @@ namespace ShirtTee
             IdentityResult result = manager.Create(user, signupPassword.Text);
             if (result.Succeeded)
             {
+                manager.AddToRole(user.Id, "customer");
                 Response.Redirect($"~/Login.aspx?");
             }
             else

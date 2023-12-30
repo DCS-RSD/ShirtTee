@@ -259,22 +259,21 @@ WHERE (Product.product_ID = @product_ID)">
                                                             </div>
                                                             <!-- End Form Group -->
 
-                                                            <!-- Form Group -->
                                                             <div>
                                                                 <label class="block text-sm mb-2 dark:text-white">Image</label>
                                                                 <div class="relative">
-                                                                    <asp:Image class="my-2 w-24 h-24" ID="imagePreview" runat="server" ClientIDMode="Static"
+                                                                    <asp:Image class="my-2 w-24 h-24" ID="imagePreview" runat="server"
                                                                         ImageUrl='<%# Eval("image") ==DBNull.Value?"": "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' />
                                                                     <asp:FileUpload
                                                                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                                                        onchange="loadFile(event)"
+                                                                        onchange='<%# "loadFile(event,"+Container.DataItemIndex+")" %>'
                                                                         ID="fileImage" runat="server" />
                                                                 </div>
                                                             </div>
                                                             <!-- End Form Group -->
                                                             <div class="hs-tooltip flex items-center justify-end mt-4 mr-4">
-                                                                <asp:CheckBox ID="chkOnSales" runat="server" ClientIDMode="Static" 
-                                                                   Checked='<%# Eval("on_sale") %>'/>
+                                                                <asp:CheckBox ID="chkOnSales" runat="server"
+                                                                    Checked='<%# Eval("on_sale") %>' />
                                                                 <label for="chkOnSales" class="text-sm text-gray-500 ms-3 dark:text-gray-400">Activate Sales</label>
                                                                 <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700" role="tooltip">
                                                                     Start Selling This Product.
@@ -317,21 +316,38 @@ WHERE (Product.product_ID = @product_ID)">
         </div>
     </div>
     <script>
-        var loadFile = function (event) {
+        var loadFile = function (event, previewId) {
             var input = event.target;
             var file = input.files[0];
             var type = file.type;
-            var output = document.getElementById("imagePreview");
-            output.src = URL.createObjectURL(event.target.files[0]);
+            var output = document.getElementById("ContentPlaceHolder1_ListView1_imagePreview_" + previewId);
 
-            output.onload = function () {
-                URL.revokeObjectURL(output.src); // free memory
-            };
+            if (output) {
+                output.src = URL.createObjectURL(event.target.files[0]);
 
+                output.onload = function () {
+                    URL.revokeObjectURL(output.src); // free memory
+                };
+            }
         };
 
-        var checkbox = document.getElementById('chkOnSales');
-        checkbox.classList.add('hs-tooltip-toggle', 'relative', 'w-[3.25rem]', 'h-7', 'p-px', 'bg-gray-100', 'border-transparent', 'text-transparent', 'rounded-full', 'cursor-pointer', 'transition-colors', 'ease-in-out', 'duration-200', 'focus:ring-blue-600', 'disabled:opacity-50', 'disabled:pointer-events-none', 'checked:bg-none', 'checked:text-blue-600', 'checked:border-blue-600', 'focus:checked:border-blue-600', 'dark:bg-gray-800', 'dark:border-gray-700', 'dark:checked:bg-blue-500', 'dark:checked:border-blue-500', 'dark:focus:ring-offset-gray-600', 'before:inline-block', 'before:w-6', 'before:h-6', 'before:bg-white', 'checked:before:bg-blue-200', 'before:translate-x-0', 'checked:before:translate-x-full', 'before:rounded-full', 'before:shadow', 'before:transform', 'before:ring-0', 'before:transition', 'before:ease-in-out', 'before:duration-200', 'dark:before:bg-gray-400', 'dark:checked:before:bg-blue-200');
-
+        var checkboxes = document.querySelectorAll('[id*="chkOnSales"]');
+        checkboxes.forEach(function (checkbox) {
+            console.log(checkbox);
+            checkbox.classList.add(
+                'hs-tooltip-toggle', 'relative', 'w-[3.25rem]', 'h-7', 'p-px', 'bg-gray-100',
+                'border-transparent', 'text-transparent', 'rounded-full', 'cursor-pointer',
+                'transition-colors', 'ease-in-out', 'duration-200', 'focus:ring-blue-600',
+                'disabled:opacity-50', 'disabled:pointer-events-none', 'checked:bg-none',
+                'checked:text-blue-600', 'checked:border-blue-600', 'focus:checked:border-blue-600',
+                'dark:bg-gray-800', 'dark:border-gray-700', 'dark:checked:bg-blue-500',
+                'dark:checked:border-blue-500', 'dark:focus:ring-offset-gray-600', 'before:inline-block',
+                'before:w-6', 'before:h-6', 'before:bg-white', 'checked:before:bg-blue-200',
+                'before:translate-x-0', 'checked:before:translate-x-full', 'before:rounded-full',
+                'before:shadow', 'before:transform', 'before:ring-0', 'before:transition',
+                'before:ease-in-out', 'before:duration-200', 'dark:before:bg-gray-400',
+                'dark:checked:before:bg-blue-200'
+            );
+        });
     </script>
 </asp:Content>
