@@ -69,6 +69,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.HyperLink btnCart;
 
         /// <summary>
+        /// panelLoginInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelLoginInfo;
+
+        /// <summary>
         /// lblUsername control.
         /// </summary>
         /// <remarks>
@@ -105,6 +114,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.HyperLink btnProfile;
 
         /// <summary>
+        /// panelSignIn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelSignIn;
+
+        /// <summary>
         /// btnLogin control.
         /// </summary>
         /// <remarks>
@@ -112,6 +130,24 @@ namespace ShirtTee
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink btnLogin;
+
+        /// <summary>
+        /// panelLogout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelLogout;
+
+        /// <summary>
+        /// btnSignout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSignout;
 
         /// <summary>
         /// btnMen control.
