@@ -100,7 +100,7 @@ namespace ShirtTee.customer
                 " SELECT * FROM [Cart] AS c" +
                 " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
                 " WHERE user_ID = @user_ID",
-            parameterUrl2).ExecuteReader();
+            parameterUrl2).ExecuteReader();          
             bool cont = true;
             if (cartInfo.HasRows)
             {
@@ -109,7 +109,9 @@ namespace ShirtTee.customer
                     if (Convert.ToInt32(cartInfo["quantity"].ToString()) > Convert.ToInt32(cartInfo["stock_available"].ToString()))
                     {
                         cont = false;
+                        lblWarning.Visible = true;
                     }
+
                 }
                 if (cont) 
                 {
@@ -175,7 +177,13 @@ namespace ShirtTee.customer
 
                 SessionCreateOptions options;
 
-                string discountCode = Session["discountCode"].ToString();
+                string discountCode = null;
+
+                if (Session["discountCode"] != null) 
+                {
+                    discountCode = Session["discountCode"].ToString();
+                }
+               
 
                 if (!string.IsNullOrEmpty(discountCode))
                 {
@@ -292,14 +300,18 @@ namespace ShirtTee.customer
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
 
+            if (lblWarning.Visible == false) 
+            {
+                btnHidden_Click(null, EventArgs.Empty);
 
-            btnHidden_Click(null, EventArgs.Empty);
+            }
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
+                Label lblLowStock = (Label)e.Item.FindControl("lblLowStock");
                 Label lblEachSubtotal = (Label)e.Item.FindControl("lblEachSubtotal");
                 Label lblPrice = (Label)e.Item.FindControl("lblPrice");
 
@@ -309,6 +321,17 @@ namespace ShirtTee.customer
                 lblPrice.Text = price.ToString("F2");
                 double subtotal = Convert.ToDouble(dataItem["subtotal"].ToString());
                 lblEachSubtotal.Text = subtotal.ToString("F2");
+
+                if (Convert.ToInt32(dataItem["quantity"].ToString()) > Convert.ToInt32(dataItem["stock_available"].ToString()))
+                {
+                    lblLowStock.Visible = true;
+                }
+                else 
+                {
+                    lblLowStock.Visible= false;
+                }
+
+
 
             }
 

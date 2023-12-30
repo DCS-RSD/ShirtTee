@@ -29,7 +29,7 @@ WHERE user_ID = @user_ID">
                                 <span class="float-right text-gray-400"><%# Eval("size_name") %> - <%# Eval("color_name") %></span>
                                 <span class="float-right text-gray-400">Price: RM
                                     <asp:Label ID="lblPrice" runat="server" Text="" /></span>
-                                <span class="float-right text-gray-400">Quantity: <%# Eval("quantity") %></span>
+                                <span class="float-right text-gray-400">Quantity: <%# Eval("quantity") %> <asp:Label runat="server" class="text-red-500 italic font-semibold" ID="lblLowStock" Text="Insufficient Stock"  Visible="false"/></span>
                                 <p class="text-lg font-bold">
                                     RM
                                     <asp:Label ID="lblEachSubtotal" runat="server" Text="" />
@@ -157,7 +157,12 @@ WHERE user_ID = @user_ID">
                 </div>
             </div>
             <asp:Button ID="btnHidden" runat="server" CssClass="hidden" OnClick="btnHidden_Click" Visible="False" />
-            <asp:Button ID="btnPlaceOrder" runat="server" class="mt-4 mb-8 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" OnClick="btnPlaceOrder_Click" />
+            <asp:Button ID="btnPlaceOrder" runat="server" class="mt-4 mb-4 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" OnClick="btnPlaceOrder_Click" />
+            <div class="text-center mb-4">
+                            <asp:Label ID="lblWarning" runat="server" class="italic font-semibold text-lg text-red-500 mt-2" Visible="false" Text="Cannot proceed due to insufficient stock."></asp:Label>
+
+            </div>
+
         </div>
 
 

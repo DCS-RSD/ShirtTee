@@ -30,10 +30,10 @@ WHERE user_ID = @user_ID">
                                 <div class="mt-5 sm:mt-0">
                                     <h2 class="text-lg font-bold text-gray-900"><%# Eval("product_name") %></h2>
                                   
-                                    <p class="mt-1 text-xs text-gray-700"><%# Eval("color_name") %></p>
-                                    <p class="mt-1 text-xs text-gray-700"><%# Eval("size_name") %></p>
-                                     <p class="mt-1 text-xs text-gray-700">RM <asp:Label runat="server" ID="lblPrice" Text="" /></p>
-                                    
+                                    <p class="mt-1 text-base text-gray-700"><%# Eval("color_name") %></p>
+                                    <p class="mt-1 text-base text-gray-700"><%# Eval("size_name") %></p>
+                                     <p class="mt-1 text-base text-gray-700">RM <asp:Label runat="server" ID="lblPrice" Text="" /></p>
+                                    <asp:Label runat="server" ID="lblLowStock" Visible="false" Text="Only left " class="mt-1 text-red-500 text-base italic font-semibold"><p class="inline-flex"><%# Eval("stock_available") %> stock</p> </asp:Label>
                                 </div>
                                 <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                                     <asp:DropDownList ID="ddlQty" runat="server" OnSelectedIndexChanged="ddlQty_SelectedIndexChanged" class="ml-8 max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" AutoPostBack="True">
