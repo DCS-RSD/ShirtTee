@@ -11,7 +11,22 @@ namespace ShirtTee
 {
     public class EmailManager
     {
-        public static void sendEmail(string receiverName, string receiverEmail, string orderId)
+        string receiverName; 
+        string receiverEmail;
+        string orderId;
+        string orderStatus;
+
+        EmailManager() { }
+
+        public EmailManager(string receiverName, string receiverEmail, string orderId, string orderStatus)
+        {
+            this.receiverName = receiverName;
+            this.receiverEmail = receiverEmail;
+            this.orderId = orderId;
+            this.orderStatus = orderStatus;
+        }
+
+        public void sendEmail()
         {
             //^[^@\s]+@[^@\s]+\.[^@\s]+$
             var email = new MimeMessage();
@@ -19,12 +34,12 @@ namespace ShirtTee
             email.From.Add(new MailboxAddress("ShirtTee", "shirttee@email.com"));
             email.To.Add(new MailboxAddress(receiverName, receiverEmail));
 
-            email.Subject = "Testing out email sending";
+            email.Subject = "ShirtTee: "+orderStatus;
 
 
             var bodyBuilder = new BodyBuilder();
 
-            string htmlContent = emailTemplate(receiverName, orderId);
+            string htmlContent = emailTemplate();
             bodyBuilder.HtmlBody = htmlContent;
             email.Body = bodyBuilder.ToMessageBody();
             using (var smtp = new SmtpClient())
@@ -39,7 +54,7 @@ namespace ShirtTee
             }
         }
 
-        private static string emailTemplate(string receiverName, string orderId)
+        private string emailTemplate()
         {
             string emailTemplate = $@"
 <!DOCTYPE html>
@@ -125,7 +140,8 @@ namespace ShirtTee
 
         <main>
             <h2>Hi {receiverName}</h2>
-            <p>Your Order #{orderId} is updated</p>
+            <p>Order #{orderId}</p>
+            <p>{orderStatus}</p>
 
             <p>
                 Thanks,

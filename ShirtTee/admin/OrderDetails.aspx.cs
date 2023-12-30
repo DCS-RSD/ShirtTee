@@ -16,7 +16,7 @@ namespace ShirtTee.admin
 {
     public partial class OrderDetails : System.Web.UI.Page
     {
-        string nextStatus, id, toEmail, receiverName;
+        string nextStatus, id, toEmail, receiverName, emailOrderStatus;
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -169,11 +169,13 @@ namespace ShirtTee.admin
                 new SqlParameter("@status", "Cancelled"),
                 new SqlParameter("@update_date", DateTime.Now),
                 new SqlParameter("@order_ID", id),
-                new SqlParameter("@description", txtUpdateStatusDesc.Text),
+                new SqlParameter("@description", "Your order has been cancelled."),
                 };
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
+                    EmailManager emailManager = new EmailManager(receiverName, toEmail, id, "Your order has been cancelled.");
+                    emailManager.sendEmail();
                     Session["OrderStatusUpdated"] = "success";
                 }
             }
@@ -206,7 +208,8 @@ namespace ShirtTee.admin
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
-                    EmailManager.sendEmail(toEmail, receiverName, id);
+                    EmailManager emailManager = new EmailManager(receiverName, toEmail, id, txtUpdateStatusDesc.Text);
+                    emailManager.sendEmail();
                     Session["OrderStatusUpdated"] = "success";
                 }
             }

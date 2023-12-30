@@ -13,7 +13,6 @@ namespace ShirtTee
         protected void Application_Start(object sender, EventArgs e)
         {
             SiteMapProvider siteMapProvider = SiteMap.Providers["AdminSiteMapProvider"];
-            // Code that runs on application startup
             siteMapProvider.SiteMapResolve += SiteMap_SiteMapResolve;
         }
 
