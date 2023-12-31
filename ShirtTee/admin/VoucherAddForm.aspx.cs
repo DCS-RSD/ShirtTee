@@ -19,7 +19,6 @@ namespace ShirtTee.admin
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(calExpireDate.SelectedDate);
             try
             {
                 DBconnection dbconnection = new DBconnection();
@@ -33,7 +32,7 @@ namespace ShirtTee.admin
                 new SqlParameter("@voucher_description", txtVoucherDesc.Text),
                 new SqlParameter("@discount_rate", discount),
                 new SqlParameter("@min_spend", Convert.ToDouble(txtMinSpend.Text)),
-                new SqlParameter("@expiry_date", calExpireDate.SelectedDate),
+                new SqlParameter("@expiry_date", txtDate.Text),
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text))
                 };
 
@@ -47,7 +46,7 @@ namespace ShirtTee.admin
                         Name = txtVoucherName.Text,
                         Id = txtVoucherName.Text,
                         PercentOff = (decimal)discount,
-                        RedeemBy = calExpireDate.SelectedDate,
+                        RedeemBy = DateTime.Parse(txtDate.Text)
                     };
 
                     var service = new CouponService();
