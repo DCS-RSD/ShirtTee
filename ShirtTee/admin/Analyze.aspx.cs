@@ -23,14 +23,16 @@ namespace ShirtTee.admin
             try
             {
                 DBconnection dBconnection = new DBconnection();
-                string query = "SELECT COUNT(*) FROM [Order] WHERE MONTH(order_date) = @month";
+                string query = "SELECT COUNT(*) FROM [Order] WHERE YEAR(order_date) = @year" +
+                    " AND MONTH(order_date) = @month";
                 SqlParameter[] parameters = new SqlParameter[]
                 {
+                new SqlParameter("@year",DateTime.Now.Year),
                 new SqlParameter("@month",DateTime.Now.Month),
                 };
 
                 object totalOrder = dBconnection.ExecuteQuery(query, parameters).ExecuteScalar();
-                if (totalOrder != null)
+                if (totalOrder != null && totalOrder.ToString() != String.Empty)
                 {
                     lblTotalOrder.Text = totalOrder.ToString();
                 }
@@ -63,14 +65,16 @@ namespace ShirtTee.admin
             try
             {
                 DBconnection dBconnection = new DBconnection();
-                string query = "SELECT SUM(order_total) FROM [Order] WHERE MONTH(order_date) = @month";
+                string query = "SELECT SUM(order_total) FROM [Order] WHERE YEAR(order_date) = @year" +
+                    " AND MONTH(order_date) = @month";
                 SqlParameter[] parameters = new SqlParameter[]
                 {
+                new SqlParameter("@year",DateTime.Now.Year),
                 new SqlParameter("@month",DateTime.Now.Month),
                 };
 
                 object totalOrder = dBconnection.ExecuteQuery(query, parameters).ExecuteScalar();
-                if (totalOrder != null)
+                if (totalOrder != null && totalOrder.ToString() != String.Empty)
                 {
                     lblTotalSales.Text = totalOrder.ToString();
                 }
