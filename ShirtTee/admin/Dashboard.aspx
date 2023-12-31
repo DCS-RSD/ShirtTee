@@ -134,8 +134,6 @@
                                     </tr>
                                 </table>
                             </LayoutTemplate>
-
-
                         </asp:ListView>
 
                         <!-- End Table -->
