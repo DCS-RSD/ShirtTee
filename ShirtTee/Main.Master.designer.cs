@@ -78,6 +78,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.HyperLink btnCart;
 
         /// <summary>
+        /// panelUserDropdown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelUserDropdown;
+
+        /// <summary>
         /// imgAvatar control.
         /// </summary>
         /// <remarks>
@@ -168,24 +177,6 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.HyperLink btnProfile;
 
         /// <summary>
-        /// panelSignIn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelSignIn;
-
-        /// <summary>
-        /// btnLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink btnLogin;
-
-        /// <summary>
         /// hypToClient control.
         /// </summary>
         /// <remarks>
@@ -211,6 +202,24 @@ namespace ShirtTee
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSignout;
+
+        /// <summary>
+        /// panelSignIn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelSignIn;
+
+        /// <summary>
+        /// btnLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink btnLogin;
 
         /// <summary>
         /// btnMen control.

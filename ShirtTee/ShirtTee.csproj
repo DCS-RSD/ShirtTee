@@ -188,6 +188,7 @@
     <Content Include="errors\500.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Homepage.aspx" />
+    <Content Include="Image\default-avatar.jpg" />
     <Content Include="Image\noimage.png" />
     <Content Include="Login.aspx" />
     <Content Include="ProductDetails.aspx" />
