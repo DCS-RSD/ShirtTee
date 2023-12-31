@@ -135,22 +135,22 @@ namespace ShirtTee.admin
                 {
                     Session["VoucherUpdated"] = "success";
 
-                    //StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    //var service = new CouponService();
-                    //service.Delete(voucherName);
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    var service = new CouponService();
+                    service.Delete(voucherName);
 
-                    //StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    //var options = new CouponCreateOptions
-                    //{
-                    //    Duration = "once",
-                    //    Name = txtVoucherName.Text,
-                    //    Id = txtVoucherName.Text,
-                    //    PercentOff = (decimal)discount,
-                    //    RedeemBy = DateTime.Parse(txtDate.Text)
-                    //};
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    var options = new CouponCreateOptions
+                    {
+                        Duration = "once",
+                        Name = txtVoucherName.Text,
+                        Id = txtVoucherName.Text,
+                        PercentOff = (decimal)discount,
+                        RedeemBy = DateTime.Parse(txtDate.Text)
+                    };
 
-                    //var service2 = new CouponService();
-                    //service2.Create(options);
+                    var service2 = new CouponService();
+                    service2.Create(options);
 
                     fetchData();
                 }

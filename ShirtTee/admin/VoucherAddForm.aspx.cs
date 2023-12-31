@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,7 @@ namespace ShirtTee.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -32,7 +33,7 @@ namespace ShirtTee.admin
                 new SqlParameter("@voucher_description", txtVoucherDesc.Text),
                 new SqlParameter("@discount_rate", discount),
                 new SqlParameter("@min_spend", Convert.ToDouble(txtMinSpend.Text)),
-                new SqlParameter("@expiry_date", txtDate.Text),
+                new SqlParameter("@expiry_date", DbType.Date) {Value=txtDate.Text},
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text))
                 };
 
