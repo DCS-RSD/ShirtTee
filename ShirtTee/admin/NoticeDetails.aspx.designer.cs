@@ -60,6 +60,15 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.TextBox txtTitle;
 
         /// <summary>
+        /// rfvTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTitle;
+
+        /// <summary>
         /// txtContent control.
         /// </summary>
         /// <remarks>
@@ -69,6 +78,15 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.TextBox txtContent;
 
         /// <summary>
+        /// rfvContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvContent;
+
+        /// <summary>
         /// radVisibility control.
         /// </summary>
         /// <remarks>
@@ -76,6 +94,24 @@ namespace ShirtTee.admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList radVisibility;
+
+        /// <summary>
+        /// rfvVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvVisibility;
+
+        /// <summary>
+        /// RegularExpressionValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
 
         /// <summary>
         /// btnSubmit control.

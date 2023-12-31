@@ -51,11 +51,11 @@
                         <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
                             <%--Title--%>
 
-                            <!-- Input -->
+                            <!-- Search -->
                             <div class="sm:col-span-1">
                                 <label for="txtSearch" class="sr-only">Search</label>
                                 <div class="relative">
-                                    <asp:TextBox runat="server" placeholder="Search" ID="txtSearch" AutoPostBack="true"
+                                    <asp:TextBox runat="server" placeholder="Search" ID="txtSearch" AutoPostBack="true" OnTextChanged="txtSearch_TextChanged"
                                         class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
                                     </asp:TextBox>
                                     <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Input -->
+                            <!-- End Search -->
 
                             <div class="sm:col-span-2 md:grow">
                                 <div class="flex justify-end gap-x-2">
@@ -83,11 +83,10 @@
                         <!-- Table -->
                         <asp:SqlDataSource ID="SqlDataSourceFiltered" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice] WHERE (([is_private] = @is_private))">
                             <SelectParameters>
-                                <asp:ControlParameter ControlID="ddlNoticeType" PropertyName="SelectedValue" Name="is_private" Type="Boolean"  ConvertEmptyStringToNull="true"></asp:ControlParameter>
+                                <asp:ControlParameter ControlID="ddlNoticeType" PropertyName="SelectedValue" Name="is_private" Type="Boolean" ConvertEmptyStringToNull="true"></asp:ControlParameter>
                             </SelectParameters>
                         </asp:SqlDataSource>
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice]">
-                        </asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice]"></asp:SqlDataSource>
                         <asp:ListView ID="ListView1" DataSourceID="SqlDataSource1" runat="server" DataKeyNames="notice_ID">
                             <EmptyDataTemplate>
                                 <table runat="server" class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">

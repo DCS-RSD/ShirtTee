@@ -48,8 +48,9 @@ namespace ShirtTee.admin
             var query = SqlDataSource1.SelectCommand;
             if (ddlNoticeType.SelectedIndex != 0)
             {
-                SqlDataSource1.SelectCommand = SqlDataSourceFiltered.SelectCommand;
+                txtSearch.Text = ""; //reset search
 
+                SqlDataSource1.SelectCommand = SqlDataSourceFiltered.SelectCommand;
                 SqlDataSource1.SelectParameters.Clear();
                 SqlDataSource1.SelectParameters.Add("is_private", ddlNoticeType.SelectedValue);
             }
@@ -61,5 +62,22 @@ namespace ShirtTee.admin
             ListView1.DataBind();
         }
 
+        protected void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            var query = SqlDataSource1.SelectCommand;
+            if (txtSearch.Text != "")
+            {
+                ddlNoticeType.SelectedIndex = 0; //reset dropdown
+                SqlDataSource1.SelectCommand = query + " WHERE notice_title LIKE '%' + @notice_title + '%'";
+                SqlDataSource1.SelectParameters.Clear();
+                SqlDataSource1.SelectParameters.Add("notice_title", txtSearch.Text);
+            }
+            else
+            {
+                SqlDataSource1.SelectCommand = query;
+            }
+            ListView1.DataBind();
+
+        }
     }
 }
