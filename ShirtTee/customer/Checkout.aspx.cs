@@ -92,7 +92,33 @@ namespace ShirtTee.customer
             lblTotal.Text = total.ToString("F2");
 
 
-            callFPX();
+            SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"]),
+            };
+
+            SqlDataReader cartInfo = dbconnection.ExecuteQuery(
+                " SELECT * FROM [Cart] AS c" +
+                " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
+                " WHERE user_ID = @user_ID",
+            parameterUrl2).ExecuteReader();          
+            bool cont = true;
+            if (cartInfo.HasRows)
+            {
+                while (cartInfo.Read())
+                {
+                    if (Convert.ToInt32(cartInfo["quantity"].ToString()) > Convert.ToInt32(cartInfo["stock_available"].ToString()))
+                    {
+                        cont = false;
+                        lblWarning.Visible = true;
+                    }
+
+                }
+                if (cont) 
+                {
+                    callFPX();
+                }
+            }
+
 
         }
 
@@ -139,7 +165,7 @@ namespace ShirtTee.customer
                 //shipping free
                 shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OS2AVFglGOSlsymaAj05Mih" });
             }
-            else 
+            else
             {
                 //shipping RM 12.00
                 shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OS1yRFglGOSlsym0DVPXvEB" });
@@ -151,7 +177,13 @@ namespace ShirtTee.customer
 
                 SessionCreateOptions options;
 
-                string discountCode = Session["discountCode"].ToString();
+                string discountCode = null;
+
+                if (Session["discountCode"] != null) 
+                {
+                    discountCode = Session["discountCode"].ToString();
+                }
+               
 
                 if (!string.IsNullOrEmpty(discountCode))
                 {
@@ -203,77 +235,17 @@ namespace ShirtTee.customer
 
         }
 
-        protected void btnHidden_Click(object sender, EventArgs e)
-        {
-            decimal shipping = Convert.ToDecimal(lblShipping.Text.ToString());
-            decimal discount = Convert.ToDecimal(lblDiscount.Text.ToString());
-            decimal subtotal = Convert.ToDecimal(lblSubtotal.Text.ToString()) - discount;
-            int quantity = 1;
-            decimal total = subtotal + shipping;
-            
-            // Authenticate with PayPal
-            var config = ConfigManager.Instance.GetProperties();
-            var accessToken = new OAuthTokenCredential(config).GetAccessToken();
-            //Get APIContext Object
-            var apiContext = new APIContext(accessToken);
-
-            var cartItem = new Item();
-            cartItem.name = "ShirtTee";
-            cartItem.currency = "MYR";
-            cartItem.price = subtotal.ToString();
-            cartItem.sku = "SHIRTEE";
-            cartItem.quantity = quantity.ToString();
-
-            var transactionDetails = new Details();
-            transactionDetails.tax = "0";
-            transactionDetails.shipping = shipping.ToString();
-            transactionDetails.subtotal = subtotal.ToString("0.00");
-
-            var transactionAmount = new Amount();
-            transactionAmount.currency = "MYR";
-            transactionAmount.total = total.ToString("0.00");
-            transactionAmount.details = transactionDetails;
-
-            var transaction = new Transaction();
-            transaction.description = "Your order at SHIRTTEE";
-            transaction.invoice_number = Guid.NewGuid().ToString(); //this should ideally be the id of a record storing the order
-            transaction.amount = transactionAmount;
-            transaction.item_list = new ItemList
-            {
-                items = new List<Item> { cartItem }
-            };
-            var payer = new Payer();
-            payer.payment_method = "paypal";
-            var redirectUrls = new RedirectUrls();
-            redirectUrls.cancel_url = "https://localhost:44374/customer/OrderHistory.aspx" + "?cancel=true";
-            redirectUrls.return_url = "https://localhost:44374/customer/OrderHistory.aspx" + "?cancel=false";
-            var payment = Payment.Create(apiContext, new Payment
-            {
-                intent = "sale",
-                payer = payer,
-                transactions = new List<Transaction> { transaction },
-                redirect_urls = redirectUrls
-            });
-            Session["paymentId"] = payment.id;
-            foreach (var link in payment.links)
-            {
-                if (link.rel.ToLower().Trim().Equals("approval_url"))
-                {
-                    Response.Redirect(link.href);
-                };
-            }
-
-        }
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
-            btnHidden_Click(null, EventArgs.Empty);
+
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
+                Label lblLowStock = (Label)e.Item.FindControl("lblLowStock");
                 Label lblEachSubtotal = (Label)e.Item.FindControl("lblEachSubtotal");
                 Label lblPrice = (Label)e.Item.FindControl("lblPrice");
 
@@ -283,6 +255,17 @@ namespace ShirtTee.customer
                 lblPrice.Text = price.ToString("F2");
                 double subtotal = Convert.ToDouble(dataItem["subtotal"].ToString());
                 lblEachSubtotal.Text = subtotal.ToString("F2");
+
+                if (Convert.ToInt32(dataItem["quantity"].ToString()) > Convert.ToInt32(dataItem["stock_available"].ToString()))
+                {
+                    lblLowStock.Visible = true;
+                }
+                else 
+                {
+                    lblLowStock.Visible= false;
+                }
+
+
 
             }
 

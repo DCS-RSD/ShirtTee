@@ -37,7 +37,7 @@
                         <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
                             <asp:Repeater ID="Repeater6" runat="server" DataSourceID="SqlDataSource3">
                                 <ItemTemplate>
-                                    <button id="tabs-1-tab-1" data-src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
+                                    <button id="tabs-1-tab-1" data-src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-40 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
                                         <span class="sr-only">Angled view </span>
                                         <span class="absolute inset-0 rounded-md overflow-hidden">
                                             <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>'
@@ -52,7 +52,7 @@
                             <%-- Stock Image --%>
                             <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource4">
                                 <ItemTemplate>
-                                    <button id="tabs-1-tab-1" data-src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
+                                    <button id="tabs-1-tab-1" data-src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' data-hs-overlay="#hs-subscription-with-image" class="image-button relative h-40 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" aria-controls="tabs-1-panel-1" role="tab" type="button">
                                         <span class="sr-only">Angled view </span>
                                         <span class="absolute inset-0 rounded-md overflow-hidden">
                                             <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' alt="" class="w-full h-full object-center object-cover" />
@@ -177,12 +177,7 @@ s.image IS NOT NULL">
                         <fieldset class="mt-4">
                             <legend class="sr-only">Choose a color</legend>
                             <div class="flex items-center space-x-3">
-                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.color_ID, color_name, hex_color FROM [Product_Details] AS s
-INNER JOIN [Color] AS c ON
-s.color_ID = c.color_ID
-WHERE product_ID = @product_ID AND
-on_sale = 1
-GROUP BY s.color_ID, color_name, hex_color">
+                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.color_ID, color_name, hex_color FROM [Product_Details] AS s INNER JOIN [Color] AS c ON s.color_ID = c.color_ID WHERE product_ID = @product_ID AND on_sale = 1 AND stock_available > 0 GROUP BY s.color_ID, color_name, hex_color">
                                     <SelectParameters>
                                         <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
                                     </SelectParameters>
@@ -196,7 +191,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                         </label>
                                     </ItemTemplate>
                                 </asp:Repeater>
-                                <asp:Label ID="lblColor" runat="server" Text=""></asp:Label>
+                                <asp:Label ID="lblColor" runat="server" Text="" Visible="false"></asp:Label>
                             </div>
                         </fieldset>
                     </div>
@@ -225,7 +220,7 @@ GROUP BY s.color_ID, color_name, hex_color">
                                         </label>
                                     </ItemTemplate>
                                 </asp:Repeater>
-                                <asp:Label ID="lblSize" runat="server" Text=""></asp:Label>
+                                <asp:Label ID="lblSize" runat="server" Text="" Visible="false"></asp:Label>
 
                             </div>
                         </fieldset>
@@ -255,35 +250,8 @@ GROUP BY s.color_ID, color_name, hex_color">
 
                 <div class="mt-1 flex items-center">
                     <div>
-                        <div class="flex items-center">
-                            <!--
-              Heroicon name: solid/star
+                        <div runat="server" id="ratingStars" class="flex items-center">
 
-              Active: "text-yellow-400", Default: "text-gray-300"
-            -->
-                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                            </svg>
-
-                            <!-- Heroicon name: solid/star -->
-                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                            </svg>
-
-                            <!-- Heroicon name: solid/star -->
-                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                            </svg>
-
-                            <!-- Heroicon name: solid/star -->
-                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                            </svg>
-
-                            <!-- Heroicon name: solid/star -->
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                            </svg>
                         </div>
                     </div>
                     <p class="ml-2 text-sm text-gray-900">
@@ -409,25 +377,23 @@ GROUP BY s.color_ID, color_name, hex_color">
                 <div class="flow-root">
                     <div class=" divide-y divide-gray-200">
                         <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Review] AS r
-INNER JOIN [Product_Details] AS p ON
-r.product_details_ID = p.product_details_ID
-INNER JOIN [AspNetUsers] AS u ON
-r.user_ID = Id 
-INNER JOIN [Color] AS c ON
-p.color_ID = c.color_ID 
-INNER JOIN [Size] AS s ON
-p.size_ID = s.size_ID 
-WHERE product_ID = @product_ID">
+INNER JOIN [Product_Details] AS p ON r.product_details_ID = p.product_details_ID
+INNER JOIN [AspNetUsers] AS u ON r.user_ID = Id 
+INNER JOIN [Color] AS c ON p.color_ID = c.color_ID 
+INNER JOIN [Size] AS s ON p.size_ID = s.size_ID 
+WHERE product_ID = @product_ID
+ORDER BY review_date DESC">
                             <SelectParameters>
                                 <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
                             </SelectParameters>
                         </asp:SqlDataSource>
-                        <asp:Repeater ID="Repeater8" runat="server" DataSourceID="SqlDataSource5">
+                        <asp:Repeater ID="Repeater8" runat="server" DataSourceID="SqlDataSource5" OnItemDataBound="Repeater8_ItemDataBound">
                             <ItemTemplate>
                                 <div class="py-4 border-t border-b">
                                     <div class="flex items-center">
                                         <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="Emily Selman." class="h-12 w-12 rounded-full">
                                         <div class="ml-4">
+                                            <asp:Label runat="server" ID="lblRating" Text='<%# Eval("rating") %>' Visible="false"/>
                                             <h4 class="text-sm font-bold text-gray-900"><%# Eval("UserName") %></h4>
                                             <div class="mt-1 flex items-center">
 
@@ -436,10 +402,10 @@ WHERE product_ID = @product_ID">
                                         </div>
                                     </div>
 
-                                    <div class="mt-4 text-base italic text-gray-600">
+                                    <div class="mt-4 text-base">
                                         <p><%# Eval("review_description") %></p>
 
-                                        <div class="flex justify-between mt-4">
+                                        <div class="flex justify-between mt-4  italic text-gray-600">
                                             <p><%# Eval("size_name") %> | <%# Eval("color_name") %></p>
 
 

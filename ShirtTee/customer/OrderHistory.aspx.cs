@@ -13,7 +13,10 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace ShirtTee.customer
 {
@@ -21,128 +24,137 @@ namespace ShirtTee.customer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             paymentStatusDiv.Visible = false;
             string sessionId = Request.QueryString["id"]; //stripe
-            string cancel = Request.QueryString["cancel"]; //paypal
             if (!string.IsNullOrEmpty(sessionId))
             {
-                // Use the sessionId to retrieve the session and check its status
-                StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                var service = new SessionService();
-                var session = service.Get(sessionId);
-                var paymentIntent = new PaymentIntentService();
-                string checkPaymentID = "";
-                if (session != null)
+                try
                 {
-                    checkPaymentID = session.PaymentIntentId;
-                }
-                DBconnection dBconnection = new DBconnection();
-                SqlParameter[] para = new SqlParameter[]{
+                    // Use the sessionId to retrieve the session and check its status
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    var service = new SessionService();
+                    var session = service.Get(sessionId);
+                    var paymentIntent = new PaymentIntentService();
+                    string checkPaymentID = "";
+                    if (session != null)
+                    {
+                        checkPaymentID = session.PaymentIntentId;
+                    }
+                    if (!string.IsNullOrEmpty(checkPaymentID))
+                    {
+                        DBconnection dBconnection = new DBconnection();
+                        SqlParameter[] para = new SqlParameter[]{
                    new SqlParameter("@payment_ID", checkPaymentID),
                 };
 
-                SqlDataReader payment = dBconnection.ExecuteQuery(
-                    " SELECT * FROM [Payment]"
-                  + " WHERE payment_ID = @payment_ID",
-                para).ExecuteReader();
-                if (!payment.HasRows && session != null)
-                {
-                    paymentStatusDiv.Visible = true;
-
-                    if (session != null)
-                    {
-                        if (session.PaymentStatus == "paid")
+                        SqlDataReader payment = dBconnection.ExecuteQuery(
+                            " SELECT * FROM [Payment]"
+                          + " WHERE payment_ID = @payment_ID",
+                        para).ExecuteReader();
+                        if (!payment.HasRows && session != null)
                         {
-                            // Payment successful
-                            successIcon.Visible = true;
-                            failedIcon.Visible = false;
-                            lblStatus.Text = "paid";
+                            paymentStatusDiv.Visible = true;
 
-
-                            DateTime orderDate = DateTime.Now;
-                            string orderID = generateOrderId(orderDate);
-                            Boolean loop = false;
-                            do
+                            if (session != null)
                             {
-                                if (loop)
+                                if (session.PaymentStatus == "paid")
                                 {
-                                    orderID = generateOrderId(orderDate);
-                                }
-                                loop = false;
+                                    // Payment successful
+                                    successIcon.Visible = true;
+                                    failedIcon.Visible = false;
+                                    lblStatus.Text = "paid";
 
-                                SqlParameter[] parameterUrl = new SqlParameter[]{
-                            new SqlParameter("@order_date", orderDate),
-                            };
 
-                                SqlDataReader order = dBconnection.ExecuteQuery(
-                                    " SELECT order_ID FROM [Order]"
-                                  + " WHERE order_date = @order_date",
-                                    parameterUrl).ExecuteReader();
-
-                                if (order.HasRows)
-                                {
-                                    while (order.Read())
+                                    DateTime orderDate = DateTime.Now;
+                                    string orderID = generateOrderId(orderDate);
+                                    Boolean loop = false;
+                                    do
                                     {
-                                        if (order["order_ID"].ToString().Equals(orderID))
+                                        if (loop)
                                         {
-                                            loop = true;
-                                            break;
+                                            orderID = generateOrderId(orderDate);
                                         }
+                                        loop = false;
+
+                                        SqlParameter[] parameterUrl = new SqlParameter[]{
+                                        new SqlParameter("@order_date", orderDate),
+                                        };
+
+                                        SqlDataReader order = dBconnection.ExecuteQuery(
+                                            " SELECT order_ID FROM [Order]"
+                                          + " WHERE order_date = @order_date",
+                                            parameterUrl).ExecuteReader();
+
+                                        if (order.HasRows)
+                                        {
+                                            while (order.Read())
+                                            {
+                                                if (order["order_ID"].ToString().Equals(orderID))
+                                                {
+                                                    loop = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    } while (loop);
+
+                                    //initialize all values
+                                    decimal total = Convert.ToDecimal(session.AmountTotal) / 100m;
+                                    string paymentID = session.PaymentIntentId;
+                                    string voucherID = null;
+                                    string tempCode = "";
+                                    if (Session["discountCode"] != null) 
+                                    {
+                                        tempCode = Session["discountCode"].ToString();
                                     }
-                                }
-                            } while (loop);
+                                    SqlParameter[] parameter = new SqlParameter[]{
+                                       new SqlParameter("@voucher_name", tempCode),
+                                    };
+                                    SqlDataReader voucher = dBconnection.ExecuteQuery(
+                                       " SELECT * FROM [Voucher]"
+                                     + " WHERE voucher_name = @voucher_name",
+                                       parameter).ExecuteReader();
+                                    if (voucher.HasRows)
+                                    {
+                                        voucher.Read();
+                                        voucherID = voucher["voucher_ID"].ToString();
+                                    }
+                                    string deliveryAddress = "abc";
+                                    //Session["deliveryAddress"].ToString();
+                                    decimal shippingFee = Convert.ToDecimal(session.TotalDetails.AmountShipping) / 100m;
+                                    int memberPoint = Convert.ToInt32(session.AmountTotal) / 100;
+                                    decimal subtotal = Convert.ToDecimal(session.AmountSubtotal) / 100m;
+                                    decimal discount = Convert.ToDecimal(session.TotalDetails.AmountDiscount) / 100m;
 
-                            //initialize all values
-                            decimal total = Convert.ToDecimal(session.AmountTotal) / 100m;
-                            string paymentID = session.PaymentIntentId;
-                            string voucherID = null;
-                            SqlParameter[] parameter = new SqlParameter[]{
-                           new SqlParameter("@voucher_name", Session["discountCode"].ToString()),
-                        };
-                            SqlDataReader voucher = dBconnection.ExecuteQuery(
-                               " SELECT * FROM [Voucher]"
-                             + " WHERE voucher_name = @voucher_name",
-                               parameter).ExecuteReader();
-                            if (voucher.HasRows)
-                            {
-                                voucher.Read();
-                                voucherID = voucher["voucher_ID"].ToString();
-                            }
-                            string deliveryAddress = "abc";
-                            //Session["deliveryAddress"].ToString();
-                            decimal shippingFee = Convert.ToDecimal(session.TotalDetails.AmountShipping) / 100m;
-                            int memberPoint = Convert.ToInt32(session.AmountTotal) / 100;
-                            decimal subtotal = Convert.ToDecimal(session.AmountSubtotal) / 100m;
-                            decimal discount = Convert.ToDecimal(session.TotalDetails.AmountDiscount) / 100m;
-
-                            //create payment
-                            var list = paymentIntent.Get(session.PaymentIntentId);
-                            string paymentName = list.PaymentMethodTypes[0];
-                            DateTime paymentDate = session.Created;
-                            try
-                            {
-                                string createPaymentDetails =
-                                    "INSERT INTO [Payment] (payment_ID, payment_name, payment_date) " +
-                                    "VALUES (@payment_ID, @payment_name, @payment_date)";
-                                SqlParameter[] parameters5 = {
+                                    //create payment
+                                    var list = paymentIntent.Get(session.PaymentIntentId);
+                                    string paymentName = list.PaymentMethodTypes[0];
+                                    DateTime paymentDate = session.Created;
+                                    try
+                                    {
+                                        string createPaymentDetails =
+                                            "INSERT INTO [Payment] (payment_ID, payment_name, payment_date) " +
+                                            "VALUES (@payment_ID, @payment_name, @payment_date)";
+                                        SqlParameter[] parameters5 = {
                                 new SqlParameter("@payment_ID", paymentID),
                                 new SqlParameter("@payment_name", paymentName),
                                 new SqlParameter("@payment_date", paymentDate)
                             };
-                                dBconnection.ExecuteNonQuery(createPaymentDetails, parameters5);
+                                        dBconnection.ExecuteNonQuery(createPaymentDetails, parameters5);
 
-                            }
-                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "1"); }
+                                    }
+                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "1"); }
 
-                            //create order
-                            try
-                            {
-                                //with voucher
-                                string createOrder =
-                                   "INSERT INTO [Order] (order_ID, order_date, order_total, payment_ID, voucher_ID, delivery_address, shipping_fee, member_points_earned, user_ID, subtotal, discount) " +
-                                   "VALUES (@order_ID, @order_date, @order_total, @payment_ID, @voucher_ID, @delivery_address, @shipping_fee, @member_point, @user_ID, @subtotal, @discount)";
+                                    //create order
+                                    try
+                                    {
+                                        //with voucher
+                                        string createOrder =
+                                           "INSERT INTO [Order] (order_ID, order_date, order_total, payment_ID, voucher_ID, delivery_address, shipping_fee, member_points_earned, user_ID, subtotal, discount) " +
+                                           "VALUES (@order_ID, @order_date, @order_total, @payment_ID, @voucher_ID, @delivery_address, @shipping_fee, @member_point, @user_ID, @subtotal, @discount)";
 
-                                SqlParameter[] withVoucher = {
+                                        SqlParameter[] withVoucher = {
                                 new SqlParameter("@order_ID", orderID),
                                 new SqlParameter("@order_date", orderDate),
                                 new SqlParameter("@order_total", total),
@@ -156,14 +168,14 @@ namespace ShirtTee.customer
                                 new SqlParameter("@discount", discount)
                             };
 
-                                Boolean orderCreated = false;
-                                //without voucher
-                                if (voucherID == null)
-                                {
-                                    createOrder =
-                                        "INSERT INTO [Order] (order_ID, order_date, order_total, payment_ID, delivery_address, shipping_fee, member_points_earned, user_ID, subtotal, discount) " +
-                                        "VALUES (@order_ID, @order_date, @order_total, @payment_ID, @delivery_address, @shipping_fee, @member_point, @user_ID, @subtotal, @discount)";
-                                    SqlParameter[] withoutVoucher = {
+                                        Boolean orderCreated = false;
+                                        //without voucher
+                                        if (voucherID == null)
+                                        {
+                                            createOrder =
+                                                "INSERT INTO [Order] (order_ID, order_date, order_total, payment_ID, delivery_address, shipping_fee, member_points_earned, user_ID, subtotal, discount) " +
+                                                "VALUES (@order_ID, @order_date, @order_total, @payment_ID, @delivery_address, @shipping_fee, @member_point, @user_ID, @subtotal, @discount)";
+                                            SqlParameter[] withoutVoucher = {
                                         new SqlParameter("@order_ID", orderID),
                                         new SqlParameter("@order_date", orderDate),
                                         new SqlParameter("@order_total", total),
@@ -175,140 +187,203 @@ namespace ShirtTee.customer
                                         new SqlParameter("@subtotal", subtotal),
                                         new SqlParameter("@discount", discount)
                                     };
-                                    if (dBconnection.ExecuteNonQuery(createOrder, withoutVoucher)) { orderCreated = true; }
-                                }
-                                else //with voucher
-                                {
-                                    if (dBconnection.ExecuteNonQuery(createOrder, withVoucher)) { orderCreated = true; }
-                                }
+                                            if (dBconnection.ExecuteNonQuery(createOrder, withoutVoucher)) { orderCreated = true; }
+                                        }
+                                        else //with voucher
+                                        {
+                                            if (dBconnection.ExecuteNonQuery(createOrder, withVoucher)) { orderCreated = true; }
+                                        }
 
-                                if (orderCreated)
-                                {
-                 
-                                    //add member points
-                                    try
-                                    {
-                                        string addMemberPoints =
-                                            "UPDATE [AspNetUsers] SET " +
-                                            "member_points = member_points + @member_points_earned " +
-                                            "WHERE Id = @user_ID";
-                                        SqlParameter[] param = {
+                                        if (orderCreated)
+                                        {
+
+                                            //add member points
+                                            try
+                                            {
+                                                string addMemberPoints =
+                                                    "UPDATE [AspNetUsers] SET " +
+                                                    "member_points = member_points + @member_points_earned " +
+                                                    "WHERE Id = @user_ID";
+                                                SqlParameter[] param = {
                                             new SqlParameter("@member_points_earned", memberPoint),
                                             new SqlParameter("@user_ID", Session["user_ID"])
                                         };
-                                        dBconnection.ExecuteNonQuery(addMemberPoints, param);
-                                    }
-                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "6"); }
+                                                dBconnection.ExecuteNonQuery(addMemberPoints, param);
+                                            }
+                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "6"); }
 
 
 
-                                    //create order status
-                                    try
-                                    {
-                                        string createStatus =
-                                            "INSERT INTO [Order_Status] (status, update_date, order_ID, description) " +
-                                            "VALUES (@status, @update_date, @order_ID, @description) ";
-                                        SqlParameter[] parameters1 = {
+
+                                            //create order status
+                                            try
+                                            {
+                                                string createStatus =
+                                                    "INSERT INTO [Order_Status] (status, update_date, order_ID, description) " +
+                                                    "VALUES (@status, @update_date, @order_ID, @description) ";
+                                                SqlParameter[] parameters1 = {
                                         new SqlParameter("@status", "Order Placed"),
                                         new SqlParameter("@update_date", DateTime.Now),
                                         new SqlParameter("@order_ID", orderID),
                                         new SqlParameter("@description", "We received your order.")
                                     };
-                                        dBconnection.ExecuteNonQuery(createStatus, parameters1);
-                                    }
-                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "4"); }
+                                                dBconnection.ExecuteNonQuery(createStatus, parameters1);
+                                            }
+                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "4"); }
 
 
-                                    //read cart details
-                                    SqlParameter[] parameters2 = new SqlParameter[]{
+                                            //read cart details
+                                            SqlParameter[] parameters2 = new SqlParameter[]{
                                     new SqlParameter("@user_ID", Session["user_ID"].ToString()),
                                 };
-                                    SqlDataReader cart = dBconnection.ExecuteQuery(
-                                       " SELECT * FROM [Cart]"
-                                     + " WHERE user_ID = @user_ID",
-                                       parameters2).ExecuteReader();
-                                    if (cart.HasRows)
-                                    {
-                                        //create order details
-                                        while (cart.Read())
-                                        {
-                                            string createDetails =
-                                                "INSERT INTO [Order_Details] (order_ID, product_details_ID, quantity, total) " +
-                                                "VALUES (@order_ID, @product_details_ID, @quantity, @total)";
-                                            SqlParameter[] parameters3 = {
+                                            SqlDataReader cart = dBconnection.ExecuteQuery(
+                                               " SELECT * FROM [Cart]"
+                                             + " WHERE user_ID = @user_ID",
+                                               parameters2).ExecuteReader();
+                                            if (cart.HasRows)
+                                            {
+                                                //create order details
+                                                while (cart.Read())
+                                                {
+                                                    string createDetails =
+                                                        "INSERT INTO [Order_Details] (order_ID, product_details_ID, quantity, total) " +
+                                                        "VALUES (@order_ID, @product_details_ID, @quantity, @total)";
+                                                    SqlParameter[] parameters3 = {
                                         new SqlParameter("@order_ID", orderID),
                                         new SqlParameter("@product_details_ID", cart["product_details_ID"]),
                                         new SqlParameter("@quantity", cart["quantity"]),
                                         new SqlParameter("@total", cart["subtotal"])
                                     };
-                                            dBconnection.ExecuteNonQuery(createDetails, parameters3);
-                                        }
-                                    }
+                                                    dBconnection.ExecuteNonQuery(createDetails, parameters3);
 
-                                    //clear cart
-                                    string clearCart =
-                                        "DELETE FROM [Cart] " +
-                                        "WHERE user_ID = @user_ID";
-                                    SqlParameter[] parameters4 = {
+                                                    //deduct stock
+                                                    try
+                                                    {
+                                                        string deductStock =
+                                                                "UPDATE [Product_Details] SET " +
+                                                                "stock_available = stock_available - @quantity " +
+                                                                "WHERE product_details_ID = @product_details_ID";
+                                                        SqlParameter[] param = {
+                                            new SqlParameter("@quantity", cart["quantity"]),
+                                            new SqlParameter("@product_details_ID", cart["product_details_ID"]),
+                                        };
+                                                        dBconnection.ExecuteNonQuery(deductStock, param);
+                                                    }
+                                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "deduct stock"); }
+                                                }
+                                            }
+
+                                            //clear cart
+                                            string clearCart =
+                                                "DELETE FROM [Cart] " +
+                                                "WHERE user_ID = @user_ID";
+                                            SqlParameter[] parameters4 = {
                                 new SqlParameter("@user_ID", Session["user_ID"])
                             };
-                                    dBconnection.ExecuteNonQuery(clearCart, parameters4);
-                                };
+                                            dBconnection.ExecuteNonQuery(clearCart, parameters4);
+                                        };
+                                    }
+                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "2"); }
+
+
+
+                                }
+                                else
+                                {
+                                    successIcon.Visible = false;
+                                    failedIcon.Visible = true;
+                                    // Payment canceled
+                                    lblStatus.Text = "error";
+                                    lblPaymentTitle.Text = "Payment Failed !";
+                                    lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
+                                }
                             }
-                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "2"); }
-
-
-
-                        }
-                        else
-                        {
-                            successIcon.Visible = false;
-                            failedIcon.Visible = true;
-                            // Payment canceled
-                            lblStatus.Text = "error";
-                            lblPaymentTitle.Text = "Payment Failed !";
-                            lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
+                            else
+                            {
+                                // Unable to retrieve session, handle accordingly
+                                lblStatus.Text = "error";
+                            }
                         }
                     }
                     else
                     {
-                        // Unable to retrieve session, handle accordingly
+                        paymentStatusDiv.Visible = true;
+                        successIcon.Visible = false;
+                        failedIcon.Visible = true;
                         lblStatus.Text = "error";
+                        lblPaymentTitle.Text = "Payment Failed !";
+                        lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
                     }
                 }
 
-            }
-            else if (!string.IsNullOrEmpty(cancel))
-            {
-                paymentStatusDiv.Visible = true;
-                if (cancel == "false")
+                catch (Exception ex)
                 {
-                    // Payment successful
-                    // You can perform additional actions here
-                    successIcon.Visible = true;
-                    failedIcon.Visible = false;
-                    lblStatus.Text = "paid";
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }
 
+
+            }
+ 
+
+
+            displayStatus();
+
+        }
+
+        private void displayStatus()
+        {
+            string status = Request.QueryString["status"];
+            if (!string.IsNullOrEmpty(status))
+            {
+                if (status.Equals("OrderPlaced"))
+                {
+                    linkOrderPlaced.CssClass += " text-blue-500";
                 }
                 else
                 {
-                    successIcon.Visible = false;
-                    failedIcon.Visible = true;
-                    lblStatus.Text = "error";
-                    lblPaymentTitle.Text = "Payment Failed !";
-                    lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
+                    // Remove the class if the condition is not met
+                    linkOrderPlaced.CssClass = linkOrderPlaced.CssClass.Replace("text-blue-500", "").Trim();
+                }
+                if (status.Equals("Preparing"))
+                {
+                    linkPreparing.CssClass += " text-blue-500";
+                }
+                else
+                {
+                    // Remove the class if the condition is not met
+                    linkPreparing.CssClass = linkPreparing.CssClass.Replace("text-blue-500", "").Trim();
+                }
+                if (status.Equals("Shipped"))
+                {
+                    linkShipped.CssClass += " text-blue-500";
+                }
+                else
+                {
+                    // Remove the class if the condition is not met
+                    linkShipped.CssClass = linkShipped.CssClass.Replace("text-blue-500", "").Trim();
+                }
+                if (status.Equals("Delivered"))
+                {
+                    linkDelivered.CssClass += " text-blue-500";
+                }
+                else
+                {
+                    // Remove the class if the condition is not met
+                    linkDelivered.CssClass = linkDelivered.CssClass.Replace("text-blue-500", "").Trim();
+                }
+                if (status.Equals("Cancelled"))
+                {
+                    linkCancelled.CssClass += " text-blue-500";
+                }
+                else
+                {
+                    // Remove the class if the condition is not met
+                    linkCancelled.CssClass = linkCancelled.CssClass.Replace("text-blue-500", "").Trim();
                 }
             }
-            else
-            {
-                // No session ID in the query parameters, handle accordingly
-                lblStatus.Text = "error";
-                paymentStatusDiv.Visible = false;
-            }
-
-
 
         }
+
 
         private string generateOrderId(DateTime orderDate)
         {
@@ -360,8 +435,10 @@ namespace ShirtTee.customer
                 Label lblDisplayStatus = (Label)e.Item.FindControl("lblDisplayStatus");
                 Label lblVoucherCode = (Label)e.Item.FindControl("lblVoucherCode");
                 Label lblDisplayVoucher = (Label)e.Item.FindControl("lblDisplayVoucher");
-                
+
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
+
+                string oStatus = "";
 
                 if (dataItem != null)
                 {
@@ -379,14 +456,15 @@ namespace ShirtTee.customer
                         "WHERE order_ID = @order_ID AND " +
                         "update_date = (SELECT MAX(update_date) FROM [Order_Status] WHERE order_ID = @order_ID)",
                     parameter).ExecuteReader();
-                    if (orderStatus.HasRows) 
+                    if (orderStatus.HasRows)
                     {
                         orderStatus.Read();
                         lblOrderStatus.Text = orderStatus["status"].ToString();
+                        oStatus = orderStatus["status"].ToString();
                         GetStatusClass(orderStatus["status"].ToString(), lblDisplayStatus);
                     }
-                    
-                    if (dataItem["voucher_ID"] != null) 
+
+                    if (dataItem["voucher_ID"] != null)
                     {
                         SqlParameter[] p = new SqlParameter[]{
                          new SqlParameter("@voucher_ID", dataItem["voucher_ID"].ToString())
@@ -396,11 +474,57 @@ namespace ShirtTee.customer
                             "SELECT * FROM [Voucher] " +
                             "WHERE voucher_ID = @voucher_ID ",
                         p).ExecuteReader();
-                        if (voucher.HasRows) 
+                        if (voucher.HasRows)
                         {
                             voucher.Read();
                             lblDisplayVoucher.Visible = true;
                             lblVoucherCode.Text = voucher["voucher_name"].ToString();
+                        }
+
+                    }
+                    string reqStatus = Request.QueryString["status"];
+
+                    if (!string.IsNullOrEmpty(reqStatus))
+                    {
+                        if (reqStatus.Equals("OrderPlaced"))
+                        {
+                            reqStatus = "Order Placed";
+                        }
+                        switch (oStatus)
+                        {
+                            case "Order Placed":
+                                if (!reqStatus.Equals(oStatus))
+                                {
+                                    e.Item.Visible = false;
+                                }
+                                break;
+                            case "Preparing":
+                                if (!reqStatus.Equals(oStatus))
+                                {
+                                    e.Item.Visible = false;
+                                }
+                                break;
+                            case "Shipped":
+                                if (!reqStatus.Equals(oStatus))
+                                {
+                                    e.Item.Visible = false;
+                                }
+                                break;
+                            case "Delivered":
+                                if (!reqStatus.Equals(oStatus))
+                                {
+                                    e.Item.Visible = false;
+                                }
+                                break;
+                            case "Cancelled":
+                                if (!reqStatus.Equals(oStatus))
+                                {
+                                    e.Item.Visible = false;
+                                }
+                                break;
+                            default:
+                                break;
+
                         }
 
                     }
@@ -488,7 +612,7 @@ namespace ShirtTee.customer
                         if (review.HasRows)
                         {
                             int rowCount = 0;
-                            while (review.Read()) 
+                            while (review.Read())
                             {
                                 rowCount++;
                             }
@@ -496,13 +620,13 @@ namespace ShirtTee.customer
                             {
                                 btnWriteReview.Text = "Edit Review";
                             }
-                            else 
+                            else
                             {
                                 btnWriteReview.Text = "View Review";
                             }
-                            
+
                         }
-                        else 
+                        else
                         {
                             btnWriteReview.Text = "Write Review";
                         }
@@ -512,5 +636,7 @@ namespace ShirtTee.customer
 
             }
         }
+
+
     }
 }

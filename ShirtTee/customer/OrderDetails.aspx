@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="hidden sm:grid grid-cols-4 text-sm font-medium text-gray-600 mt-6">
                                     <div class="">Order placed</div>
-                                    <div class="text-center ">Processing</div>
+                                    <div class="text-center ">Preparing</div>
                                     <div class="text-center">Shipped</div>
                                     <div class="text-right">Delivered</div>
                                 </div>
@@ -60,7 +60,7 @@
                                     <div class="hs-tooltip">
                                         <asp:Button
                                             ID="btnCancelDisabled" Visible="false" runat="server" Text="Cancel" disabled class="hs-tooltip-toggle w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
-                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700 hidden" role="tooltip" style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(814.4px, -472.8px, 0px);" data-popper-placement="top">Order cancelled or start processing cannot be cancelled.
+                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700 hidden" role="tooltip" style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(814.4px, -472.8px, 0px);" data-popper-placement="top">Order cancelled or start preparing cannot be cancelled.
                                         </span>
                                     </div>
 

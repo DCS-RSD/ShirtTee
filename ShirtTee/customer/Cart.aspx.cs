@@ -65,11 +65,23 @@ namespace ShirtTee.customer
                 DropDownList ddlQty = (DropDownList)e.Item.FindControl("ddlQty");
                 Label lblEachSubtotal = (Label)e.Item.FindControl("lblEachSubtotal");
                 Label lblPrice = (Label)e.Item.FindControl("lblPrice");
+                Label lblLowStock = (Label)e.Item.FindControl("lblLowStock");
 
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
 
+
+
                 if (ddlQty != null && dataItem != null)
                 {
+                    if (Convert.ToInt32(dataItem["stock_available"].ToString()) < 10)
+                    {
+                        lblLowStock.Visible = true;
+                    }
+                    else
+                    {
+                        lblLowStock.Visible = false;
+                    }
+
                     ddlQty.SelectedValue = dataItem["quantity"].ToString();
                     double price = Convert.ToDouble(dataItem["price"].ToString());
                     lblPrice.Text = price.ToString("F2");
@@ -77,6 +89,8 @@ namespace ShirtTee.customer
                     lblEachSubtotal.Text = eachSubtotal.ToString("F2");
                 }
             }
+
+
 
             calculateSubtotal();
             calculateTotal(Convert.ToDouble(lblDiscount.Text.ToString()));

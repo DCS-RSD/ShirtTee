@@ -29,7 +29,7 @@ WHERE user_ID = @user_ID">
                                 <span class="float-right text-gray-400"><%# Eval("size_name") %> - <%# Eval("color_name") %></span>
                                 <span class="float-right text-gray-400">Price: RM
                                     <asp:Label ID="lblPrice" runat="server" Text="" /></span>
-                                <span class="float-right text-gray-400">Quantity: <%# Eval("quantity") %></span>
+                                <span class="float-right text-gray-400">Quantity: <%# Eval("quantity") %> <asp:Label runat="server" class="text-red-500 italic font-semibold" ID="lblLowStock" Text="Insufficient Stock"  Visible="false"/></span>
                                 <p class="text-lg font-bold">
                                     RM
                                     <asp:Label ID="lblEachSubtotal" runat="server" Text="" />
@@ -52,17 +52,6 @@ WHERE user_ID = @user_ID">
                         <div class="ml-5">
                             <span class="mt-2 font-semibold">Online Banking</span>
                             <p class="text-slate-500 text-sm leading-6">FPX, GrabPay, Credit/Debit Card etc.</p>
-                        </div>
-                    </label>
-                </div>
-                <div class="relative">
-                    <input class="peer hidden" id="radio_2" type="radio" name="radio" checked="">
-                    <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-                    <label class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_2">
-                        <img class="w-14 object-contain" src="../Image/paypal.png" alt="">
-                        <div class="ml-5">
-                            <span class="mt-2 font-semibold">PayPal</span>
-                            <p class="text-slate-500 text-sm leading-6">Credit/Debit Card</p>
                         </div>
                     </label>
                 </div>
@@ -156,8 +145,12 @@ WHERE user_ID = @user_ID">
                         <asp:Label ID="lblTotal" runat="server" Text="" /></p>
                 </div>
             </div>
-            <asp:Button ID="btnHidden" runat="server" CssClass="hidden" OnClick="btnHidden_Click" Visible="False" />
-            <asp:Button ID="btnPlaceOrder" runat="server" class="mt-4 mb-8 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" OnClick="btnPlaceOrder_Click" />
+            <asp:Button ID="btnPlaceOrder" runat="server" class="mt-4 mb-4 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" OnClick="btnPlaceOrder_Click" />
+            <div class="text-center mb-4">
+                            <asp:Label ID="lblWarning" runat="server" class="italic font-semibold text-lg text-red-500 mt-2" Visible="false" Text="Cannot proceed due to insufficient stock."></asp:Label>
+
+            </div>
+
         </div>
 
 
