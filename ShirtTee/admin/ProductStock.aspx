@@ -172,11 +172,20 @@ WHERE (Product.product_ID = @product_ID)">
                                                         <div class="grid gap-y-4">
                                                             <!-- Form Group -->
                                                             <div>
-                                                                <label class="block text-sm mb-2 dark:text-white">Stock Quantity</label>
+                                                                <label class="block text-sm mb-2 dark:text-white">Stock Quantity <span class="text-red-500">*</span></label>
                                                                 <div class="relative">
-                                                                    <asp:TextBox runat="server" ID="txtQty" Text='<%# Eval("stock_available") %>'
+                                                                    <asp:TextBox runat="server" ID="txtQty" Text='<%# Eval("stock_available") %>' TextMode="Number"
                                                                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" />
                                                                 </div>
+                                                                <asp:RequiredFieldValidator ID="rfvQty" class="text-sm italic"
+                                                                    runat="server" ControlToValidate="txtQty"
+                                                                    ErrorMessage="Please enter a quantity."
+                                                                    Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                                                <asp:CompareValidator runat="server" ID="cValidator" ControlToValidate="txtQty"
+                                                                    class="text-sm italic" ForeColor="Red"
+                                                                    Type="Integer" Operator="DataTypeCheck" EnableClientScript="true"
+                                                                    ErrorMessage="Please enter a valid number." Display="Dynamic" />
                                                             </div>
                                                             <!-- End Form Group -->
 
@@ -189,6 +198,11 @@ WHERE (Product.product_ID = @product_ID)">
                                                                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                                                         onchange='<%# "loadFile(event,"+Container.DataItemIndex+")" %>'
                                                                         ID="fileImage" runat="server" />
+                                                                    <asp:RegularExpressionValidator ID="revFileThumbnail" class="text-sm italic"
+                                                                        runat="server" ControlToValidate="fileImage"
+                                                                        ErrorMessage="Please choose a valid image file (JPG, JPEG, or PNG)."
+                                                                        Display="Dynamic" ForeColor="Red"
+                                                                        ValidationExpression="^.*\.(jpg|jpeg|png|JPG|JPEG|PNG)$"></asp:RegularExpressionValidator>
                                                                 </div>
                                                             </div>
                                                             <!-- End Form Group -->
