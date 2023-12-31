@@ -90,8 +90,8 @@
                         <asp:ListView ID="ListView1" DataSourceID="SqlDataSource1" runat="server" DataKeyNames="notice_ID">
                             <EmptyDataTemplate>
                                 <table runat="server" class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
-                                    <tr class="text-center whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
-                                        <td>Empty!</td>
+                                    <tr class="text-center whitespace-nowrap border-y border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">
+                                        <td class="py-8">Empty!</td>
                                     </tr>
                                 </table>
                             </EmptyDataTemplate>
