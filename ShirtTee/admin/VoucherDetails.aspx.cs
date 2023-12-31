@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -51,7 +52,6 @@ namespace ShirtTee.admin
                     voucherDetails.Read();
                     voucherName = voucherDetails["voucher_name"].ToString();
 
-                    lblSubTitle.Text = voucherDetails["voucher_ID"].ToString();
                     lblTitle.Text = voucherDetails["voucher_name"].ToString();
                     txtCapAt.Text = voucherDetails["cap_at"].ToString();
 
@@ -60,7 +60,7 @@ namespace ShirtTee.admin
                     txtMinSpend.Text = voucherDetails["min_spend"].ToString();
                     txtVoucherDesc.Text = voucherDetails["voucher_description"].ToString();
                     txtVoucherName.Text = voucherDetails["voucher_name"].ToString();
-                    txtDate.Text = ((DateTime)voucherDetails["expiry_date"]).ToString("yyyy-MM-dd");
+                    txtDate.Text = voucherDetails["expiry_date"].ToString();
                 }
             }
             catch (Exception)
@@ -124,31 +124,33 @@ namespace ShirtTee.admin
                 new SqlParameter("@voucher_description", txtVoucherDesc.Text),
                 new SqlParameter("@discount_rate", discount),
                 new SqlParameter("@min_spend", Convert.ToDouble(txtMinSpend.Text)),
-                new SqlParameter("@expiry_date", txtDate.Text),
+                new SqlParameter("@expiry_date",SqlDbType.Date){ Value = txtDate.Text},
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text)),
                 new SqlParameter("@voucher_ID", Request.QueryString["voucher_id"])
                 };
+                System.Diagnostics.Debug.WriteLine(">>",txtDate.Text);
+
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     Session["VoucherUpdated"] = "success";
 
-                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    var service = new CouponService();
-                    service.Delete(voucherName);
+                    //StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    //var service = new CouponService();
+                    //service.Delete(voucherName);
 
-                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    var options = new CouponCreateOptions
-                    {
-                        Duration = "once",
-                        Name = txtVoucherName.Text,
-                        Id = txtVoucherName.Text,
-                        PercentOff = (decimal)discount,
-                        RedeemBy = DateTime.Parse(txtDate.Text)
-                    };
+                    //StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    //var options = new CouponCreateOptions
+                    //{
+                    //    Duration = "once",
+                    //    Name = txtVoucherName.Text,
+                    //    Id = txtVoucherName.Text,
+                    //    PercentOff = (decimal)discount,
+                    //    RedeemBy = DateTime.Parse(txtDate.Text)
+                    //};
 
-                    var service2 = new CouponService();
-                    service2.Create(options);
+                    //var service2 = new CouponService();
+                    //service2.Create(options);
 
                     fetchData();
                 }

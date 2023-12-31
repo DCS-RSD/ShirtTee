@@ -14,7 +14,7 @@ namespace ShirtTee.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -62,6 +62,35 @@ namespace ShirtTee.admin
                 Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
             }
 
+        }
+
+        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            //try
+            //{
+            //    DBconnection dbconnection = new DBconnection();
+            //    SqlParameter[] parameterUrl = new SqlParameter[]{
+            //     new SqlParameter("@voucher_name",args.Value)
+            //    };
+            //    SqlDataReader voucherExist = dbconnection.ExecuteQuery(
+            //        "SELECT * FROM [Voucher] WHERE voucher_name = @voucher_name",
+            //        parameterUrl).ExecuteReader();
+
+            //    System.Diagnostics.Debug.WriteLine(voucherExist.ToString());
+            //    if (voucherExist.HasRows)
+            //    {
+            //        args.IsValid = false;
+            //    }
+            //    else
+            //    {
+            //        args.IsValid = true;
+            //    }
+
+            //}
+            //catch (Exception ex) {
+            //    System.Diagnostics.Debug.WriteLine(ex.Message);
+
+            //}
         }
     }
 }
