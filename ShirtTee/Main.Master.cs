@@ -53,7 +53,7 @@ namespace ShirtTee
                     }
                     else 
                     {
-                        imgAvatar.ImageUrl = "~/Image/noimage.png";
+                        imgAvatar.ImageUrl = "~/Image/default-avatar.jpg";
                     }
                 }
             }
@@ -68,9 +68,9 @@ namespace ShirtTee
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     notificationDiv.Visible = true;
-                    orderHisDiv.Visible = true;
-                    myReviewDiv.Visible = true;
-                    profileDiv.Visible = true;
+                    panelOrderHistory.Visible = true;
+                    panelMyReview.Visible = true;
+                    panelProfile.Visible = true;
                     cartDiv.Visible = true;
                     panelLoginInfo.Visible = true;
                     panelLogout.Visible = true;
@@ -84,9 +84,9 @@ namespace ShirtTee
                 else
                 {
                     notificationDiv.Visible = false;
-                    orderHisDiv.Visible = false;
-                    myReviewDiv.Visible = false;
-                    profileDiv.Visible = false;
+                    panelOrderHistory.Visible = false;
+                    panelMyReview.Visible = false;
+                    panelProfile.Visible = false;
                     cartDiv.Visible = false;
                     panelLoginInfo.Visible = false;
                     panelLogout.Visible = false;

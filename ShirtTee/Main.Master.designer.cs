@@ -114,13 +114,13 @@ namespace ShirtTee
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl notificationDiv;
 
         /// <summary>
-        /// orderHisDiv control.
+        /// panelOrderHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl orderHisDiv;
+        protected global::System.Web.UI.WebControls.Panel panelOrderHistory;
 
         /// <summary>
         /// btnOrderHis control.
@@ -132,13 +132,13 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.HyperLink btnOrderHis;
 
         /// <summary>
-        /// myReviewDiv control.
+        /// panelMyReview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl myReviewDiv;
+        protected global::System.Web.UI.WebControls.Panel panelMyReview;
 
         /// <summary>
         /// btnReview control.
@@ -150,13 +150,13 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.HyperLink btnReview;
 
         /// <summary>
-        /// profileDiv control.
+        /// panelProfile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl profileDiv;
+        protected global::System.Web.UI.WebControls.Panel panelProfile;
 
         /// <summary>
         /// btnProfile control.
