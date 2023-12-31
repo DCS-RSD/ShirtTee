@@ -70,7 +70,17 @@ namespace ShirtTee.customer
 
                     txtUsername.Text = profile["UserName"].ToString();
 
-                    ddlGender.SelectedValue = profile["gender"].ToString();
+
+                    if (profile["gender"] == DBNull.Value)
+                    {
+                        ddlGender.SelectedValue = profile["gender"].ToString();
+                    }
+                    else
+                    {
+                        ddlGender.SelectedIndex = 0;
+                    }
+                    
+                        
 
                     if (profile["dob"] != DBNull.Value)
                     {
