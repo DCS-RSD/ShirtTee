@@ -21,7 +21,7 @@ namespace ShirtTee.admin
                 {
                     if (txtSearch.Text != "" && ddlIsExpired.SelectedIndex != 0)
                     {
-                        SqlDataSource1.SelectCommand = query + " AND voucher_name LIKE '%' + @voucher_name + '%'";
+                        SqlDataSource1.SelectCommand = query + " WHERE voucher_name LIKE '%' + @voucher_name + '%'";
                         if (ddlIsExpired.SelectedValue == "active")
                         {
                             SqlDataSource1.SelectCommand += " AND expiry_date >= @today ";
@@ -32,7 +32,7 @@ namespace ShirtTee.admin
                             SqlDataSource1.SelectCommand += " AND expiry_date < @today ";
                         }
                         SqlDataSource1.SelectParameters.Clear();
-                        SqlDataSource1.SelectParameters.Add("product_name", txtSearch.Text);
+                        SqlDataSource1.SelectParameters.Add("voucher_name", txtSearch.Text);
                         SqlDataSource1.SelectParameters.Add("today", DbType.Date, DateTime.Now.Date.ToString("yyyy-MM-dd"));
 
                     }
@@ -52,7 +52,7 @@ namespace ShirtTee.admin
                     }
                     else if (txtSearch.Text != "")
                     {
-                        SqlDataSource1.SelectCommand = query + " AND voucher_name LIKE '%' + @product_name + '%'";
+                        SqlDataSource1.SelectCommand = query + " WHERE voucher_name LIKE '%' + @voucher_name + '%'";
                         SqlDataSource1.SelectParameters.Clear();
                         SqlDataSource1.SelectParameters.Add("voucher_name", txtSearch.Text);
                     }
