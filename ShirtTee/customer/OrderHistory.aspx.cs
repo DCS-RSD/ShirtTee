@@ -120,8 +120,7 @@ namespace ShirtTee.customer
                                         voucher.Read();
                                         voucherID = voucher["voucher_ID"].ToString();
                                     }
-                                    string deliveryAddress = "abc";
-                                    //Session["deliveryAddress"].ToString();
+                                    string deliveryAddress = Session["shippingAddress"].ToString(); ;
                                     decimal shippingFee = Convert.ToDecimal(session.TotalDetails.AmountShipping) / 100m;
                                     int memberPoint = Convert.ToInt32(session.AmountTotal) / 100;
                                     decimal subtotal = Convert.ToDecimal(session.AmountSubtotal) / 100m;
@@ -130,7 +129,11 @@ namespace ShirtTee.customer
                                     //create payment
                                     var list = paymentIntent.Get(session.PaymentIntentId);
                                     string paymentName = list.PaymentMethodTypes[0];
-                                    DateTime paymentDate = session.Created;
+                                    
+                                    DateTime tempDate = session.Created;
+                                    TimeZoneInfo gmtPlus8 = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+                                    DateTime paymentDate = TimeZoneInfo.ConvertTimeFromUtc(tempDate, gmtPlus8);
+
                                     try
                                     {
                                         string createPaymentDetails =
@@ -319,6 +322,12 @@ namespace ShirtTee.customer
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine(ex.Message);
+                    paymentStatusDiv.Visible = true;
+                    successIcon.Visible = false;
+                    failedIcon.Visible = true;
+                    lblStatus.Text = "error";
+                    lblPaymentTitle.Text = "Payment Failed !";
+                    lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
                 }
 
 
