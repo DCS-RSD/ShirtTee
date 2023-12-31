@@ -71,13 +71,13 @@
                     </div>
 
                     <div class="flex flex-row items-center justify-end gap-3 md:gap-6">
-                        <div id="cartDiv" runat="server" class="hs-dropdown-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-offcanvas="#hs-offcanvas-right">
+                        <asp:HyperLink NavigateUrl="~/customer/Cart.aspx" ID="cartDiv" runat="server" class="hs-dropdown-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-offcanvas="#hs-offcanvas-right">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
                                 <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z" />
                             </svg>
                             <asp:Label runat="server" ID="lblCartNumber" class="text-sm font-medium text-gray-700 group-hover:text-gray-800" Text=""></asp:Label>
-                            <asp:HyperLink NavigateUrl="~/customer/Cart.aspx" runat="server" ID="btnCart" class="hidden" />
-                        </div>
+                            <asp:HyperLink runat="server" ID="btnCart" class="hidden" />
+                        </asp:HyperLink>
 
                         <asp:Panel ID="panelUserDropdown" runat="server">
                             <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
