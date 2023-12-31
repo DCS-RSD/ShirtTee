@@ -140,7 +140,9 @@ namespace ShirtTee.customer
                     SqlParameter[] parameterUrl2 = new SqlParameter[]{
                      new SqlParameter("@user_ID", Session["user_ID"])
                     };
-                    SqlDataReader allUser = dbconnection.ExecuteQuery("SELECT * FROM [AspNetUsers] WHERE Id != @user_ID",parameterUrl2).ExecuteReader();
+                    SqlDataReader allUser = dbconnection.ExecuteQuery("SELECT * FROM [AspNetUsers] WHERE Id != @user_ID"
+                        ,parameterUrl2)
+                        .ExecuteReader();
 
                     if (allUser.HasRows)
                     {
