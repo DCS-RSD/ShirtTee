@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -36,7 +37,7 @@ namespace ShirtTee.customer
                     profile.Read();
                     int memberPoint = Convert.ToInt32(profile["member_points"].ToString());
                     lblMemberPoints.Text = memberPoint.ToString();
-                    if (memberPoint > 0 && memberPoint <= 999)
+                    if (memberPoint >= 0 && memberPoint <= 999)
                     {
                         lblMemberInfo.Text = "Level up to unlock more benefits !";
                         lblLvNow.Text = "0";
@@ -102,120 +103,81 @@ namespace ShirtTee.customer
         {
             try
             {
+
+
+                //Boolean fileValid = false;
+                //if (fileAvatar.HasFile)
+                //{
+                //    string fileName = Path.GetFileName(fileAvatar.FileName);
+                //    string fileExtension = Path.GetExtension(fileName).ToLower();
+                //    if (fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".png")
+                //    {
+                //        // Process the file upload
+                //        // ...
+                //        fileValid = true;
+                //    }
+                //    else
+                //    {
+                //        // Invalid file type
+                //        Response.Write("Invalid file type. Please upload a JPG, JPEG or PNG file.");
+                //    }
+                //}
+
+
+                //Boolean same = false;
+                //if (userDetails.HasRows)
+                //{
+                //    userDetails.Read();
+                //    SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                //     new SqlParameter("@user_ID", Session["user_ID"])
+                //    };
+                //    SqlDataReader allUser = dbconnection.ExecuteQuery("SELECT * FROM [AspNetUsers] WHERE Id != @user_ID"
+                //        ,parameterUrl2)
+                //        .ExecuteReader();
+
+                //    if (allUser.HasRows)
+                //    {
+                //        while (allUser.Read())
+                //        {
+                //            if (allUser["UserName"].ToString().Equals(txtUsername.Text)) 
+                //            {
+                //                same = true;
+                //                Session["ProfileChanged"] = "sameUsername";
+                //            }
+                //        }
+                //    }
+                //}
                 DBconnection dbconnection = new DBconnection();
-                /*
-                Boolean fileValid = false;
+                string sqlCommand =
+                       "UPDATE [AspNetUsers] SET " +
+                       "Email = @email, " +
+                       (fileAvatar.HasFile ? "avatar = @avatar, " : "") +
+                       "UserName = @username, " +
+                       "gender = @gender, " +
+                       "PhoneNumber = @phone " +
+                       "WHERE Id = @user_ID";
+
+                SqlParameter[] parameters = {
+                        new SqlParameter("@email", txtEmail.Text),
+                        new SqlParameter("@username", txtUsername.Text),
+                        new SqlParameter("@gender", ddlGender.SelectedValue),
+                        new SqlParameter("@phone", txtPhone.Text),
+                        new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId())
+                    };
+
                 if (fileAvatar.HasFile)
                 {
-                    string fileName = Path.GetFileName(fileAvatar.FileName);
-                    string fileExtension = Path.GetExtension(fileName).ToLower();
-                    if (fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".png")
-                    {
-                        // Process the file upload
-                        // ...
-                        fileValid = true;
-                    }
-                    else
-                    {
-                        // Invalid file type
-                        Response.Write("Invalid file type. Please upload a JPG, JPEG or PNG file.");
-                    }
+                    parameters = parameters.Append(new SqlParameter("@thumbnail", (object)fileAvatar.FileBytes)).ToArray();
                 }
-                */
 
-
-                SqlParameter[] parameterUrl = new SqlParameter[]{
-                 new SqlParameter("@user_ID", Session["user_ID"])
-                };
-
-                SqlDataReader userDetails = dbconnection.ExecuteQuery(
-                    " SELECT * FROM [AspNetUsers]"
-                  + " WHERE Id = @user_ID",
-                parameterUrl).ExecuteReader();
-
-                Boolean same = false;
-                if (userDetails.HasRows)
+                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
-                    userDetails.Read();
-                    SqlParameter[] parameterUrl2 = new SqlParameter[]{
-                     new SqlParameter("@user_ID", Session["user_ID"])
-                    };
-                    SqlDataReader allUser = dbconnection.ExecuteQuery("SELECT * FROM [AspNetUsers] WHERE Id != @user_ID"
-                        ,parameterUrl2)
-                        .ExecuteReader();
-
-                    if (allUser.HasRows)
-                    {
-                        while (allUser.Read())
-                        {
-                            if (allUser["UserName"].ToString().Equals(txtUsername.Text)) 
-                            {
-                                same = true;
-                                Session["ProfileChanged"] = "sameUsername";
-                            }
-                        }
-                    }
-                    //string oriAvatar = "data:Image/png;base64," + Convert.ToBase64String((byte[])userDetails["avatar"]);
-                    if (userDetails["Email"].ToString().Equals(txtEmail.Text) &&
-                        userDetails["UserName"].ToString().Equals(txtUsername.Text) &&
-                        userDetails["gender"].ToString().Equals(ddlGender.SelectedValue) &&
-                        userDetails["PhoneNumber"].ToString().Equals(txtPhone.Text))  
-                    {
-                        same = true;
-                        Session["ProfileChanged"] = "sameDetails";
-                    }
+                    Session["ProfileChanged"] = "success";
                 }
-                /*
-                if (fileValid)
-                {
-                    string sqlCommand =
-                       "UPDATE [AspNetUsers] SET " +
-                       "Email = @email, avatar = @avatar, UserName = @username, gender = @gender, PhoneNumber = @phone " +
-                       "WHERE Id = @user_ID";
-                    //byte[] defaultImage = File.ReadAllBytes(Server.MapPath("~/Image/noimage.png"));
 
-                    SqlParameter[] parameters = {
-                        new SqlParameter("@email", txtEmail.Text),
-                        new SqlParameter("@avatar", SqlDbType.VarBinary) {
-                            Value = fileAvatar.HasFile?(object)fileAvatar.FileBytes: DBNull.Value,
-                        },
-                        new SqlParameter("@username", txtUsername.Text),
-                        new SqlParameter("@gender", ddlGender.SelectedValue),
-                        new SqlParameter("@phone", txtPhone.Text),
-                        new SqlParameter("@user_ID", Session["user_ID"])
-
-                    };
-
-                    if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
-                    {
-                        Session["ProfileChanged"] = "success";
-                    }
-                }
-                else*/ if (!same) 
-                {
-                    string sqlCommand =
-                       "UPDATE [AspNetUsers] SET " +
-                       "Email = @email, UserName = @username, gender = @gender, PhoneNumber = @phone " +
-                       "WHERE Id = @user_ID";
-                    //byte[] defaultImage = File.ReadAllBytes(Server.MapPath("~/Image/noimage.png"));
-
-                    SqlParameter[] parameters = {
-                        new SqlParameter("@email", txtEmail.Text),
-                        new SqlParameter("@username", txtUsername.Text),
-                        new SqlParameter("@gender", ddlGender.SelectedValue),
-                        new SqlParameter("@phone", txtPhone.Text),
-                        new SqlParameter("@user_ID", Session["user_ID"])
-
-                    };
-
-                    if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
-                    {
-                        Session["ProfileChanged"] = "success";
-                    }
-                }
 
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex + "profile");
                 Session["ProfileChanged"] = "error";
