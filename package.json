@@ -19,7 +19,6 @@
     "apexcharts": "^3.45.1",
     "clipboard": "^2.0.11",
     "flowbite": "^2.2.0",
-    "flowbite-datepicker": "^1.2.6",
     "preline": "^2.0.2"
   }
 }

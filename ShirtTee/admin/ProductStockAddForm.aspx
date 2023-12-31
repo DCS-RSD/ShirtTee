@@ -11,6 +11,9 @@
                 <div class="mb-8">
                     <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Add Stock
                     </h2>
+                    <p class="text-red-500 text-sm text-gray-600 dark:text-gray-400">
+                        * Indicates required field.
+                    </p>
                     <asp:HyperLink ID="hypProduct" runat="server"
                         class="text-sm font-medium text-indigo-600 hover:text-indigo-500 hover:cursor-pointer hover:underline">
                     </asp:HyperLink>
@@ -24,20 +27,24 @@
 
                     <div class="col-span-1">
                         <label for="ddlSize" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Size
+                            Size <span class="text-red-500">*</span>
                         </label>
                     </div>
 
                     <div class="col-span-3">
                         <asp:DropDownList ID="ddlSize" CssClass="cInput" runat="server" DataSourceID="SqlDataSource1" DataTextField="size_name" DataValueField="size_ID" AutoPostBack="True" />
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Size]" />
+                        <asp:RequiredFieldValidator ID="rfvddlSize" class="text-sm italic"
+                            runat="server" ControlToValidate="ddlSize"
+                            ErrorMessage="Please select a size."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
 
                     <%--Color--%>
 
                     <div class="col-span-1">
                         <label for="ddlColor" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Color
+                            Color <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -57,14 +64,17 @@ AND size_ID = @size_ID
                                 <asp:ControlParameter ControlID="ddlSize" PropertyName="SelectedValue" Name="size_ID"></asp:ControlParameter>
                             </SelectParameters>
                         </asp:SqlDataSource>
-
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" class="text-sm italic"
+                            runat="server" ControlToValidate="ddlColor"
+                            ErrorMessage="Please select a color."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
 
                     <%--Quantity--%>
 
                     <div class="col-span-1">
                         <label for="txtQty" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Stock Quantity
+                            Stock Quantity <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -75,6 +85,15 @@ AND size_ID = @size_ID
                                 class="cInput" TextMode="Number">
                             </asp:TextBox>
                         </div>
+                        <asp:RequiredFieldValidator ID="rfvQty" class="text-sm italic"
+                            runat="server" ControlToValidate="txtQty"
+                            ErrorMessage="Please enter a quantity."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                        <asp:CompareValidator runat="server" ID="cValidator" ControlToValidate="txtQty"
+                            class="text-sm italic" ForeColor="Red"
+                            Type="Integer" Operator="DataTypeCheck" EnableClientScript="true"
+                            ErrorMessage="Please enter a valid number." Display="Dynamic" />
                     </div>
 
                     <div class="col-span-1">
@@ -88,6 +107,11 @@ AND size_ID = @size_ID
                         <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                             onchange="loadFile(event)"
                             ID="fileImage" runat="server" />
+                        <asp:RegularExpressionValidator ID="revFileThumbnail" class="text-sm italic"
+                            runat="server" ControlToValidate="fileImage"
+                            ErrorMessage="Please choose a valid image file (JPG, JPEG, or PNG)."
+                            Display="Dynamic" ForeColor="Red"
+                            ValidationExpression="^.*\.(jpg|jpeg|png|JPG|JPEG|PNG)$"></asp:RegularExpressionValidator>
                     </div>
 
                     <div class="col-start-3 col-span-2 sm:col-start-4 sm:col-span-1">
