@@ -244,20 +244,16 @@ namespace ShirtTee.customer
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
-            if (Page.IsValid) 
+            if (Page.IsValid)
             {
-       
-          
+
                 string shippingAddress = txtAddressLine1.Text + " " + txtAddressLine2.Text + " " + txtCity.Text + " " + txtPostalCode.Text + " " + ddlState.SelectedValue + " " + "Malaysia";
                 Session["shippingAddress"] = shippingAddress;
-    
+
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "SubmitAPI", "submitAPI();", true);
+
             }
-
-
-
-
         }
-
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
