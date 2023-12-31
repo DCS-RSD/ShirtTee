@@ -22,20 +22,19 @@ namespace ShirtTee.customer
         protected override void OnPreRender(EventArgs e)
         {
             Repeater1.DataBind();
+
+      
         }
+
+
+
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            
             //lbl1.Text = Session["voucherApplied"].ToString();
-            //if (IsPostBack)
-            //{
-            //    Page.Validate();
-
-            //    if (Page.IsValid)
-            //    {
-
-            //    }
-            //}
 
             DBconnection dbconnection = new DBconnection();
             double subtotal = 0;
@@ -100,7 +99,7 @@ namespace ShirtTee.customer
                 " SELECT * FROM [Cart] AS c" +
                 " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
                 " WHERE user_ID = @user_ID",
-            parameterUrl2).ExecuteReader();          
+            parameterUrl2).ExecuteReader();
             bool cont = true;
             if (cartInfo.HasRows)
             {
@@ -113,17 +112,20 @@ namespace ShirtTee.customer
                     }
 
                 }
-                if (cont) 
+                if (cont)
                 {
                     callFPX();
                 }
             }
 
 
+
+
         }
 
         protected void callFPX()
         {
+
             DBconnection dbconnection = new DBconnection();
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
@@ -179,11 +181,11 @@ namespace ShirtTee.customer
 
                 string discountCode = null;
 
-                if (Session["discountCode"] != null) 
+                if (Session["discountCode"] != null)
                 {
                     discountCode = Session["discountCode"].ToString();
                 }
-               
+
 
                 if (!string.IsNullOrEmpty(discountCode))
                 {
@@ -200,6 +202,7 @@ namespace ShirtTee.customer
                         {
                             new SessionDiscountOptions { Coupon = discountCode },
                         },
+                        Customer = Session["user_ID"].ToString(),
                         ShippingOptions = shipping,
                         SuccessUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
                         CancelUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
@@ -233,13 +236,28 @@ namespace ShirtTee.customer
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
 
+
+
+
         }
 
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
+            if (Page.IsValid) 
+            {
+       
+          
+                string shippingAddress = txtAddressLine1.Text + " " + txtAddressLine2.Text + " " + txtCity.Text + " " + txtPostalCode.Text + " " + ddlState.SelectedValue + " " + "Malaysia";
+                Session["shippingAddress"] = shippingAddress;
+    
+            }
+
+
+
 
         }
+
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -260,9 +278,9 @@ namespace ShirtTee.customer
                 {
                     lblLowStock.Visible = true;
                 }
-                else 
+                else
                 {
-                    lblLowStock.Visible= false;
+                    lblLowStock.Visible = false;
                 }
 
 
@@ -270,5 +288,13 @@ namespace ShirtTee.customer
             }
 
         }
+
+
+        protected void ddlState_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
