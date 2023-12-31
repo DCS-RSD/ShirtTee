@@ -27,8 +27,8 @@
                     <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
                         <asp:Label ID="lblTitle" runat="server"></asp:Label>
                     </h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        <asp:Label ID="lblSubTitle" runat="server"></asp:Label>
+                    <p class="text-red-500 text-sm text-gray-600 dark:text-gray-400">
+                        * Indicates required field.
                     </p>
                 </div>
                 <%--End Title--%>
@@ -39,7 +39,7 @@
 
                     <div class="col-span-1">
                         <label for="txtTitle" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Title
+                            Title <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -58,7 +58,7 @@
                     <%--Notice Content--%>
                     <div class="col-span-1">
                         <label for="txtContent" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Content
+                            Content <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -77,7 +77,7 @@
                     <%-- Visibility --%>
                     <div class="col-span-1">
                         <label for="radVisibility" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Visibility
+                            Visibility <span class="text-red-500">*</span>
                         </label>
                     </div>
                     <div class="col-span-3">

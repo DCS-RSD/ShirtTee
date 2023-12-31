@@ -45,7 +45,6 @@ namespace ShirtTee.admin
             {
                 noticeDetails.Read();
                 lblTitle.Text = (string)noticeDetails["notice_title"];
-                lblSubTitle.Text = noticeDetails["notice_ID"].ToString();
 
 
                 txtTitle.Text = (string)noticeDetails["notice_title"];

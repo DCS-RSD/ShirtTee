@@ -81,11 +81,7 @@
                         <!-- End Header -->
 
                         <!-- Table -->
-                        <asp:SqlDataSource ID="SqlDataSourceFiltered" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice] WHERE (([is_private] = @is_private))">
-                            <SelectParameters>
-                                <asp:ControlParameter ControlID="ddlNoticeType" PropertyName="SelectedValue" Name="is_private" Type="Boolean" ConvertEmptyStringToNull="true"></asp:ControlParameter>
-                            </SelectParameters>
-                        </asp:SqlDataSource>
+
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT [notice_ID], [notice_title], [created_at], [is_private] FROM [Notice]"></asp:SqlDataSource>
                         <asp:ListView ID="ListView1" DataSourceID="SqlDataSource1" runat="server" DataKeyNames="notice_ID">
                             <EmptyDataTemplate>

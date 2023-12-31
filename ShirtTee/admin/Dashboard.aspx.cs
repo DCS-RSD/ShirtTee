@@ -9,6 +9,50 @@ namespace ShirtTee.admin
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        const string query = "SELECT * FROM [Notice]";
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            if (IsPostBack)
+            {
+                try
+                {
+                    if (txtSearch.Text != "" && ddlNoticeType.SelectedIndex != 0)
+                    {
+                        SqlDataSource1.SelectCommand = query + " WHERE notice_title LIKE '%' + @notice_title + '%'";
+                        SqlDataSource1.SelectCommand += " AND is_private = @is_private";
+                        SqlDataSource1.SelectParameters.Clear();
+                        SqlDataSource1.SelectParameters.Add("notice_title", txtSearch.Text);
+                        SqlDataSource1.SelectParameters.Add("is_private", ddlNoticeType.SelectedValue);
+
+                    }
+                    else if (ddlNoticeType.SelectedIndex != 0)
+                    {
+                        SqlDataSource1.SelectCommand = query + " WHERE is_private = @is_private";
+                        SqlDataSource1.SelectParameters.Clear();
+                        SqlDataSource1.SelectParameters.Add("is_private", ddlNoticeType.SelectedValue);
+                    }
+                    else if (txtSearch.Text != "")
+                    {
+                        SqlDataSource1.SelectCommand = query + " WHERE notice_title LIKE '%' + @notice_title + '%'";
+                        SqlDataSource1.SelectParameters.Clear();
+                        SqlDataSource1.SelectParameters.Add("notice_title", txtSearch.Text);
+                    }
+                    else
+                    {
+                        SqlDataSource1.SelectCommand = query;
+                        SqlDataSource1.SelectParameters.Clear();
+                    }
+
+                    ListView1.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message + "\n" + query + "\n" + SqlDataSource1.SelectCommand);
+                }
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -45,38 +89,12 @@ namespace ShirtTee.admin
 
         protected void ddlNoticeType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var query = SqlDataSource1.SelectCommand;
-            if (ddlNoticeType.SelectedIndex != 0)
-            {
-                txtSearch.Text = ""; //reset search
 
-                SqlDataSource1.SelectCommand = SqlDataSourceFiltered.SelectCommand;
-                SqlDataSource1.SelectParameters.Clear();
-                SqlDataSource1.SelectParameters.Add("is_private", ddlNoticeType.SelectedValue);
-            }
-            else
-            {
-                SqlDataSource1.SelectCommand = query;
-            }
-
-            ListView1.DataBind();
         }
 
         protected void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            var query = SqlDataSource1.SelectCommand;
-            if (txtSearch.Text != "")
-            {
-                ddlNoticeType.SelectedIndex = 0; //reset dropdown
-                SqlDataSource1.SelectCommand = query + " WHERE notice_title LIKE '%' + @notice_title + '%'";
-                SqlDataSource1.SelectParameters.Clear();
-                SqlDataSource1.SelectParameters.Add("notice_title", txtSearch.Text);
-            }
-            else
-            {
-                SqlDataSource1.SelectCommand = query;
-            }
-            ListView1.DataBind();
+
 
         }
     }
