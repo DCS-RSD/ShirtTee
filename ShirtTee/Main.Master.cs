@@ -51,9 +51,9 @@ namespace ShirtTee
                         imgAvatar.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])user["avatar"]);
 
                     }
-                    else 
+                    else
                     {
-                        imgAvatar.ImageUrl = "~/Image/noimage.png";
+                        imgAvatar.ImageUrl = "~/Image/default-avatar.jpg";
                     }
                 }
             }
@@ -67,14 +67,10 @@ namespace ShirtTee
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    notificationDiv.Visible = true;
-                    orderHisDiv.Visible = true;
-                    myReviewDiv.Visible = true;
-                    profileDiv.Visible = true;
-                    cartDiv.Visible = true;
-                    panelLoginInfo.Visible = true;
-                    panelLogout.Visible = true;
+                    panelUserDropdown.Visible = true;
                     panelSignIn.Visible = false;
+                    cartDiv.Visible = true;
+
                     lblUsername.Text = string.Format("{0}", HttpContext.Current.User.Identity.GetUserName());
                     if (HttpContext.Current.User.IsInRole("admin"))
                     {
@@ -83,13 +79,8 @@ namespace ShirtTee
                 }
                 else
                 {
-                    notificationDiv.Visible = false;
-                    orderHisDiv.Visible = false;
-                    myReviewDiv.Visible = false;
-                    profileDiv.Visible = false;
                     cartDiv.Visible = false;
-                    panelLoginInfo.Visible = false;
-                    panelLogout.Visible = false;
+                    panelUserDropdown.Visible = false;
                     panelSignIn.Visible = true;
                 }
             }
@@ -118,7 +109,7 @@ namespace ShirtTee
 
                 HyperLink linkMen = (HyperLink)e.Item.FindControl("linkMen");
 
-                if (dataItem != null) 
+                if (dataItem != null)
                 {
                     linkMen.NavigateUrl = "~/Products.aspx?category=men&sub=" + dataItem["category_name"].ToString();
                 }

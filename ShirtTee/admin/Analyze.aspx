@@ -23,7 +23,7 @@
                             Order Received / Month
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
-                            <asp:Label ID="lblTotalOrder" runat="server"
+                            <asp:Label ID="lblTotalOrder" runat="server" Text="0"
                                 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">
                             </asp:Label>
                         </div>
@@ -52,7 +52,7 @@
                             New Users
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
-                            <asp:Label ID="lblTotalUser" runat="server"
+                            <asp:Label ID="lblTotalUser" runat="server" Text="0"
                                 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">
                             </asp:Label>
                         </div>
@@ -83,7 +83,7 @@
                             Sales (RM) / Month
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
-                            <asp:Label ID="lblTotalSales" runat="server"
+                            <asp:Label ID="lblTotalSales" runat="server" Text="0"
                                 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">
                             </asp:Label>
                         </div>

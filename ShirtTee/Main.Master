@@ -53,7 +53,6 @@
 
         <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
         <!-- ========== HEADER ========== -->
-        <p class="flex h-10 items-center justify-center bg-black px-4 text-sm font-medium text-white sm:px-6 lg:px-8">FREE SHIPPING ON ORDERS OVER RM150</p>
         <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b text-sm py-2.5 sm:py-4 dark:bg-slate-900 dark:border-gray-700">
             <nav class="max-w-7xl flex basis-full items-center w-full mx-auto  md:px-8 pl-2 pr-2" aria-label="Global">
                 <div class="me-2 md:me-8">
@@ -80,97 +79,112 @@
                             <asp:HyperLink NavigateUrl="~/customer/Cart.aspx" runat="server" ID="btnCart" class="hidden" />
                         </div>
 
-                        <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
-                            <div id="hs-dropdown-with-header" class="hs-dropdown-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                <asp:Image ID="imgAvatar" runat="server" class="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white dark:ring-gray-800" ImageUrl='' />
-                            </div>
+                        <asp:Panel ID="panelUserDropdown" runat="server">
+                            <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
 
-                            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] z-10 bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-dropdown-with-header">
-                                <asp:Panel ID="panelLoginInfo" runat="server">
-                                    <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">Signed in as</p>
-                                        <asp:Label runat="server" class="text-sm font-medium text-gray-800 dark:text-gray-300" ID="lblUsername">Anonymous</asp:Label>
-                                    </div>
-                                </asp:Panel>
+                                <div id="hs-dropdown-with-header" class="cursor-pointer hs-dropdown-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                    <asp:Image ID="imgAvatar" runat="server" class="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white dark:ring-gray-800" ImageUrl='' />
+                                </div>
 
-                                <div class="mt-2 py-2 first:pt-0 last:pb-0">
 
-                                    <div id="notificationDiv" runat="server" onclick="notificationHandler(false)" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-                                        </svg>
-                                        Notifications
-                                    </div>
-
-                                    <div id="orderHisDiv" runat="server" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                                            <path d="M3 6h18" />
-                                            <path d="M16 10a4 4 0 0 1-8 0" />
-                                        </svg>
-                                        <asp:HyperLink NavigateUrl="~/customer/OrderHistory.aspx" runat="server" Text="Order History" ID="btnOrderHis" />
-
-                                    </div>
-
-                                    <div id="myReviewDiv" runat="server" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                        </svg>
-                                        <asp:HyperLink NavigateUrl="~/customer/Review.aspx" runat="server" Text="Review" ID="btnReview" />
-
-                                    </div>
-
-                                    <div id="profileDiv" runat="server" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
-                                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                                            <circle cx="9" cy="7" r="4" />
-                                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                        </svg>
-                                        <asp:HyperLink ID="btnProfile" runat="server" Text="Profile" NavigateUrl="~/customer/Profile.aspx" />
-                                    </div>
-
-                                    <asp:Panel ID="panelSignIn" runat="server">
-                                        <div id="loginDiv" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
-                                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-                                                <path d="M12 12v9" />
-                                                <path d="m8 17 4 4 4-4" />
-                                            </svg>
-                                            <asp:HyperLink ID="btnLogin" runat="server" Text="Login" NavigateUrl="~/Login.aspx" />
+                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] z-10 bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-dropdown-with-header">
+                                    <asp:Panel ID="panelLoginInfo" runat="server">
+                                        <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Signed in as</p>
+                                            <asp:Label runat="server" class="text-sm font-medium text-gray-800 dark:text-gray-300" ID="lblUsername">Anonymous</asp:Label>
                                         </div>
                                     </asp:Panel>
 
-                                    <asp:HyperLink ID="hypToClient" runat="server" Visible="false"
-                                        NavigateUrl="~/admin/Dashboard.aspx"
-                                        class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                    <div class="mt-2 py-2 first:pt-0 last:pb-0">
+
+                                        <div id="notificationDiv" runat="server" onclick="notificationHandler(false)" class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                                                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                                            </svg>
+                                            Notifications
+                                        </div>
+
+                                        <asp:Panel ID="panelOrderHistory" runat="server">
+                                            <asp:HyperLink NavigateUrl="~/customer/OrderHistory.aspx" runat="server" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                                Text="Order History" ID="btnOrderHis">
+                                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                 <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                                                 <path d="M3 6h18" />
+                                                 <path d="M16 10a4 4 0 0 1-8 0" />
+                                             </svg>
+                                            Order History
+                                            </asp:HyperLink>
+                                        </asp:Panel>
+
+                                        <asp:Panel ID="panelMyReview" runat="server">
+                                            <asp:HyperLink NavigateUrl="~/customer/Review.aspx" runat="server" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                                Text="Review" ID="btnReview">
+                                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                            </svg>
+                                            My Review
+                                            </asp:HyperLink>
+                                        </asp:Panel>
+
+                                        <asp:Panel ID="panelProfile" runat="server">
+                                            <asp:HyperLink ID="btnProfile" runat="server" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                                Text="Profile" NavigateUrl="~/customer/Profile.aspx">
+                                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                                <circle cx="9" cy="7" r="4" />
+                                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                            </svg>
+                                            Profile
+                                            </asp:HyperLink>
+                                        </asp:Panel>
+
+
+
+                                        <asp:HyperLink ID="hypToClient" runat="server" Visible="false"
+                                            NavigateUrl="~/admin/Dashboard.aspx"
+                                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                          <path d="M20 17H4M4 17L8 13M4 17L8 21M4 7H20M20 7L16 3M20 7L16 11" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                          </svg>
                                          Switch To Admin Page
-                                    </asp:HyperLink>
+                                        </asp:HyperLink>
 
 
-                                    <asp:Panel ID="panelLogout" runat="server">
-                                        <div class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-                                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                                            </svg>
-                                            <asp:Button
-                                                class="cursor-pointer w-full text-left"
-                                                Text="Sign Out"
-                                                ID="btnSignout"
-                                                OnClick="btnSignout_Click"
-                                                runat="server" />
-                                        </div>
-                                    </asp:Panel>
+                                        <asp:Panel ID="panelLogout" runat="server">
+                                            <div class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                                <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                                </svg>
+                                                <asp:Button
+                                                    class="cursor-pointer w-full text-left"
+                                                    Text="Sign Out"
+                                                    ID="btnSignout"
+                                                    OnClick="btnSignout_Click"
+                                                    runat="server" />
+                                            </div>
+                                        </asp:Panel>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </asp:Panel>
+
+                        <asp:Panel ID="panelSignIn" runat="server">
+                            <asp:HyperLink ID="btnLogin" runat="server"
+                                class="flex items-center gap-x-3.5 py-2 px-3 border border-gray-400 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                Text="Login" NavigateUrl="~/Login.aspx">
+                                                <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                                            <path d="M12 12v9" />
+                                            <path d="m8 17 4 4 4-4" />
+                                        </svg>
+                                            Sign In
+                            </asp:HyperLink>
+                        </asp:Panel>
                     </div>
                 </div>
             </nav>
@@ -588,9 +602,9 @@ WHERE is_private = 0"></asp:SqlDataSource>
                                     </div>
                                     <div class="ms-3">
                                         <h3 class="text-gray-800 font-semibold dark:text-white"><%# Eval("notice_title") %></h3>
-                                        <p class="mt-1 text-sm text-gray-700 dark:text-gray-400"> <%# Eval("notice_content") %></p>
+                                        <p class="mt-1 text-sm text-gray-700 dark:text-gray-400"><%# Eval("notice_content") %></p>
                                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                             <%# Eval("created_at") %>
+                                            <%# Eval("created_at") %>
                                         </p>
                                     </div>
                                 </div>

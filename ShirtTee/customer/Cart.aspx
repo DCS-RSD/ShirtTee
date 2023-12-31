@@ -153,7 +153,7 @@ WHERE user_ID = @user_ID">
                     </div>
                 </div>
                 <div class="mt-6">
-                    <asp:Button runat="server" Visible="true" ID="btnCheckout"  OnClick="btnCheckout_Click" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 " Text="Checkout"></asp:Button>
+                    <asp:Button runat="server" Visible="true" ID="btnCheckout"  OnClick="btnCheckout_Click" class="w-full bg-gray-900 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500 " Text="CHECKOUT"></asp:Button>
                     <asp:Button runat="server" Visible="false" ID="btnDisabledChkOut" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed" disabled Text="Checkout"></asp:Button>
                 </div>
             </div>

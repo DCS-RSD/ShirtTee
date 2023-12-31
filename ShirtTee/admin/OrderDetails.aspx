@@ -31,10 +31,10 @@
                             <asp:Label ID="lblTitle" runat="server"></asp:Label>
                         </h2>
                     </div>
-                    <p class="text-sm text-gray-600">
+                    <p class="text-sm text-gray-600 dark:text-gray-200">
                         Order placed 
                     <asp:Label runat="server" ID="lblOrderDate"
-                        class="font-medium text-gray-900"></asp:Label>
+                        class="font-medium text-gray-900 dark:text-white"></asp:Label>
                     </p>
                 </div>
 
@@ -42,16 +42,16 @@
                 <div class="mt-6">
 
                     <div class="space-y-8">
-                        <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg dark:bg-transparent dark:border-transparent">
+                        <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg dark:bg-transparent dark:border-white">
 
-                            <div class=" border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
+                            <div class="border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
                                 <div class="mt-6" aria-hidden="true">
                                     <div class="bg-gray-200 rounded-full overflow-hidden">
                                         <div runat="server" id="progressBar"
                                             class="h-2 bg-indigo-600 rounded-full">
                                         </div>
                                     </div>
-                                    <div class="hidden sm:grid grid-cols-4 text-sm font-medium text-gray-600 mt-6">
+                                    <div class="hidden sm:grid grid-cols-4 text-sm font-medium text-gray-600 dark:text-white mt-6">
                                         <div class="">Order placed</div>
                                         <div class="text-center">Preparing</div>
                                         <div class="text-center">Shipped</div>
@@ -72,74 +72,72 @@
 
                         </div>
 
-                        <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg">
+                        <div class="bg-white border-t border-b border-gray-200 dark:border-white shadow-sm sm:border sm:rounded-lg dark:bg-gray-800">
                             <div class="px-4 py-4 sm:px-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Customer Information</h3>
+                                <h3 class="text-lg leading-6 font-medium text-gray-900  dark:text-gray-200">Customer Information</h3>
                             </div>
-                            <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                            <div class="border-t border-gray-200 dark:border-white px-4 py-5 sm:px-6 text-gray-500  dark:text-gray-200 ">
                                 <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                     <div class="sm:col-span-1">
-                                        <h1 class="text-sm font-medium text-gray-500">ID</h1>
+                                        <h1 class="text-sm font-medium ">ID</h1>
                                         <asp:Label runat="server" ID="lblCustId"
-                                            class="mt-1 text-sm text-gray-900"></asp:Label>
+                                            class="mt-1 text-sm"></asp:Label>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <h1 class="text-sm font-medium text-gray-500">Name</h1>
+                                        <h1 class="text-sm font-medium  ">Name</h1>
                                         <asp:Label runat="server" ID="lblCustName"
-                                            class="mt-1 text-sm text-gray-900"></asp:Label>
+                                            class="mt-1 text-sm"></asp:Label>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <h1 class="text-sm font-medium text-gray-500">Email address</h1>
+                                        <h1 class="text-sm font-medium">Email address</h1>
                                         <asp:HyperLink runat="server" ID="hypCustEmail"
-                                            class="mt-1 text-sm text-gray-900 underline"></asp:HyperLink>
+                                            class="mt-1 text-sm  underline"></asp:HyperLink>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <h1 class="text-sm font-medium text-gray-500">Contact Number</h1>
-                                        <asp:HyperLink runat="server" ID="hypContactNo"
-                                            class="mt-1 text-sm text-gray-900 underline"></asp:HyperLink>
+                                        <h1 class="text-sm font-medium ">Contact Number</h1>
+                                        <asp:HyperLink runat="server" ID="hypContactNo" 
+                                            class="mt-1 text-sm underline"></asp:HyperLink>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
 
-
-                        <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg">
+                        <div class="bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg dark:bg-gray-800">
                             <div class="px-4 py-4 sm:px-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Order List</h3>
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200">Order List</h3>
                             </div>
                             <div class="border-t border-gray-200">
                                 <asp:ListView runat="server" DataSourceID="SqlDataSource2">
                                     <ItemTemplate>
-                                        <div class="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
+                                        <div class="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8 ">
                                             <div class="sm:flex lg:col-span-7">
                                                 <div class="flex-shrink-0 w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-none sm:w-40 sm:h-40">
                                                     <img src='<%#"data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' alt="" class="w-full h-full object-center object-cover sm:w-full sm:h-full">
                                                 </div>
 
                                                 <div class="mt-6 sm:mt-0 sm:ml-6">
-                                                    <h3 class="text-base font-medium text-gray-900">
-                                                        <a href="#"><%# Eval("product_name") %></a>
+                                                    <h3 class="text-base font-medium text-gray-900 dark:text-gray-200">
+                                                        <a target="_blank" href='<%# ResolveUrl("~/admin/ProductDetails.aspx?product_id="+Eval("product_ID")) %>'><%# Eval("product_name") %></a>
                                                     </h3>
-                                                    <p class="mt-2 text-sm font-medium text-gray-900">RM <%# Eval("price") %></p>
-                                                    <p class="mt-3 text-sm text-gray-500"><%# Eval("description") %></p>
-                                                    <p class="mt-3 text-sm font-bold text-gray-900">Total: RM <%# Eval("total") %></p>
+                                                    <p class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-200">RM <%# Eval("price") %></p>
+                                                    <p class="mt-3 text-sm font-bold text-gray-900 dark:text-gray-200">Total: RM <%# Eval("total") %></p>
                                                 </div>
                                             </div>
 
                                             <div class="mt-6 lg:mt-0 lg:col-span-5">
                                                 <dl class="grid grid-cols-2 gap-x-6 text-sm">
                                                     <div>
-                                                        <dt class="font-medium text-gray-900">Quantity</dt>
-                                                        <dd class="mt-3 text-gray-500">
+                                                        <dt class="font-medium text-gray-900 dark:text-gray-200">Quantity</dt>
+                                                        <dd class="mt-3 text-gray-500 dark:text-gray-200">
                                                             <span class="block">
                                                                 <%# Eval("quantity") %>
                                                             </span>
                                                         </dd>
                                                     </div>
                                                     <div>
-                                                        <dt class="font-medium text-gray-900">Size / Color</dt>
-                                                        <dd class="mt-3 text-gray-500 space-y-3">
+                                                        <dt class="font-medium text-gray-900 dark:text-gray-200">Size / Color</dt>
+                                                        <dd class="mt-3 text-gray-500 space-y-3 dark:text-gray-200">
                                                             <p><%# Eval("size_name") %></p>
                                                             <p><%# Eval("color_name") %></p>
                                                         </dd>
@@ -164,28 +162,26 @@ INNER JOIN [Category] AS cat ON cat.category_ID= pd.category_ID
                                 </SelectParameters>
                             </asp:SqlDataSource>
                         </div>
-                        <!-- More products... -->
                     </div>
                 </div>
 
                 <!-- Billing -->
                 <div class="mt-8">
-
-                    <div class="bg-gray-100 py-6 px-4 sm:px-6 sm:rounded-lg lg:px-8 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
+                    <div class="bg-gray-100  dark:bg-gray-600 py-6 px-4 sm:px-6 sm:rounded-lg lg:px-8 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
                         <div class="grid md:grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
                             <div>
-                                <h1 class="font-medium text-gray-900">Delivery Address</h1>
+                                <h1 class="font-medium text-gray-900 dark:text-gray-200">Delivery Address</h1>
                                 <p class="mt-3 text-gray-500">
-                                    <asp:Label runat="server" CssClass="block" ID="lblDeliveryAddress"></asp:Label>
+                                    <asp:Label runat="server" CssClass="block dark:text-gray-400" ID="lblDeliveryAddress"></asp:Label>
                                 </p>
                             </div>
                             <div>
-                                <h1 class="font-medium text-gray-900">Payment Information</h1>
+                                <h1 class="font-medium text-gray-900 dark:text-gray-200">Payment Information</h1>
                                 <div class="mt-3">
                                     <div class="mt-3 text-gray-500">
-                                        <asp:Label runat="server" CssClass="block" ID="lblPaymentId"></asp:Label>
-                                        <asp:Label runat="server" CssClass="block mt-1" ID="lblPaymentMethod"></asp:Label>
-                                        <asp:Label runat="server" CssClass="block mt-1" ID="lblPaymentDate"></asp:Label>
+                                        <asp:Label runat="server" CssClass="block dark:text-gray-400" ID="lblPaymentId"></asp:Label>
+                                        <asp:Label runat="server" CssClass="block dark:text-gray-400 mt-1" ID="lblPaymentMethod"></asp:Label>
+                                        <asp:Label runat="server" CssClass="block dark:text-gray-400 mt-1" ID="lblPaymentDate"></asp:Label>
                                     </div>
                                 </div>
                             </div>
@@ -193,24 +189,24 @@ INNER JOIN [Category] AS cat ON cat.category_ID= pd.category_ID
 
                         <div class="mt-8 divide-y divide-gray-200 text-sm lg:mt-0 lg:col-span-5">
                             <div class="pb-4 flex items-center justify-between">
-                                <h1 class="text-gray-600">Subtotal</h1>
-                                <asp:Label ID="lblSubtotal" runat="server" class="font-medium text-gray-900"></asp:Label>
+                                <h1 class="text-gray-600 dark:text-gray-200">Subtotal</h1>
+                                <asp:Label ID="lblSubtotal" runat="server" class="font-medium dark:text-gray-400 text-gray-900"></asp:Label>
                             </div>
                             <div class="py-4 flex items-center justify-between">
-                                <h1 class="text-gray-600">Shipping</h1>
-                                <asp:Label ID="lblShippingFee" runat="server" class="font-medium text-gray-900"></asp:Label>
+                                <h1 class="text-gray-600 dark:text-gray-200">Shipping</h1>
+                                <asp:Label ID="lblShippingFee" runat="server" class="font-medium dark:text-gray-400 text-gray-900"></asp:Label>
                             </div>
                             <div class="py-4 flex items-center justify-between">
-                                <h1 class="text-gray-600">Discount (<asp:Label ID="lblVoucher" runat="server"></asp:Label>)</h1>
-                                <asp:Label ID="lblDiscount" runat="server" class="font-medium text-gray-900"></asp:Label>
+                                <h1 class="text-gray-600 dark:text-gray-200">Discount (<asp:Label ID="lblVoucher" runat="server"></asp:Label>)</h1>
+                                <asp:Label ID="lblDiscount" runat="server" class="font-medium dark:text-gray-400 text-gray-900"></asp:Label>
                             </div>
                             <div class="py-4 flex items-center justify-between">
-                                <h1 class="font-medium text-gray-900">Order total</h1>
-                                <asp:Label ID="lblOrderTotal" runat="server" class="font-medium text-indigo-600"></asp:Label>
+                                <h1 class="font-medium text-gray-900 dark:text-gray-200">Order total</h1>
+                                <asp:Label ID="lblOrderTotal" runat="server" class="font-medium dark:text-violet-300 text-indigo-600"></asp:Label>
                             </div>
                             <div class="pt-4 flex items-center justify-between">
-                                <h1 class="text-gray-600">Member Point Earned</h1>
-                                <asp:Label ID="lblPoint" runat="server" class="font-medium text-gray-900"></asp:Label>
+                                <h1 class="text-gray-600 dark:text-gray-200">Member Point Earned</h1>
+                                <asp:Label ID="lblPoint" runat="server" class="font-medium dark:text-gray-400 text-gray-900"></asp:Label>
                             </div>
 
 

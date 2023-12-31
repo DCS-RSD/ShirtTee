@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -32,9 +33,10 @@ namespace ShirtTee.admin
                 new SqlParameter("@voucher_description", txtVoucherDesc.Text),
                 new SqlParameter("@discount_rate", discount),
                 new SqlParameter("@min_spend", Convert.ToDouble(txtMinSpend.Text)),
-                new SqlParameter("@expiry_date", txtDate.Text),
+                new SqlParameter("@expiry_date", SqlDbType.Date) {Value=txtDate.Text},
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text))
                 };
+                System.Diagnostics.Debug.WriteLine(txtDate.Text);
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
@@ -55,6 +57,7 @@ namespace ShirtTee.admin
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 Session["VoucherAdded"] = "error";
             }
             finally
@@ -62,6 +65,35 @@ namespace ShirtTee.admin
                 Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
             }
 
+        }
+
+        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            //try
+            //{
+            //    DBconnection dbconnection = new DBconnection();
+            //    SqlParameter[] parameterUrl = new SqlParameter[]{
+            //     new SqlParameter("@voucher_name",args.Value)
+            //    };
+            //    SqlDataReader voucherExist = dbconnection.ExecuteQuery(
+            //        "SELECT * FROM [Voucher] WHERE voucher_name = @voucher_name",
+            //        parameterUrl).ExecuteReader();
+
+            //    System.Diagnostics.Debug.WriteLine(voucherExist.ToString());
+            //    if (voucherExist.HasRows)
+            //    {
+            //        args.IsValid = false;
+            //    }
+            //    else
+            //    {
+            //        args.IsValid = true;
+            //    }
+
+            //}
+            //catch (Exception ex) {
+            //    System.Diagnostics.Debug.WriteLine(ex.Message);
+
+            //}
         }
     }
 }

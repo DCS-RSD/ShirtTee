@@ -88,7 +88,8 @@ namespace ShirtTee
 
         protected void Application_End(object sender, EventArgs e)
         {
-
+            var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            authenticationManager.SignOut();
         }
     }
 }

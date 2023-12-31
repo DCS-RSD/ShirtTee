@@ -1,23 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="VoucherDetails.aspx.cs" Inherits="ShirtTee.admin.VoucherDetails" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="../dist/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <%-- Toast --%>
-     <script>
-         function showSuccessToast() {
-             var status = '<%= Session["VoucherUpdated"] %>';
-         if (status !== null && status !== undefined) {
-             if (status == "success") {
-                 toastr["success"]("Voucher updated successfully.");
-             } else {
-                 toastr["error"]("Something went wrong.");
+    <%-- Toast --%>
+    <script>
+        function showSuccessToast() {
+            var status = '<%= Session["VoucherUpdated"] %>';
+             if (status !== null && status !== undefined) {
+                 if (status == "success") {
+                     toastr["success"]("Voucher updated successfully.");
+                 } else {
+                     toastr["error"]("Something went wrong.");
+                 }
              }
-         }
          <% Session.Remove("VoucherUpdated"); %>
-         }
-     </script>
+        }
+    </script>
     <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-xl shadow dark:bg-gray-800 p-8">
 
@@ -28,19 +28,21 @@
                     <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
                         <asp:Label ID="lblTitle" runat="server"></asp:Label>
                     </h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        <asp:Label ID="lblSubTitle" runat="server"></asp:Label>
+                    <p class="text-red-500 text-sm text-gray-600 dark:text-gray-400">
+                        * Indicates required field.
                     </p>
                 </div>
+
                 <%--End Title--%>
 
                 <div class="grid grid-cols-4 gap-6">
+                    <%--Voucher Name--%>
 
                     <div class="col-span-1">
                         <label
                             for="txtVoucherName"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Voucher Name
+                            Voucher Code <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -48,9 +50,14 @@
                         <asp:TextBox
                             ID="txtVoucherName"
                             runat="server"
-                            placeholder="Enter voucher name"
+                            placeholder="Enter voucher code"
                             class="cInput">
                         </asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4"
+                            class="text-sm italic" runat="server"
+                            ControlToValidate="txtVoucherName"
+                            ErrorMessage="Please enter a voucher code."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
 
                     <%--Voucher Desc--%>
@@ -59,7 +66,7 @@
                         <label
                             for="txtVoucherDesc"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Voucher Description
+                            Description <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -72,6 +79,11 @@
                             TextMode="MultiLine"
                             Rows="3">
                         </asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
+                            class="text-sm italic" runat="server"
+                            ControlToValidate="txtVoucherDesc"
+                            ErrorMessage="Please enter a voucher description."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
 
                     <%--Discount Rate--%>
@@ -80,7 +92,7 @@
                         <label
                             for="txtDiscount"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Discount Rate (%)
+                            Discount Rate (%) <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -94,6 +106,14 @@
                                 TextMode="Number">
                             </asp:TextBox>
                         </div>
+                        <asp:RequiredFieldValidator ID="rfvDisRate" class="text-sm italic"
+                            runat="server" ControlToValidate="txtDiscount"
+                            ErrorMessage="Please enter a discount rate." Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:RangeValidator ID="rvDisRate" class="text-sm italic"
+                            runat="server" ControlToValidate="txtDiscount"
+                            ErrorMessage="Please enter between 1 to 100." Type="Integer"
+                            MinimumValue="1" MaximumValue="100" EnableClientScript="true"
+                            Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                     </div>
 
                     <%--MIN SPEND--%>
@@ -102,7 +122,7 @@
                         <label
                             for="txtMinSpend"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Min Spend
+                            Minimum Spend <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -112,10 +132,18 @@
                                 ID="txtMinSpend"
                                 runat="server"
                                 placeholder="Enter min spend"
-                                class="cInput"
-                                TextMode="Number">
+                                class="cInput">
                             </asp:TextBox>
                         </div>
+                        <asp:RequiredFieldValidator ID="rfvtxtMinSpend" class="text-sm italic"
+                            runat="server" ControlToValidate="txtMinSpend"
+                            ErrorMessage="Please enter a minimum spend."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                        <asp:CompareValidator runat="server" ID="cValidator" ControlToValidate="txtMinSpend"
+                            class="text-sm italic" ForeColor="Red"
+                            Type="Currency" Operator="DataTypeCheck" EnableClientScript="true"
+                            ErrorMessage="Please enter a valid currency amount. (Example: 12.30)" Display="Dynamic" />
                     </div>
 
                     <%--Cap At--%>
@@ -124,7 +152,7 @@
                         <label
                             for="txtCapAt"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Cap At
+                            Cap At <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -134,18 +162,27 @@
                                 ID="txtCapAt"
                                 runat="server"
                                 placeholder="Enter cap at value"
-                                class="cInput"
-                                TextMode="Number">
+                                class="cInput">
                             </asp:TextBox>
                         </div>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" class="text-sm italic"
+                            runat="server" ControlToValidate="txtCapAt"
+                            ErrorMessage="Please enter a cap at value."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:CompareValidator runat="server" ID="CompareValidator1"
+                            ControlToValidate="txtCapAt"
+                            class="text-sm italic" ForeColor="Red"
+                            Type="Currency" Operator="DataTypeCheck" EnableClientScript="true"
+                            ErrorMessage="Please enter a valid currency amount. (Example: 12.30)" Display="Dynamic" />
                     </div>
+
 
                     <%--Expired Date--%>
                     <div class="col-span-1">
                         <label
                             for="txtDate"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            Expired Date
+                            Expired Date <span class="text-red-500">*</span>
                         </label>
                     </div>
 
@@ -158,12 +195,20 @@
                                     </svg>
                                 </div>
                                 <asp:TextBox ID="txtDate" runat="server"
-                                    datepicker datepicker-format="yyyy-mm-dd"
-                                    ReadOnly="true"
+                                    datepicker datepicker-format="dd/mm/yyyy"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Select date" />
                             </div>
                         </div>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" class="text-sm italic"
+                            runat="server" ControlToValidate="txtDate"
+                            ErrorMessage="Please enter an expiry date."
+                            Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:CompareValidator runat="server" ID="CompareValidator2"
+                            ControlToValidate="txtDate"
+                            class="text-sm italic" ForeColor="Red"
+                            Type="Date" Operator="DataTypeCheck" EnableClientScript="true"
+                            ErrorMessage="Please enter a valid date." Display="Dynamic" />
                     </div>
 
 

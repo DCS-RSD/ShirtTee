@@ -87,7 +87,7 @@
                         <!-- End Header -->
 
                         <!-- Table -->
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Voucher]"></asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Voucher] WHERE deleted_at IS NULL"></asp:SqlDataSource>
 
                         <asp:ListView ID="ListView1" DataSourceID="SqlDataSource1" runat="server" DataKeyNames="voucher_ID">
                             <EmptyDataTemplate>
