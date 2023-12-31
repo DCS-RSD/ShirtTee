@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
 
 namespace ShirtTee.admin
 {
@@ -26,7 +27,7 @@ namespace ShirtTee.admin
                                "VALUES (@user_ID, @notice_title, @notice_content, @created_at, @is_private)";
 
                 SqlParameter[] parameters = {
-                new SqlParameter("@user_ID", "1a243703-25dd-4213-b791-9c4721e28416"), //replace session user id
+                new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId()), //replace session user id
                 new SqlParameter("@notice_title", txtTitle.Text),
                 new SqlParameter("@notice_content", txtContent.Text),
                 new SqlParameter("@created_at", DateTime.Now),
