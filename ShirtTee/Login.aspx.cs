@@ -14,7 +14,10 @@ namespace ShirtTee
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["LoginValidate"] != null && !IsPostBack)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -25,9 +28,10 @@ namespace ShirtTee
             var manager = new UserManager<IdentityUser>(userStore);
 
             var userEmail = manager.FindByEmail(signinEmail.Text);
-            if (userEmail ==null)
+            if (userEmail == null)
             {
-                //error
+                Session["LoginValidate"] = "invalidUser";
+                Response.Redirect(Request.Url.AbsoluteUri);
                 return;
             }
             var user = manager.Find(userEmail.UserName, signInPassword.Text);
@@ -66,7 +70,8 @@ namespace ShirtTee
             }
             else
             {
-                
+                Session["LoginValidate"] = "notMatch";
+                Response.Redirect(Request.Url.AbsoluteUri);
             }
         }
 
