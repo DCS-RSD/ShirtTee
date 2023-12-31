@@ -10,8 +10,8 @@
             <div class="mb-8">
                 <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Product
                 </h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    Add new product to sales.
+                <p class="text-red-500 text-sm text-gray-600 dark:text-gray-400">
+                    * Indicates required field.
                 </p>
             </div>
             <%--End Title--%>
@@ -22,7 +22,7 @@
 
                 <div class="col-span-1">
                     <label for="txtProdName" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                         Name
+                        Name <span class="text-red-500">*</span>
                     </label>
                 </div>
 
@@ -31,12 +31,16 @@
                         placeholder="Enter product name"
                         class="cInput">
                     </asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvProdName" class="text-sm italic"
+                        runat="server" ControlToValidate="txtProdName"
+                        ErrorMessage="Please enter a product name."
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                 </div>
 
                 <%--Product Group--%>
                 <div class="col-span-1">
                     <label for="radProdGroup" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                         Group
+                        Group <span class="text-red-500">*</span>
                     </label>
                 </div>
                 <div class="col-span-3">
@@ -45,13 +49,25 @@
                         <asp:ListItem class="px-4" Value="women">  Women</asp:ListItem>
                         <asp:ListItem class="px-4" Value="kids">  Kids</asp:ListItem>
                     </asp:RadioButtonList>
+                    <asp:RequiredFieldValidator ID="rfvProdGroup" class="text-sm italic"
+                        runat="server" ControlToValidate="radProdGroup"
+                        ErrorMessage="Please select a product group."
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" class="text-sm italic"
+                        ControlToValidate="radProdGroup"
+                        ValidationExpression="^(men|women|kids)$"
+                        ErrorMessage='Please enter "Men", "Women" or "Kids" only.'
+                        Display="Dynamic"
+                        ForeColor="Red"
+                        runat="server">
+                    </asp:RegularExpressionValidator>
                 </div>
 
                 <%--Product Category--%>
 
                 <div class="col-span-1">
                     <label for="ddlProdCategory" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                         Category
+                        Category <span class="text-red-500">*</span>
                     </label>
                 </div>
 
@@ -64,31 +80,43 @@
                             <asp:ControlParameter ControlID="radProdGroup" Name="category_group" PropertyName="SelectedValue" Type="String" />
                         </SelectParameters>
                     </asp:SqlDataSource>
+                    <asp:RequiredFieldValidator ID="rfvProdCategory" class="text-sm italic"
+                        runat="server" ControlToValidate="ddlProdCategory"
+                        ErrorMessage="Please select a product category."
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                 </div>
 
                 <%--Product Price--%>
 
                 <div class="col-span-1">
                     <label for="txtPrice" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                         Price
+                        Price <span class="text-red-500">*</span>
                     </label>
                 </div>
 
                 <div class="col-span-3">
                     <div class="flex">
                         <asp:TextBox ID="txtPrice" runat="server"
-                            placeholder="Enter product price"
-                            class="cInput" TextMode="Number">
+                            placeholder="Enter product price (e.g: 100.50)"
+                            class="cInput">
                         </asp:TextBox>
                     </div>
+                    <asp:RequiredFieldValidator ID="rfvProdPrice" class="text-sm italic"
+                        runat="server" ControlToValidate="txtPrice"
+                        ErrorMessage="Please enter a product price."
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
+                    <asp:CompareValidator runat="server" ID="cValidator" ControlToValidate="txtPrice"
+                        class="text-sm italic" ForeColor="Red"
+                        Type="Currency" Operator="DataTypeCheck" EnableClientScript="true"
+                        ErrorMessage="Please enter a valid currency amount. (Example: 12.30)" Display="Dynamic" />
                 </div>
 
                 <%--Product Desc--%>
 
                 <div class="col-span-1">
                     <label for="txtProdDescription" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                         Description
+                        Description <span class="text-red-500">*</span>
                     </label>
                 </div>
 
@@ -97,13 +125,17 @@
                         placeholder="Enter product description"
                         class="cInput" TextMode="MultiLine" Rows="3">
                     </asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvProdDesc" class="text-sm italic"
+                        runat="server" ControlToValidate="txtProdDesc"
+                        ErrorMessage="Please enter a product description."
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                 </div>
 
                 <%--Product Image--%>
 
                 <div class="col-span-1">
                     <label for="txtProdDescription" class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                       Thumbnail
+                        Thumbnail
                     </label>
                 </div>
 
@@ -113,6 +145,11 @@
                     <asp:FileUpload class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                         onchange="loadFile(event)"
                         ID="fileThumbnail" runat="server" />
+                    <asp:RegularExpressionValidator ID="revFileThumbnail" class="text-sm italic"
+                        runat="server" ControlToValidate="fileThumbnail"
+                        ErrorMessage="Please choose a valid image file (JPG, JPEG, or PNG)."
+                        Display="Dynamic" ForeColor="Red"
+                        ValidationExpression="^.*\.(jpg|jpeg|png|JPG|JPEG|PNG)$"></asp:RegularExpressionValidator>
                 </div>
 
 
@@ -136,7 +173,7 @@
             var output = document.getElementById('Image1');
 
             output.src = URL.createObjectURL(event.target.files[0]);
-            
+
             output.onload = function () {
                 URL.revokeObjectURL(output.src) // free memory
             }

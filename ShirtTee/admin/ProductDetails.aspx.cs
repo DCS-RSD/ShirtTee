@@ -51,7 +51,6 @@ namespace ShirtTee.admin
             {
                 productDetails.Read();
                 lblTitle.Text = (string)productDetails["product_name"];
-                lblSubTitle.Text = productDetails["product_id"].ToString();
 
 
                 txtProdName.Text = (string)productDetails["product_name"];

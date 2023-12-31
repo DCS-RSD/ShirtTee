@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,11 +13,58 @@ namespace ShirtTee.admin
 {
     public partial class ProductStock : System.Web.UI.Page
     {
+        const string query = "SELECT *" +
+" FROM Product_Details" +
+" INNER JOIN Product ON Product.product_ID = Product_Details.product_ID" +
+" INNER JOIN Color ON Product_Details.color_ID = Color.color_ID" +
+" INNER JOIN Size ON Product_Details.size_ID = Size.size_ID" +
+" WHERE (Product.product_ID = @product_ID)";
+
         protected override void OnPreRender(EventArgs e)
         {
-            // Bind your ListView data here
-            ListView1.DataSource = SqlDataSource2;
-            ListView1.DataBind();
+            base.OnPreRender(e);
+            if (IsPostBack)
+            {
+                try
+                {
+                    if (ddlColor.SelectedIndex != 0 && ddlSize.SelectedIndex != 0)
+                    {
+                        SqlDataSource2.SelectCommand = query + " AND (Color.color_ID = @color_ID)";
+                        SqlDataSource2.SelectCommand += " AND (Size.size_ID = @size_ID)";
+                        SqlDataSource2.SelectParameters.Clear();
+                        SqlDataSource2.SelectParameters.Add("size_ID", ddlSize.SelectedValue);
+                        SqlDataSource2.SelectParameters.Add("color_ID", ddlColor.SelectedValue);
+
+                    }
+                    else if (ddlColor.SelectedIndex != 0)
+                    {
+                        SqlDataSource2.SelectCommand = query + " AND (Color.color_ID = @color_ID)";
+
+                        SqlDataSource2.SelectParameters.Clear();
+                        SqlDataSource2.SelectParameters.Add("color_ID", ddlColor.SelectedValue);
+                    }
+                    else if (ddlSize.SelectedIndex != 0)
+                    {
+                        SqlDataSource2  .SelectCommand += " AND (Size.size_ID = @size_ID)";
+                        SqlDataSource2.SelectParameters.Clear();
+                        SqlDataSource2.SelectParameters.Add("size_ID", ddlSize.SelectedValue);
+                    }
+                    else
+                    {
+                        SqlDataSource2.SelectCommand = query;
+                        SqlDataSource2.SelectParameters.Clear();
+                    }
+                    SqlDataSource2.SelectParameters.Add("product_ID", Request.QueryString["product_id"].ToString());
+
+                    ListView1.DataBind();
+
+
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message + "\n" + query + "\n" + SqlDataSource1.SelectCommand);
+                }
+            }
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -118,6 +166,14 @@ namespace ShirtTee.admin
             }
         }
 
+        protected void ddlColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        protected void ddlSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

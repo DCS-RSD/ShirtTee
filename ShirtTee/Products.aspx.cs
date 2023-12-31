@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PayPal.Api;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,10 +11,12 @@ namespace ShirtTee
 {
     public partial class Products : System.Web.UI.Page
     {
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             string prodCategory = Request.QueryString["category"];
-            if (prodCategory != null) {
+            if (prodCategory != null)
+            {
                 if (prodCategory.Equals("men"))
                 {
                     lblProduct.Text = "MEN";

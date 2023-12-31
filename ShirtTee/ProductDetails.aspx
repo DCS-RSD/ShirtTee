@@ -96,11 +96,8 @@
                                     </asp:Repeater>
 
                                     <%-- Stock Image(pending) --%>
-                                    <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT s.image FROM [Product_Details] AS s
-INNER JOIN [Product] AS p ON
-s.product_ID = p.product_ID
-WHERE p.product_ID = @product_ID AND
-s.image IS NOT NULL">
+                                    <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT DISTINCT s.color_ID, CONVERT(VARBINARY(MAX), s.image) AS image FROM Product_Details AS s INNER JOIN Product AS p ON s.product_ID = p.product_ID WHERE (p.product_ID = @product_ID) AND (s.image IS NOT NULL) AND (on_sale = 1)
+">
                                         <SelectParameters>
                                             <asp:QueryStringParameter QueryStringField="product_ID" Name="product_ID"></asp:QueryStringParameter>
                                         </SelectParameters>

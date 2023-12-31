@@ -9,6 +9,7 @@
     "watch:css": "tailwindcss --watch -i ./ShirtTee/input.css -o ./ShirtTee/dist/output.css"
   },
   "dependencies": {
+    "@preline/toggle-password": "^2.0.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
@@ -18,7 +19,6 @@
     "apexcharts": "^3.45.1",
     "clipboard": "^2.0.11",
     "flowbite": "^2.2.0",
-    "flowbite-datepicker": "^1.2.6",
     "preline": "^2.0.2"
   }
 }

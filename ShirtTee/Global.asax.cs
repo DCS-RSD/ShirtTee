@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using WingtipToys.Logic;
+using Microsoft.Owin.Security;
 
 namespace ShirtTee
 {
@@ -46,7 +49,20 @@ namespace ShirtTee
         {
             if (Request.Cookies["user_ID"] != null)
             {
-                Session["user_ID"] = Request.Cookies["user_ID"].Value;
+                var identityDbContext = new IdentityDbContext("ConnectionString");
+
+                var userStore = new UserStore<IdentityUser>(identityDbContext);
+                var manager = new UserManager<IdentityUser>(userStore);
+                var user = manager.FindById(Request.Cookies["user_ID"].Value);
+                if (user != null) 
+                {
+                    //logUserIn
+                    var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+                    var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
+                    Session["user_ID"] = user.Id;
+                }
+                
             }
         }
 
