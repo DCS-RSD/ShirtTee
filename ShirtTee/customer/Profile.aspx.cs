@@ -87,8 +87,8 @@ namespace ShirtTee.customer
                     {
                         ddlGender.SelectedIndex = 0;
                     }
-                    
-                        
+
+
 
                     if (profile["dob"] != DBNull.Value)
                     {
@@ -212,15 +212,86 @@ namespace ShirtTee.customer
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 Label lblExpiryDate = (Label)e.Item.FindControl("lblExpiryDate");
+                Label lblVoucher = (Label)e.Item.FindControl("lblVoucher");
+                Label lblMinSpend = (Label)e.Item.FindControl("lblMinSpend");
+                Label lblCapAt = (Label)e.Item.FindControl("lblCapAt");
 
                 DataRowView dataItem = (DataRowView)e.Item.DataItem;
 
-                if (dataItem != null) 
+                if (dataItem != null)
                 {
                     string expDate = dataItem["expiry_date"].ToString();
+                    string discountRate = (Convert.ToDouble(dataItem["discount_rate"].ToString()) * 100).ToString();
+                    lblVoucher.Text = "Voucher " + discountRate +"% off";
+                    lblMinSpend.Text = "Minimum Spend: RM" + Convert.ToDouble(dataItem["min_spend"].ToString()).ToString("F2");
+                    lblCapAt.Text = "Cap At: RM" + Convert.ToDouble(dataItem["cap_at"].ToString()).ToString("F2");
+
                     lblExpiryDate.Text = Convert.ToDateTime(expDate).ToString("dd MMMM yyyy");
                 }
             }
+        }
+
+        protected void btnRedeem_Click(object sender, EventArgs e)
+        {
+            DBconnection dbconnection = new DBconnection();
+
+            SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                         new SqlParameter("@voucher_name", txtRedeem.Text.ToString()),
+                        };
+
+            SqlDataReader voucher = dbconnection.ExecuteQuery(
+                " SELECT * FROM [Voucher] AS v" +
+                " WHERE expiry_date > GETDATE() AND" +
+                " deleted_at IS NULL AND" +
+                " voucher_name = @voucher_name", parameterUrl2).ExecuteReader();
+
+            if (voucher.HasRows)
+            {
+
+                voucher.Read();
+
+                SqlParameter[] parameterUrl = new SqlParameter[]{
+                         new SqlParameter("@user_ID", Session["user_ID"]),
+                         new SqlParameter("@voucher_name", voucher["voucher_name"].ToString()),
+                        };
+
+                SqlDataReader existingVoucher = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [Voucher_Details] AS vd" +
+                    " INNER JOIN [Voucher] AS v ON vd.voucher_ID = v.voucher_ID" +
+                    " WHERE user_ID = @user_ID AND" +
+                    " voucher_name = @voucher_name",
+                parameterUrl).ExecuteReader();
+                if (existingVoucher.HasRows)
+                {
+                    existingVoucher.Read();
+                    //duplicate voucher
+                    Session["ProfileChanged"] = "duplicateVoucher";
+                }
+                else
+                {
+                    //insert voucher
+                    string sqlcommand =
+                        "INSERT INTO Voucher_Details (user_ID, voucher_ID) " +
+                        "VALUES (@user_ID, @voucher_ID)";
+                    SqlParameter[] parameters = {
+                       new SqlParameter("@user_ID", Session["user_ID"]),
+                         new SqlParameter("@voucher_ID", voucher["voucher_ID"].ToString()),
+                                    };
+                    if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+                    {
+                        Session["ProfileChanged"] = "redeemSuccess";
+                    }
+
+
+                }
+
+
+            }
+            else
+            {
+                Session["ProfileChanged"] = "noSuchVoucher";
+            }
+            Response.Redirect(Request.Url.AbsoluteUri);
         }
     }
 }

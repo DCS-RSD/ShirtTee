@@ -41,6 +41,11 @@ namespace ShirtTee
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
+                    notificationDiv.Visible = true;
+                    orderHisDiv.Visible = true;
+                    myReviewDiv.Visible = true;
+                    profileDiv.Visible = true;
+                    cartDiv.Visible = true;
                     panelLoginInfo.Visible = true;
                     panelLogout.Visible = true;
                     panelSignIn.Visible = false;
@@ -52,6 +57,11 @@ namespace ShirtTee
                 }
                 else
                 {
+                    notificationDiv.Visible = false;
+                    orderHisDiv.Visible = false;
+                    myReviewDiv.Visible = false;
+                    profileDiv.Visible = false;
+                    cartDiv.Visible = false;
                     panelLoginInfo.Visible = false;
                     panelLogout.Visible = false;
                     panelSignIn.Visible = true;
@@ -65,7 +75,16 @@ namespace ShirtTee
         {
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             authenticationManager.SignOut();
+            Session["user_ID"] = "";
             Response.Redirect("~/Login.aspx");
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text;
+
+            // Perform server-side logic, such as redirecting to another page with the query string
+            Response.Redirect("Products.aspx?search=" + searchText);
         }
     }
 }

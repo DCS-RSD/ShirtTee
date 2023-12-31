@@ -16,6 +16,15 @@
                 else if (status == "sameDetails") {
                     toastr["error"]("You haven't update your information.")
                 }
+                else if (status == "duplicateVoucher") {
+                    toastr["error"]("You have redeemed / used the voucher before.")
+                }
+                else if (status == "noSuchVoucher") {
+                    toastr["error"]("No such voucher.")
+                }
+                else if (status == "redeemSuccess") {
+                    toastr["success"]("Redeem voucher successfully.")
+                }
                 else {
                     toastr["error"]("Something went wrong.");
                 }
@@ -47,7 +56,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question" viewBox="0 0 16 16">
                                                 <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94" />
                                             </svg>
-                                            <asp:Label Text="" runat="server" ID="lblMemberInfo" class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700 hidden" role="tooltip" Style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(814.4px, -472.8px, 0px);" data-popper-placement="top">
+                                            <asp:Label Text="" runat="server" ID="lblMemberInfo" class="text-left hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700 hidden" role="tooltip" Style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(814.4px, -472.8px, 0px);" data-popper-placement="top">
                                             </asp:Label>
                                         </div>
                                     </div>
@@ -166,8 +175,8 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5 mb-8">
                         <label for="region" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Redeem Vouchers</label>
                         <div class="mt-1 sm:mt-0 flex">
-                            <asp:TextBox runat="server" ID="region" autocomplete="address-level1" class="max-w-lg block shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
-                            <asp:Button runat="server" Text="Redeem" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></asp:Button>
+                            <asp:TextBox runat="server" ID="txtRedeem" Text="" class="max-w-lg block shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
+                            <asp:Button runat="server" ID="btnRedeem" OnClick="btnRedeem_Click" Text="Redeem" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></asp:Button>
                         </div>
 
                     </div>
@@ -187,8 +196,14 @@
                         <ItemTemplate>
                             <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                                 <div class="p-4 md:p-5">
-                                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Pay Day 20% Off</h3>
+                                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                                        <asp:Label runat="server" ID="lblVoucher" Text=""></asp:Label></h3>
                                     <p class="mt-2 text-gray-500 dark:text-gray-400"><%# Eval("voucher_description") %></p>
+
+                                    <p class="mt-2 text-gray-500 dark:text-gray-400 text-xs">
+                                        <asp:Label runat="server" ID="lblMinSpend" Text=""></asp:Label></p>
+                                    <p class="mt-2 text-gray-500 dark:text-gray-400 text-xs">
+                                        <asp:Label runat="server" ID="lblCapAt" Text=""></asp:Label></p>
                                     <input type="hidden" id='<%# "hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>' value='<%# Eval("voucher_name") %>'>
 
                                     <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -196,16 +211,16 @@
                                         data-clipboard-action="copy"
                                         data-clipboard-success-text="Copied">
                                         <%# Eval("voucher_name") %>
-  <span class="border-s ps-3.5 dark:border-gray-700">
-      <svg class="js-clipboard-default w-4 h-4 group-hover:rotate-6 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
-          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-      </svg>
+                                        <span class="border-s ps-3.5 dark:border-gray-700">
+                                            <svg class="js-clipboard-default w-4 h-4 group-hover:rotate-6 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                                            </svg>
 
-      <svg class="js-clipboard-success hidden w-4 h-4 text-blue-600 rotate-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12" />
-      </svg>
-  </span>
+                                            <svg class="js-clipboard-success hidden w-4 h-4 text-blue-600 rotate-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                        </span>
 
                                         <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity hidden invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-lg shadow-sm dark:bg-slate-700" role="tooltip">
                                             <span class="js-clipboard-success-text">Copy</span>
@@ -213,7 +228,8 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-slate-900 dark:border-gray-700">
-                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">Used By <asp:Label runat="server" ID="lblExpiryDate" Text="" /></p>
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">Used By
+                                        <asp:Label runat="server" ID="lblExpiryDate" Text="" /></p>
                                 </div>
                             </div>
 
