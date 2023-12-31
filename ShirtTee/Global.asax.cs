@@ -29,7 +29,7 @@ namespace ShirtTee
             SiteMapNode currentNode = siteMapProvider.CurrentNode.Clone(true);
             SiteMapNode tempNode = currentNode;
 
-            string queryString= "?product_id=" + e.Context.Request["product_id"];
+            string queryString = "?product_id=" + e.Context.Request["product_id"];
 
             if (currentNode.Title.Equals("Stock"))
             {
@@ -54,7 +54,7 @@ namespace ShirtTee
                 var userStore = new UserStore<IdentityUser>(identityDbContext);
                 var manager = new UserManager<IdentityUser>(userStore);
                 var user = manager.FindById(Request.Cookies["user_ID"].Value);
-                if (user != null) 
+                if (user != null)
                 {
                     //logUserIn
                     var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
@@ -62,7 +62,7 @@ namespace ShirtTee
                     authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
                     Session["user_ID"] = user.Id;
                 }
-                
+
             }
         }
 
@@ -88,8 +88,11 @@ namespace ShirtTee
 
         protected void Application_End(object sender, EventArgs e)
         {
-            var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-            authenticationManager.SignOut();
+            if (HttpContext.Current != null && HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+                authenticationManager.SignOut();
+            }
         }
     }
 }
