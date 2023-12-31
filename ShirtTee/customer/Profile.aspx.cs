@@ -79,7 +79,7 @@ namespace ShirtTee.customer
                     txtUsername.Text = profile["UserName"].ToString();
 
 
-                    if (profile["gender"] == DBNull.Value)
+                    if (profile["gender"] != DBNull.Value)
                     {
                         ddlGender.SelectedValue = profile["gender"].ToString();
                     }
@@ -95,7 +95,7 @@ namespace ShirtTee.customer
                         txtSelectDOB.Visible = false;
                         txtDisplayDOB.Visible = true;
                         DateTime dob = Convert.ToDateTime(profile["dob"].ToString());
-                        txtDisplayDOB.Text = dob.ToString("MM/dd/yyyy");
+                        txtDisplayDOB.Text = dob.ToString("dd MMMM yyyy");
 
                     }
                     else
@@ -112,13 +112,34 @@ namespace ShirtTee.customer
             }
         }
 
+        protected void ValidatePhotoFormat(object source, ServerValidateEventArgs args)
+        {
+            if (fileAvatar.HasFile)
+            {
+                string extension = System.IO.Path.GetExtension(fileAvatar.FileName).ToLower();
+                if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
+                {
+                    args.IsValid = true;
+                }
+                else
+                {
+                    args.IsValid = false;
+                }
+            }
+            else
+            {
+                // No file uploaded, consider it valid if not required
+                args.IsValid = true;
+            }
+        }
+
         protected void btnChangeAvatar_Click(object sender, EventArgs e)
         {
 
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
-        {
+        {/*
             try
             {
 
@@ -165,6 +186,7 @@ namespace ShirtTee.customer
                 //        }
                 //    }
                 //}
+               
                 DBconnection dbconnection = new DBconnection();
                 string sqlCommand =
                        "UPDATE [AspNetUsers] SET " +
@@ -204,7 +226,7 @@ namespace ShirtTee.customer
             {
                 Response.Redirect(Request.Url.AbsoluteUri);
             }
-
+            */
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
