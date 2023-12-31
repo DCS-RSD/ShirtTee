@@ -46,7 +46,15 @@ namespace ShirtTee
                 if (user.HasRows)
                 {
                     user.Read();
-                    imgAvatar.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])user["avatar"]);
+                    if (user["avatar"] != DBNull.Value)
+                    {
+                        imgAvatar.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])user["avatar"]);
+
+                    }
+                    else 
+                    {
+                        imgAvatar.ImageUrl = "~/Image/noimage.png";
+                    }
                 }
             }
 

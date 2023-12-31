@@ -100,7 +100,7 @@
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <div class="flex items-center">
                                 <span id="divAvatar" runat="server" class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                                    <asp:Image ID="Image1" runat="server" ClientIDMode="Static" class="" ImageUrl="" />
+                                    <asp:Image ID="Image1" runat="server" ClientIDMode="Static" class="" ImageUrl='' />
 
                                 </span>
 
@@ -147,7 +147,8 @@
                                         <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"></path>
                                     </svg>
                                 </div>
-                                <asp:TextBox runat="server" ID="txtSelectDOB" Visible="false" Text="" datepicker="" datepicker-autohide="" type="text" CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" />
+
+                                <asp:TextBox runat="server" ID="txtSelectDOB" Visible="false" Text="" datepicker="" datepicker-autohide=""  CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"  />
                                 <asp:TextBox runat="server" ID="txtDisplayDOB" Visible="true" Text="" type="text" disabled CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
                             </div>
