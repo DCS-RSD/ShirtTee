@@ -33,6 +33,21 @@ namespace ShirtTee
                     cartDetails.Read();
                     lblCartNumber.Text = cartDetails["qty"].ToString();
                 }
+
+                SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"])
+                };
+
+                SqlDataReader user = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [AspNetUsers]"
+                  + " WHERE Id = @user_ID",
+                parameterUrl2).ExecuteReader();
+
+                if (user.HasRows)
+                {
+                    user.Read();
+                    imgAvatar.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])user["avatar"]);
+                }
             }
 
         }

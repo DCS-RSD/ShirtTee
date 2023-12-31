@@ -78,6 +78,15 @@ namespace ShirtTee
         protected global::System.Web.UI.WebControls.HyperLink btnCart;
 
         /// <summary>
+        /// imgAvatar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgAvatar;
+
+        /// <summary>
         /// panelLoginInfo control.
         /// </summary>
         /// <remarks>
