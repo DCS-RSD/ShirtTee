@@ -1,11 +1,44 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Data.SqlClient;
 using System.Web;
 
 namespace ShirtTee.admin
 {
     public partial class MainAdmin : System.Web.UI.MasterPage
     {
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                DBconnection dbconnection = new DBconnection();
+                SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId())
+                };
+
+
+                SqlDataReader user = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [AspNetUsers]"
+                  + " WHERE Id = @user_ID",
+                parameterUrl).ExecuteReader();
+
+                if (user.HasRows)
+                {
+                    user.Read();
+                    if (user["avatar"] != DBNull.Value)
+                    {
+                        imgAvatar.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])user["avatar"]);
+
+                    }
+                    else
+                    {
+                        imgAvatar.ImageUrl = "~/Image/default-avatar.jpg";
+                    }
+                }
+            }
+
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             lblUsername.Text = HttpContext.Current.User.Identity.GetUserName();

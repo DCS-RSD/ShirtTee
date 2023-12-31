@@ -207,7 +207,7 @@ WHERE user_ID = @user_ID">
 
         var form = document.getElementById("form1");
         console.log(form);
-        form.addEventListener('submit', function (e) {
+        function submitAPI() {
             if (isFPXChecked()) {
                 
                 Page_ClientValidate();
@@ -215,7 +215,7 @@ WHERE user_ID = @user_ID">
 
                 //console.log(ddlState.value);
                 if (Page_IsValid && ddlState.value != "Choose State") {
-                    e.preventDefault();
+                    //e.preventDefault();
 
                     // Make an AJAX request to your server handler to get the Stripe public key
                     fetch('/StripePublicKeyHandler.ashx', {
@@ -243,7 +243,7 @@ WHERE user_ID = @user_ID">
             else {
                 return;
             }
-        });
+        };
 
 
 
