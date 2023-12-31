@@ -60,6 +60,24 @@ namespace ShirtTee.customer
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
+        /// divAvatar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAvatar;
+
+        /// <summary>
+        /// Image1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image Image1;
+
+        /// <summary>
         /// btnChangeAvatar control.
         /// </summary>
         /// <remarks>
@@ -67,6 +85,15 @@ namespace ShirtTee.customer
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChangeAvatar;
+
+        /// <summary>
+        /// fileAvatar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileAvatar;
 
         /// <summary>
         /// txtUsername control.
@@ -87,13 +114,22 @@ namespace ShirtTee.customer
         protected global::System.Web.UI.WebControls.DropDownList ddlGender;
 
         /// <summary>
-        /// txtDOB control.
+        /// txtSelectDOB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDOB;
+        protected global::System.Web.UI.WebControls.TextBox txtSelectDOB;
+
+        /// <summary>
+        /// txtDisplayDOB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDisplayDOB;
 
         /// <summary>
         /// txtPhone control.
@@ -114,30 +150,21 @@ namespace ShirtTee.customer
         protected global::System.Web.UI.WebControls.TextBox region;
 
         /// <summary>
-        /// ori_pwd control.
+        /// btnCancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ori_pwd;
+        protected global::System.Web.UI.WebControls.Button btnCancel;
 
         /// <summary>
-        /// new_pwd control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox new_pwd;
-
-        /// <summary>
-        /// con_pwd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox con_pwd;
+        protected global::System.Web.UI.WebControls.Button btnSave;
     }
 }
