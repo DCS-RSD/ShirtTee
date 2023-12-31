@@ -33,9 +33,10 @@ namespace ShirtTee.admin
                 new SqlParameter("@voucher_description", txtVoucherDesc.Text),
                 new SqlParameter("@discount_rate", discount),
                 new SqlParameter("@min_spend", Convert.ToDouble(txtMinSpend.Text)),
-                new SqlParameter("@expiry_date", DbType.Date) {Value=txtDate.Text},
+                new SqlParameter("@expiry_date", SqlDbType.Date) {Value=txtDate.Text},
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text))
                 };
+                System.Diagnostics.Debug.WriteLine(txtDate.Text);
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
@@ -56,6 +57,7 @@ namespace ShirtTee.admin
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 Session["VoucherAdded"] = "error";
             }
             finally
