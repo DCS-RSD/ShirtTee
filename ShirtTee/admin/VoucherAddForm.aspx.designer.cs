@@ -60,13 +60,13 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.TextBox txtCapAt;
 
         /// <summary>
-        /// txtDate control.
+        /// calExpireDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDate;
+        protected global::System.Web.UI.WebControls.Calendar calExpireDate;
 
         /// <summary>
         /// btnSubmit control.
