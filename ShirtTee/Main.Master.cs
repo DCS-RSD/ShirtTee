@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
@@ -44,6 +45,10 @@ namespace ShirtTee
                     panelLogout.Visible = true;
                     panelSignIn.Visible = false;
                     lblUsername.Text = string.Format("{0}", HttpContext.Current.User.Identity.GetUserName());
+                    if (HttpContext.Current.User.IsInRole("admin"))
+                    {
+                        hypToClient.Visible = true;
+                    }
                 }
                 else
                 {

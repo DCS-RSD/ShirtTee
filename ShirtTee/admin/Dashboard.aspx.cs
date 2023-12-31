@@ -42,5 +42,24 @@ namespace ShirtTee.admin
                 </div>
             </div>";
         }
+
+        protected void ddlNoticeType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var query = SqlDataSource1.SelectCommand;
+            if (ddlNoticeType.SelectedIndex != 0)
+            {
+                SqlDataSource1.SelectCommand = SqlDataSourceFiltered.SelectCommand;
+
+                SqlDataSource1.SelectParameters.Clear();
+                SqlDataSource1.SelectParameters.Add("is_private", ddlNoticeType.SelectedValue);
+            }
+            else
+            {
+                SqlDataSource1.SelectCommand = query;
+            }
+
+            ListView1.DataBind();
+        }
+
     }
 }
