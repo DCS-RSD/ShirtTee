@@ -205,8 +205,6 @@ WHERE user_ID = @user_ID">
             return radFPX.checked;
         }
 
-        var form = document.getElementById("form1");
-        console.log(form);
         function submitAPI() {
             if (isFPXChecked()) {
                 
@@ -244,9 +242,6 @@ WHERE user_ID = @user_ID">
                 return;
             }
         };
-
-
-
 
     </script>
 
