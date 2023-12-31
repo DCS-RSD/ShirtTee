@@ -2,29 +2,27 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <script>
-            function showSuccessToast() {
-                var status = '<%= Session["ProfileChanged"] %>';
-                console.log(status);
-                if (status !== null && status !== undefined) {
-                    if (status == "success") {
-                        toastr["success"]("Profile updated successfully.");
-                    }
-                    else if (status == "sameUsername")
-                    {
-                        toastr["error"]("Username have been used by others.")
-                    }
-                    else if (status == "sameDetails")
-                    {
-                        toastr["error"]("You haven't update your information.")
-                    }
-                    else {
-                        toastr["error"]("Something went wrong.");
-                    }
+    <script>
+        function showSuccessToast() {
+            var status = '<%= Session["ProfileChanged"] %>';
+            console.log(status);
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Profile updated successfully.");
                 }
-        <% Session.Remove("ProfileChanged"); %>
+                else if (status == "sameUsername") {
+                    toastr["error"]("Username have been used by others.")
+                }
+                else if (status == "sameDetails") {
+                    toastr["error"]("You haven't update your information.")
+                }
+                else {
+                    toastr["error"]("Something went wrong.");
+                }
             }
-        </script>
+        <% Session.Remove("ProfileChanged"); %>
+        }
+    </script>
 
     <div class="space-y-8  ">
 
@@ -58,17 +56,20 @@
 
                             <div class="text-right">
                                 <asp:Label runat="server" ID="lblMemberPoints" Text="" />
-                                points</div>
+                                points
+                            </div>
                         </div>
                         <div class="mt-4" aria-hidden="true">
                             <div class="bg-gray-200 rounded-full overflow-hidden">
-                                <div class="h-2 bg-indigo-600 rounded-full" style="width: calc((1 * 2 + 1) / 8 * 100%)"></div>
+                                <div runat="server" id="progressBar" class="h-2 bg-indigo-600 rounded-full"></div>
                             </div>
                             <div class="grid grid-cols-2 text-sm font-medium text-gray-600 mt-4">
-                                <div class="text-indigo-600">Level
-                                    <asp:Label runat="server" ID="lblLvNow" Text="" /></div>
-                                <div class="text-right">Level
-                                    <asp:Label runat="server" ID="lblLvNext" Text="" /></div>
+                                <div class="text-indigo-600">
+                                    <asp:Label runat="server" ID="lblLvNow" Text="" />
+                                </div>
+                                <div class="text-right">
+                                    <asp:Label runat="server" ID="lblLvNext" Text="" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,10 +91,10 @@
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <div class="flex items-center">
                                 <span id="divAvatar" runat="server" class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                                    <asp:Image ID="Image1" runat="server" ClientIDMode="Static" class="" ImageUrl=""/>
+                                    <asp:Image ID="Image1" runat="server" ClientIDMode="Static" class="" ImageUrl="" />
 
                                 </span>
-                                
+
                                 <asp:Button runat="server" Text="Change" ID="btnChangeAvatar" OnClientClick="triggerFileUploadClick(); return false;" OnClick="btnChangeAvatar_Click" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></asp:Button>
                                 <asp:FileUpload runat="server" ID="fileAvatar" class="hidden" onchange="loadFile(event)" />
                             </div>
@@ -138,7 +139,7 @@
                                     </svg>
                                 </div>
                                 <asp:TextBox runat="server" ID="txtSelectDOB" Visible="false" Text="" datepicker="" datepicker-autohide="" type="text" CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" />
-                                <asp:TextBox runat="server" ID="txtDisplayDOB" Visible="true" Text=""  type="text" disabled CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                <asp:TextBox runat="server" ID="txtDisplayDOB" Visible="true" Text="" type="text" disabled CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
                             </div>
                         </div>
@@ -174,18 +175,27 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Repeat this card block for each card -->
-                    <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                        <div class="p-4 md:p-5">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">Pay Day 20% Off</h3>
-                            <p class="mt-2 text-gray-500 dark:text-gray-400">Get 20% discount on your order with minimum spend RM150.</p>
-                            <input type="hidden" id="hs-clipboard-tooltip-on-hover" value="PAYDAY20">
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Voucher_Details] AS vd INNER JOIN [Voucher] AS v ON vd.voucher_ID = v.voucher_ID WHERE user_ID = @user_ID AND used_date IS NULL AND expiry_date > GETDATE() AND deleted_at IS NULL">
+                        <SelectParameters>
+                            <asp:SessionParameter SessionField="user_ID" Name="user_ID"></asp:SessionParameter>
+                        </SelectParameters>
+                    </asp:SqlDataSource>
 
-                            <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                data-clipboard-target="#hs-clipboard-tooltip-on-hover"
-                                data-clipboard-action="copy"
-                                data-clipboard-success-text="Copied">
-                                PAYDAY20
+                    <!-- Repeat this card block for each card -->
+                    <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
+
+                        <ItemTemplate>
+                            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                                <div class="p-4 md:p-5">
+                                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Pay Day 20% Off</h3>
+                                    <p class="mt-2 text-gray-500 dark:text-gray-400"><%# Eval("voucher_description") %></p>
+                                    <input type="hidden" id='<%# "hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>' value='<%# Eval("voucher_name") %>'>
+
+                                    <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                        data-clipboard-target='<%# "#hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>'
+                                        data-clipboard-action="copy"
+                                        data-clipboard-success-text="Copied">
+                                        <%# Eval("voucher_name") %>
   <span class="border-s ps-3.5 dark:border-gray-700">
       <svg class="js-clipboard-default w-4 h-4 group-hover:rotate-6 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
@@ -197,15 +207,18 @@
       </svg>
   </span>
 
-                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity hidden invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-lg shadow-sm dark:bg-slate-700" role="tooltip">
-                                    <span class="js-clipboard-success-text">Copy</span>
-                                </span>
+                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity hidden invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-lg shadow-sm dark:bg-slate-700" role="tooltip">
+                                            <span class="js-clipboard-success-text">Copy</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-slate-900 dark:border-gray-700">
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">Used By <asp:Label runat="server" ID="lblExpiryDate" Text="" /></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-slate-900 dark:border-gray-700">
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">Used By 12 December 2023</p>
-                        </div>
-                    </div>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
                     <!-- End of card block -->
                     <!-- Repeat the card blocks for the desired number of cards -->
                 </div>
@@ -285,36 +298,36 @@
         })()
     </script>
 
-        <script type="text/javascript">
-            function triggerFileUploadClick() {
-                document.getElementById('<%=fileAvatar.ClientID%>').click();
-            }
-        </script>
+    <script type="text/javascript">
+        function triggerFileUploadClick() {
+            document.getElementById('<%=fileAvatar.ClientID%>').click();
+        }
+    </script>
 
-        <script>
-            var loadFile = function (event) {
-                var input = event.target;
-                var file = input.files[0];
-                var type = file.type;
-                var output = document.getElementById('Image1');
+    <script>
+        var loadFile = function (event) {
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
+            var output = document.getElementById('Image1');
 
-                if (file) {
-                    var allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; // Add allowed file types here
+            if (file) {
+                var allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; // Add allowed file types here
 
-                    // Check if the file type is allowed
-                    if (allowedTypes.includes(type)) {
-                        output.src = URL.createObjectURL(event.target.files[0]);
+                // Check if the file type is allowed
+                if (allowedTypes.includes(type)) {
+                    output.src = URL.createObjectURL(event.target.files[0]);
 
-                        output.onload = function () {
-                            URL.revokeObjectURL(output.src); // free memory
-                        }
-
-                        output.classList.add("w-12");
-                        output.classList.add("h-12");
-                    } else {
-                        alert("Invalid file type. Please upload a JPEG, PNG, or JPG file.");
+                    output.onload = function () {
+                        URL.revokeObjectURL(output.src); // free memory
                     }
+
+                    output.classList.add("w-12");
+                    output.classList.add("h-12");
+                } else {
+                    alert("Invalid file type. Please upload a JPEG, PNG, or JPG file.");
                 }
-            };
-        </script>
+            }
+        };
+    </script>
 </asp:Content>

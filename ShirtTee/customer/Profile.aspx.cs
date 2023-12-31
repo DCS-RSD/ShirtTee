@@ -15,6 +15,7 @@ namespace ShirtTee.customer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (Session["ProfileChanged"] != null && !IsPostBack)
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
@@ -34,28 +35,35 @@ namespace ShirtTee.customer
 
                 if (profile.HasRows)
                 {
+                    double width;
                     profile.Read();
+
                     int memberPoint = Convert.ToInt32(profile["member_points"].ToString());
                     lblMemberPoints.Text = memberPoint.ToString();
                     if (memberPoint >= 0 && memberPoint <= 999)
                     {
                         lblMemberInfo.Text = "Level up to unlock more benefits !";
-                        lblLvNow.Text = "0";
-                        lblLvNext.Text = "1";
+                        lblLvNow.Text = "Level 0";
+                        lblLvNext.Text = "Level 1";
+                        width = memberPoint / 999.0 * 100;
 
                     }
                     else if (memberPoint >= 1000 && memberPoint <= 3999)
                     {
                         lblMemberInfo.Text = "Level 1: Free delivery for all your purchases.";
-                        lblLvNow.Text = "1";
-                        lblLvNext.Text = "2";
+                        lblLvNow.Text = "Level 1";
+                        lblLvNext.Text = "Level 2";
+                        width = (memberPoint - 999) / 2999.0 * 100;
                     }
                     else
                     {
                         lblMemberInfo.Text = "Level 1: Free delivery for all your purchases. <br /> Level 2: A birthday gift to look forward to on your special day.";
-                        lblLvNow.Text = "2";
-                        lblLvNext.Text = "3";
+                        lblLvNow.Text = "Level 2";
+                        lblLvNext.Text = "Max Level";
+                        width = 100;
                     }
+                    progressBar.Attributes["style"] = "width: calc((" + width + ") / 100 * 100%)";
+
                     txtEmail.Text = profile["Email"].ToString();
 
 
@@ -197,6 +205,22 @@ namespace ShirtTee.customer
                 Response.Redirect(Request.Url.AbsoluteUri);
             }
 
+        }
+
+        protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Label lblExpiryDate = (Label)e.Item.FindControl("lblExpiryDate");
+
+                DataRowView dataItem = (DataRowView)e.Item.DataItem;
+
+                if (dataItem != null) 
+                {
+                    string expDate = dataItem["expiry_date"].ToString();
+                    lblExpiryDate.Text = Convert.ToDateTime(expDate).ToString("dd MMMM yyyy");
+                }
+            }
         }
     }
 }
