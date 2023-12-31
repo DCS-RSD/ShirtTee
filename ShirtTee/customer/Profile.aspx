@@ -10,8 +10,16 @@
                     if (status == "success") {
                         toastr["success"]("Profile updated successfully.");
                     }
+                    else if (status == "sameUsername")
+                    {
+                        toastr["error"]("Username have been used by others.")
+                    }
+                    else if (status == "sameDetails")
+                    {
+                        toastr["error"]("You haven't update your information.")
+                    }
                     else {
-                        toastr["error"]("Please update your information before saving.");
+                        toastr["error"]("Something went wrong.");
                     }
                 }
         <% Session.Remove("ProfileChanged"); %>

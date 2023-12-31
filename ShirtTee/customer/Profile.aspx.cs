@@ -123,6 +123,7 @@ namespace ShirtTee.customer
                 }
                 */
 
+
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"])
                 };
@@ -136,6 +137,22 @@ namespace ShirtTee.customer
                 if (userDetails.HasRows)
                 {
                     userDetails.Read();
+                    SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                     new SqlParameter("@user_ID", Session["user_ID"])
+                    };
+                    SqlDataReader allUser = dbconnection.ExecuteQuery("SELECT * FROM [AspNetUsers] WHERE Id != @user_ID",parameterUrl2).ExecuteReader();
+
+                    if (allUser.HasRows)
+                    {
+                        while (allUser.Read())
+                        {
+                            if (allUser["UserName"].ToString().Equals(txtUsername.Text)) 
+                            {
+                                same = true;
+                                Session["ProfileChanged"] = "sameUsername";
+                            }
+                        }
+                    }
                     //string oriAvatar = "data:Image/png;base64," + Convert.ToBase64String((byte[])userDetails["avatar"]);
                     if (userDetails["Email"].ToString().Equals(txtEmail.Text) &&
                         userDetails["UserName"].ToString().Equals(txtUsername.Text) &&
@@ -143,6 +160,7 @@ namespace ShirtTee.customer
                         userDetails["PhoneNumber"].ToString().Equals(txtPhone.Text))  
                     {
                         same = true;
+                        Session["ProfileChanged"] = "sameDetails";
                     }
                 }
                 /*
@@ -192,10 +210,6 @@ namespace ShirtTee.customer
                     {
                         Session["ProfileChanged"] = "success";
                     }
-                }
-                else
-                {
-                    Session["ProfileChanged"] = "error";
                 }
 
             }
