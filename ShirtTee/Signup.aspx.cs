@@ -25,24 +25,29 @@ namespace ShirtTee
         {
             if (tandc.Checked)
             {
-                
+
                 var identityDbContext = new IdentityDbContext("ConnectionString");
 
                 var userStore = new UserStore<IdentityUser>(identityDbContext);
                 var manager = new UserManager<IdentityUser>(userStore);
                 var user = new IdentityUser() { UserName = signupEmail.Text, Email = signupEmail.Text };
-                IdentityResult result = manager.Create(user, signupPassword.Text);
-                if (result.Succeeded)
+
+                if (manager.FindByEmail(signupEmail.Text) != null)
                 {
-                    manager.AddToRole(user.Id, "customer");
-                    Session["SigninValidate"] = "validSignin";
-                    Response.Redirect($"~/Login.aspx");
+                    IdentityResult result = manager.Create(user, signupPassword.Text);
+                    if (result.Succeeded)
+                    {
+                        manager.AddToRole(user.Id, "customer");
+                        Session["SigninValidate"] = "validSignin";
+                        Response.Redirect($"~/Login.aspx");
+                    }
                 }
                 else
                 {
                     Session["SigninValidate"] = "invalidSignin";
                     Response.Redirect(Request.Url.AbsoluteUri);
                 }
+
             }
             else
             {
