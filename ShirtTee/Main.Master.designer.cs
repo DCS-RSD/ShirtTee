@@ -57,7 +57,7 @@ namespace ShirtTee
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl cartDiv;
+        protected global::System.Web.UI.WebControls.HyperLink cartDiv;
 
         /// <summary>
         /// lblCartNumber control.
