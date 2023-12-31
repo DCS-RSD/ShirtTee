@@ -98,7 +98,7 @@
 
                             <ItemTemplate>
                                 <tr onclick='<%# Eval("notice_id", "window.location.href = \"NoticeDetails.aspx?notice_id={0}\";") %>'
-                                    class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 cursor-pointer">
+                                    class="border-y border-gray-200 dark:border-gray-700 bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 cursor-pointer">
 
                                     <td class="whitespace-nowrap py-4 px-6 text-gray-800 dark:text-gray-200">
                                         <%# Eval("notice_title") %>
