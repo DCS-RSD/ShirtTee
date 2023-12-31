@@ -122,7 +122,7 @@ namespace ShirtTee.admin
             }
             finally
             {
-                Response.Redirect(ResolveUrl("~/admin/dashboard.aspx").ToString());
+                Response.Redirect(ResolveUrl("~/admin/Dashboard.aspx").ToString());
             }
         }
     }
