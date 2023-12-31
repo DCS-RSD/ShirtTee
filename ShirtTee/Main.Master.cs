@@ -37,6 +37,7 @@ namespace ShirtTee
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
@@ -79,12 +80,5 @@ namespace ShirtTee
             Response.Redirect("~/Login.aspx");
         }
 
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            string searchText = txtSearch.Text;
-
-            // Perform server-side logic, such as redirecting to another page with the query string
-            Response.Redirect("Products.aspx?search=" + searchText);
-        }
     }
 }

@@ -11,11 +11,54 @@ namespace ShirtTee
 {
     public partial class Products : System.Web.UI.Page
     {
+        const string query = "SELECT * FROM [Product] INNER JOIN[Category] ON Product.category_id = Category.category_id WHERE deleted_at IS NULL";
+        protected override void OnPreRender(EventArgs e)
+        {
+            string prodCategory = Request.QueryString["category"];
+            base.OnPreRender(e);
+            if (IsPostBack)
+            {
+                try
+                {
+                    if (txtSearch.Text != "" && !string.IsNullOrEmpty(prodCategory))
+                    {
+                        SqlDataSource1.SelectCommand = query + " AND product_name LIKE '%' + @product_name + '%'";
+                        SqlDataSource1.SelectCommand += " AND Category.category_group = @category_group ";
+                        SqlDataSource1.SelectParameters.Clear();
+                        SqlDataSource1.SelectParameters.Add("product_name", txtSearch.Text);
+                        SqlDataSource1.SelectParameters.Add("category_group", prodCategory);
+
+                    }
+                    else if (!string.IsNullOrEmpty(prodCategory))
+                    {
+                        SqlDataSource1.SelectCommand = query + " AND Category.category_group = @category_group";
+                        SqlDataSource1.SelectParameters.Clear();
+                        SqlDataSource1.SelectParameters.Add("category_group", prodCategory);
+                    }
+                    else if (txtSearch.Text != "")
+                    {
+                        SqlDataSource1.SelectCommand = query + " AND product_name LIKE '%' + @product_name + '%'";
+                        SqlDataSource1.SelectParameters.Clear();
+                        SqlDataSource1.SelectParameters.Add("product_name", txtSearch.Text);
+                    }
+                    else
+                    {
+                        SqlDataSource1.SelectCommand = query;
+                        SqlDataSource1.SelectParameters.Clear();
+                    }
+
+                    Repeater1.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message + "\n" + query + "\n" + SqlDataSource1.SelectCommand);
+                }
+            }
+
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            Repeater2.Visible = false;
             string prodCategory = Request.QueryString["category"];
-            string search = Request.QueryString["search"];
             if (prodCategory != null)
             {
                 if (prodCategory.Equals("men"))
@@ -30,50 +73,10 @@ namespace ShirtTee
                 {
                     lblProduct.Text = "KIDS";
                 }
-                Repeater2.Visible = false;
-            }
-            else if (search != null)
-            {
-                lblProduct.Text = "Search Results";
-                SqlDataSource newDataSource = new SqlDataSource();
-                newDataSource.ID = "NewDataSource";
-                newDataSource.ConnectionString = "YourConnectionString";
-                newDataSource.SelectCommand = "SELECT * FROM YourNewTable";
-
-                Repeater1.Visible = false;
-                Repeater2.Visible = true;
-                // Bind the data
-                Repeater2.DataBind();
-            }
-
-        }
-
-        protected void Repeater2_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-
-            string search = "";
-            if (Request.QueryString["search"] != null)
-            {
-                search = Request.QueryString["search"].ToString();
-            }
-
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-
-                DataRowView dataItem = (DataRowView)e.Item.DataItem;
-                if (!string.IsNullOrEmpty(search))
-                {
-                    string temp = dataItem["product_name"].ToString().ToLower();
-                    if (temp.Contains(search.ToLower()))
-                    {
-                        e.Item.Visible = true;
-                    }
-                    else { e.Item.Visible = false; }
-
-                }
             }
 
 
         }
+
     }
 }
