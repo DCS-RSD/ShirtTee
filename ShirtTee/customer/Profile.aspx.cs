@@ -167,7 +167,7 @@ namespace ShirtTee.customer
 
                 if (fileAvatar.HasFile)
                 {
-                    parameters = parameters.Append(new SqlParameter("@thumbnail", (object)fileAvatar.FileBytes)).ToArray();
+                    parameters = parameters.Append(new SqlParameter("@avatar", (object)fileAvatar.FileBytes)).ToArray();
                 }
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
