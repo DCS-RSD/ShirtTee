@@ -18,6 +18,10 @@ namespace ShirtTee
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
             }
+            if (Session["SigninValidate"] != null && !IsPostBack)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)

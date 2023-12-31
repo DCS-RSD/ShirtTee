@@ -15,25 +15,41 @@ namespace ShirtTee
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (Session["SigninValidate"] != null && !IsPostBack)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+            }
         }
 
         protected void btnSignup_Click(object sender, EventArgs e)
         {
-            var identityDbContext = new IdentityDbContext("ConnectionString");
-
-            var userStore = new UserStore<IdentityUser>(identityDbContext);
-            var manager = new UserManager<IdentityUser>(userStore);
-            var user = new IdentityUser() { UserName = signupEmail.Text, Email = signupEmail.Text };
-            IdentityResult result = manager.Create(user, signupPassword.Text);
-            if (result.Succeeded)
+            if (tandc.Checked)
             {
-                manager.AddToRole(user.Id, "customer");
-                Response.Redirect($"~/Login.aspx?");
+                
+                var identityDbContext = new IdentityDbContext("ConnectionString");
+
+                var userStore = new UserStore<IdentityUser>(identityDbContext);
+                var manager = new UserManager<IdentityUser>(userStore);
+                var user = new IdentityUser() { UserName = signupEmail.Text, Email = signupEmail.Text };
+                IdentityResult result = manager.Create(user, signupPassword.Text);
+                if (result.Succeeded)
+                {
+                    manager.AddToRole(user.Id, "customer");
+                    Session["SigninValidate"] = "validSignin";
+                    Response.Redirect($"~/Login.aspx");
+                }
+                else
+                {
+                    Session["SigninValidate"] = "invalidSignin";
+                    Response.Redirect(Request.Url.AbsoluteUri);
+                }
             }
             else
             {
-                //error
+                Session["SigninValidate"] = "notChecked";
+                Response.Redirect(Request.Url.AbsoluteUri);
             }
+
 
 
             //
