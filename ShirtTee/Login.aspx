@@ -8,7 +8,6 @@
     <link href="./dist/output.css" rel="stylesheet" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="../dist/preline.js"></script>
-    <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/datepicker.min.js"></script>
     <style>
         @layer utilities {
@@ -124,7 +123,7 @@
                                 <div>
                                     <div class="flex justify-between items-center">
                                         <asp:Label runat="server" for="password" class="block text-sm mb-2 dark:text-white">Password</asp:Label>
-                                        <asp:HyperLink runat="server" class="text-sm text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Forgot password?</asp:HyperLink>
+                                        <asp:HyperLink runat="server" NavigateUrl="~/ForgetPassword.aspx" class="text-sm text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Forgot password?</asp:HyperLink>
                                     </div>
                                     <div class="relative">
                                         <asp:TextBox runat="server" ID="signInPassword" name="password" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" aria-describedby="signInPasswordError" TextMode="Password" />

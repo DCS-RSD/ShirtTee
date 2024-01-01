@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,14 +15,9 @@ namespace ShirtTee.customer
 {
     public partial class Profile : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+
+        protected override void OnPreRender(EventArgs e)
         {
-
-            if (Session["ProfileChanged"] != null && !IsPostBack)
-            {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
-            }
-
             if (Session["user_ID"] != null && !IsPostBack)
             {
                 DBconnection dbconnection = new DBconnection();
@@ -93,10 +89,21 @@ namespace ShirtTee.customer
 
                     if (profile["dob"] != DBNull.Value)
                     {
-                        DateTime dob = Convert.ToDateTime(profile["dob"].ToString());
-                        txtSelectDOB.Text = dob.ToString("dd/MM/yyyy");    
+                        svgIcon.Visible = false;
                         rfvDate.Enabled = false;
-                        txtSelectDOB.Attributes.Add("disabled", "disabled");
+
+                        DateTime dob = Convert.ToDateTime(profile["dob"].ToString());
+
+                        txtDOB.Text = dob.ToString("dd MMMM yyyy");
+
+
+
+                    }
+                    else
+                    {
+                        //txtDOB.Visible = false;
+
+                        rfvDate.Enabled = true;
                     }
 
                     txtPhone.Text = profile["PhoneNumber"].ToString();
@@ -106,6 +113,16 @@ namespace ShirtTee.customer
 
 
             }
+
+
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["ProfileChanged"] != null && !IsPostBack)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+            }
+
         }
 
 
@@ -116,7 +133,8 @@ namespace ShirtTee.customer
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (Page.IsValid) 
+            Page.Validate();
+            if (Page.IsValid)
             {
                 Boolean dobExist = false;
                 try
@@ -131,10 +149,10 @@ namespace ShirtTee.customer
                         " SELECT * FROM [AspNetUsers] " +
                         " WHERE Id = @user_ID", parameterUrl2).ExecuteReader();
 
-                    if (user.HasRows) 
+                    if (user.HasRows)
                     {
                         user.Read();
-                        if (user["dob"] != DBNull.Value) 
+                        if (user["dob"] != DBNull.Value)
                         {
                             dobExist = true;
                         }
@@ -161,7 +179,7 @@ namespace ShirtTee.customer
                         new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId())
                     };
 
-                        if (!dobExist) 
+                        if (!dobExist)
                         {
                             parameters = parameters.Append(new SqlParameter("@dob", Convert.ToDateTime(txtSelectDOB.Text))).ToArray();
                         }
@@ -217,6 +235,8 @@ namespace ShirtTee.customer
                     Response.Redirect(Request.Url.AbsoluteUri);
                 }
             }
+   
+
             
  
             
