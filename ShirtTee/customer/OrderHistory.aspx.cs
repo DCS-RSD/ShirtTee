@@ -45,13 +45,14 @@ namespace ShirtTee.customer
                     {
                         DBconnection dBconnection = new DBconnection();
                         SqlParameter[] para = new SqlParameter[]{
-                   new SqlParameter("@payment_ID", checkPaymentID),
-                };
+                           new SqlParameter("@payment_ID", checkPaymentID),
+                        };
 
                         SqlDataReader payment = dBconnection.ExecuteQuery(
                             " SELECT * FROM [Payment]"
                           + " WHERE payment_ID = @payment_ID",
                         para).ExecuteReader();
+                        //upon postback, prevent generate duplicate order
                         if (!payment.HasRows && session != null)
                         {
                             paymentStatusDiv.Visible = true;
@@ -104,7 +105,7 @@ namespace ShirtTee.customer
                                     string paymentID = session.PaymentIntentId;
                                     string voucherID = null;
                                     string tempCode = "";
-                                    if (Session["discountCode"] != null) 
+                                    if (Session["discountCode"] != null)
                                     {
                                         tempCode = Session["discountCode"].ToString();
                                     }
@@ -125,80 +126,102 @@ namespace ShirtTee.customer
                                     int memberPoint = Convert.ToInt32(session.AmountTotal) / 100;
                                     decimal subtotal = Convert.ToDecimal(session.AmountSubtotal) / 100m;
                                     decimal discount = Convert.ToDecimal(session.TotalDetails.AmountDiscount) / 100m;
-
-                                    //create payment
                                     var list = paymentIntent.Get(session.PaymentIntentId);
                                     string paymentName = list.PaymentMethodTypes[0];
-                                    
                                     DateTime tempDate = session.Created;
                                     TimeZoneInfo gmtPlus8 = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
                                     DateTime paymentDate = TimeZoneInfo.ConvertTimeFromUtc(tempDate, gmtPlus8);
-
+                                    
+                                    //create payment
                                     try
                                     {
                                         string createPaymentDetails =
                                             "INSERT INTO [Payment] (payment_ID, payment_name, payment_date) " +
                                             "VALUES (@payment_ID, @payment_name, @payment_date)";
-                                        SqlParameter[] parameters5 = {
-                                new SqlParameter("@payment_ID", paymentID),
-                                new SqlParameter("@payment_name", paymentName),
-                                new SqlParameter("@payment_date", paymentDate)
-                            };
+                                                    SqlParameter[] parameters5 = {
+                                            new SqlParameter("@payment_ID", paymentID),
+                                            new SqlParameter("@payment_name", paymentName),
+                                            new SqlParameter("@payment_date", paymentDate)
+                                        };
                                         dBconnection.ExecuteNonQuery(createPaymentDetails, parameters5);
 
                                     }
-                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "1"); }
+                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "create payment details"); }
 
                                     //create order
                                     try
                                     {
-                                        //with voucher
+                                        //with voucher query
                                         string createOrder =
                                            "INSERT INTO [Order] (order_ID, order_date, order_total, payment_ID, voucher_ID, delivery_address, shipping_fee, member_points_earned, user_ID, subtotal, discount) " +
                                            "VALUES (@order_ID, @order_date, @order_total, @payment_ID, @voucher_ID, @delivery_address, @shipping_fee, @member_point, @user_ID, @subtotal, @discount)";
 
                                         SqlParameter[] withVoucher = {
-                                new SqlParameter("@order_ID", orderID),
-                                new SqlParameter("@order_date", orderDate),
-                                new SqlParameter("@order_total", total),
-                                new SqlParameter("@payment_ID", paymentID),
-                                new SqlParameter("@voucher_ID", voucherID),
-                                new SqlParameter("@delivery_address", deliveryAddress),
-                                new SqlParameter("@shipping_fee", shippingFee),
-                                new SqlParameter("@member_point", memberPoint),
-                                new SqlParameter("@user_ID", Session["user_ID"].ToString()),
-                                new SqlParameter("@subtotal", subtotal),
-                                new SqlParameter("@discount", discount)
-                            };
+                                            new SqlParameter("@order_ID", orderID),
+                                            new SqlParameter("@order_date", orderDate),
+                                            new SqlParameter("@order_total", total),
+                                            new SqlParameter("@payment_ID", paymentID),
+                                            new SqlParameter("@voucher_ID", voucherID),
+                                            new SqlParameter("@delivery_address", deliveryAddress),
+                                            new SqlParameter("@shipping_fee", shippingFee),
+                                            new SqlParameter("@member_point", memberPoint),
+                                            new SqlParameter("@user_ID", Session["user_ID"].ToString()),
+                                            new SqlParameter("@subtotal", subtotal),
+                                            new SqlParameter("@discount", discount)
+                                        };
 
                                         Boolean orderCreated = false;
-                                        //without voucher
+
+                                        //without voucher query
                                         if (voucherID == null)
                                         {
                                             createOrder =
                                                 "INSERT INTO [Order] (order_ID, order_date, order_total, payment_ID, delivery_address, shipping_fee, member_points_earned, user_ID, subtotal, discount) " +
                                                 "VALUES (@order_ID, @order_date, @order_total, @payment_ID, @delivery_address, @shipping_fee, @member_point, @user_ID, @subtotal, @discount)";
                                             SqlParameter[] withoutVoucher = {
-                                        new SqlParameter("@order_ID", orderID),
-                                        new SqlParameter("@order_date", orderDate),
-                                        new SqlParameter("@order_total", total),
-                                        new SqlParameter("@payment_ID", paymentID),
-                                        new SqlParameter("@delivery_address", deliveryAddress),
-                                        new SqlParameter("@shipping_fee", shippingFee),
-                                        new SqlParameter("@member_point", memberPoint),
-                                        new SqlParameter("@user_ID", Session["user_ID"].ToString()),
-                                        new SqlParameter("@subtotal", subtotal),
-                                        new SqlParameter("@discount", discount)
-                                    };
+                                                    new SqlParameter("@order_ID", orderID),
+                                                    new SqlParameter("@order_date", orderDate),
+                                                    new SqlParameter("@order_total", total),
+                                                    new SqlParameter("@payment_ID", paymentID),
+                                                    new SqlParameter("@delivery_address", deliveryAddress),
+                                                    new SqlParameter("@shipping_fee", shippingFee),
+                                                    new SqlParameter("@member_point", memberPoint),
+                                                    new SqlParameter("@user_ID", Session["user_ID"].ToString()),
+                                                    new SqlParameter("@subtotal", subtotal),
+                                                    new SqlParameter("@discount", discount)
+                                                };
+                                            //without voucher
                                             if (dBconnection.ExecuteNonQuery(createOrder, withoutVoucher)) { orderCreated = true; }
                                         }
-                                        else //with voucher
+                                        //with voucher
+                                        else
                                         {
                                             if (dBconnection.ExecuteNonQuery(createOrder, withVoucher)) { orderCreated = true; }
                                         }
 
                                         if (orderCreated)
                                         {
+                                            //update voucher used
+                                            try
+                                            {
+                                                if (voucherID != null)
+                                                {
+
+                                                    string updateVoucherUsed =
+                                                        "UPDATE Voucher_Details SET " +
+                                                        "used_date = @used_date " + 
+                                                        "WHERE user_ID = @user_ID AND " +
+                                                        "voucher_ID = @voucher_ID";
+                                                    SqlParameter[] param = {
+                                                        new SqlParameter("@used_date", orderDate),
+                                                        new SqlParameter("@user_ID", Session["user_ID"]),
+                                                        new SqlParameter("@voucher_ID", voucherID)          
+                                                    };
+                                                    dBconnection.ExecuteNonQuery(updateVoucherUsed, param);
+                                                }
+                                            }
+                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "update voucher used"); }
+
 
                                             //add member points
                                             try
@@ -208,15 +231,12 @@ namespace ShirtTee.customer
                                                     "member_points = member_points + @member_points_earned " +
                                                     "WHERE Id = @user_ID";
                                                 SqlParameter[] param = {
-                                            new SqlParameter("@member_points_earned", memberPoint),
-                                            new SqlParameter("@user_ID", Session["user_ID"])
-                                        };
+                                                    new SqlParameter("@member_points_earned", memberPoint),
+                                                    new SqlParameter("@user_ID", Session["user_ID"])
+                                                };
                                                 dBconnection.ExecuteNonQuery(addMemberPoints, param);
                                             }
-                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "6"); }
-
-
-
+                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "add member points"); }
 
                                             //create order status
                                             try
@@ -225,68 +245,86 @@ namespace ShirtTee.customer
                                                     "INSERT INTO [Order_Status] (status, update_date, order_ID, description) " +
                                                     "VALUES (@status, @update_date, @order_ID, @description) ";
                                                 SqlParameter[] parameters1 = {
-                                        new SqlParameter("@status", "Order Placed"),
-                                        new SqlParameter("@update_date", DateTime.Now),
-                                        new SqlParameter("@order_ID", orderID),
-                                        new SqlParameter("@description", "We received your order.")
-                                    };
+                                                    new SqlParameter("@status", "Order Placed"),
+                                                    new SqlParameter("@update_date", DateTime.Now),
+                                                    new SqlParameter("@order_ID", orderID),
+                                                    new SqlParameter("@description", "We received your order.")
+                                                };
                                                 dBconnection.ExecuteNonQuery(createStatus, parameters1);
                                             }
-                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "4"); }
+                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "create order status"); }
 
 
                                             //read cart details
-                                            SqlParameter[] parameters2 = new SqlParameter[]{
-                                    new SqlParameter("@user_ID", Session["user_ID"].ToString()),
-                                };
-                                            SqlDataReader cart = dBconnection.ExecuteQuery(
-                                               " SELECT * FROM [Cart]"
-                                             + " WHERE user_ID = @user_ID",
-                                               parameters2).ExecuteReader();
-                                            if (cart.HasRows)
+                                            try
                                             {
-                                                //create order details
-                                                while (cart.Read())
-                                                {
-                                                    string createDetails =
-                                                        "INSERT INTO [Order_Details] (order_ID, product_details_ID, quantity, total) " +
-                                                        "VALUES (@order_ID, @product_details_ID, @quantity, @total)";
-                                                    SqlParameter[] parameters3 = {
-                                        new SqlParameter("@order_ID", orderID),
-                                        new SqlParameter("@product_details_ID", cart["product_details_ID"]),
-                                        new SqlParameter("@quantity", cart["quantity"]),
-                                        new SqlParameter("@total", cart["subtotal"])
-                                    };
-                                                    dBconnection.ExecuteNonQuery(createDetails, parameters3);
+                                                SqlParameter[] parameters2 = new SqlParameter[]{
+                                                    new SqlParameter("@user_ID", Session["user_ID"].ToString()),
+                                                };
+                                                SqlDataReader cart = dBconnection.ExecuteQuery(
+                                                   " SELECT * FROM [Cart]"
+                                                 + " WHERE user_ID = @user_ID",
+                                                   parameters2).ExecuteReader();
 
-                                                    //deduct stock
-                                                    try
+                                                if (cart.HasRows)
+                                                {
+
+                                                    while (cart.Read())
                                                     {
-                                                        string deductStock =
-                                                                "UPDATE [Product_Details] SET " +
-                                                                "stock_available = stock_available - @quantity " +
-                                                                "WHERE product_details_ID = @product_details_ID";
-                                                        SqlParameter[] param = {
-                                            new SqlParameter("@quantity", cart["quantity"]),
-                                            new SqlParameter("@product_details_ID", cart["product_details_ID"]),
-                                        };
-                                                        dBconnection.ExecuteNonQuery(deductStock, param);
+                                                        //create order details
+                                                        try
+                                                        {
+                                                            string createDetails =
+                                                                "INSERT INTO [Order_Details] (order_ID, product_details_ID, quantity, total) " +
+                                                                "VALUES (@order_ID, @product_details_ID, @quantity, @total)";
+                                                            SqlParameter[] parameters3 = {
+                                                            new SqlParameter("@order_ID", orderID),
+                                                            new SqlParameter("@product_details_ID", cart["product_details_ID"]),
+                                                            new SqlParameter("@quantity", cart["quantity"]),
+                                                            new SqlParameter("@total", cart["subtotal"])
+                                                        };
+                                                            dBconnection.ExecuteNonQuery(createDetails, parameters3);
+
+                                                        }
+                                                        catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "create order details"); }
+
+                                                        //deduct stock
+                                                        try
+                                                        {
+                                                            string deductStock =
+                                                                    "UPDATE [Product_Details] SET " +
+                                                                    "stock_available = stock_available - @quantity " +
+                                                                    "WHERE product_details_ID = @product_details_ID";
+                                                            SqlParameter[] param = {
+                                                            new SqlParameter("@quantity", cart["quantity"]),
+                                                            new SqlParameter("@product_details_ID", cart["product_details_ID"]),
+                                                        };
+                                                            dBconnection.ExecuteNonQuery(deductStock, param);
+                                                        }
+                                                        catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "deduct stock"); }
                                                     }
-                                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "deduct stock"); }
                                                 }
                                             }
+                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "read cart details"); }
+
 
                                             //clear cart
-                                            string clearCart =
-                                                "DELETE FROM [Cart] " +
-                                                "WHERE user_ID = @user_ID";
-                                            SqlParameter[] parameters4 = {
-                                new SqlParameter("@user_ID", Session["user_ID"])
-                            };
-                                            dBconnection.ExecuteNonQuery(clearCart, parameters4);
+                                            try
+                                            {
+                                                string clearCart =
+                                                    "DELETE FROM [Cart] " +
+                                                    "WHERE user_ID = @user_ID";
+                                                SqlParameter[] parameters4 = {
+                                                    new SqlParameter("@user_ID", Session["user_ID"])
+                                                };
+                                                dBconnection.ExecuteNonQuery(clearCart, parameters4);
+                                            }
+                                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "clear cart"); }
+
+
                                         };
                                     }
-                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "2"); }
+                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "create order"); }
 
 
 
@@ -321,7 +359,7 @@ namespace ShirtTee.customer
 
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    System.Diagnostics.Debug.WriteLine(ex.Message + "other exception");
                     paymentStatusDiv.Visible = true;
                     successIcon.Visible = false;
                     failedIcon.Visible = true;
@@ -329,10 +367,8 @@ namespace ShirtTee.customer
                     lblPaymentTitle.Text = "Payment Failed !";
                     lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
                 }
-
-
             }
- 
+
 
 
             displayStatus();

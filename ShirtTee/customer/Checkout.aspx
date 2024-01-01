@@ -109,7 +109,7 @@ WHERE user_ID = @user_ID">
 
                     <label for="city/postalCode" class="mt-4 mb-2 block text-sm font-medium">Postal Code</label>
                     <div class="relative">
-                        <asp:TextBox runat="server" ID="txtPostalCode" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm  shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Postal Code" />
+                        <asp:TextBox runat="server" ID="txtPostalCode" TextMode="Number" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm  shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Postal Code" />
 
                         <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-geo-alt text-gray-400" viewBox="0 0 16 16">
@@ -119,7 +119,12 @@ WHERE user_ID = @user_ID">
                         </div>
                     </div>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ValidationGroup="CheckOutValidation" ControlToValidate="txtPostalCode" class="text-sm italic" runat="server" ErrorMessage="Please fill in your postal code." Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-
+                    <asp:RegularExpressionValidator ID="regexValidator" runat="server"
+    ControlToValidate="txtPostalCode"
+    ErrorMessage="Please enter correct postal code."
+    ValidationExpression="^(?!00000)\d{5}$"
+    Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" ValidationGroup="CheckOutValidation">
+</asp:RegularExpressionValidator>
 
                     <label for="state/country" class="mt-4 mb-2 block text-sm font-medium">State / Country</label>
                     <div class="flex flex-col sm:flex-row items-center sm:space-y-0 sm:space-x-4">
@@ -209,12 +214,12 @@ WHERE user_ID = @user_ID">
             if (isFPXChecked()) {
                 
                 Page_ClientValidate();
-                var ddlState = document.getElementById('<%= ddlState.ClientID %>');
 
-                //console.log(ddlState.value);
-                if (Page_IsValid && ddlState.value != "Choose State") {
+
+                console.log("hi");
+                if (Page_IsValid) {
                     //e.preventDefault();
-
+                    console.log("vlaid");
                     // Make an AJAX request to your server handler to get the Stripe public key
                     fetch('/StripePublicKeyHandler.ashx', {
                         method: 'GET',
