@@ -179,11 +179,12 @@ namespace ShirtTee.admin
             SqlParameter[] parameter = new SqlParameter[]{
                  new SqlParameter("@voucher_name", txtVoucherName.Text),
             };
+            dbconnection.createConnection();
+
             SqlDataReader findVoucher = dbconnection.ExecuteQuery(
                 "SELECT * FROM [Voucher] " +
                 "WHERE voucher_name = @voucher_name ",
             parameter).ExecuteReader();
-
 
             if (findVoucher.HasRows)
             {
@@ -193,6 +194,7 @@ namespace ShirtTee.admin
             {
                 args.IsValid = true;
             }
+            dbconnection.closeConnection();
         }
     }
 }
