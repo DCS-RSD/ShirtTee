@@ -284,21 +284,6 @@
                         y: {
                             formatter: (value) => `${value >= 1000 ? `${value / 1000}k` : value}`
                         },
-                        custom: function (props) {
-                            const { categories } = props.ctx.opts.xaxis;
-                            const { dataPointIndex } = props;
-                            const title = categories[dataPointIndex].split(' ');
-                            const newTitle = `${title[0]} ${title[1]}`;
-
-                            return buildTooltip(props, {
-                                title: newTitle,
-                                mode,
-                                valuePrefix: '',
-                                hasTextLabel: true,
-                                markerExtClasses: '!rounded-sm',
-                                wrapperExtClasses: 'min-w-[120px]'
-                            });
-                        }
                     },
                     responsive: [{
                         breakpoint: 568,
