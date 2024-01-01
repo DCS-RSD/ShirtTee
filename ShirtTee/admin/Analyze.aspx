@@ -164,8 +164,14 @@
         var arrSales;
         function setArrSales(value) {
             arrSales = value;
-            console.log(arrSales);
         }
+
+        var groupSales;
+        function setGroupSales(value) {
+            groupSales = value;
+        }
+
+        console.log(groupSales);
 
 
 
@@ -353,7 +359,10 @@
                         type: 'donut',
                         zoom: {
                             enabled: false
-                        }
+                        },
+                        toolbar: {
+                            show: true
+                        },
                     },
                     plotOptions: {
                         pie: {
@@ -362,7 +371,7 @@
                             }
                         }
                     },
-                    series: [47, 23, 30],
+                    series: groupSales,
                     labels: ['Men', 'Women', 'Kids'],
                     legend: {
                         show: false

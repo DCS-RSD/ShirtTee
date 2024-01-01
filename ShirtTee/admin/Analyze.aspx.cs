@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ShirtTee.customer;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -17,6 +19,7 @@ namespace ShirtTee.admin
             displayTotalUser();
             displayTotalSales();
             ScriptManager.RegisterStartupScript(this, GetType(), "setArrSales", $"setArrSales({getSales()});", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "setGroupSales", $"setGroupSales({getGroupSales()});", true);
 
             if (!IsPostBack)
             {
@@ -109,6 +112,60 @@ namespace ShirtTee.admin
             }
             JavaScriptSerializer ser = new JavaScriptSerializer();
             string values = ser.Serialize(arr);
+            return values;
+        }
+
+        public string getGroupSales()
+        {
+            int total = 0;
+
+
+            int[] arr = new int[3];
+            string query = @"SELECT category_group, SUM(quantity)
+ FROM [Category] AS c
+ INNER JOIN [Product] AS p ON p.category_ID = c.category_ID
+ INNER JOIN [Product_Details] AS pd ON pd.product_ID = p.product_ID
+ INNER JOIN [Order_Details] AS od ON od.product_details_ID = pd.product_details_ID
+ INNER JOIN [Order] AS o ON o.order_ID = od.order_ID
+ WHERE YEAR(order_date) = 2023
+ GROUP BY  category_group";
+
+            DBconnection dBconnection = new DBconnection();
+            SqlParameter[] parameters2 = new SqlParameter[]
+            {
+                new SqlParameter("@year",ddlYear.SelectedValue),
+            };
+            SqlDataReader result = dBconnection.ExecuteQuery(query, parameters2).ExecuteReader();
+
+            while (result.Read())
+            {
+                total+= Convert.ToInt32(result[1].ToString());
+                int x;
+                switch (result["category_group"].ToString())
+                {
+                    case "men":
+                        x = 0;
+                        break;
+                    case "women":
+                        x = 1;
+                        break;
+                    default:
+                        x = 2;
+                        break;
+                }
+                arr[x] = Convert.ToInt32(result[1].ToString());
+            }
+
+            double[] percent = new double[3];
+            if (total != 0)
+            {
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    percent[i] = Math.Round((double)arr[i] / total * 100, 2);
+                }
+            }        
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            string values = ser.Serialize(percent);
             return values;
         }
     }
