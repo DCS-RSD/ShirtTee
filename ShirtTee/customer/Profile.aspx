@@ -93,6 +93,7 @@
 
                             <asp:RequiredFieldValidator ID="rfvEmail" ValidationGroup="ProfileValidation" runat="server" ControlToValidate="txtEmail" ErrorMessage="Email address is required" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
                             <asp:RegularExpressionValidator runat="server" ControlToValidate="txtEmail" Display="Dynamic" ErrorMessage="Please enter a valid email address" ForeColor="Red" ValidationExpression="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b" ValidationGroup="ProfileValidation" CssClass="text-sm italic" />
+                            <asp:CustomValidator ID="CustomValidator2" OnServerValidate="CustomValidator2_ServerValidate" runat="server" ErrorMessage="The email is used." ValidationGroup="ProfileValidation" ControlToValidate="txtEmail" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic"></asp:CustomValidator>
 
                         </div>
                     </div>
@@ -110,11 +111,12 @@
 
                                 <asp:Button runat="server" Text="Change" ID="btnChangeAvatar" OnClientClick="triggerFileUploadClick(); return false;" OnClick="btnChangeAvatar_Click" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></asp:Button>
                                 <asp:FileUpload runat="server" ID="fileAvatar" class="hidden" onchange="loadFile(event)" />
-
+                                <!--
+                                        no need, javascript got
+                                <asp:RegularExpressionValidator ID="revPhoto" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="fileAvatar" OnServerValidate="ValidatePhotoFormat" ErrorMessage="Only jpg, png, and jpeg formats are accepted." Display="Dynamic" ForeColor="Red" CssClass="text-sm italic mt-2" ValidationExpression="^.+\.(jpg|png|jpeg)$" />
+-->
                             </div>
                             <div class="mt-2">
-                                                            <asp:RegularExpressionValidator ID="revPhoto" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="fileAvatar" OnServerValidate="ValidatePhotoFormat" ErrorMessage="Only jpg, png, and jpeg formats are accepted." Display="Dynamic" ForeColor="Red" CssClass="text-sm italic mt-2" ValidationExpression="^.+\.(jpg|png|jpeg)$" />
-
                             </div>
 
                         </div>
@@ -134,6 +136,7 @@
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <asp:TextBox runat="server" ID="txtUsername" Text="" autocomplete="given-name" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
                             <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="txtUsername" ErrorMessage="Username is required" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
+                            <asp:CustomValidator ID="CustomValidator1" OnServerValidate="CustomValidator1_ServerValidate" runat="server" ErrorMessage="The username is used." ValidationGroup="ProfileValidation" ControlToValidate="txtUsername" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic"></asp:CustomValidator>
                         </div>
                     </div>
 
@@ -142,10 +145,12 @@
                         <label for="country" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Gender</label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <asp:DropDownList runat="server" ID="ddlGender" autocomplete="country-name" class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                                <asp:ListItem Value="none">Select gender</asp:ListItem>
+                                <asp:ListItem Value="0">Select gender</asp:ListItem>
                                 <asp:ListItem>Male</asp:ListItem>
                                 <asp:ListItem>Female</asp:ListItem>
                             </asp:DropDownList>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="ddlGender" ErrorMessage="Gender is required" InitialValue="0" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
+
                         </div>
                     </div>
 
@@ -160,12 +165,12 @@
                                     </svg>
                                 </div>
 
-                                <asp:TextBox runat="server" ID="txtSelectDOB" Visible="false" Text="" datepicker="" datepicker-autohide="" CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" />
-                                <asp:RequiredFieldValidator ID="rfvDate" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="txtSelectDOB" ErrorMessage="DOB is required" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
+                                <asp:TextBox runat="server" ID="txtSelectDOB" Text="" datepicker="" datepicker-autohide="" CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" />
 
-                                <asp:TextBox runat="server" ID="txtDisplayDOB" Visible="true" Text="" disabled CssClass="disabled:cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
                             </div>
+                            <asp:RequiredFieldValidator ID="rfvDate" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="txtSelectDOB" ErrorMessage="DOB is required" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
+
                         </div>
                     </div>
 
@@ -175,7 +180,9 @@
                             <asp:TextBox runat="server" ID="txtPhone" Text="" autocomplete="address-level2" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
 
                             <asp:RequiredFieldValidator ID="rfvPhone" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="txtPhone" ErrorMessage="Phone number is required" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
-
+                            <asp:RegularExpressionValidator ID="revPhoneNumber" runat="server" ControlToValidate="txtPhone" ValidationGroup="ProfileValidation"
+                                ErrorMessage="Format should be +60123456789" ValidationExpression="^(\+?6?01)[0-46-9]-*[0-9]{7,8}$" ForeColor="Red" CssClass="text-sm italic">
+                            </asp:RegularExpressionValidator>
                         </div>
                     </div>
 
@@ -225,13 +232,11 @@
                                         <asp:Label runat="server" ID="lblCapAt" Text=""></asp:Label>
                                     </p>
                                     <input type="hidden" id='<%# "hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>' value='<%# Eval("voucher_name") %>'>
-
-
                                 </div>
 
                                 <div class="p-4 self-center">
 
-                                                                        <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                    <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                                         data-clipboard-target='<%# "#hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>'
                                         data-clipboard-action="copy"
                                         data-clipboard-success-text="Copied">
@@ -355,7 +360,6 @@
             var file = input.files[0];
             var type = file.type;
             var output = document.getElementById('Image1');
-
             if (file) {
                 var allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; // Add allowed file types here
 
@@ -369,7 +373,9 @@
 
                     output.classList.add("w-12");
                     output.classList.add("h-12");
+
                 } else {
+
                     alert("Invalid file type. Please upload a JPEG, PNG, or JPG file.");
                 }
             }
