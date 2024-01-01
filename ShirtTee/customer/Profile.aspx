@@ -196,7 +196,7 @@
 
                         <ItemTemplate>
                             <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                                <div class="p-4 md:p-5">
+                                <div class="flex-1 px-4 md:px-5">
                                     <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                                         <asp:Label runat="server" ID="lblVoucher" Text=""></asp:Label></h3>
                                     <p class="mt-2 text-gray-500 dark:text-gray-400"><%# Eval("voucher_description") %></p>
@@ -207,7 +207,12 @@
                                         <asp:Label runat="server" ID="lblCapAt" Text=""></asp:Label></p>
                                     <input type="hidden" id='<%# "hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>' value='<%# Eval("voucher_name") %>'>
 
-                                    <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+
+                                </div>
+
+                                <div class="p-4 self-center">
+
+                                                                        <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                                         data-clipboard-target='<%# "#hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>'
                                         data-clipboard-action="copy"
                                         data-clipboard-success-text="Copied">
@@ -227,7 +232,9 @@
                                             <span class="js-clipboard-success-text">Copy</span>
                                         </span>
                                     </div>
+
                                 </div>
+
                                 <div class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-slate-900 dark:border-gray-700">
                                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">Used By
                                         <asp:Label runat="server" ID="lblExpiryDate" Text="" /></p>
