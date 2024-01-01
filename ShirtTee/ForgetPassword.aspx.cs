@@ -17,9 +17,7 @@ namespace ShirtTee
 {
     public partial class ForgetPassword : System.Web.UI.Page
     {
-        private string connectionString =
-    ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-
+        private string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,9 +40,6 @@ namespace ShirtTee
             DateTime? existingExpired = null;
             //DBconnection dbconnection = new DBconnection();
 
-            SqlParameter[] parameterUrl = new SqlParameter[]{
-                 new SqlParameter("@email", signinEmail.Text)
-                };
             /*
             SqlDataReader userDetails = dbconnection.ExecuteQuery(
                 " SELECT * FROM [AspNetUsers]"
@@ -52,12 +47,17 @@ namespace ShirtTee
                 parameterUrl).ExecuteReader();
 
             */
+
+
+            SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@email", signinEmail.Text)
+            };
+
             SqlConnection connection = new SqlConnection(connectionString);
 
             connection.Open();
 
-
-            SqlCommand command = new SqlCommand("SELECT * FROM[AspNetUsers] WHERE Email = @email", connection);
+            SqlCommand command = new SqlCommand("SELECT * FROM [AspNetUsers] WHERE Email = @email", connection);
 
             if (parameterUrl != null)
             {
@@ -66,9 +66,9 @@ namespace ShirtTee
 
             SqlDataReader userDetails = command.ExecuteReader();
           
-
             if (userDetails.HasRows)
             {
+
                 userDetails.Read();
                 email = userDetails["Email"].ToString();
                 username = userDetails["UserName"].ToString();

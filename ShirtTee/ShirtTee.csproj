@@ -195,6 +195,7 @@
     <Content Include="ProductDetails.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="customer\Review.aspx" />
+    <Content Include="ResetPassword.aspx" />
     <Content Include="Signup.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -449,6 +450,13 @@
     </Compile>
     <Compile Include="customer\Review.aspx.designer.cs">
       <DependentUpon>Review.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="RoleActions.cs" />
     <Compile Include="Signup.aspx.cs">

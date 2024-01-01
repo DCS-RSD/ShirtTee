@@ -51,6 +51,13 @@
                 else if (status == "notMatch") {
                     toastr["error"]("Email or password invalid.");
                 }
+                else if (status == "resetPwd") {
+                    toastr["success"]("Password reset successfully.");
+                }
+                else if (status == "resetPwdError")
+                {
+                    toastr["success"]("Password reset unsucessful. Try again.");
+                }
             }
             var status2 = '<%= Session["SigninValidate"] %>'
             if (status2 !== null && status2 !== undefined) {
