@@ -204,15 +204,16 @@
         }
 
 
-        var category;
-        function setCategory(value) {
-            category = value;
-        }
-
         var productCategory;
-        function setCategorySales(value) {
+        function setCategory(value) {
             productCategory = value;
             console.log(productCategory);
+        }
+
+        var categorySales;
+        function setCategorySales(value) {
+            categorySales = value;
+            console.log(categorySales);
         }
     </script>
 
@@ -513,8 +514,6 @@
                                 fontFamily: 'Inter, ui-sans-serif',
                                 fontWeight: 400
                             },
-                            offsetX: -2,
-                            formatter: (title) => title.slice(0, 3)
                         }
                     },
                     yaxis: {

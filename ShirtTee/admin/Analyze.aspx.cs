@@ -1,5 +1,6 @@
 ﻿using ShirtTee.customer;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -43,12 +44,16 @@ namespace ShirtTee.admin
                 new SqlParameter("@year",DateTime.Now.Year),
                 new SqlParameter("@month",DateTime.Now.Month),
                 };
+                dBconnection.createConnection();
+
 
                 object totalOrder = dBconnection.ExecuteQuery(query, parameters).ExecuteScalar();
                 if (totalOrder != null && totalOrder.ToString() != String.Empty)
                 {
                     lblTotalOrder.Text = totalOrder.ToString();
                 }
+                dBconnection.closeConnection();
+
             }
             catch (Exception ex) { }
         }
@@ -63,12 +68,14 @@ namespace ShirtTee.admin
                 {
                 new SqlParameter("@month",DateTime.Now.Month),
                 };
-
+                dBconnection.createConnection();
                 object totalUser = dBconnection.ExecuteQuery(query, parameters).ExecuteScalar();
                 if (totalUser != null)
                 {
                     lblTotalUser.Text = totalUser.ToString();
                 }
+                dBconnection.closeConnection();
+
             }
             catch (Exception ex) { }
         }
@@ -80,11 +87,14 @@ namespace ShirtTee.admin
                 DBconnection dBconnection = new DBconnection();
                 string query = "SELECT SUM(order_total) FROM [Order] WHERE YEAR(order_date) = @year" +
                     " AND MONTH(order_date) = @month";
+                dBconnection.createConnection();
+
                 SqlParameter[] parameters = new SqlParameter[]
                 {
                 new SqlParameter("@year",DateTime.Now.Year),
                 new SqlParameter("@month",DateTime.Now.Month),
                 };
+                dBconnection.closeConnection();
 
                 object totalOrder = dBconnection.ExecuteQuery(query, parameters).ExecuteScalar();
                 if (totalOrder != null && totalOrder.ToString() != String.Empty)
@@ -105,16 +115,20 @@ namespace ShirtTee.admin
             {
                 new SqlParameter("@year",ddlYear.SelectedValue),
             };
-
+            dBconnection.createConnection();
             SqlDataReader result = dBconnection.ExecuteQuery(query, parameters).ExecuteReader();
 
             while (result.Read())
             {
                 arr[Convert.ToInt32(result["month"]) - 1] = Convert.ToDecimal(result[1].ToString());
             }
+            dBconnection.closeConnection();
+
+
             JavaScriptSerializer ser = new JavaScriptSerializer();
             string values = ser.Serialize(arr);
             return values;
+
         }
 
         public string getGroupSales()
@@ -134,6 +148,8 @@ namespace ShirtTee.admin
             {
                 new SqlParameter("@year",ddlYear.SelectedValue),
             };
+            dBconnection.createConnection();
+
             SqlDataReader result = dBconnection.ExecuteQuery(query, parameters2).ExecuteReader();
 
             while (result.Read())
@@ -154,7 +170,8 @@ namespace ShirtTee.admin
 
                 arr[x] = Convert.ToInt32(result[1].ToString());
             }
-     
+            dBconnection.closeConnection();
+
             JavaScriptSerializer ser = new JavaScriptSerializer();
             string values = ser.Serialize(arr);
 
@@ -163,7 +180,7 @@ namespace ShirtTee.admin
 
         public string getCategorySales()
         {
-            int[] arr = new int[3];
+            ArrayList arr = new ArrayList();
             string query = @" SELECT category_group, category_name, SUM(quantity)
  FROM [Category] AS c
  INNER JOIN [Product] AS p ON p.category_ID = c.category_ID
@@ -181,26 +198,16 @@ namespace ShirtTee.admin
                 new SqlParameter("@year",ddlYear.SelectedValue),
                 new SqlParameter("@category",ddlCategory.SelectedValue),
             };
+            dBconnection.createConnection();
             SqlDataReader result = dBconnection.ExecuteQuery(query, parameters2).ExecuteReader();
 
             while (result.Read())
             {
-               
-                int x;
-                switch (result["category_group"].ToString())
-                {
-                    case "men":
-                        x = 0;
-                        break;
-                    case "women":
-                        x = 1;
-                        break;
-                    default:
-                        x = 2;
-                        break;
-                }
-                arr[x] = Convert.ToInt32(result[2].ToString());
+
+                arr.Add(Convert.ToInt32(result[2].ToString()));
             }
+            dBconnection.closeConnection();
+
 
             JavaScriptSerializer ser = new JavaScriptSerializer();
             string values = ser.Serialize(arr);
@@ -209,7 +216,7 @@ namespace ShirtTee.admin
 
         public string getCategoryName()
         {
-            string[] arr = new string[10];
+            ArrayList arr = new ArrayList();
             string query = @" SELECT category_group, category_name
  FROM [Category] AS c
  WHERE category_group = @category
@@ -220,14 +227,15 @@ namespace ShirtTee.admin
             {
                 new SqlParameter("@category",ddlCategory.SelectedValue),
             };
+            dBconnection.createConnection();
             SqlDataReader result = dBconnection.ExecuteQuery(query, parameters2).ExecuteReader();
 
             int x = 0;
             while (result.Read())
             {
-                arr[x++] = result[1].ToString();
+                arr.Add(result[1].ToString());
             }
-
+            dBconnection.closeConnection();
             JavaScriptSerializer ser = new JavaScriptSerializer();
             string values = ser.Serialize(arr);
             System.Diagnostics.Debug.WriteLine(values);
