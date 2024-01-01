@@ -165,12 +165,12 @@ namespace ShirtTee.customer
             if (Convert.ToDouble(Session["shipping"]) == 0)
             {
                 //shipping free
-                shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OS2AVFglGOSlsymaAj05Mih" });
+                shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTfRpFglGOSlsymW3eN9MPy" });
             }
             else
             {
                 //shipping RM 12.00
-                shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OS1yRFglGOSlsym0DVPXvEB" });
+                shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTfQmFglGOSlsymUjrBek5J" });
             }
 
             try

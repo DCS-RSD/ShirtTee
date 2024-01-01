@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="ShirtTee.customer.Checkout" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <script src="https://js.stripe.com/v3/"></script>
+
     <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
         <div class="px-4 pt-4">
             <p class="text-xl font-medium">Order Summary</p>

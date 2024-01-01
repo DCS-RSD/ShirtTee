@@ -11,35 +11,35 @@ namespace ShirtTee.admin
 {
 
 
-    public partial class Analyze
+    public partial class AnalyzeCustomer
     {
 
         /// <summary>
-        /// lblTotalOrder control.
+        /// panelContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalOrder;
+        protected global::System.Web.UI.WebControls.Panel panelContent;
 
         /// <summary>
-        /// lblTotalUser control.
+        /// btnPrint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalUser;
+        protected global::System.Web.UI.WebControls.Button btnPrint;
 
         /// <summary>
-        /// lblTotalSales control.
+        /// btnExcel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalSales;
+        protected global::System.Web.UI.WebControls.Button btnExcel;
 
         /// <summary>
         /// ddlYear control.
@@ -51,12 +51,30 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.DropDownList ddlYear;
 
         /// <summary>
-        /// ddlCategory control.
+        /// ddlMonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCategory;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMonth;
+
+        /// <summary>
+        /// SqlDataSource1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
+
+        /// <summary>
+        /// ListView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView ListView1;
     }
 }

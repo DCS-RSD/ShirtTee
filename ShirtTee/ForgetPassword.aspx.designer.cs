@@ -7,56 +7,47 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShirtTee.admin
+namespace ShirtTee
 {
 
 
-    public partial class Analyze
+    public partial class ForgetPassword
     {
 
         /// <summary>
-        /// lblTotalOrder control.
+        /// formLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalOrder;
+        protected global::System.Web.UI.HtmlControls.HtmlForm formLogin;
 
         /// <summary>
-        /// lblTotalUser control.
+        /// signinEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalUser;
+        protected global::System.Web.UI.WebControls.TextBox signinEmail;
 
         /// <summary>
-        /// lblTotalSales control.
+        /// btnLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalSales;
+        protected global::System.Web.UI.WebControls.Button btnLogin;
 
         /// <summary>
-        /// ddlYear control.
+        /// lblMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlYear;
-
-        /// <summary>
-        /// ddlCategory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCategory;
+        protected global::System.Web.UI.WebControls.Label lblMsg;
     }
 }

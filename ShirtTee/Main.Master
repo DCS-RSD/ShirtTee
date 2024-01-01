@@ -10,7 +10,6 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="../dist/preline.js"></script>
     <script src="../dist/clipboard.min.js"></script>
-    <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/datepicker.min.js"></script>
 
     <%-- Toast --%>
@@ -164,6 +163,7 @@
                                                     Text="Sign Out"
                                                     ID="btnSignout"
                                                     OnClick="btnSignout_Click"
+                                                    UseSubmitBehavior="false"
                                                     runat="server" />
                                             </div>
                                         </asp:Panel>

@@ -32,7 +32,7 @@ namespace ShirtTee
                 var manager = new UserManager<IdentityUser>(userStore);
                 var user = new IdentityUser() { UserName = signupEmail.Text, Email = signupEmail.Text };
 
-                if (manager.FindByEmail(signupEmail.Text) != null)
+                if (manager.FindByEmail(signupEmail.Text) == null)
                 {
                     IdentityResult result = manager.Create(user, signupPassword.Text);
                     if (result.Succeeded)
