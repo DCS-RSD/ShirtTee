@@ -17,7 +17,8 @@ namespace ShirtTee.admin
 SELECT
     P.product_ID,
     P.product_name,
-
+    COALESCE(SUM(OD.quantity), 0) AS total_quantity_sold,
+    COALESCE(SUM(O.order_total), 0) AS total_order_sales
 FROM
     Product P
 JOIN
@@ -66,7 +67,6 @@ LEFT JOIN
                 {
                     System.Diagnostics.Debug.WriteLine(ex.Message + "\n" + query + "\n" + SqlDataSource1.SelectCommand);
                 }
-                DataPager2.PageSize = int.MaxValue;
             }
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -117,5 +117,7 @@ LEFT JOIN
         {
             ClientScript.RegisterStartupScript(this.GetType(), "Print", "printListView();", true);
         }
+
+
     }
 }

@@ -103,11 +103,8 @@ namespace ShirtTee.admin
 
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-            DataPager2.PagedControlID = null;
-            DataPager2.Visible = false;
+
             ClientScript.RegisterStartupScript(this.GetType(), "Print", "printListView();", true);
-            DataPager2.PagedControlID = "ListView1";
-            DataPager2.Visible = true;
 
 
         }

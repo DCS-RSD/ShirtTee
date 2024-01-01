@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="AnalyzeProduct.aspx.cs" Inherits="ShirtTee.admin.AnalyzeProduct" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -23,7 +24,7 @@
                             </div>
 
                             <!-- Header -->
-                            <div class="px-6 py-4 grid gap-3 md:flex md:justify-end md:items-center border-b border-gray-200 dark:border-gray-700">
+                            <div class="px-6 py-4 grid gap-3 md:flex md:justify-end md:items-center">
                                 <div class="">
                                     <div class="flex justify-start gap-x-2">
                                         <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
@@ -107,6 +108,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                             <!-- End Header -->
 
                             <!-- Table -->
@@ -188,35 +190,6 @@ GROUP BY
 
                             <!-- End Table -->
 
-                            <!-- Footer -->
-                            <div class="px-6 py-4 flex justify-end items-center">
-                                <asp:DataPager ID="DataPager2" runat="server" PagedControlID="ListView1" PageSize="10">
-                                    <Fields>
-                                        <asp:NextPreviousPagerField
-                                            ButtonCssClass="cursor-pointer min-h-[38px] min-w-[38px] py-2 px-2.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
-                                            ButtonType="Button"
-                                            ShowFirstPageButton="True"
-                                            ShowPreviousPageButton="True"
-                                            ShowNextPageButton="False"
-                                            ShowLastPageButton="False"
-                                            RenderNonBreakingSpacesBetweenControls="false" />
-                                        <asp:NumericPagerField
-                                            NumericButtonCssClass="cursor-pointer min-h-[38px] min-w-[38px] text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
-                                            ButtonType="Button"
-                                            CurrentPageLabelCssClass="text-center inline-block min-h-[38px] min-w-[38px] bg-gray-200 text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-600 dark:text-white dark:focus:bg-gray-500"
-                                            ButtonCount="10" />
-                                        <asp:NextPreviousPagerField
-                                            ButtonCssClass="cursor-pointer  min-h-[38px] min-w-[38px] py-2 px-2.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
-                                            ButtonType="Button"
-                                            ShowFirstPageButton="False"
-                                            ShowPreviousPageButton="False"
-                                            ShowNextPageButton="True"
-                                            ShowLastPageButton="True" />
-                                    </Fields>
-                                </asp:DataPager>
-                            </div>
-                            <!-- End Footer -->
-
                         </div>
                     </div>
                 </div>
@@ -226,6 +199,8 @@ GROUP BY
     </div>
     <!-- End Table Section -->
     <script>
+
+
         function printListView() {
             var panel = document.getElementById("<%=panelContent.ClientID %>");
             var printWindow = window.open('', '_blank', 'height=400,width=800');
@@ -245,5 +220,24 @@ GROUP BY
             printWindow.print();
             return false;
         }
+
+        var checkboxes = document.querySelectorAll('[id*="chkAllowPage"]');
+        checkboxes.forEach(function (checkbox) {
+            console.log(checkbox);
+            checkbox.classList.add(
+                'hs-tooltip-toggle', 'relative', 'w-[3.25rem]', 'h-7', 'p-px', 'bg-gray-100',
+                'border-transparent', 'text-transparent', 'rounded-full', 'cursor-pointer',
+                'transition-colors', 'ease-in-out', 'duration-200', 'focus:ring-blue-600',
+                'disabled:opacity-50', 'disabled:pointer-events-none', 'checked:bg-none',
+                'checked:text-blue-600', 'checked:border-blue-600', 'focus:checked:border-blue-600',
+                'dark:bg-gray-800', 'dark:border-gray-700', 'dark:checked:bg-blue-500',
+                'dark:checked:border-blue-500', 'dark:focus:ring-offset-gray-600', 'before:inline-block',
+                'before:w-6', 'before:h-6', 'before:bg-white', 'checked:before:bg-blue-200',
+                'before:translate-x-0', 'checked:before:translate-x-full', 'before:rounded-full',
+                'before:shadow', 'before:transform', 'before:ring-0', 'before:transition',
+                'before:ease-in-out', 'before:duration-200', 'dark:before:bg-gray-400',
+                'dark:checked:before:bg-blue-200'
+            );
+        });
     </script>
 </asp:Content>
