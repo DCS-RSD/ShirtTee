@@ -94,6 +94,7 @@ namespace ShirtTee.admin
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@ProductId", Request.QueryString["product_id"])
                 };
+                dbconnection.createConnection();
                 SqlDataReader productDetails = dbconnection.ExecuteQuery(
                     "SELECT * FROM Product WHERE Product_ID=@ProductId",
                     parameterUrl).ExecuteReader();
@@ -105,6 +106,8 @@ namespace ShirtTee.admin
                     hypProduct.Text = "Product: " + productDetails["product_name"];
                     hypProduct.NavigateUrl = ResolveUrl("~/admin/ProductDetails.aspx") + "?product_id=" + Request.QueryString["product_id"];
                 }
+                dbconnection.closeConnection();
+
             }
 
         }
@@ -146,11 +149,13 @@ namespace ShirtTee.admin
                         {
                             parameters = parameters.Append(new SqlParameter("@image", (object)fileImage.FileBytes)).ToArray();
                         }
+                        dbconnection.createConnection();
 
                         if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                         {
                             Session["StockUpdated"] = "success";
                         }
+                        dbconnection.closeConnection();
                     }
                     catch (Exception ex)
                     {

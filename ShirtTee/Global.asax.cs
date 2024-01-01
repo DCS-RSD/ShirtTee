@@ -49,6 +49,7 @@ namespace ShirtTee
         {
             if (Request.Cookies["user_ID"] != null)
             {
+                System.Diagnostics.Debug.WriteLine("start");
                 var identityDbContext = new IdentityDbContext("ConnectionString");
 
                 var userStore = new UserStore<IdentityUser>(identityDbContext);
@@ -61,6 +62,11 @@ namespace ShirtTee
                     var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                     authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
                     Session["user_ID"] = user.Id;
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("wrong cookie");
+                    Request.Cookies.Remove("user_ID");
                 }
 
             }

@@ -37,9 +37,10 @@ namespace ShirtTee.admin
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@notice_ID", Request.QueryString["notice_id"])
                 };
+            dbconnection.createConnection();
+
             SqlDataReader noticeDetails = dbconnection.ExecuteQuery("SELECT * FROM [Notice] AS n INNER JOIN [AspNetUsers] AS s ON s.id = n.user_ID WHERE n.notice_ID = @notice_ID",
                 parameterUrl).ExecuteReader();
-
 
             if (noticeDetails.HasRows)
             {
@@ -60,6 +61,7 @@ namespace ShirtTee.admin
                 }
 
             }
+            dbconnection.closeConnection();
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -80,12 +82,16 @@ namespace ShirtTee.admin
                 new SqlParameter("@is_private", radVisibility.SelectedValue=="is_staff_only"?1:0),
                 new SqlParameter("@notice_ID", Request.QueryString["notice_id"]),
                 };
+                dbconnection.createConnection();
+                bool valid = dbconnection.ExecuteNonQuery(sqlCommand, parameters);
+                dbconnection.closeConnection();
 
-                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                if (valid)
                 {
                     Session["NoticeUpdated"] = "success";
                     fetchData();
                 }
+
             }
             catch (Exception ex)
             {
@@ -109,12 +115,13 @@ namespace ShirtTee.admin
                 SqlParameter[] parameters = {
                 new SqlParameter("@notice_ID",Request.QueryString["notice_id"])
                 };
-
+                dbconnection.createConnection();
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     Session["NoticeDeleted"] = "success";
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception)
             {

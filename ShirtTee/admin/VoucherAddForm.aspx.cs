@@ -36,7 +36,7 @@ namespace ShirtTee.admin
                 new SqlParameter("@expiry_date", SqlDbType.Date) {Value=txtDate.Text},
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text))
                 };
-                System.Diagnostics.Debug.WriteLine(txtDate.Text);
+                dbconnection.createConnection();
 
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
@@ -54,6 +54,7 @@ namespace ShirtTee.admin
                     var service = new CouponService();
                     service.Create(options);
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception ex)
             {
@@ -71,8 +72,9 @@ namespace ShirtTee.admin
         {
             DBconnection dbconnection = new DBconnection();
             SqlParameter[] parameter = new SqlParameter[]{
-                         new SqlParameter("@voucher_name", txtVoucherName),
+                         new SqlParameter("@voucher_name", txtVoucherName.Text),
                     };
+            dbconnection.createConnection();
             SqlDataReader findVoucher = dbconnection.ExecuteQuery(
                 "SELECT * FROM [Voucher] " +
                 "WHERE voucher_name = @voucher_name ",
@@ -87,6 +89,7 @@ namespace ShirtTee.admin
             {
                 args.IsValid = true;
             }
+            dbconnection.closeConnection();
         }
     }
 }

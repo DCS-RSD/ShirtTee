@@ -45,11 +45,13 @@ namespace ShirtTee.admin
                     Value = fileThumbnail.HasFile?(object)fileThumbnail.FileBytes: defaultImage
                   }
                 };
-
+                dbconnection.createConnection();
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     Session["ProductAdded"] = "success";
                 }
+                dbconnection.closeConnection();
+
             }
             catch (Exception ex)
             {

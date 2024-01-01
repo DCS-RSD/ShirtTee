@@ -172,7 +172,6 @@
     <Content Include="admin\VoucherAddForm.aspx" />
     <Content Include="admin\VoucherDetails.aspx" />
     <Content Include="admin\WebAdmin.sitemap" />
-    <Content Include="admin\WebForm1.aspx" />
     <Content Include="App_Data\ShirtTeeDB.mdf" />
     <Content Include="App_Data\ShirtTeeDB_log.ldf">
       <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
@@ -325,13 +324,6 @@
     </Compile>
     <Compile Include="admin\VoucherDetails.aspx.designer.cs">
       <DependentUpon>VoucherDetails.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
