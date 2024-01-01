@@ -164,6 +164,7 @@
                                                     Text="Sign Out"
                                                     ID="btnSignout"
                                                     OnClick="btnSignout_Click"
+                                                    UseSubmitBehavior="false"
                                                     runat="server" />
                                             </div>
                                         </asp:Panel>
