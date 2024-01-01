@@ -54,7 +54,7 @@ namespace ShirtTee.admin
                 case var noticePage when noticePage.StartsWith("Notice"):
                     dashboardLink.Attributes["class"] = activeNavClass;
                     break;
-                case "Analyze":
+                case var analyzePage when analyzePage.StartsWith("Analyze"):
                     analyzeLink.Attributes["class"] = activeNavClass;
                     break;
                 case var productPage when productPage.StartsWith("Product"):

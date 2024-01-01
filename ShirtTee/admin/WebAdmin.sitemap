@@ -24,7 +24,9 @@
 			<siteMapNode url="~/admin/VoucherDetails.aspx" title="Voucher Details"  description="" />
 		</siteMapNode>
 
-		<siteMapNode url="~/admin/Analyze.aspx" title="Analyze"  description="" />
+		<siteMapNode url="~/admin/Analyze.aspx" title="Analyze"  description="">
+			<siteMapNode url="~/admin/AnalyzeCustomer.aspx" title="Customer Report" />
+		</siteMapNode>
 
 
 	</siteMapNode>

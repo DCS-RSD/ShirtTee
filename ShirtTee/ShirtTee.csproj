@@ -155,6 +155,7 @@
   <ItemGroup>
     <Content Include="AdminLogin.aspx" />
     <Content Include="admin\Analyze.aspx" />
+    <Content Include="admin\AnalyzeCustomer.aspx" />
     <Content Include="admin\Dashboard.aspx" />
     <Content Include="admin\MainAdmin.Master" />
     <Content Include="admin\NoticeAddForm.aspx" />
@@ -211,6 +212,13 @@
     </Compile>
     <Compile Include="admin\Analyze.aspx.designer.cs">
       <DependentUpon>Analyze.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\AnalyzeCustomer.aspx.cs">
+      <DependentUpon>AnalyzeCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\AnalyzeCustomer.aspx.designer.cs">
+      <DependentUpon>AnalyzeCustomer.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
