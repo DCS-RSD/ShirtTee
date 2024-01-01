@@ -76,7 +76,7 @@ namespace ShirtTee
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            
+
             string resetKey = Request.QueryString["resetKey"];
             if (!string.IsNullOrEmpty(resetKey))
             {
@@ -86,7 +86,7 @@ namespace ShirtTee
                 var identityDbContext = new IdentityDbContext("ConnectionString");
                 var userStore = new UserStore<IdentityUser>(identityDbContext);
                 var manager = new UserManager<IdentityUser>(userStore);
-                var user = new IdentityUser() { UserName = username , Email = tEmail };
+                var user = new IdentityUser() { UserName = username, Email = tEmail };
                 if (manager.FindByEmail(tEmail) == null)
                 {
                     IdentityResult result = manager.Create(user, signupPassword.Text);
@@ -109,7 +109,7 @@ namespace ShirtTee
                     command.Parameters.AddRange(parameterUrl);
                 }
                 SqlDataReader tempAcc = command.ExecuteReader();
-                if (tempAcc.HasRows) 
+                if (tempAcc.HasRows)
                 {
                     tempAcc.Read();
                     newPwd = tempAcc["PasswordHash"].ToString();
@@ -164,9 +164,11 @@ namespace ShirtTee
             }
 
 
+
+
         }
 
-        private (string,string) GenerateRandomEmail()
+        private (string, string) GenerateRandomEmail()
         {
             // Generate a random prefix
             string prefix = GenerateRandomString(8);
@@ -180,7 +182,7 @@ namespace ShirtTee
             return (email, prefix);
         }
 
-        private string GenerateRandomUsername(string prefix) 
+        private string GenerateRandomUsername(string prefix)
         {
             return prefix;
         }
