@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -15,6 +16,13 @@ namespace ShirtTee.admin
             displayTotalOrder();
             displayTotalUser();
             displayTotalSales();
+            ScriptManager.RegisterStartupScript(this, GetType(), "setArrSales", $"setArrSales({getSales()});", true);
+
+            if (!IsPostBack)
+            {
+                ddlYear.SelectedValue = DateTime.Now.Year.ToString();
+
+            }
 
         }
 
@@ -80,6 +88,28 @@ namespace ShirtTee.admin
                 }
             }
             catch (Exception ex) { }
+        }
+
+        public string getSales()
+        {
+            decimal[] arr = new decimal[12];
+            DBconnection dBconnection = new DBconnection();
+            string query = "SELECT MONTH(order_date) AS month, SUM(order_total) AS monthly_order_total " +
+            "FROM [Order] WHERE YEAR(order_date) = @year GROUP BY MONTH(order_date) ORDER BY month;";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@year",ddlYear.SelectedValue),
+            };
+
+            SqlDataReader result = dBconnection.ExecuteQuery(query, parameters).ExecuteReader();
+
+            while (result.Read())
+            {
+                arr[Convert.ToInt32(result["month"]) - 1] = Convert.ToDecimal(result[1].ToString());
+            }
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            string values = ser.Serialize(arr);
+            return values;
         }
     }
 }

@@ -116,8 +116,17 @@
                     <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Sales Line Chart
                     </h1>
                 </div>
+                <div class="">
+                    <div class="flex gap-x-2">
+                        <asp:DropDownList runat="server" ID="ddlYear"
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" AutoPostBack="True">
+                            <asp:ListItem>2024</asp:ListItem>
+                            <asp:ListItem>2023</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
             </div>
-            <div id="hs-single-area-chart"></div>
+            <div class="p-4" id="hs-single-area-chart"></div>
         </div>
     </div>
     <%-- End Line CHart --%>
@@ -152,6 +161,14 @@
     </div>
 
     <script>
+        var arrSales;
+        function setArrSales(value) {
+            arrSales = value;
+            console.log(arrSales);
+        }
+
+
+
         window.addEventListener('load', () => {
             (function () {
                 buildChart('#hs-single-area-chart', (mode) => ({
@@ -159,7 +176,7 @@
                         height: 300,
                         type: 'area',
                         toolbar: {
-                            show: false
+                            show: true
                         },
                         zoom: {
                             enabled: false
@@ -167,8 +184,8 @@
                     },
                     series: [
                         {
-                            name: 'Visitors',
-                            data: [180, 51, 60, 38, 88, 50, 40, 52, 88, 80, 60, 70]
+                            name: 'Sales',
+                            data: arrSales
                         }
                     ],
                     legend: {
@@ -197,18 +214,18 @@
                         type: 'category',
                         tickPlacement: 'on',
                         categories: [
-                            '25 January 2023',
-                            '26 January 2023',
-                            '27 January 2023',
-                            '28 January 2023',
-                            '29 January 2023',
-                            '30 January 2023',
-                            '31 January 2023',
-                            '1 February 2023',
-                            '2 February 2023',
-                            '3 February 2023',
-                            '4 February 2023',
-                            '5 February 2023'
+                            ' January ',
+                            ' February ',
+                            ' March ',
+                            ' April ',
+                            ' May ',
+                            ' June ',
+                            ' July ',
+                            ' August ',
+                            ' September ',
+                            ' October ',
+                            ' November ',
+                            ' December ',
                         ],
                         axisBorder: {
                             show: false
@@ -262,7 +279,7 @@
                     },
                     tooltip: {
                         x: {
-                            format: 'MMMM yyyy'
+                            format: 'MMMM'
                         },
                         y: {
                             formatter: (value) => `${value >= 1000 ? `${value / 1000}k` : value}`
@@ -341,63 +358,63 @@
     </script>
 
 
-<script>
-    window.addEventListener('load', () => {
-        (function () {
-            buildChart('#hs-doughnut-chart', () => ({
-                chart: {
-                    height: 230,
-                    width: 230,
-                    type: 'donut',
-                    zoom: {
+    <script>
+        window.addEventListener('load', () => {
+            (function () {
+                buildChart('#hs-doughnut-chart', () => ({
+                    chart: {
+                        height: 230,
+                        width: 230,
+                        type: 'donut',
+                        zoom: {
+                            enabled: false
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '76%'
+                            }
+                        }
+                    },
+                    series: [47, 23, 30],
+                    labels: ['Men', 'Women', 'Kids'],
+                    legend: {
+                        show: false
+                    },
+                    dataLabels: {
                         enabled: false
-                    }
-                },
-                plotOptions: {
-                    pie: {
-                        donut: {
-                            size: '76%'
+                    },
+                    stroke: {
+                        width: 5
+                    },
+                    grid: {
+                        padding: {
+                            top: -12,
+                            bottom: -11,
+                            left: -12,
+                            right: -12
+                        }
+                    },
+                    states: {
+                        hover: {
+                            filter: {
+                                type: 'none'
+                            }
                         }
                     }
-                },
-                series: [47, 23, 30],
-                labels: ['Men', 'Women', 'Kids'],
-                legend: {
-                    show: false
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    width: 5
-                },
-                grid: {
-                    padding: {
-                        top: -12,
-                        bottom: -11,
-                        left: -12,
-                        right: -12
+                }), {
+                    colors: ['#3b82f6', '#22d3ee', '#6b7280'],
+                    stroke: {
+                        colors: ['rgb(255, 255, 255)']
                     }
-                },
-                states: {
-                    hover: {
-                        filter: {
-                            type: 'none'
-                        }
+                }, {
+                    colors: ['#e5e7eb', '#3b82f6', '#22d3ee'],
+                    stroke: {
+                        colors: ['rgb(38, 38, 38)']
                     }
-                }
-            }), {
-                colors: ['#3b82f6', '#22d3ee', '#6b7280'],
-                stroke: {
-                    colors: ['rgb(255, 255, 255)']
-                }
-            }, {
-                colors: ['#e5e7eb', '#3b82f6', '#22d3ee'],
-                stroke: {
-                    colors: ['rgb(38, 38, 38)']
-                }
-            });
-        })();
-    });
-</script>
+                });
+            })();
+        });
+    </script>
 </asp:Content>
