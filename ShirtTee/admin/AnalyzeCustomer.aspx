@@ -256,7 +256,7 @@ GROUP BY u.Id, u.Username, u.email;
             };
 
             // Trigger the print operation with additional options
-            printWindow.print(printOptions);
+            printWindow.print();
             return false;
         }
     </script>
