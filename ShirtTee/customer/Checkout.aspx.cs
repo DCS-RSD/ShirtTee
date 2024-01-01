@@ -202,7 +202,6 @@ namespace ShirtTee.customer
                         {
                             new SessionDiscountOptions { Coupon = discountCode },
                         },
-                        Customer = Session["user_ID"].ToString(),
                         ShippingOptions = shipping,
                         SuccessUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
                         CancelUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
@@ -214,10 +213,10 @@ namespace ShirtTee.customer
                     options = new SessionCreateOptions
                     {
                         PaymentMethodTypes = new List<String> {
-                    "fpx",
-                    "card",
-                    "grabpay"
-                },
+                            "fpx",
+                            "card",
+                            "grabpay"
+                        },
                         LineItems = items,
                         Mode = "payment",
                         ShippingOptions = shipping,
