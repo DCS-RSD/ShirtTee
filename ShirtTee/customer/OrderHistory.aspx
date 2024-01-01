@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OrderHistory.aspx.cs" Inherits="ShirtTee.customer.OrderHistory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <script src="https://js.stripe.com/v3/"></script>
+
     <div class="bg-gray-50 dark:bg-slate-900">
 
         <main id="content" role="main">
