@@ -42,6 +42,7 @@ namespace ShirtTee.admin
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@ProductId", Request.QueryString["product_id"])
                 };
+            dbconnection.createConnection();
             SqlDataReader productDetails = dbconnection.ExecuteQuery(
                 "SELECT P.*, C.* FROM Product AS P INNER JOIN Category AS C ON P.category_id = C.category_id WHERE Product_ID=@ProductId",
                 parameterUrl).ExecuteReader();
@@ -77,6 +78,7 @@ namespace ShirtTee.admin
 
                
             }
+            dbconnection.closeConnection();
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -105,8 +107,10 @@ namespace ShirtTee.admin
                 {
                     parameters = parameters.Append(new SqlParameter("@thumbnail", (object)fileThumbnail.FileBytes)).ToArray();
                 }
-
-                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                dbconnection.createConnection();
+                bool valid = dbconnection.ExecuteNonQuery(sqlCommand, parameters);
+                dbconnection.closeConnection();
+                if (valid)
                 {
                     Session["ProductUpdated"] = "success";
                     FetchData();
@@ -138,11 +142,12 @@ namespace ShirtTee.admin
                 new SqlParameter("@product_id",Request.QueryString["product_id"])
                 };
 
-
+                dbconnection.createConnection();
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     Session["ProductDeleted"] = "success";
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception)
             {

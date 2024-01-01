@@ -153,7 +153,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdminLogin.aspx" />
     <Content Include="admin\Analyze.aspx" />
     <Content Include="admin\AnalyzeCustomer.aspx" />
     <Content Include="admin\AnalyzeProduct.aspx" />
@@ -172,7 +171,6 @@
     <Content Include="admin\VoucherAddForm.aspx" />
     <Content Include="admin\VoucherDetails.aspx" />
     <Content Include="admin\WebAdmin.sitemap" />
-    <Content Include="admin\WebForm1.aspx" />
     <Content Include="App_Data\ShirtTeeDB.mdf" />
     <Content Include="App_Data\ShirtTeeDB_log.ldf">
       <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
@@ -201,13 +199,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminLogin.aspx.cs">
-      <DependentUpon>AdminLogin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminLogin.aspx.designer.cs">
-      <DependentUpon>AdminLogin.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\Analyze.aspx.cs">
       <DependentUpon>Analyze.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -326,13 +317,6 @@
     </Compile>
     <Compile Include="admin\VoucherDetails.aspx.designer.cs">
       <DependentUpon>VoucherDetails.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>

@@ -30,13 +30,13 @@ namespace ShirtTee.customer
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@order_ID", Session["order_ID"])
                 };
+                dbconnection.createConnection();
                 SqlDataReader orderDetails = dbconnection.ExecuteQuery(
                     "SELECT * FROM [Order] AS o"
                     + " LEFT JOIN [Voucher] AS v ON v.voucher_ID = o.voucher_ID"
                     + " INNER JOIN [Payment] AS p ON p.payment_ID = o.payment_ID"
                     + " WHERE order_ID = @order_ID",
                     parameterUrl).ExecuteReader();
-
                 if (orderDetails.HasRows)
                 {
                     orderDetails.Read();
@@ -62,10 +62,12 @@ namespace ShirtTee.customer
                     lblTotal.Text = orderDetails["order_total"].ToString();
 
                 }
+                dbconnection.closeConnection();
 
                 SqlParameter[] parameter2 = new SqlParameter[]{
                  new SqlParameter("@order_ID", Session["order_ID"])
                 };
+                dbconnection.createConnection();
                 SqlDataReader orderStatus = dbconnection.ExecuteQuery(
                      "SELECT * FROM [Order_Status] " +
                      "WHERE order_ID = @order_ID AND " +
@@ -127,6 +129,8 @@ namespace ShirtTee.customer
 
                     progressBar.Attributes["style"] = "width: calc((" + width + ") / 8 * 100%)";
                 }
+                dbconnection.closeConnection();
+
             }
 
         }
@@ -146,11 +150,12 @@ namespace ShirtTee.customer
                     new SqlParameter("@order_ID", Session["order_ID"]),
                     new SqlParameter("@description", "Your order is cancelled."),
                 };
-
+                dbconnection.createConnection();
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     Session["OrderStatusUpdated"] = "success";
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception ex)
             {

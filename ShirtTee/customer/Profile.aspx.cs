@@ -24,12 +24,11 @@ namespace ShirtTee.customer
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
                 };
-
+                dbconnection.createConnection();
                 SqlDataReader profile = dbconnection.ExecuteQuery(
                     " SELECT * FROM [AspNetUsers] AS u"
                   + " WHERE Id = @user_ID",
                 parameterUrl).ExecuteReader();
-
                 if (profile.HasRows)
                 {
                     double width;
@@ -110,6 +109,7 @@ namespace ShirtTee.customer
 
 
                 }
+                dbconnection.closeConnection();
 
 
             }
@@ -294,13 +294,13 @@ namespace ShirtTee.customer
             SqlParameter[] parameterUrl2 = new SqlParameter[]{
                          new SqlParameter("@voucher_name", txtRedeem.Text.ToString()),
                         };
-
+            dbconnection.createConnection();
             SqlDataReader voucher = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Voucher] AS v" +
                 " WHERE expiry_date > GETDATE() AND" +
                 " deleted_at IS NULL AND" +
                 " voucher_name = @voucher_name", parameterUrl2).ExecuteReader();
-
+     
             if (voucher.HasRows)
             {
 
@@ -310,7 +310,7 @@ namespace ShirtTee.customer
                          new SqlParameter("@user_ID", Session["user_ID"]),
                          new SqlParameter("@voucher_name", voucher["voucher_name"].ToString()),
                         };
-
+                dbconnection.createConnection();
                 SqlDataReader existingVoucher = dbconnection.ExecuteQuery(
                     " SELECT * FROM [Voucher_Details] AS vd" +
                     " INNER JOIN [Voucher] AS v ON vd.voucher_ID = v.voucher_ID" +
@@ -333,13 +333,17 @@ namespace ShirtTee.customer
                        new SqlParameter("@user_ID", Session["user_ID"]),
                          new SqlParameter("@voucher_ID", voucher["voucher_ID"].ToString()),
                                     };
-                    if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+
+                    DBconnection db = new DBconnection();
+                    db.createConnection();
+                    if (db.ExecuteNonQuery(sqlcommand, parameters))
                     {
                         Session["ProfileChanged"] = "redeemSuccess";
                     }
 
-
+                    db.closeConnection();
                 }
+                dbconnection.closeConnection();
 
 
             }
@@ -347,6 +351,7 @@ namespace ShirtTee.customer
             {
                 Session["ProfileChanged"] = "noSuchVoucher";
             }
+            dbconnection.closeConnection();
             Response.Redirect(Request.Url.AbsoluteUri);
         }
 

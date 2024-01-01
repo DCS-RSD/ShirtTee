@@ -38,7 +38,11 @@ namespace ShirtTee.admin
                 new SqlParameter("@expiry_date", SqlDbType.Date) {Value=txtDate.Text},
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text))
                 };
+
+                dbconnection.createConnection();
+
                     System.Diagnostics.Debug.WriteLine(txtDate.Text);
+
 
                     if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                     {
@@ -57,15 +61,17 @@ namespace ShirtTee.admin
                         service.Create(options);
                     }
                 }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    Session["VoucherAdded"] = "error";
-                }
-                finally
-                {
-                    Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
-                }
+
+                dbconnection.closeConnection();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Session["VoucherAdded"] = "error";
+            }
+            finally
+            {
+                Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
 
             }
 
@@ -77,8 +83,11 @@ namespace ShirtTee.admin
 
             DBconnection dbconnection = new DBconnection();
             SqlParameter[] parameter = new SqlParameter[]{
-                 new SqlParameter("@voucher_name", txtVoucherName.Text),
-            };
+
+                         new SqlParameter("@voucher_name", txtVoucherName.Text),
+                    };
+            dbconnection.createConnection();
+
             SqlDataReader findVoucher = dbconnection.ExecuteQuery(
                 "SELECT * FROM [Voucher] " +
                 "WHERE voucher_name = @voucher_name ",
@@ -93,6 +102,7 @@ namespace ShirtTee.admin
             {
                 args.IsValid = true;
             }
+            dbconnection.closeConnection();
         }
     }
 }

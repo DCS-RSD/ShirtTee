@@ -38,6 +38,7 @@ namespace ShirtTee.customer
                  new SqlParameter("@order_ID", Session["order_ID_review"]),
                  new SqlParameter("@product_details_ID", Session["product_details_ID"])
                 };
+                dbconnection.createConnection();
                 SqlDataReader product = dbconnection.ExecuteQuery(
                   "SELECT * FROM [Order_Details] AS od"
                 + " INNER JOIN [Product_Details] AS pd ON od.product_details_ID = pd.product_details_ID"
@@ -47,7 +48,6 @@ namespace ShirtTee.customer
                 + " WHERE order_ID = @order_ID AND"
                 + " od.product_details_ID = @product_details_ID ",
                     parameterUrl0).ExecuteReader();
-
                 if (product.HasRows)
                 {
                     product.Read();
@@ -63,6 +63,8 @@ namespace ShirtTee.customer
                     imgProduct.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])product["thumbnail"]);
 
                 }
+                dbconnection.closeConnection();
+
             }
             catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "orderdetails"); }
 
@@ -75,6 +77,7 @@ namespace ShirtTee.customer
                  new SqlParameter("@product_details_ID", Session["product_details_ID"]),
                  new SqlParameter("@order_ID", Session["order_ID_review"]),
                 };
+                    dbconnection.createConnection();
                     SqlDataReader review = dbconnection.ExecuteQuery(
                       "SELECT * FROM [Review] AS r"
                     + " INNER JOIN [Product_Details] AS pd ON r.product_details_ID = pd.product_details_ID"
@@ -84,7 +87,6 @@ namespace ShirtTee.customer
                     + " r.order_ID = @order_ID AND"
                     + " review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = @order_ID AND product_details_ID = @product_details_ID)",
                         parameterUrl).ExecuteReader();
-
                     if (review.HasRows)
                     {
                         review.Read();
@@ -103,6 +105,7 @@ namespace ShirtTee.customer
                         }
 
                     }
+                    dbconnection.closeConnection();
 
                 }
 
@@ -119,6 +122,7 @@ namespace ShirtTee.customer
                  new SqlParameter("@product_details_ID", Session["product_details_ID"]),
                  new SqlParameter("@order_ID", Session["order_ID_review"]),
                 };
+            dbconnection.createConnection();
             SqlDataReader review = dbconnection.ExecuteQuery(
               "SELECT * FROM [Review] AS r"
             + " INNER JOIN [Product_Details] AS pd ON r.product_details_ID = pd.product_details_ID"
@@ -128,7 +132,6 @@ namespace ShirtTee.customer
             + " r.order_ID = @order_ID AND"
             + " review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = @order_ID AND product_details_ID = @product_details_ID)",
                 parameterUrl).ExecuteReader();
-
             if (review.HasRows)
             {
                 review.Read();
@@ -145,6 +148,8 @@ namespace ShirtTee.customer
                     return false;
                 }
             }
+            dbconnection.closeConnection();
+
             return false;
         }
 
@@ -185,7 +190,9 @@ namespace ShirtTee.customer
                                 new SqlParameter("@edited_at", dateNow),
                                 new SqlParameter("order_ID", Session["order_ID_review"])
                             };
+                            dbconnection.createConnection();
                             dbconnection.ExecuteNonQuery(createReview, parameters);
+                            dbconnection.closeConnection();
                         }
                         else 
                         {
@@ -201,7 +208,9 @@ namespace ShirtTee.customer
                                 new SqlParameter("@edited_at", dateNow),
                                 new SqlParameter("order_ID", Session["order_ID_review"])
                             };
+                            dbconnection.createConnection();
                             dbconnection.ExecuteNonQuery(createReview, parameters);
+                            dbconnection.closeConnection();
                         }
                         
 
@@ -225,7 +234,9 @@ namespace ShirtTee.customer
                                 new SqlParameter("@review_date", dateNow),
                                 new SqlParameter("order_ID", Session["order_ID_review"])
                             };
+                        dbconnection.createConnection();
                         dbconnection.ExecuteNonQuery(createReview, parameters);
+                        dbconnection.closeConnection();
                     }
                     else 
                     {
@@ -240,7 +251,9 @@ namespace ShirtTee.customer
                                 new SqlParameter("@review_date", dateNow),
                                 new SqlParameter("order_ID", Session["order_ID_review"])
                             };
+                        dbconnection.createConnection();
                         dbconnection.ExecuteNonQuery(createReview, parameters);
+                        dbconnection.closeConnection();
                     }
 
                     Session["ReviewSubmitted"] = "success";
