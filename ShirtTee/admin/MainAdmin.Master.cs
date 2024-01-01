@@ -17,7 +17,7 @@ namespace ShirtTee.admin
                  new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId())
                 };
 
-
+                dbconnection.createConnection();
                 SqlDataReader user = dbconnection.ExecuteQuery(
                     " SELECT * FROM [AspNetUsers]"
                   + " WHERE Id = @user_ID",
@@ -36,6 +36,8 @@ namespace ShirtTee.admin
                         imgAvatar.ImageUrl = "~/Image/default-avatar.jpg";
                     }
                 }
+                dbconnection.closeConnection();
+
             }
 
         }
