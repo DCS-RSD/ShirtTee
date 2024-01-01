@@ -41,7 +41,7 @@ namespace ShirtTee.customer
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
             };
-
+            dbconnection.createConnection();
             SqlDataReader cartDetails = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Cart] AS c"
               + " WHERE user_ID = @user_ID",
@@ -58,7 +58,7 @@ namespace ShirtTee.customer
             {
                 subtotal = 0;
             }
-
+            dbconnection.closeConnection();
             double shipping = 0, discountValue = 0, total;
 
             lblSubtotal.Text = subtotal.ToString("F2");
@@ -94,12 +94,13 @@ namespace ShirtTee.customer
             SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
             };
-
+            dbconnection.createConnection();
             SqlDataReader cartInfo = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Cart] AS c" +
                 " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
                 " WHERE user_ID = @user_ID",
             parameterUrl2).ExecuteReader();
+            dbconnection.closeConnection();
             bool cont = true;
             if (cartInfo.HasRows)
             {
@@ -130,7 +131,7 @@ namespace ShirtTee.customer
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
             };
-
+            dbconnection.createConnection();
             SqlDataReader cartDetails = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Cart] AS c" +
                 " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
@@ -139,6 +140,7 @@ namespace ShirtTee.customer
                 " INNER JOIN [Size] AS s ON d.size_ID = s.size_ID" +
                 " WHERE user_ID = @user_ID",
             parameterUrl).ExecuteReader();
+            dbconnection.closeConnection();
             var items = new List<SessionLineItemOptions>();
             if (cartDetails.HasRows)
             {

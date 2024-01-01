@@ -60,11 +60,13 @@ namespace ShirtTee.customer
                          new SqlParameter("@order_ID", dataItem["order_ID"].ToString()),
                          new SqlParameter("@product_details_ID", dataItem["product_details_ID"].ToString())
                     };
+                    dBconnection.createConnection();
                     SqlDataReader orderDetails = dBconnection.ExecuteQuery(
                         "SELECT * FROM [Order_Details] " +
                         "WHERE order_ID = @order_ID AND " +
                         "product_details_ID = @product_details_ID",
                     parameter).ExecuteReader();
+                    dBconnection.closeConnection();
                     if (orderDetails.HasRows)
                     {
                         orderDetails.Read();
