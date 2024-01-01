@@ -388,7 +388,7 @@ ORDER BY review_date DESC">
                             <ItemTemplate>
                                 <div class="py-4 border-t border-b">
                                     <div class="flex items-center">
-                                        <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="Emily Selman." class="h-12 w-12 rounded-full">
+                                        <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("avatar")) %>' alt="<%# Eval("UserName") %>" class="h-12 w-12 rounded-full">
                                         <div class="ml-4">
                                             <asp:Label runat="server" ID="lblRating" Text='<%# Eval("rating") %>' Visible="false"/>
                                             <h4 class="text-sm font-bold text-gray-900"><%# Eval("UserName") %></h4>
