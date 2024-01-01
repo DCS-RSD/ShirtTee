@@ -214,12 +214,12 @@ WHERE user_ID = @user_ID">
             if (isFPXChecked()) {
                 
                 Page_ClientValidate();
-                var ddlState = document.getElementById('<%= ddlState.ClientID %>');
 
-                //console.log(ddlState.value);
-                if (Page_IsValid && ddlState.value != "Choose State") {
+
+                console.log("hi");
+                if (Page_IsValid) {
                     //e.preventDefault();
-
+                    console.log("vlaid");
                     // Make an AJAX request to your server handler to get the Stripe public key
                     fetch('/StripePublicKeyHandler.ashx', {
                         method: 'GET',
