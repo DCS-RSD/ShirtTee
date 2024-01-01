@@ -107,23 +107,25 @@
         <!-- End Grid -->
     </div>
     <!-- End Card Section -->
-
+    <div class="my-4 mx-8 flex sm:justify-end">
+        <div>
+            <asp:DropDownList runat="server" ID="ddlYear"
+                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" AutoPostBack="True">
+                <asp:ListItem>2024</asp:ListItem>
+                <asp:ListItem>2023</asp:ListItem>
+            </asp:DropDownList>
+        </div>
+    </div>
     <%-- line chart --%>
-    <div class="max-w-[85rem] mt-8">
+    <div class="max-w-[85rem]">
         <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
             <div class="mt-8 mb-4 mx-8 sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                     <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Sales Line Chart
                     </h1>
-                </div>
-                <div class="">
-                    <div class="flex gap-x-2">
-                        <asp:DropDownList runat="server" ID="ddlYear"
-                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" AutoPostBack="True">
-                            <asp:ListItem>2024</asp:ListItem>
-                            <asp:ListItem>2023</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
+                    <p class="text-sm text-gray-800 dark:text-gray-200">
+                        Overview of yearly sales.
+                    </p>
                 </div>
             </div>
             <div class="p-4" id="hs-single-area-chart"></div>
@@ -132,8 +134,17 @@
     <%-- End Line CHart --%>
 
     <%-- Bar Chart --%>
-    <div class="max-w-[85rem] mt-8 ">
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+    <div class="flex mt-4 gap-x-4">
+        <div class="flex-1 bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+            <div class="mt-8 mb-4 mx-8 sm:flex sm:items-center">
+                <div class="sm:flex-auto">
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Category Group Sales Chart
+                    </h1>
+                    <p class="text-sm text-gray-800 dark:text-gray-200">
+                        Overview of men, women, kids products sold.
+                    </p>
+                </div>
+            </div>
             <div class="p-4 flex flex-col justify-center items-center">
                 <div id="hs-doughnut-chart"></div>
 
@@ -158,7 +169,28 @@
                 <!-- End Legend Indicator -->
             </div>
         </div>
+        <div class="flex-1 bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+            <div class="mt-8 mb-4 mx-8 sm:flex sm:items-center">
+                <div class="sm:flex-auto">
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">Product Category Sales Bar Chart
+                    </h1>
+                    <p class="text-sm text-gray-800 dark:text-gray-200">
+                        Items sold based on product category group.
+                    </p>
+                </div>
+                    <div class="self-end">
+                        <asp:DropDownList runat="server" ID="ddlCategory"
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" AutoPostBack="True">
+                            <asp:ListItem Value="men">Men</asp:ListItem>
+                            <asp:ListItem Value="women">Women</asp:ListItem>
+                            <asp:ListItem Value="kids">Kids</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+            </div>
+            <div class="p-6" id="hs-single-bar-chart"></div>
+        </div>
     </div>
+
 
     <script>
         var arrSales;
@@ -171,10 +203,21 @@
             groupSales = value;
         }
 
-        console.log(groupSales);
 
+        var category;
+        function setCategory(value) {
+            category = value;
+        }
 
+        var productCategory;
+        function setCategorySales(value) {
+            productCategory = value;
+            console.log(productCategory);
+        }
+    </script>
 
+    <%-- Line Chart --%>
+    <script>
         window.addEventListener('load', () => {
             (function () {
                 buildChart('#hs-single-area-chart', (mode) => ({
@@ -346,9 +389,10 @@
                 });
             })();
         });
+
     </script>
 
-
+    <%-- Doughnut chart --%>
     <script>
         window.addEventListener('load', () => {
             (function () {
@@ -406,6 +450,145 @@
                     colors: ['#e5e7eb', '#3b82f6', '#22d3ee'],
                     stroke: {
                         colors: ['rgb(38, 38, 38)']
+                    }
+                });
+            })();
+        });
+    </script>
+
+    <%-- Bar chart --%>
+    <script>
+        window.addEventListener('load', () => {
+            (function () {
+                buildChart('#hs-single-bar-chart', (mode) => ({
+                    chart: {
+                        type: 'bar',
+                        height: 300,
+                        toolbar: {
+                            show: true
+                        },
+                        zoom: {
+                            enabled: false
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Quantity Sold',
+                            data: categorySales
+                        }
+                    ],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '16px',
+                            borderRadius: 0
+                        }
+                    },
+                    legend: {
+                        show: false
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 8,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: productCategory,
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false
+                        },
+                        crosshairs: {
+                            show: false
+                        },
+                        labels: {
+                            style: {
+                                colors: '#9ca3af',
+                                fontSize: '13px',
+                                fontFamily: 'Inter, ui-sans-serif',
+                                fontWeight: 400
+                            },
+                            offsetX: -2,
+                            formatter: (title) => title.slice(0, 3)
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            align: 'left',
+                            minWidth: 0,
+                            maxWidth: 140,
+                            style: {
+                                colors: '#9ca3af',
+                                fontSize: '13px',
+                                fontFamily: 'Inter, ui-sans-serif',
+                                fontWeight: 400
+                            },
+                        }
+                    },
+                    states: {
+                        hover: {
+                            filter: {
+                                type: 'darken',
+                                value: 0.9
+                            }
+                        }
+                    },
+                    tooltip: {
+                    },
+                    responsive: [{
+                        breakpoint: 568,
+                        options: {
+                            chart: {
+                                height: 300
+                            },
+                            plotOptions: {
+                                bar: {
+                                    columnWidth: '14px'
+                                }
+                            },
+                            stroke: {
+                                width: 8
+                            },
+                            labels: {
+                                style: {
+                                    colors: '#9ca3af',
+                                    fontSize: '11px',
+                                    fontFamily: 'Inter, ui-sans-serif',
+                                    fontWeight: 400
+                                },
+                                offsetX: -2,
+                                formatter: (title) => title.slice(0, 3)
+                            },
+                            yaxis: {
+                                labels: {
+                                    align: 'left',
+                                    minWidth: 0,
+                                    maxWidth: 140,
+                                    style: {
+                                        colors: '#9ca3af',
+                                        fontSize: '11px',
+                                        fontFamily: 'Inter, ui-sans-serif',
+                                        fontWeight: 400
+                                    },
+                                    formatter: (value) => value >= 1000 ? `${value / 1000}k` : value
+                                }
+                            },
+                        },
+                    }]
+                }), {
+                    colors: ['#2563eb', '#d1d5db'],
+                    grid: {
+                        borderColor: '#e5e7eb'
+                    }
+                }, {
+                    colors: ['#3b82f6', '#2563eb'],
+                    grid: {
+                        borderColor: '#374151'
                     }
                 });
             })();

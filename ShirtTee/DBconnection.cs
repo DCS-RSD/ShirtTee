@@ -12,14 +12,16 @@ namespace ShirtTee
         private string connectionString =
             ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
+        SqlConnection connection;
+
+        public DBconnection()
+        {
+            connection = new SqlConnection(connectionString);
+            connection.Open();
+        }
+
         public SqlCommand ExecuteQuery(string query, SqlParameter[] parameters = null)
         {
-
-
-            SqlConnection connection = new SqlConnection(connectionString);
-
-            connection.Open();
-
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -29,14 +31,10 @@ namespace ShirtTee
             }
 
             return command;
-
-
         }
 
         public Boolean ExecuteNonQuery(string nonQuery, SqlParameter[] parameters = null)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
             SqlCommand command = new SqlCommand(nonQuery, connection);
 
             if (parameters != null)
@@ -45,6 +43,11 @@ namespace ShirtTee
             }
 
             return command.ExecuteNonQuery() > 0 ? true : false;
+        }
+
+        public void stopConnection()
+        {
+            connection.Close();
         }
     }
 }

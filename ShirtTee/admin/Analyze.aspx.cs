@@ -20,6 +20,8 @@ namespace ShirtTee.admin
             displayTotalSales();
             ScriptManager.RegisterStartupScript(this, GetType(), "setArrSales", $"setArrSales({getSales()});", true);
             ScriptManager.RegisterStartupScript(this, GetType(), "setGroupSales", $"setGroupSales({getGroupSales()});", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "setCategorySales", $"setCategorySales({getCategorySales()});", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "setCategory", $"setCategory({getCategoryName()});", true);
 
             if (!IsPostBack)
             {
@@ -117,9 +119,6 @@ namespace ShirtTee.admin
 
         public string getGroupSales()
         {
-            int total = 0;
-
-
             int[] arr = new int[3];
             string query = @"SELECT category_group, SUM(quantity)
  FROM [Category] AS c
@@ -127,7 +126,7 @@ namespace ShirtTee.admin
  INNER JOIN [Product_Details] AS pd ON pd.product_ID = p.product_ID
  INNER JOIN [Order_Details] AS od ON od.product_details_ID = pd.product_details_ID
  INNER JOIN [Order] AS o ON o.order_ID = od.order_ID
- WHERE YEAR(order_date) = 2023
+ WHERE YEAR(order_date) = @year
  GROUP BY  category_group";
 
             DBconnection dBconnection = new DBconnection();
@@ -139,7 +138,6 @@ namespace ShirtTee.admin
 
             while (result.Read())
             {
-                total+= Convert.ToInt32(result[1].ToString());
                 int x;
                 switch (result["category_group"].ToString())
                 {
@@ -153,19 +151,86 @@ namespace ShirtTee.admin
                         x = 2;
                         break;
                 }
+
                 arr[x] = Convert.ToInt32(result[1].ToString());
             }
-
-            double[] percent = new double[3];
-            if (total != 0)
-            {
-                for (int i = 0; i < arr.Length; i++)
-                {
-                    percent[i] = Math.Round((double)arr[i] / total * 100, 2);
-                }
-            }        
+     
             JavaScriptSerializer ser = new JavaScriptSerializer();
-            string values = ser.Serialize(percent);
+            string values = ser.Serialize(arr);
+
+            return values;
+        }
+
+        public string getCategorySales()
+        {
+            int[] arr = new int[3];
+            string query = @" SELECT category_group, category_name, SUM(quantity)
+ FROM [Category] AS c
+ INNER JOIN [Product] AS p ON p.category_ID = c.category_ID
+ INNER JOIN [Product_Details] AS pd ON pd.product_ID = p.product_ID
+ INNER JOIN [Order_Details] AS od ON od.product_details_ID = pd.product_details_ID
+ INNER JOIN [Order] AS o ON o.order_ID = od.order_ID
+ WHERE YEAR(order_date) = @year
+ AND category_group = @category
+ group by category_group, category_name
+ order by category_group";
+
+            DBconnection dBconnection = new DBconnection();
+            SqlParameter[] parameters2 = new SqlParameter[]
+            {
+                new SqlParameter("@year",ddlYear.SelectedValue),
+                new SqlParameter("@category",ddlCategory.SelectedValue),
+            };
+            SqlDataReader result = dBconnection.ExecuteQuery(query, parameters2).ExecuteReader();
+
+            while (result.Read())
+            {
+               
+                int x;
+                switch (result["category_group"].ToString())
+                {
+                    case "men":
+                        x = 0;
+                        break;
+                    case "women":
+                        x = 1;
+                        break;
+                    default:
+                        x = 2;
+                        break;
+                }
+                arr[x] = Convert.ToInt32(result[2].ToString());
+            }
+
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            string values = ser.Serialize(arr);
+            return values;
+        }
+
+        public string getCategoryName()
+        {
+            string[] arr = new string[10];
+            string query = @" SELECT category_group, category_name
+ FROM [Category] AS c
+ WHERE category_group = @category
+ ORDER by category_group";
+
+            DBconnection dBconnection = new DBconnection();
+            SqlParameter[] parameters2 = new SqlParameter[]
+            {
+                new SqlParameter("@category",ddlCategory.SelectedValue),
+            };
+            SqlDataReader result = dBconnection.ExecuteQuery(query, parameters2).ExecuteReader();
+
+            int x = 0;
+            while (result.Read())
+            {
+                arr[x++] = result[1].ToString();
+            }
+
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            string values = ser.Serialize(arr);
+            System.Diagnostics.Debug.WriteLine(values);
             return values;
         }
     }
