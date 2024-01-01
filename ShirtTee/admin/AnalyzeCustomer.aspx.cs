@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -58,6 +60,45 @@ namespace ShirtTee.admin
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+        protected void btnExcel_Click(object sender, EventArgs e)
+        {
+            generateFile(".xls");
+        }
+
+        private void generateFile(string extension)
+        {
+            hideLinkButton();
+
+            Response.Clear();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment;filename=customer-report-" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss") + extension);
+            Response.Charset = "";
+            Response.ContentType = "application/vnd.ms-excel";
+            using (StringWriter sw = new StringWriter())
+            {
+                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                ListView1.RenderControl(hw);
+                Response.Output.Write(sw.ToString());
+                Response.Flush();
+                Response.End();
+            }
+        }
+
+        private void hideLinkButton()
+        {
+            string[] linkButtonIds = { "sortTitle", "sortDate", "LinkButton1", "LinkButton2", "LinkButton3" };
+
+            foreach (string linkButtonId in linkButtonIds)
+            {
+                LinkButton linkButton = (LinkButton)ListView1.FindControl(linkButtonId);
+
+                if (linkButton != null)
+                {
+                    linkButton.Visible = false;
+                }
+            }
         }
     }
 }
