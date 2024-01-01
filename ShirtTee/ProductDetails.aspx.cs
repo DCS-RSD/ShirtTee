@@ -274,11 +274,12 @@ namespace ShirtTee
                     }
                     dbconnection2.closeConnection();
                 }
-                dbconnection.closeConnection();
                 else
                 {
                     lblErrAdd.Text = "Please Select Color/Size Before Adding To Cart.";
                 }
+                dbconnection.closeConnection();
+
             }
 
         }

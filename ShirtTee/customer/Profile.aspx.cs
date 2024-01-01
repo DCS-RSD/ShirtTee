@@ -300,7 +300,7 @@ namespace ShirtTee.customer
                          new SqlParameter("@voucher_ID", voucher["voucher_ID"].ToString()),
                                     };
 
-                    DBconnection db = new DBconnection;
+                    DBconnection db = new DBconnection();
                     db.createConnection();
                     if (db.ExecuteNonQuery(sqlcommand, parameters))
                     {
