@@ -21,54 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script>
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": true,
-            "positionClass": "toast-bottom-center",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-    </script>
-    <script>
-        function showSuccessToast() {
-            var status = '<%= Session["ForgetPassword"] %>';
-            var lblMsg = document.getElementById('<%= lblMsg.ClientID %>');
-
-            console.log(status);
-            if (status !== null && status !== undefined) {
-                if (status == "success") {
-                    toastr["success"]("Reset password link send successfully.");
-                    lblMsg.style.display = 'block';
-                }
-                else if (status == "invalidEmail")
-                {
-                    toastr["error"]("Email not found.");
-                    lblMsg.style.display = 'none';
-                }
-                else if (status == "keyNotExpired")
-                {
-                    toastr["error"]("Reset link have been generated.");
-                    lblMsg.style.display = 'block';
-                }
-                else  {
-                    toastr["error"]("Something went wrong.");
-                    lblMsg.style.display = 'none';
-                }
-            }
-        <% Session.Remove("ForgetPassword"); %>
-        }
-    </script>
+ 
 </head>
 <body>
     <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b text-sm py-4 dark:bg-slate-900 dark:border-gray-700">

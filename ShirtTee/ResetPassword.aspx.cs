@@ -76,99 +76,93 @@ namespace ShirtTee
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string resetKey = Request.QueryString["resetKey"];
-                if (!string.IsNullOrEmpty(resetKey))
-                {
-                    //use the password and create a temp account to get the password hash
-                    //random email to prevent many user reset pwd same time
-                    (string tEmail, string username) = GenerateRandomEmail();
-                    var identityDbContext = new IdentityDbContext("ConnectionString");
-                    var userStore = new UserStore<IdentityUser>(identityDbContext);
-                    var manager = new UserManager<IdentityUser>(userStore);
-                    var user = new IdentityUser() { UserName = username, Email = tEmail };
-                    if (manager.FindByEmail(tEmail) == null)
-                    {
-                        IdentityResult result = manager.Create(user, signupPassword.Text);
-                        if (result.Succeeded)
-                        {
-                            manager.AddToRole(user.Id, "customer");
-                        }
-                    }
 
-                    //get the temp account from database
-                    string newPwd = "";
-                    SqlParameter[] parameterUrl = new SqlParameter[]{
+            string resetKey = Request.QueryString["resetKey"];
+            if (!string.IsNullOrEmpty(resetKey))
+            {
+                //use the password and create a temp account to get the password hash
+                //random email to prevent many user reset pwd same time
+                (string tEmail, string username) = GenerateRandomEmail();
+                var identityDbContext = new IdentityDbContext("ConnectionString");
+                var userStore = new UserStore<IdentityUser>(identityDbContext);
+                var manager = new UserManager<IdentityUser>(userStore);
+                var user = new IdentityUser() { UserName = username, Email = tEmail };
+                if (manager.FindByEmail(tEmail) == null)
+                {
+                    IdentityResult result = manager.Create(user, signupPassword.Text);
+                    if (result.Succeeded)
+                    {
+                        manager.AddToRole(user.Id, "customer");
+                    }
+                }
+
+                //get the temp account from database
+                string newPwd = "";
+                SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@Email", tEmail)
                 };
-                    SqlConnection connection = new SqlConnection(connectionString);
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT * FROM [AspNetUsers] WHERE Email = @email", connection);
-                    if (parameterUrl != null)
-                    {
-                        command.Parameters.AddRange(parameterUrl);
-                    }
-                    SqlDataReader tempAcc = command.ExecuteReader();
-                    if (tempAcc.HasRows)
-                    {
-                        tempAcc.Read();
-                        newPwd = tempAcc["PasswordHash"].ToString();
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT * FROM [AspNetUsers] WHERE Email = @email", connection);
+                if (parameterUrl != null)
+                {
+                    command.Parameters.AddRange(parameterUrl);
+                }
+                SqlDataReader tempAcc = command.ExecuteReader();
+                if (tempAcc.HasRows)
+                {
+                    tempAcc.Read();
+                    newPwd = tempAcc["PasswordHash"].ToString();
 
-                    }
-                    connection.Close();
+                }
+                connection.Close();
 
-                    //update the user pwd that want to reset pwd, clear resetkey and expdate
-                    string sqlcommand =
-                        "UPDATE AspNetUsers SET " +
-                        "reset_key = @resetKey2, " +
-                        "reset_key_expired = @expiryDate2, " +
-                        "PasswordHash = @password " +
-                        "WHERE Email = @email2";
-                    SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                //update the user pwd that want to reset pwd, clear resetkey and expdate
+                string sqlcommand =
+                    "UPDATE AspNetUsers SET " +
+                    "reset_key = @resetKey2, " +
+                    "reset_key_expired = @expiryDate2, " +
+                    "PasswordHash = @password " +
+                    "WHERE Email = @email2";
+                SqlParameter[] parameterUrl2 = new SqlParameter[]{
                     new SqlParameter("@resetKey2", DBNull.Value),
                     new SqlParameter("@expiryDate2", DBNull.Value),
                     new SqlParameter("@password", newPwd),
                     new SqlParameter("@email2", email)
                 };
-                    SqlConnection connection2 = new SqlConnection(connectionString);
-                    connection2.Open();
-                    SqlCommand command2 = new SqlCommand(sqlcommand, connection2);
+                SqlConnection connection2 = new SqlConnection(connectionString);
+                connection2.Open();
+                SqlCommand command2 = new SqlCommand(sqlcommand, connection2);
 
-                    if (parameterUrl2 != null)
-                    {
-                        command2.Parameters.AddRange(parameterUrl2);
-                    }
-                    command2.ExecuteNonQuery();
-                    connection2.Close();
+                if (parameterUrl2 != null)
+                {
+                    command2.Parameters.AddRange(parameterUrl2);
+                }
+                command2.ExecuteNonQuery();
+                connection2.Close();
 
-                    //delete temp account
-                    string sqlcommand3 =
-                        "DELETE FROM AspNetUsers " +
-                        "WHERE Email = @tEmail";
-                    SqlParameter[] parameterUrl3 = new SqlParameter[]{
+                //delete temp account
+                string sqlcommand3 =
+                    "DELETE FROM AspNetUsers " +
+                    "WHERE Email = @tEmail";
+                SqlParameter[] parameterUrl3 = new SqlParameter[]{
                     new SqlParameter("@tEmail", tEmail)
                 };
-                    SqlConnection connection3 = new SqlConnection(connectionString);
-                    connection3.Open();
-                    SqlCommand command3 = new SqlCommand(sqlcommand3, connection3);
+                SqlConnection connection3 = new SqlConnection(connectionString);
+                connection3.Open();
+                SqlCommand command3 = new SqlCommand(sqlcommand3, connection3);
 
-                    if (parameterUrl3 != null)
-                    {
-                        command3.Parameters.AddRange(parameterUrl3);
-                    }
-                    command3.ExecuteNonQuery();
-                    connection3.Close();
-
-                    Session["LoginValidate"] = "resetPwd";
-                    Response.Redirect("~/Login.aspx");
+                if (parameterUrl3 != null)
+                {
+                    command3.Parameters.AddRange(parameterUrl3);
                 }
-            }
-            catch (Exception ex)
-            {
-                Session["LoginValidate"] = "resetPwdError";
+                command3.ExecuteNonQuery();
+                connection3.Close();
+
+                Session["LoginValidate"] = "resetPwd";
                 Response.Redirect("~/Login.aspx");
             }
+
 
 
 
