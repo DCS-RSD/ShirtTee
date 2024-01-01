@@ -16,8 +16,13 @@ namespace ShirtTee
 
         protected override void OnPreRender(EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("render");
+
+            base.OnPreRender(e);
             if (Session["user_ID"] != null)
             {
+                System.Diagnostics.Debug.WriteLine("has session");
+
                 DBconnection dbconnection = new DBconnection();
                 dbconnection.createConnection();
                 SqlParameter[] parameterUrl = new SqlParameter[]{
@@ -61,6 +66,10 @@ namespace ShirtTee
                 }
                 dbconnection.closeConnection();
 
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("no session key");
             }
 
         }

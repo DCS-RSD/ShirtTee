@@ -196,7 +196,7 @@ namespace ShirtTee
                                         };
                                         DBconnection db1 =new DBconnection();
                                         db1.createConnection();
-                                        bool valid = dbconnection.ExecuteNonQuery(sqlcommand, parameters);
+                                        bool valid = db1.ExecuteNonQuery(sqlcommand, parameters);
                                         db1.closeConnection();
                                         if (valid)
                                         {
@@ -228,7 +228,7 @@ namespace ShirtTee
                                     };
                                     DBconnection db2 =new DBconnection();
                                     db2.createConnection();
-                                    bool valid = dbconnection.ExecuteNonQuery(sqlcommand, parameters);
+                                    bool valid = db2.ExecuteNonQuery(sqlcommand, parameters);
                                     db2.closeConnection();
                                     if (valid)
                                     {

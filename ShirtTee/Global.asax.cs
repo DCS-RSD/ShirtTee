@@ -57,6 +57,8 @@ namespace ShirtTee
                 var user = manager.FindById(Request.Cookies["user_ID"].Value);
                 if (user != null)
                 {
+                    System.Diagnostics.Debug.WriteLine("auto login");
+
                     //logUserIn
                     var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
                     var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
