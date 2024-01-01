@@ -20,15 +20,17 @@ namespace ShirtTee.admin
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            try
+            if (Page.IsValid) 
             {
-                DBconnection dbconnection = new DBconnection();
+                try
+                {
+                    DBconnection dbconnection = new DBconnection();
 
-                string sqlCommand = "INSERT INTO Voucher (voucher_name, voucher_description, discount_rate, min_spend, cap_at ,expiry_date)" +
-                   "VALUES (@voucher_name, @voucher_description, @discount_rate, @min_spend, @cap_at ,@expiry_date)";
+                    string sqlCommand = "INSERT INTO Voucher (voucher_name, voucher_description, discount_rate, min_spend, cap_at ,expiry_date)" +
+                       "VALUES (@voucher_name, @voucher_description, @discount_rate, @min_spend, @cap_at ,@expiry_date)";
 
-                double discount = Convert.ToDouble(txtDiscount.Text) / 100;
-                SqlParameter[] parameters = {
+                    double discount = Convert.ToDouble(txtDiscount.Text) / 100;
+                    SqlParameter[] parameters = {
                 new SqlParameter("@voucher_name", txtVoucherName.Text),
                 new SqlParameter("@voucher_description", txtVoucherDesc.Text),
                 new SqlParameter("@discount_rate", discount),
@@ -36,24 +38,30 @@ namespace ShirtTee.admin
                 new SqlParameter("@expiry_date", SqlDbType.Date) {Value=txtDate.Text},
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text))
                 };
+
                 dbconnection.createConnection();
 
-                if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
-                {
-                    Session["VoucherAdded"] = "success";
-                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    var options = new CouponCreateOptions
-                    {
-                        Duration = "once",
-                        Name = txtVoucherName.Text,
-                        Id = txtVoucherName.Text,
-                        PercentOff = (decimal)discount,
-                        RedeemBy = DateTime.Parse(txtDate.Text)
-                    };
+                    System.Diagnostics.Debug.WriteLine(txtDate.Text);
 
-                    var service = new CouponService();
-                    service.Create(options);
+
+                    if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                    {
+                        Session["VoucherAdded"] = "success";
+                        StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                        var options = new CouponCreateOptions
+                        {
+                            Duration = "once",
+                            Name = txtVoucherName.Text,
+                            Id = txtVoucherName.Text,
+                            PercentOff = (decimal)discount,
+                            RedeemBy = DateTime.Parse(txtDate.Text)
+                        };
+
+                        var service = new CouponService();
+                        service.Create(options);
+                    }
                 }
+
                 dbconnection.closeConnection();
             }
             catch (Exception ex)
@@ -64,23 +72,28 @@ namespace ShirtTee.admin
             finally
             {
                 Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
+
             }
 
         }
 
-        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+
+        protected void CustomValidator1_ServerValidate1(object source, ServerValidateEventArgs args)
         {
+
             DBconnection dbconnection = new DBconnection();
             SqlParameter[] parameter = new SqlParameter[]{
+
                          new SqlParameter("@voucher_name", txtVoucherName.Text),
                     };
             dbconnection.createConnection();
+
             SqlDataReader findVoucher = dbconnection.ExecuteQuery(
                 "SELECT * FROM [Voucher] " +
                 "WHERE voucher_name = @voucher_name ",
             parameter).ExecuteReader();
 
-          
+
             if (findVoucher.HasRows)
             {
                 args.IsValid = false;

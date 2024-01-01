@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="VoucherDetails.aspx.cs" Inherits="ShirtTee.admin.VoucherDetails" Culture = "en-GB"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/MainAdmin.Master" AutoEventWireup="true" CodeBehind="VoucherDetails.aspx.cs" Inherits="ShirtTee.admin.VoucherDetails" Culture="en-GB" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
@@ -8,13 +8,13 @@
     <script>
         function showSuccessToast() {
             var status = '<%= Session["VoucherUpdated"] %>';
-             if (status !== null && status !== undefined) {
-                 if (status == "success") {
-                     toastr["success"]("Voucher updated successfully.");
-                 } else {
-                     toastr["error"]("Something went wrong.");
-                 }
-             }
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Voucher updated successfully.");
+                } else {
+                    toastr["error"]("Something went wrong.");
+                }
+            }
          <% Session.Remove("VoucherUpdated"); %>
         }
     </script>
@@ -57,7 +57,16 @@
                             class="text-sm italic" runat="server"
                             ControlToValidate="txtVoucherName"
                             ErrorMessage="Please enter a voucher code."
+                             ValidationGroup="VoucherValidation" 
                             Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:CustomValidator ID="CustomValidator1"
+                            OnServerValidate="CustomValidator1_ServerValidate"
+                            runat="server"
+                            ErrorMessage="The voucher is used."
+                            ValidationGroup="VoucherValidation"
+                            ControlToValidate="txtVoucherName"
+                            Display="Dynamic" ForeColor="Red" CssClass="text-sm italic"></asp:CustomValidator>
+
                     </div>
 
                     <%--Voucher Desc--%>
@@ -80,6 +89,7 @@
                             Rows="3">
                         </asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
+                             ValidationGroup="VoucherValidation" 
                             class="text-sm italic" runat="server"
                             ControlToValidate="txtVoucherDesc"
                             ErrorMessage="Please enter a voucher description."
@@ -107,9 +117,11 @@
                             </asp:TextBox>
                         </div>
                         <asp:RequiredFieldValidator ID="rfvDisRate" class="text-sm italic"
+                             ValidationGroup="VoucherValidation" 
                             runat="server" ControlToValidate="txtDiscount"
                             ErrorMessage="Please enter a discount rate." Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                         <asp:RangeValidator ID="rvDisRate" class="text-sm italic"
+                             ValidationGroup="VoucherValidation" 
                             runat="server" ControlToValidate="txtDiscount"
                             ErrorMessage="Please enter between 1 to 100." Type="Integer"
                             MinimumValue="1" MaximumValue="100" EnableClientScript="true"
@@ -136,11 +148,14 @@
                             </asp:TextBox>
                         </div>
                         <asp:RequiredFieldValidator ID="rfvtxtMinSpend" class="text-sm italic"
+                             ValidationGroup="VoucherValidation" 
                             runat="server" ControlToValidate="txtMinSpend"
                             ErrorMessage="Please enter a minimum spend."
                             Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
-                        <asp:CompareValidator runat="server" ID="cValidator" ControlToValidate="txtMinSpend"
+                        <asp:CompareValidator runat="server" ID="cValidator" 
+                             ValidationGroup="VoucherValidation" 
+                            ControlToValidate="txtMinSpend"
                             class="text-sm italic" ForeColor="Red"
                             Type="Currency" Operator="DataTypeCheck" EnableClientScript="true"
                             ErrorMessage="Please enter a valid currency amount. (Example: 12.30)" Display="Dynamic" />
@@ -166,10 +181,12 @@
                             </asp:TextBox>
                         </div>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" class="text-sm italic"
+                             ValidationGroup="VoucherValidation" 
                             runat="server" ControlToValidate="txtCapAt"
                             ErrorMessage="Please enter a cap at value."
                             Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                         <asp:CompareValidator runat="server" ID="CompareValidator1"
+                             ValidationGroup="VoucherValidation" 
                             ControlToValidate="txtCapAt"
                             class="text-sm italic" ForeColor="Red"
                             Type="Currency" Operator="DataTypeCheck" EnableClientScript="true"
@@ -201,10 +218,12 @@
                             </div>
                         </div>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" class="text-sm italic"
+                             ValidationGroup="VoucherValidation" 
                             runat="server" ControlToValidate="txtDate"
                             ErrorMessage="Please enter an expiry date."
                             Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                         <asp:CompareValidator runat="server" ID="CompareValidator2"
+                             ValidationGroup="VoucherValidation" 
                             ControlToValidate="txtDate"
                             class="text-sm italic" ForeColor="Red"
                             Type="Date" Operator="DataTypeCheck" EnableClientScript="true"
@@ -214,7 +233,7 @@
 
                     <%--Button--%>
                     <div class="col-span-4 sm:col-span-1 sm:col-start-3">
-                        <asp:Button ID="btnSubmit" runat="server" Text="Save Changes" OnClick="btnSubmit_Click"
+                        <asp:Button ID="btnSubmit" runat="server" Text="Save Changes"  ValidationGroup="VoucherValidation"  OnClick="btnSubmit_Click"
                             class="w-full justify-center py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"></asp:Button>
                     </div>
                     <div class="col-span-4 sm:col-span-1">

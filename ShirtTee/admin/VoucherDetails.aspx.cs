@@ -107,21 +107,23 @@ namespace ShirtTee.admin
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            try
+            if (Page.IsValid)
             {
-                DBconnection dbconnection = new DBconnection();
+                try
+                {
+                    DBconnection dbconnection = new DBconnection();
 
-                string sqlCommand = "UPDATE Voucher SET" +
-                    " voucher_name = @voucher_name," +
-                    " voucher_description = @voucher_description," +
-                    " discount_rate = @discount_rate, " +
-                    " min_spend = @min_spend, " +
-                    " cap_at = @cap_at," +
-                    " expiry_date = @expiry_date " +
-                    " WHERE voucher_ID = @voucher_ID";
+                    string sqlCommand = "UPDATE Voucher SET" +
+                        " voucher_name = @voucher_name," +
+                        " voucher_description = @voucher_description," +
+                        " discount_rate = @discount_rate, " +
+                        " min_spend = @min_spend, " +
+                        " cap_at = @cap_at," +
+                        " expiry_date = @expiry_date " +
+                        " WHERE voucher_ID = @voucher_ID";
 
-                double discount = Convert.ToDouble(txtDiscount.Text) / 100;
-                SqlParameter[] parameters = {
+                    double discount = Convert.ToDouble(txtDiscount.Text) / 100;
+                    SqlParameter[] parameters = {
                 new SqlParameter("@voucher_name", txtVoucherName.Text),
                 new SqlParameter("@voucher_description", txtVoucherDesc.Text),
                 new SqlParameter("@discount_rate", discount),
@@ -135,37 +137,61 @@ namespace ShirtTee.admin
                 bool valid= dbconnection.ExecuteNonQuery(sqlCommand, parameters);
                 dbconnection.closeConnection();
                 if (valid)
-                {
-                    Session["VoucherUpdated"] = "success";
+{
+                        Session["VoucherUpdated"] = "success";
 
-                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    var service = new CouponService();
-                    service.Delete(voucherName);
+                        StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                        var service = new CouponService();
+                        service.Delete(voucherName);
 
-                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    var options = new CouponCreateOptions
-                    {
-                        Duration = "once",
-                        Name = txtVoucherName.Text,
-                        Id = txtVoucherName.Text,
-                        PercentOff = (decimal)discount,
-                        RedeemBy = DateTime.Parse(txtDate.Text)
-                    };
+                        StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                        var options = new CouponCreateOptions
+                        {
+                            Duration = "once",
+                            Name = txtVoucherName.Text,
+                            Id = txtVoucherName.Text,
+                            PercentOff = (decimal)discount,
+                            RedeemBy = DateTime.Parse(txtDate.Text)
+                        };
 
-                    var service2 = new CouponService();
-                    service2.Create(options);
+                        var service2 = new CouponService();
+                        service2.Create(options);
 
-                    fetchData();
+                        fetchData();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message + "\n>>" + voucherName);
+                    Session["VoucherUpdated"] = "error";
+                }
+                finally
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+                }
+
             }
-            catch (Exception ex)
+        }
+
+        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DBconnection dbconnection = new DBconnection();
+            SqlParameter[] parameter = new SqlParameter[]{
+                 new SqlParameter("@voucher_name", txtVoucherName.Text),
+            };
+            SqlDataReader findVoucher = dbconnection.ExecuteQuery(
+                "SELECT * FROM [Voucher] " +
+                "WHERE voucher_name = @voucher_name ",
+            parameter).ExecuteReader();
+
+
+            if (findVoucher.HasRows)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message+"\n>>"+ voucherName);
-                Session["VoucherUpdated"] = "error";
+                args.IsValid = false;
             }
-            finally
+            else
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+                args.IsValid = true;
             }
         }
     }
