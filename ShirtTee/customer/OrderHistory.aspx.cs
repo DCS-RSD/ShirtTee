@@ -43,16 +43,15 @@ namespace ShirtTee.customer
                     }
                     if (!string.IsNullOrEmpty(checkPaymentID))
                     {
-                        DBconnection dBconnection = new DBconnection();
+                        DBconnection dBconnectionMain = new DBconnection();
                         SqlParameter[] para = new SqlParameter[]{
                            new SqlParameter("@payment_ID", checkPaymentID),
                         };
-                        dBconnection.createConnection();
-                        SqlDataReader payment = dBconnection.ExecuteQuery(
+                        dBconnectionMain.createConnection();
+                        SqlDataReader payment = dBconnectionMain.ExecuteQuery(
                             " SELECT * FROM [Payment]"
                           + " WHERE payment_ID = @payment_ID",
                         para).ExecuteReader();
-                        dBconnection.closeConnection();
                         //upon postback, prevent generate duplicate order
                         if (!payment.HasRows && session != null)
                         {
@@ -87,7 +86,6 @@ namespace ShirtTee.customer
                                             " SELECT order_ID FROM [Order]"
                                           + " WHERE order_date = @order_date",
                                             parameterUrl).ExecuteReader();
-                                        dBconnection.closeConnection();
                                         if (order.HasRows)
                                         {
                                             while (order.Read())
@@ -99,6 +97,8 @@ namespace ShirtTee.customer
                                                 }
                                             }
                                         }
+                                        dBconnection.closeConnection();
+
                                     } while (loop);
 
                                     //initialize all values
@@ -118,12 +118,13 @@ namespace ShirtTee.customer
                                        " SELECT * FROM [Voucher]"
                                      + " WHERE voucher_name = @voucher_name",
                                        parameter).ExecuteReader();
-                                    dBconnection.closeConnection();
                                     if (voucher.HasRows)
                                     {
                                         voucher.Read();
                                         voucherID = voucher["voucher_ID"].ToString();
                                     }
+                                    dBconnection.closeConnection();
+
                                     string deliveryAddress = Session["shippingAddress"].ToString(); ;
                                     decimal shippingFee = Convert.ToDecimal(session.TotalDetails.AmountShipping) / 100m;
                                     int memberPoint = Convert.ToInt32(session.AmountTotal) / 100;
@@ -281,7 +282,6 @@ namespace ShirtTee.customer
                                                    " SELECT * FROM [Cart]"
                                                  + " WHERE user_ID = @user_ID",
                                                    parameters2).ExecuteReader();
-                                                dBconnection.closeConnection();
                                                 if (cart.HasRows)
                                                 {
 
@@ -290,6 +290,7 @@ namespace ShirtTee.customer
                                                         //create order details
                                                         try
                                                         {
+                                                            DBconnection db1 = new DBconnection();
                                                             string createDetails =
                                                                 "INSERT INTO [Order_Details] (order_ID, product_details_ID, quantity, total) " +
                                                                 "VALUES (@order_ID, @product_details_ID, @quantity, @total)";
@@ -299,15 +300,17 @@ namespace ShirtTee.customer
                                                             new SqlParameter("@quantity", cart["quantity"]),
                                                             new SqlParameter("@total", cart["subtotal"])
                                                         };
-                                                            dBconnection.createConnection();
-                                                            dBconnection.ExecuteNonQuery(createDetails, parameters3);
-                                                            dBconnection.closeConnection();
+
+                                                            db1.createConnection();
+                                                            db1.ExecuteNonQuery(createDetails, parameters3);
+                                                            db1.closeConnection();
                                                         }
                                                         catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "create order details"); }
 
                                                         //deduct stock
                                                         try
                                                         {
+                                                            DBconnection db2 = new DBconnection();
                                                             string deductStock =
                                                                     "UPDATE [Product_Details] SET " +
                                                                     "stock_available = stock_available - @quantity " +
@@ -316,13 +319,14 @@ namespace ShirtTee.customer
                                                             new SqlParameter("@quantity", cart["quantity"]),
                                                             new SqlParameter("@product_details_ID", cart["product_details_ID"]),
                                                         };
-                                                            dBconnection.createConnection();
+                                                            db2.createConnection();
                                                             dBconnection.ExecuteNonQuery(deductStock, param);
-                                                            dBconnection.closeConnection();
+                                                            db2.closeConnection();
                                                         }
                                                         catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "deduct stock"); }
                                                     }
                                                 }
+                                                dBconnection.closeConnection();
                                             }
                                             catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "read cart details"); }
 
@@ -366,6 +370,7 @@ namespace ShirtTee.customer
                                 lblStatus.Text = "error";
                             }
                         }
+                        dBconnectionMain.closeConnection();
                     }
                     else
                     {
@@ -523,7 +528,6 @@ namespace ShirtTee.customer
                         "WHERE order_ID = @order_ID AND " +
                         "update_date = (SELECT MAX(update_date) FROM [Order_Status] WHERE order_ID = @order_ID)",
                     parameter).ExecuteReader();
-                    dBconnection.closeConnection();
                     if (orderStatus.HasRows)
                     {
                         orderStatus.Read();
@@ -531,6 +535,7 @@ namespace ShirtTee.customer
                         oStatus = orderStatus["status"].ToString();
                         GetStatusClass(orderStatus["status"].ToString(), lblDisplayStatus);
                     }
+                    dBconnection.closeConnection();
 
                     if (dataItem["voucher_ID"] != null)
                     {
@@ -543,13 +548,13 @@ namespace ShirtTee.customer
                             "SELECT * FROM [Voucher] " +
                             "WHERE voucher_ID = @voucher_ID ",
                         p).ExecuteReader();
-                        dBconnection.closeConnection();
                         if (voucher.HasRows)
                         {
                             voucher.Read();
                             lblDisplayVoucher.Visible = true;
                             lblVoucherCode.Text = voucher["voucher_name"].ToString();
                         }
+                        dBconnection.closeConnection();
 
                     }
                     string reqStatus = Request.QueryString["status"];
@@ -657,7 +662,6 @@ namespace ShirtTee.customer
                     "WHERE order_ID = @order_ID AND " +
                     "update_date = (SELECT MAX(update_date) FROM [Order_Status] WHERE order_ID = @order_ID)",
                 parameter).ExecuteReader();
-                dBconnection.closeConnection();
                 if (orderStatus.HasRows)
                 {
                     orderStatus.Read();
@@ -673,6 +677,8 @@ namespace ShirtTee.customer
                             new SqlParameter("@product_details_ID", dataItem["product_details_ID"]),
                             new SqlParameter("@order_ID", dataItem["order_ID"]),
                         };
+                        dBconnection.closeConnection();
+
                         dBconnection.createConnection();
                         SqlDataReader review = dBconnection.ExecuteQuery(
                           "SELECT * FROM [Review] AS r"
@@ -682,7 +688,6 @@ namespace ShirtTee.customer
                         + " r.product_details_ID = @product_details_ID AND"
                         + " r.order_ID = @order_ID",
                             parameterUrl).ExecuteReader();
-                        dBconnection.closeConnection();
                         if (review.HasRows)
                         {
                             int rowCount = 0;
@@ -704,9 +709,12 @@ namespace ShirtTee.customer
                         {
                             btnWriteReview.Text = "Write Review";
                         }
+                        dBconnection.closeConnection();
+
                     }
                 }
 
+                dBconnection.closeConnection();
 
             }
         }

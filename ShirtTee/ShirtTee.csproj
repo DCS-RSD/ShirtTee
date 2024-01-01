@@ -153,7 +153,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdminLogin.aspx" />
     <Content Include="admin\Analyze.aspx" />
     <Content Include="admin\AnalyzeCustomer.aspx" />
     <Content Include="admin\AnalyzeProduct.aspx" />
@@ -199,13 +198,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminLogin.aspx.cs">
-      <DependentUpon>AdminLogin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminLogin.aspx.designer.cs">
-      <DependentUpon>AdminLogin.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\Analyze.aspx.cs">
       <DependentUpon>Analyze.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

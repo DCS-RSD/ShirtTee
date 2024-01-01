@@ -66,13 +66,13 @@ namespace ShirtTee.customer
                         "WHERE order_ID = @order_ID AND " +
                         "product_details_ID = @product_details_ID",
                     parameter).ExecuteReader();
-                    dBconnection.closeConnection();
                     if (orderDetails.HasRows)
                     {
                         orderDetails.Read();
                         lblQuantity.Text = orderDetails["quantity"].ToString();
                         lblTotal.Text = orderDetails["total"].ToString();
                     }
+                    dBconnection.closeConnection();
 
                     int rating = Convert.ToInt32(dataItem["rating"].ToString());
 

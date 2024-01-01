@@ -100,7 +100,6 @@ namespace ShirtTee.customer
                 " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
                 " WHERE user_ID = @user_ID",
             parameterUrl2).ExecuteReader();
-            dbconnection.closeConnection();
             bool cont = true;
             if (cartInfo.HasRows)
             {
@@ -118,6 +117,7 @@ namespace ShirtTee.customer
                     callFPX();
                 }
             }
+            dbconnection.closeConnection();
 
 
 
@@ -140,7 +140,6 @@ namespace ShirtTee.customer
                 " INNER JOIN [Size] AS s ON d.size_ID = s.size_ID" +
                 " WHERE user_ID = @user_ID",
             parameterUrl).ExecuteReader();
-            dbconnection.closeConnection();
             var items = new List<SessionLineItemOptions>();
             if (cartDetails.HasRows)
             {
@@ -162,6 +161,7 @@ namespace ShirtTee.customer
                     });
                 }
             }
+            dbconnection.closeConnection();
 
             var shipping = new List<SessionShippingOptionOptions>();
             if (Convert.ToDouble(Session["shipping"]) == 0)

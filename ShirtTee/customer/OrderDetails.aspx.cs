@@ -37,7 +37,6 @@ namespace ShirtTee.customer
                     + " INNER JOIN [Payment] AS p ON p.payment_ID = o.payment_ID"
                     + " WHERE order_ID = @order_ID",
                     parameterUrl).ExecuteReader();
-                dbconnection.closeConnection();
                 if (orderDetails.HasRows)
                 {
                     orderDetails.Read();
@@ -63,6 +62,7 @@ namespace ShirtTee.customer
                     lblTotal.Text = orderDetails["order_total"].ToString();
 
                 }
+                dbconnection.closeConnection();
 
                 SqlParameter[] parameter2 = new SqlParameter[]{
                  new SqlParameter("@order_ID", Session["order_ID"])
@@ -73,7 +73,6 @@ namespace ShirtTee.customer
                      "WHERE order_ID = @order_ID AND " +
                      "update_date = (SELECT MAX(update_date) FROM [Order_Status] WHERE order_ID = @order_ID)",
                 parameter2).ExecuteReader();
-                dbconnection.closeConnection();
                 int width = 0;
                 if (orderStatus.HasRows) 
                 {
@@ -130,6 +129,8 @@ namespace ShirtTee.customer
 
                     progressBar.Attributes["style"] = "width: calc((" + width + ") / 8 * 100%)";
                 }
+                dbconnection.closeConnection();
+
             }
 
         }

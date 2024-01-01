@@ -196,7 +196,6 @@ namespace ShirtTee.customer
               + " WHERE user_ID = @user_ID AND"
               + " voucher_name = @voucher_name",
                 parameterUrl).ExecuteReader();
-            dbconnection.closeConnection();
             if (voucherDetails.HasRows)
             {
                 voucherDetails.Read();
@@ -255,6 +254,8 @@ namespace ShirtTee.customer
                 invalidVoucher();
                 lblErrorMsg.Text = "The voucher is not exist.";
             }
+            dbconnection.closeConnection();
+
             calculateTotal(Convert.ToDouble(lblDiscount.Text.ToString()));
         }
 

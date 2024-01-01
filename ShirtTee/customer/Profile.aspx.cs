@@ -32,7 +32,6 @@ namespace ShirtTee.customer
                     " SELECT * FROM [AspNetUsers] AS u"
                   + " WHERE Id = @user_ID",
                 parameterUrl).ExecuteReader();
-                dbconnection.closeConnection();
                 if (profile.HasRows)
                 {
                     double width;
@@ -107,6 +106,7 @@ namespace ShirtTee.customer
 
 
                 }
+                dbconnection.closeConnection();
 
 
             }
@@ -266,7 +266,7 @@ namespace ShirtTee.customer
                 " WHERE expiry_date > GETDATE() AND" +
                 " deleted_at IS NULL AND" +
                 " voucher_name = @voucher_name", parameterUrl2).ExecuteReader();
-            dbconnection.closeConnection();
+     
             if (voucher.HasRows)
             {
 
@@ -283,7 +283,6 @@ namespace ShirtTee.customer
                     " WHERE user_ID = @user_ID AND" +
                     " voucher_name = @voucher_name",
                 parameterUrl).ExecuteReader();
-                dbconnection.closeConnection();
                 if (existingVoucher.HasRows)
                 {
                     existingVoucher.Read();
@@ -300,14 +299,17 @@ namespace ShirtTee.customer
                        new SqlParameter("@user_ID", Session["user_ID"]),
                          new SqlParameter("@voucher_ID", voucher["voucher_ID"].ToString()),
                                     };
-                    dbconnection.createConnection();
-                    if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+
+                    DBconnection db = new DBconnection;
+                    db.createConnection();
+                    if (db.ExecuteNonQuery(sqlcommand, parameters))
                     {
                         Session["ProfileChanged"] = "redeemSuccess";
                     }
 
-                    dbconnection.closeConnection();
+                    db.closeConnection();
                 }
+                dbconnection.closeConnection();
 
 
             }
@@ -315,6 +317,7 @@ namespace ShirtTee.customer
             {
                 Session["ProfileChanged"] = "noSuchVoucher";
             }
+            dbconnection.closeConnection();
             Response.Redirect(Request.Url.AbsoluteUri);
         }
     }

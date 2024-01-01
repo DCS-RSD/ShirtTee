@@ -48,7 +48,6 @@ namespace ShirtTee.customer
                 + " WHERE order_ID = @order_ID AND"
                 + " od.product_details_ID = @product_details_ID ",
                     parameterUrl0).ExecuteReader();
-                dbconnection.closeConnection();
                 if (product.HasRows)
                 {
                     product.Read();
@@ -64,6 +63,8 @@ namespace ShirtTee.customer
                     imgProduct.ImageUrl = "data:Image/png;base64," + Convert.ToBase64String((byte[])product["thumbnail"]);
 
                 }
+                dbconnection.closeConnection();
+
             }
             catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "orderdetails"); }
 
@@ -86,7 +87,6 @@ namespace ShirtTee.customer
                     + " r.order_ID = @order_ID AND"
                     + " review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = @order_ID AND product_details_ID = @product_details_ID)",
                         parameterUrl).ExecuteReader();
-                    dbconnection.closeConnection();
                     if (review.HasRows)
                     {
                         review.Read();
@@ -105,6 +105,7 @@ namespace ShirtTee.customer
                         }
 
                     }
+                    dbconnection.closeConnection();
 
                 }
 
@@ -131,7 +132,6 @@ namespace ShirtTee.customer
             + " r.order_ID = @order_ID AND"
             + " review_date =  (SELECT MAX(review_date) FROM [Review] WHERE order_ID = @order_ID AND product_details_ID = @product_details_ID)",
                 parameterUrl).ExecuteReader();
-            dbconnection.closeConnection();
             if (review.HasRows)
             {
                 review.Read();
@@ -148,6 +148,8 @@ namespace ShirtTee.customer
                     return false;
                 }
             }
+            dbconnection.closeConnection();
+
             return false;
         }
 
