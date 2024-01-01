@@ -43,6 +43,12 @@
                         ControlToValidate="txtVoucherName"
                         ErrorMessage="Please enter a voucher code."
                         Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="CustomValidator1"
+                        OnServerValidate="CustomValidator1_ServerValidate"
+                        runat="server"
+                        ErrorMessage="This voucher code already exist." 
+                        ControlToValidate="txtVoucherName"
+                        Display="Dynamic" ForeColor="Red" CssClass="text-sm italic"></asp:CustomValidator>
                 </div>
 
                 <%--Voucher Desc--%>

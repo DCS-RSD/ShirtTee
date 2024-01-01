@@ -69,31 +69,24 @@ namespace ShirtTee.admin
 
         protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            //try
-            //{
-            //    DBconnection dbconnection = new DBconnection();
-            //    SqlParameter[] parameterUrl = new SqlParameter[]{
-            //     new SqlParameter("@voucher_name",args.Value)
-            //    };
-            //    SqlDataReader voucherExist = dbconnection.ExecuteQuery(
-            //        "SELECT * FROM [Voucher] WHERE voucher_name = @voucher_name",
-            //        parameterUrl).ExecuteReader();
+            DBconnection dbconnection = new DBconnection();
+            SqlParameter[] parameter = new SqlParameter[]{
+                         new SqlParameter("@voucher_name", txtVoucherName),
+                    };
+            SqlDataReader findVoucher = dbconnection.ExecuteQuery(
+                "SELECT * FROM [Voucher] " +
+                "WHERE voucher_name = @voucher_name ",
+            parameter).ExecuteReader();
 
-            //    System.Diagnostics.Debug.WriteLine(voucherExist.ToString());
-            //    if (voucherExist.HasRows)
-            //    {
-            //        args.IsValid = false;
-            //    }
-            //    else
-            //    {
-            //        args.IsValid = true;
-            //    }
-
-            //}
-            //catch (Exception ex) {
-            //    System.Diagnostics.Debug.WriteLine(ex.Message);
-
-            //}
+          
+            if (findVoucher.HasRows)
+            {
+                args.IsValid = false;
+            }
+            else
+            {
+                args.IsValid = true;
+            }
         }
     }
 }
