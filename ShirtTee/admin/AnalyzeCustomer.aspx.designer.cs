@@ -7,56 +7,74 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShirtTee
+namespace ShirtTee.admin
 {
 
 
-    public partial class AdminLogin
+    public partial class AnalyzeCustomer
     {
 
         /// <summary>
-        /// form1 control.
+        /// panelContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Panel panelContent;
 
         /// <summary>
-        /// txtEmail control.
+        /// btnPrint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmail;
+        protected global::System.Web.UI.WebControls.Button btnPrint;
 
         /// <summary>
-        /// txtPassword control.
+        /// btnExcel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword;
+        protected global::System.Web.UI.WebControls.Button btnExcel;
 
         /// <summary>
-        /// radRemember control.
+        /// ddlYear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radRemember;
+        protected global::System.Web.UI.WebControls.DropDownList ddlYear;
 
         /// <summary>
-        /// btnSignIn control.
+        /// ddlMonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSignIn;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMonth;
+
+        /// <summary>
+        /// SqlDataSource1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
+
+        /// <summary>
+        /// ListView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView ListView1;
     }
 }

@@ -44,6 +44,7 @@ namespace ShirtTee.admin
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@voucher_ID", Request.QueryString["voucher_id"])
                 };
+                dbconnection.createConnection();
                 SqlDataReader voucherDetails = dbconnection.ExecuteQuery("SELECT * FROM [Voucher] WHERE voucher_ID = @voucher_ID", parameterUrl)
                     .ExecuteReader();
 
@@ -62,6 +63,7 @@ namespace ShirtTee.admin
                     txtVoucherName.Text = voucherDetails["voucher_name"].ToString();
                     txtDate.Text = voucherDetails["expiry_date"].ToString();
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception)
             {
@@ -130,11 +132,12 @@ namespace ShirtTee.admin
                 new SqlParameter("@cap_at", Convert.ToInt32(txtCapAt.Text)),
                 new SqlParameter("@voucher_ID", Request.QueryString["voucher_id"])
                 };
-                    System.Diagnostics.Debug.WriteLine(">>", txtDate.Text);
 
-
-                    if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
-                    {
+                dbconnection.createConnection();
+                bool valid= dbconnection.ExecuteNonQuery(sqlCommand, parameters);
+                dbconnection.closeConnection();
+                if (valid)
+{
                         Session["VoucherUpdated"] = "success";
 
                         StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];

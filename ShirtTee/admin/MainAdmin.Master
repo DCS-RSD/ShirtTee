@@ -136,7 +136,7 @@
                     <a class="flex-none text-xl font-semibold dark:text-white" href="Dashboard.aspx" aria-label="ShirtTee">ShirtTee</a>
                 </div>
 
-                <v class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
+                <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
                     <%-- SiteMapPath --%>
 
                     <div class="hidden sm:block">
@@ -173,8 +173,8 @@
                         <div class="hs-dropdown relative inline-flex [--placement:bottom-right]">
                             <%-- avatar --%>
                             <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                    <asp:Image ID="imgAvatar" runat="server" 
-                                       class="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white dark:ring-gray-800"/>
+                                <asp:Image ID="imgAvatar" runat="server"
+                                    class="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white dark:ring-gray-800" />
                             </button>
 
                             <%-- dropdown menu --%>
@@ -217,6 +217,7 @@
                                         </svg>
                                         <asp:Button
                                             class="w-full text-left cursor-pointer"
+                                            UseSubmitBehavior="false"
                                             Text="Sign Out"
                                             ID="btnSignout"
                                             OnClick="btnSignout_Click"

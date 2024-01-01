@@ -16,9 +16,15 @@ namespace ShirtTee
 
         protected override void OnPreRender(EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("render");
+
+            base.OnPreRender(e);
             if (Session["user_ID"] != null)
             {
+                System.Diagnostics.Debug.WriteLine("has session");
+
                 DBconnection dbconnection = new DBconnection();
+                dbconnection.createConnection();
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"])
                 };
@@ -33,10 +39,12 @@ namespace ShirtTee
                     cartDetails.Read();
                     lblCartNumber.Text = cartDetails["qty"].ToString();
                 }
+                dbconnection.closeConnection();
 
                 SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"])
                 };
+                dbconnection.createConnection();
 
                 SqlDataReader user = dbconnection.ExecuteQuery(
                     " SELECT * FROM [AspNetUsers]"
@@ -56,6 +64,12 @@ namespace ShirtTee
                         imgAvatar.ImageUrl = "~/Image/default-avatar.jpg";
                     }
                 }
+                dbconnection.closeConnection();
+
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("no session key");
             }
 
         }

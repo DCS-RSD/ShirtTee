@@ -48,6 +48,8 @@ namespace ShirtTee.admin
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@order_id", Request.QueryString["order_id"])
                 };
+            dbconnection.createConnection();
+
             SqlDataReader orderDetails = dbconnection.ExecuteQuery(
                 "SELECT * FROM [Order] AS o"
                 + " INNER JOIN [AspNetUsers] AS c ON c.id = o.user_ID"
@@ -55,7 +57,6 @@ namespace ShirtTee.admin
                 + " INNER JOIN [Payment] AS p ON p.payment_ID = o.payment_ID"
                 + " WHERE order_ID = @order_ID",
                 parameterUrl).ExecuteReader();
-
 
             if (orderDetails.HasRows)
             {
@@ -91,11 +92,13 @@ namespace ShirtTee.admin
                 hypContactNo.Attributes.Add("href", "tel:" + orderDetails["PhoneNumber"].ToString());
 
             }
+            dbconnection.closeConnection();
 
             DBconnection dbconnection2 = new DBconnection();
             SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@order_id", Request.QueryString["order_id"])
                 };
+            dbconnection2.createConnection();
             SqlDataReader orderStatus = dbconnection2.ExecuteQuery("SELECT * FROM [Order] AS o INNER JOIN [Order_Status] AS os ON o.order_id = os.order_id WHERE o.order_ID = @order_ID",
                 parameterUrl2).ExecuteReader();
             int width = 0;
@@ -154,6 +157,8 @@ namespace ShirtTee.admin
 
 
             }
+            dbconnection2.closeConnection();
+
         }
 
         protected void btnCancelOrder_Click(object sender, EventArgs e)
@@ -171,13 +176,14 @@ namespace ShirtTee.admin
                 new SqlParameter("@order_ID", id),
                 new SqlParameter("@description", "Your order has been cancelled."),
                 };
-
+                dbconnection.createConnection();
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     EmailManager emailManager = new EmailManager(receiverName, toEmail, id, "Your order has been cancelled.");
                     emailManager.sendEmail();
                     Session["OrderStatusUpdated"] = "success";
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception ex)
             {
@@ -205,13 +211,14 @@ namespace ShirtTee.admin
                 new SqlParameter("@order_ID", id),
                 new SqlParameter("@description", txtUpdateStatusDesc.Text),
                 };
-
+                dbconnection.createConnection();
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     EmailManager emailManager = new EmailManager(receiverName, toEmail, id, txtUpdateStatusDesc.Text);
                     emailManager.sendEmail();
                     Session["OrderStatusUpdated"] = "success";
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception ex)
             {

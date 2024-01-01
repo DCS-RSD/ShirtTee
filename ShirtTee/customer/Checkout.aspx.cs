@@ -41,7 +41,7 @@ namespace ShirtTee.customer
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
             };
-
+            dbconnection.createConnection();
             SqlDataReader cartDetails = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Cart] AS c"
               + " WHERE user_ID = @user_ID",
@@ -58,7 +58,7 @@ namespace ShirtTee.customer
             {
                 subtotal = 0;
             }
-
+            dbconnection.closeConnection();
             double shipping = 0, discountValue = 0, total;
 
             lblSubtotal.Text = subtotal.ToString("F2");
@@ -94,7 +94,7 @@ namespace ShirtTee.customer
             SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
             };
-
+            dbconnection.createConnection();
             SqlDataReader cartInfo = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Cart] AS c" +
                 " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
@@ -117,6 +117,7 @@ namespace ShirtTee.customer
                     callFPX();
                 }
             }
+            dbconnection.closeConnection();
 
 
 
@@ -130,7 +131,7 @@ namespace ShirtTee.customer
             SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
             };
-
+            dbconnection.createConnection();
             SqlDataReader cartDetails = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Cart] AS c" +
                 " INNER JOIN [Product_Details] AS d ON c.product_details_ID = d.product_details_ID" +
@@ -160,6 +161,7 @@ namespace ShirtTee.customer
                     });
                 }
             }
+            dbconnection.closeConnection();
 
             var shipping = new List<SessionShippingOptionOptions>();
             if (Convert.ToDouble(Session["shipping"]) == 0)

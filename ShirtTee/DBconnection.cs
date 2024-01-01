@@ -11,15 +11,11 @@ namespace ShirtTee
     {
         private string connectionString =
             ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        SqlConnection connection;
+
 
         public SqlCommand ExecuteQuery(string query, SqlParameter[] parameters = null)
         {
-
-
-            SqlConnection connection = new SqlConnection(connectionString);
-
-            connection.Open();
-
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -35,8 +31,7 @@ namespace ShirtTee
 
         public Boolean ExecuteNonQuery(string nonQuery, SqlParameter[] parameters = null)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
+
             SqlCommand command = new SqlCommand(nonQuery, connection);
 
             if (parameters != null)
@@ -45,6 +40,17 @@ namespace ShirtTee
             }
 
             return command.ExecuteNonQuery() > 0 ? true : false;
+        }
+
+        public void createConnection()
+        {
+            connection = new SqlConnection(connectionString);
+            connection.Open();
+        }
+
+        public void closeConnection()
+        {
+            connection.Close();
         }
     }
 }

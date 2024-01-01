@@ -33,11 +33,12 @@ namespace ShirtTee.admin
                 new SqlParameter("@created_at", DateTime.Now),
                 new SqlParameter("@is_private", radVisibility.SelectedValue=="is_staff_only"?1:0)
                 };
-
+                dbconnection.createConnection();
                 if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                 {
                     Session["NoticeAdded"] = "success";
                 }
+                dbconnection.closeConnection();
             }
             catch (Exception ex)
             {

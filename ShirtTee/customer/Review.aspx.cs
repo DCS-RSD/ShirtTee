@@ -60,6 +60,7 @@ namespace ShirtTee.customer
                          new SqlParameter("@order_ID", dataItem["order_ID"].ToString()),
                          new SqlParameter("@product_details_ID", dataItem["product_details_ID"].ToString())
                     };
+                    dBconnection.createConnection();
                     SqlDataReader orderDetails = dBconnection.ExecuteQuery(
                         "SELECT * FROM [Order_Details] " +
                         "WHERE order_ID = @order_ID AND " +
@@ -71,6 +72,7 @@ namespace ShirtTee.customer
                         lblQuantity.Text = orderDetails["quantity"].ToString();
                         lblTotal.Text = orderDetails["total"].ToString();
                     }
+                    dBconnection.closeConnection();
 
                     int rating = Convert.ToInt32(dataItem["rating"].ToString());
 

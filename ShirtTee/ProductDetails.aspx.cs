@@ -97,7 +97,7 @@ namespace ShirtTee
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@product_ID", Request.QueryString["product_ID"])
                 };
-
+                dbconnection.createConnection();
                 SqlDataReader productDetails = dbconnection.ExecuteQuery(
                     " SELECT * FROM [Product_Details] AS s"
                   + " INNER JOIN [Product] AS p ON s.product_ID = p.product_ID"
@@ -113,6 +113,7 @@ namespace ShirtTee
                     lblDesc.Text = productDetails["description"].ToString();
                     lblPrice.Text = "RM" + productDetails["price"].ToString();
                 }
+                dbconnection.closeConnection();
 
 
             }
@@ -142,27 +143,27 @@ namespace ShirtTee
                  new SqlParameter("@user_ID", Session["user_ID"]),
                  new SqlParameter("@product_ID", Request.QueryString["product_ID"])
                 };
-
+                dbconnection.createConnection();
                 SqlDataReader cartDetails = dbconnection.ExecuteQuery(
                     " SELECT * FROM [Cart] AS c" +
                     " INNER JOIN [Product_Details] AS p ON c.product_details_ID = p.product_details_ID"
                   + " WHERE user_ID = @user_ID AND product_ID = @product_ID",
                     parameterUrl).ExecuteReader();
 
+                DBconnection dbconnection2 = new DBconnection();
                 SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@product_ID", Request.QueryString["product_ID"]),
                  new SqlParameter("@size_ID", lblSize.Text),
                  new SqlParameter("@color_ID", lblColor.Text)
                 };
-
-                SqlDataReader productDetails = dbconnection.ExecuteQuery(
+                dbconnection2.createConnection();
+                SqlDataReader productDetails = dbconnection2.ExecuteQuery(
                     " SELECT * FROM [Product_Details] AS d" +
                     " INNER JOIN [Product] AS p ON d.product_ID = p.product_ID" +
                     " WHERE d.product_ID = @product_ID AND" +
                     " size_ID = @size_ID AND" +
                     " color_ID = @color_ID",
                     parameterUrl2).ExecuteReader();
-
 
                 if (productDetails.HasRows)
                 {
@@ -193,7 +194,11 @@ namespace ShirtTee
                                             new SqlParameter("@user_ID", Session["user_ID"]),
                                             new SqlParameter("@product_details_ID", cartDetails["product_details_ID"]),
                                         };
-                                        if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+                                        DBconnection db1 =new DBconnection();
+                                        db1.createConnection();
+                                        bool valid = db1.ExecuteNonQuery(sqlcommand, parameters);
+                                        db1.closeConnection();
+                                        if (valid)
                                         {
                                             //product add to cart sucess
                                             Response.Redirect($"~/customer/Cart.aspx");
@@ -221,7 +226,11 @@ namespace ShirtTee
                                         new SqlParameter("@product_details_ID", productDetails["product_details_ID"]),
                                         new SqlParameter("@subtotal", productDetails["price"])
                                     };
-                                    if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+                                    DBconnection db2 =new DBconnection();
+                                    db2.createConnection();
+                                    bool valid = db2.ExecuteNonQuery(sqlcommand, parameters);
+                                    db2.closeConnection();
+                                    if (valid)
                                     {
                                         //product add to cart sucess
                                         Response.Redirect($"~/customer/Cart.aspx");
@@ -248,7 +257,10 @@ namespace ShirtTee
                                         new SqlParameter("@product_details_ID", productDetails["product_details_ID"]),
                                         new SqlParameter("@subtotal", productDetails["price"])
                                     };
-                            if (dbconnection.ExecuteNonQuery(sqlcommand, parameters))
+                            dbconnection.createConnection();
+                            bool valid = dbconnection.ExecuteNonQuery(sqlcommand, parameters);
+                            dbconnection.closeConnection();
+                            if (valid)
                             {
                                 //product add to cart sucess
                                 Response.Redirect($"~/customer/Cart.aspx");
@@ -260,11 +272,14 @@ namespace ShirtTee
                             System.Diagnostics.Debug.WriteLine(ex.Message + "3");
                         }
                     }
+                    dbconnection2.closeConnection();
                 }
                 else
                 {
                     lblErrAdd.Text = "Please Select Color/Size Before Adding To Cart.";
                 }
+                dbconnection.closeConnection();
+
             }
 
         }
@@ -422,12 +437,12 @@ namespace ShirtTee
                  new SqlParameter("@order_ID", dataItem["order_ID"].ToString()),
                 };
 
+                dbconnection.createConnection();
                 SqlDataReader review = dbconnection.ExecuteQuery(
                     " SELECT * FROM [Review] AS r"
                   + " WHERE product_details_ID = @product_details_ID AND"
                   + " order_ID = @order_ID",
                 parameterUrl).ExecuteReader();
-
                 if (review.HasRows)
                 {
                     int reviewCount = 0;
@@ -443,6 +458,7 @@ namespace ShirtTee
                         }
                     }
                 }
+                dbconnection.closeConnection();
 
             }
         }

@@ -105,7 +105,7 @@ namespace ShirtTee.customer
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"])
                 };
-
+                dbconnection.createConnection();
                 SqlDataReader userDetails = dbconnection.ExecuteQuery(
                     " SELECT * FROM [AspNetUsers] AS u"
                   + " WHERE Id = @user_ID",
@@ -134,13 +134,14 @@ namespace ShirtTee.customer
                         Session["shipping"] = "12.00";
                     }
                 }
+                dbconnection.closeConnection();
             }
 
             double subtotal = 0;
             SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@user_ID", Session["user_ID"]),
             };
-
+            dbconnection.createConnection();
             SqlDataReader cartDetails = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Cart] AS c"
               + " WHERE user_ID = @user_ID",
@@ -157,7 +158,7 @@ namespace ShirtTee.customer
             {
                 subtotal = 0;
             }
-
+            dbconnection.closeConnection();
             lblSubtotal.Text = subtotal.ToString("F2");
         }
 
@@ -188,14 +189,13 @@ namespace ShirtTee.customer
                  new SqlParameter("@user_ID", Session["user_ID"]),
                  new SqlParameter("@voucher_name", txtVoucherCode.Text)
             };
-
+            dbconnection.createConnection();
             SqlDataReader voucherDetails = dbconnection.ExecuteQuery(
                 " SELECT * FROM [Voucher_Details] AS d"
               + " INNER JOIN [Voucher] AS v ON d.voucher_ID = v.voucher_ID"
               + " WHERE user_ID = @user_ID AND"
               + " voucher_name = @voucher_name",
                 parameterUrl).ExecuteReader();
-
             if (voucherDetails.HasRows)
             {
                 voucherDetails.Read();
@@ -254,6 +254,8 @@ namespace ShirtTee.customer
                 invalidVoucher();
                 lblErrorMsg.Text = "The voucher is not exist.";
             }
+            dbconnection.closeConnection();
+
             calculateTotal(Convert.ToDouble(lblDiscount.Text.ToString()));
         }
 
@@ -279,7 +281,7 @@ namespace ShirtTee.customer
                 new SqlParameter("@user_ID", Session["user_ID"]),
                 new SqlParameter("@product_details_ID", lblProductDetailsID.Text),
                 };
-
+                dBconnection.createConnection();
                 if (dBconnection.ExecuteNonQuery(sqlcommand, parameters))
                 {
 
@@ -291,6 +293,7 @@ namespace ShirtTee.customer
                         failedDiv.Style["display"] = "none";
                     }
                 }
+                dBconnection.closeConnection();
             }
             catch (Exception ex)
             {
@@ -316,6 +319,7 @@ namespace ShirtTee.customer
                 new SqlParameter("@user_ID", Session["user_ID"]),
                 new SqlParameter("@product_details_ID", lblProductDetailsID.Text),
                 };
+                dBconnection.createConnection();
                 if (dBconnection.ExecuteNonQuery(sqlcommand, parameters))
                 {
 
@@ -332,6 +336,7 @@ namespace ShirtTee.customer
                         failedDiv.Style["display"] = "none";
                     }
                 }
+                dBconnection.closeConnection();
             }
             catch (Exception ex)
             {
