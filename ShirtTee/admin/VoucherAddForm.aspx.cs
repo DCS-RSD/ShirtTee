@@ -60,20 +60,22 @@ namespace ShirtTee.admin
                         var service = new CouponService();
                         service.Create(options);
                     }
+                dbconnection.closeConnection();
+
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    Session["VoucherAdded"] = "error";
+                }
+                finally
+                {
+                    Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
+
                 }
 
-                dbconnection.closeConnection();
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                Session["VoucherAdded"] = "error";
-            }
-            finally
-            {
-                Response.Redirect(ResolveUrl("~/admin/Voucher.aspx").ToString());
 
-            }
 
         }
 
