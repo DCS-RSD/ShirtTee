@@ -210,6 +210,24 @@
                                          Switch To Client Page
                                     </asp:HyperLink>
 
+                                    <asp:Panel ID="panelLog" runat="server">
+                                        <div class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                            <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                                                <path d="M12 12v9" />
+                                                <path d="m8 17 4 4 4-4" />
+                                            </svg>
+                                            <asp:Button
+                                                class="w-full text-left cursor-pointer"
+                                                UseSubmitBehavior="false"
+                                                Text="Download Log File"
+                                                ID="btnDownload"
+                                                OnClick="btnDownload_Click"
+                                                runat="server" />
+                                        </div>
+                                    </asp:Panel>
+
+
                                     <div class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
@@ -223,6 +241,7 @@
                                             OnClick="btnSignout_Click"
                                             runat="server" />
                                     </div>
+
                                 </div>
                             </div>
                         </div>

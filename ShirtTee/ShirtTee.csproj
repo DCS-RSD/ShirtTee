@@ -195,6 +195,7 @@
     <Content Include="Image\default-avatar.jpg" />
     <Content Include="Image\noimage.png" />
     <Content Include="Login.aspx" />
+    <Content Include="log\log.txt" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="customer\Review.aspx" />

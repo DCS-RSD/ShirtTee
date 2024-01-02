@@ -8,6 +8,9 @@ using System.Web.Security;
 using System.Web.SessionState;
 using WingtipToys.Logic;
 using Microsoft.Owin.Security;
+using System.IO;
+using System.Text;
+using Stripe.Terminal;
 
 namespace ShirtTee
 {
@@ -97,19 +100,47 @@ namespace ShirtTee
         protected void Application_Error(object sender, EventArgs e)
         {
 
+            Exception error = Server.GetLastError();
+            Server.ClearError();
+
+            string logContent = "[" + DateTime.Now + "] " + error + " at " + Request.Url.ToString();
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log/log.txt");
+
+            try
+            {
+                string directoryPath = Path.GetDirectoryName(fileName);
+
+                // Check if the directory exists, and create it if it doesn't
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                if (!File.Exists(fileName))
+                {
+                    File.Create(fileName).Close(); // Make sure to close the FileStream
+                }
+
+                // Appending the given texts
+                using (StreamWriter sw = File.AppendText(fileName))
+                {
+                    sw.WriteLine(logContent + "\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error log: " + ex.Message);
+            }
+            finally
+            {
+                Response.Redirect("errors/500.aspx");
+            }
+
         }
 
         protected void Session_End(object sender, EventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine("end");
 
-            //if (HttpContext.Current != null && HttpContext.Current.User.Identity.IsAuthenticated)
-            //{
-            //    System.Diagnostics.Debug.WriteLine("logout");
-
-            //    var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-            //    authenticationManager.SignOut();
-            //}
         }
 
         protected void Application_End(object sender, EventArgs e)

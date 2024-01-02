@@ -87,6 +87,24 @@ namespace ShirtTee.admin
         protected global::System.Web.UI.WebControls.HyperLink hypToClient;
 
         /// <summary>
+        /// panelLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelLog;
+
+        /// <summary>
+        /// btnDownload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDownload;
+
+        /// <summary>
         /// btnSignout control.
         /// </summary>
         /// <remarks>
