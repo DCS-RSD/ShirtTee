@@ -87,7 +87,7 @@ namespace ShirtTee
                     cartDiv.Visible = true;
 
                     lblUsername.Text = string.Format("{0}", HttpContext.Current.User.Identity.GetUserName());
-                    if (HttpContext.Current.User.IsInRole("admin"))
+                    if (HttpContext.Current.User.IsInRole("admin")|| HttpContext.Current.User.IsInRole("staff"))
                     {
                         hypToClient.Visible = true;
                     }

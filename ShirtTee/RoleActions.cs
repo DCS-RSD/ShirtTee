@@ -26,6 +26,11 @@ namespace WingtipToys.Logic
                 IdRoleResult = roleMgr.Create(new IdentityRole { Name = "admin" });
             }
 
+            if (!roleMgr.RoleExists("staff"))
+            {
+                IdRoleResult = roleMgr.Create(new IdentityRole { Name = "staff" });
+            }
+
             if (!roleMgr.RoleExists("customer"))
             {
                 IdRoleResult = roleMgr.Create(new IdentityRole { Name = "customer" });
@@ -34,8 +39,8 @@ namespace WingtipToys.Logic
             //create admin acc if null
             var userStore = new UserStore<IdentityUser>(identityDbContext);
             var manager = new UserManager<IdentityUser>(userStore);
-            var hasAdminAccounr = manager.Find("admin@shirttee.com", "admin123");
-            if (hasAdminAccounr == null)
+            var hasAdminAccount = manager.Find("admin@shirttee.com", "admin123");
+            if (hasAdminAccount == null)
             {
                 var adminAccount = new IdentityUser() { UserName = "admin", Email = "admin@shirttee.com" };
                 IdentityResult result = manager.Create(adminAccount, "admin123");
@@ -44,6 +49,19 @@ namespace WingtipToys.Logic
             if (!manager.IsInRole(manager.FindByEmail("admin@shirttee.com").Id, "admin"))
             {
                 IdUserResult = manager.AddToRole(manager.FindByEmail("admin@shirttee.com").Id, "admin");
+            }
+
+            //create staff
+            var hasStaffAccount = manager.Find("staff@shirttee.com", "staff123");
+            if (hasStaffAccount == null)
+            {
+                var adminAccount = new IdentityUser() { UserName = "staff", Email = "staff@shirttee.com" };
+                IdentityResult result = manager.Create(adminAccount, "staff123");
+            }
+
+            if (!manager.IsInRole(manager.FindByEmail("staff@shirttee.com").Id, "staff"))
+            {
+                IdUserResult = manager.AddToRole(manager.FindByEmail("staff@shirttee.com").Id, "staff");
             }
         }
     }

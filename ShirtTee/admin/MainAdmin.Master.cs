@@ -37,7 +37,14 @@ namespace ShirtTee.admin
                     }
                 }
                 dbconnection.closeConnection();
-
+                if (HttpContext.Current.User.IsInRole("admin"))
+                {
+                    analyzeLink.Visible = true;
+                }
+                else
+                {
+                    analyzeLink.Visible= false;
+                }
             }
 
         }

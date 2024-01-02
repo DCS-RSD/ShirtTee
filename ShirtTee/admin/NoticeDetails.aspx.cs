@@ -29,6 +29,11 @@ namespace ShirtTee.admin
 
             }
 
+            if (HttpContext.Current.User.IsInRole("staff"))
+            {
+                Panel1.Visible = false;
+            }
+
         }
 
         private void fetchData()
@@ -50,6 +55,15 @@ namespace ShirtTee.admin
 
                 txtTitle.Text = (string)noticeDetails["notice_title"];
                 txtContent.Text = (string)noticeDetails["notice_content"];
+
+                if (HttpContext.Current.User.IsInRole("staff"))
+                {
+                    lblViewOnlyContent.Text = (string)noticeDetails["notice_content"];
+                    lblViewOnlyTitle.Text = (string)noticeDetails["notice_title"];
+                    lblViewOnlyDate.Text = noticeDetails["created_at"].ToString();
+                    lblViewOnlyAuthor.Text = (string)noticeDetails["Username"];
+                }
+
                 if ((bool)noticeDetails["is_private"])
                 {
                     radVisibility.Items[1].Selected = true;

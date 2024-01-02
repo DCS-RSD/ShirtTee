@@ -67,6 +67,15 @@ namespace ShirtTee.admin
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowDeleteSuccessToast", "showDeleteSuccessToast();", true);
                 }
             }
+
+            if (HttpContext.Current.User.IsInRole("admin"))
+            {
+                hypAddNotice.Visible = true;
+            }
+            else
+            {
+                hypAddNotice.Visible = false;
+            }
         }
 
         public string showPrivateLogo()

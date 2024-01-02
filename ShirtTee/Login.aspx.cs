@@ -61,7 +61,7 @@ namespace ShirtTee
                     Response.Cookies["user_ID"].Value = user.Id;
                     Response.Cookies["user_ID"].Expires = DateTime.UtcNow.AddDays(30);
                 }
-                if (manager.IsInRole(user.Id, "admin"))
+                if (manager.IsInRole(user.Id, "admin") || manager.IsInRole(user.Id,"staff"))
                 {
 
                     Response.Redirect($"~/admin/Dashboard.aspx", false);

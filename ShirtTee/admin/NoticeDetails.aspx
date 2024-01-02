@@ -158,7 +158,29 @@
                 </div>
 
             </asp:Panel>
+            <asp:Panel ID="panelStaffView" runat="server">
+                <%--Title--%>
+                <div class="mb-8">
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">
+                        <asp:Label ID="lblViewOnlyTitle" runat="server"></asp:Label>
+                    </h1>
 
+                    <h1 class="text-right text-sm text-gray-800 dark:text-gray-200">
+                        <asp:Label ID="lblViewOnlyDate" runat="server"></asp:Label>
+                    </h1>
+
+
+                    <p class="py-4 text-sm text-gray-600 dark:text-gray-400">
+                        <asp:Label ID="lblViewOnlyContent" runat="server"></asp:Label>
+                    </p>
+                    <p class="text-right text-sm text-gray-600 dark:text-gray-400">
+                        From,
+                        <br />
+                        <asp:Label ID="lblViewOnlyAuthor" runat="server"></asp:Label>
+                    </p>
+                </div>
+                <%--End Title--%>
+            </asp:Panel>
 
         </div>
     </div>
