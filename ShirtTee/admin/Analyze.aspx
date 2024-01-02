@@ -18,7 +18,8 @@
                 <div class="p-4 md:p-5 flex justify-between gap-x-3">
                     <div>
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Order Received / Month
+                            Order Received 
+                        <span class="font-bold"><%= DateTime.Now.ToString("yyyy/MM") %></span>
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
                             <asp:Label ID="lblTotalOrder" runat="server" Text="0"
@@ -49,6 +50,8 @@
                     <div>
                         <p class="text-xs uppercase tracking-wide text-gray-500">
                             New Users
+                        <span class="font-bold"><%= DateTime.Now.ToString("yyyy/MM") %></span>
+
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
                             <asp:Label ID="lblTotalUser" runat="server" Text="0"
@@ -80,7 +83,9 @@
                 <div class="p-4 md:p-5 flex justify-between gap-x-3">
                     <div>
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Sales (RM) / Month
+                            Sales (RM) 
+                        <span class="font-bold"><%= DateTime.Now.ToString("yyyy/MM") %></span>
+
                         </p>
                         <div class="mt-1 flex items-center gap-x-2">
                             <asp:Label ID="lblTotalSales" runat="server" Text="0"
@@ -95,12 +100,100 @@
                     </div>
                 </div>
 
-                <a class="flex-1 py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="">How are the product sales performing?
+                <button type="button" data-hs-overlay="#hs-scroll-inside-body-modal"
+                    class="flex-1 py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                    How are the product sales performing?
                     <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m9 18 6-6-6-6" />
                     </svg>
-                </a>
+                </button>
+                <%-- Modal --%>
+                <div id="hs-scroll-inside-body-modal" class="hs-overlay hidden w-full h-full fixed top-0 start-0 z-[100] overflow-x-hidden overflow-y-auto">
+                    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto h-[calc(100%-3.5rem)]">
+                        <div class="max-h-full overflow-hidden flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                            <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+                                <h3 class="font-bold text-gray-800 dark:text-white">Monthly Income
+                                    <asp:Label ID="lblModalTitle" runat="server"></asp:Label>
+                                </h3>
+                                <button type="button" class="flex justify-center items-center w-7 h-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-scroll-inside-body-modal">
+                                    <span class="sr-only">Close</span>
+                                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 6 6 18" />
+                                        <path d="m6 6 12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="py-2 px-8 overflow-y-auto">
+                                <div class=" grid grid-cols-3">
+                                    <div class="col-span-2 flex-col">
+                                        <h1 class="text-m py-2 flex-1 font-bold border-b dark:text-white">Month</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">January</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">February</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">March</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">April</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">May</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">June</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">July</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">August</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">September</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">October</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">November</h1>
+                                        <h1 class="text-m py-2 flex-1 font-semi-bold dark:text-white">December</h1>
+                                        <h1 class="text-m py-2 flex-1 border-t font-bold dark:text-white">Total Sales</h1>
+                                    </div>
+                                    <div class="col-span-1 flex-col">
+                                        <h1 class="text-m py-2 flex-1 font-bold text-right border-b dark:text-white">Income (RM)</h1>
+                                        <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1">
+                                            <ItemTemplate>
+                                                <h1 class="text-m flex-1 py-2 text-right font-semi-bold dark:text-white"><%#Eval("sales") %></h1>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                        <asp:SqlDataSource runat="server" ID="SqlDataSource1" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="WITH Months AS (
+  SELECT DISTINCT MonthNumber
+  FROM (
+    SELECT 1 AS MonthNumber
+    UNION SELECT 2
+    UNION SELECT 3
+    UNION SELECT 4
+    UNION SELECT 5
+    UNION SELECT 6
+    UNION SELECT 7
+    UNION SELECT 8
+    UNION SELECT 9
+    UNION SELECT 10
+    UNION SELECT 11
+    UNION SELECT 12
+  ) AS AllMonths
+)
+
+SELECT COALESCE(SUM(o.order_total), 0) AS sales, m.MonthNumber AS month
+FROM Months m
+LEFT JOIN [Order] o ON m.MonthNumber = MONTH(o.order_date) AND YEAR(o.order_date) = @year
+GROUP BY m.MonthNumber
+ORDER BY m.MonthNumber;
+">
+                                            <SelectParameters>
+                                                <asp:ControlParameter ControlID="ddlYear" PropertyName="SelectedValue" Name="year"></asp:ControlParameter>
+                                            </SelectParameters>
+                                        </asp:SqlDataSource>
+                                        <asp:Label
+                                            runat="server"
+                                            ID="lblModalTotalSales"
+                                            Text="0.00"
+                                            class="block text-m flex-1 py-2 text-right border-t dark:text-violet-300 text-indigo-600 font-bold"></asp:Label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+                                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-scroll-inside-body-modal">
+                                    Close
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- End Card -->
         </div>
@@ -178,14 +271,14 @@
                         Items sold based on product category group.
                     </p>
                 </div>
-                    <div class="self-end">
-                        <asp:DropDownList runat="server" ID="ddlCategory"
-                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" AutoPostBack="True">
-                            <asp:ListItem Value="men">Men</asp:ListItem>
-                            <asp:ListItem Value="women">Women</asp:ListItem>
-                            <asp:ListItem Value="kids">Kids</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
+                <div class="self-end">
+                    <asp:DropDownList runat="server" ID="ddlCategory"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" AutoPostBack="True">
+                        <asp:ListItem Value="men">Men</asp:ListItem>
+                        <asp:ListItem Value="women">Women</asp:ListItem>
+                        <asp:ListItem Value="kids">Kids</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
             </div>
             <div class="p-6" id="hs-single-bar-chart"></div>
         </div>

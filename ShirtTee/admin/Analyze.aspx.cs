@@ -19,16 +19,18 @@ namespace ShirtTee.admin
             displayTotalOrder();
             displayTotalUser();
             displayTotalSales();
+            displayModalTotalSales();
             ScriptManager.RegisterStartupScript(this, GetType(), "setArrSales", $"setArrSales({getSales()});", true);
             ScriptManager.RegisterStartupScript(this, GetType(), "setGroupSales", $"setGroupSales({getGroupSales()});", true);
             ScriptManager.RegisterStartupScript(this, GetType(), "setCategorySales", $"setCategorySales({getCategorySales()});", true);
             ScriptManager.RegisterStartupScript(this, GetType(), "setCategory", $"setCategory({getCategoryName()});", true);
-
             if (!IsPostBack)
             {
                 ddlYear.SelectedValue = DateTime.Now.Year.ToString();
 
             }
+            lblModalTitle.Text = ddlYear.SelectedValue.ToString();
+
 
         }
 
@@ -94,15 +96,46 @@ namespace ShirtTee.admin
                 new SqlParameter("@year",DateTime.Now.Year),
                 new SqlParameter("@month",DateTime.Now.Month),
                 };
-                dBconnection.closeConnection();
 
                 object totalOrder = dBconnection.ExecuteQuery(query, parameters).ExecuteScalar();
                 if (totalOrder != null && totalOrder.ToString() != String.Empty)
                 {
                     lblTotalSales.Text = totalOrder.ToString();
                 }
+                dBconnection.closeConnection();
+
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void displayModalTotalSales()
+        {
+            try
+            {
+                DBconnection dBconnection = new DBconnection();
+                string query = "SELECT SUM(order_total) FROM [Order] WHERE YEAR(order_date) = @year";
+                dBconnection.createConnection();
+
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                new SqlParameter("@year",ddlYear.SelectedValue),
+                };
+
+                object totalOrder = dBconnection.ExecuteQuery(query, parameters).ExecuteScalar();
+
+                if (totalOrder != null && totalOrder.ToString() != String.Empty)
+                {
+                    lblModalTotalSales.Text = totalOrder.ToString();
+                }
+                dBconnection.closeConnection();
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
 
         public string getSales()
