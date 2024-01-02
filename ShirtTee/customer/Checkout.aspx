@@ -45,7 +45,7 @@ WHERE user_ID = @user_ID">
             </div>
 
             <p class="mt-8 text-lg font-medium">Payment Methods</p>
-            <div class="mt-5 grid gap-6">
+            <div class="mt-5 grid gap-6 mb-10">
                 <div class="relative">
                     <!--css reason use html input and label, will use another asp:Label to pass value when submit the form-->
                     <input class="peer hidden" id="radio_1" type="radio" name="radio" checked="">
@@ -61,7 +61,7 @@ WHERE user_ID = @user_ID">
             </div>
         </div>
         <form id="form2">
-            <div class="mt-10 mb-8 mx-4 rounded bg-gray-50 px-6 pt-6 lg:mt-0">
+            <div class="mt-10 mb-8 mx-4 rounded bg-gray-50 px-6 pt-6 lg:mt-0 " style="max-height: 795px;">
                 <p class="text-xl font-medium">Shipping Details</p>
                 <p class="text-gray-400">Complete your order by providing your shipping details.</p>
                 <div class="">

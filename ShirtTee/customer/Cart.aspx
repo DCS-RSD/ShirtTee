@@ -19,20 +19,23 @@ WHERE user_ID = @user_ID">
                         <asp:SessionParameter SessionField="user_ID" Name="user_ID"></asp:SessionParameter>
                     </SelectParameters>
                 </asp:SqlDataSource>
-                <asp:Repeater ID="Repeater1" runat="server"  OnItemDataBound="Repeater1_ItemDataBound" EnableViewState="True">
+                <asp:Repeater ID="Repeater1" runat="server" OnItemDataBound="Repeater1_ItemDataBound" EnableViewState="True">
                     <ItemTemplate>
                         <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
                             <asp:Label runat="server" ID="lblProductID" Text='<%# Eval("product_ID") %>' Visible="False" />
-                                           <asp:Label runat="server" ID="lblProductDetailsID" Text='<%# Eval("product_details_ID") %>' Visible="False" />
+                            <asp:Label runat="server" ID="lblProductDetailsID" Text='<%# Eval("product_details_ID") %>' Visible="False" />
 
-                            <asp:Image runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>'  AlternateText='<%# Eval("product_name") %>' class="w-full rounded-lg sm:w-40 sm:h-40" />
+                            <asp:Image runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' AlternateText='<%# Eval("product_name") %>' class="w-full rounded-lg sm:w-40 sm:h-40" />
                             <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                                 <div class="mt-5 sm:mt-0">
                                     <h2 class="text-lg font-bold text-gray-900"><%# Eval("product_name") %></h2>
-                                  
+
                                     <p class="mt-1 text-base text-gray-700"><%# Eval("color_name") %></p>
                                     <p class="mt-1 text-base text-gray-700"><%# Eval("size_name") %></p>
-                                     <p class="mt-1 text-base text-gray-700">RM <asp:Label runat="server" ID="lblPrice" Text="" /></p>
+                                    <p class="mt-1 text-base text-gray-700">
+                                        RM
+                                        <asp:Label runat="server" ID="lblPrice" Text="" />
+                                    </p>
                                     <asp:Label runat="server" ID="lblLowStock" Visible="false" Text="Only left " class="mt-1 text-red-500 text-base italic font-semibold"><p class="inline-flex"><%# Eval("stock_available") %> stock</p> </asp:Label>
                                 </div>
                                 <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
@@ -46,6 +49,12 @@ WHERE user_ID = @user_ID">
                                         <asp:ListItem>7</asp:ListItem>
                                         <asp:ListItem>8</asp:ListItem>
                                         <asp:ListItem>9</asp:ListItem>
+                                        <asp:ListItem>10</asp:ListItem>
+                                        <asp:ListItem>11</asp:ListItem>
+                                        <asp:ListItem>12</asp:ListItem>
+                                        <asp:ListItem>13</asp:ListItem>
+                                        <asp:ListItem>14</asp:ListItem>
+                                        <asp:ListItem>15</asp:ListItem>
                                     </asp:DropDownList>
                                     <div class="flex items-center space-x-4">
                                         <p class="text-sm">
@@ -153,7 +162,7 @@ WHERE user_ID = @user_ID">
                     </div>
                 </div>
                 <div class="mt-6">
-                    <asp:Button runat="server" Visible="true" ID="btnCheckout"  OnClick="btnCheckout_Click" class="w-full bg-gray-900 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500 " Text="CHECKOUT"></asp:Button>
+                    <asp:Button runat="server" Visible="true" ID="btnCheckout" OnClick="btnCheckout_Click" class="w-full bg-gray-900 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500 " Text="CHECKOUT"></asp:Button>
                     <asp:Button runat="server" Visible="false" ID="btnDisabledChkOut" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed" disabled Text="Checkout"></asp:Button>
                 </div>
             </div>

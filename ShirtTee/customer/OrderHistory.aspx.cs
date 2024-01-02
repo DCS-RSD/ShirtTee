@@ -333,7 +333,7 @@ namespace ShirtTee.customer
                                                             new SqlParameter("@product_details_ID", cart["product_details_ID"]),
                                                         };
                                                             db2.createConnection();
-                                                            dBconnection.ExecuteNonQuery(deductStock, param);
+                                                            db2.ExecuteNonQuery(deductStock, param);
                                                             db2.closeConnection();
                                                         }
                                                         catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "deduct stock"); }
