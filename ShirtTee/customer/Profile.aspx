@@ -25,6 +25,13 @@
                 else if (status == "redeemSuccess") {
                     toastr["success"]("Redeem voucher successfully.")
                 }
+                else if (status == "changePwdSuccess")
+                {
+                    toastr["success"]("Change password successfully.")
+                }
+                else if (status == "changePwdFailed") {
+                    toastr["error"]("Change password failed.")
+                }
                 else {
                     toastr["error"]("Something went wrong.");
                 }
@@ -111,16 +118,25 @@
 
                                 <asp:Button runat="server" Text="Change" ID="btnChangeAvatar" OnClientClick="triggerFileUploadClick(); return false;" OnClick="btnChangeAvatar_Click" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></asp:Button>
                                 <asp:FileUpload runat="server" ID="fileAvatar" class="hidden" onchange="loadFile(event)" />
-                                <!--
-                                        no need, javascript got
-                                <asp:RegularExpressionValidator ID="revPhoto" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="fileAvatar" OnServerValidate="ValidatePhotoFormat" ErrorMessage="Only jpg, png, and jpeg formats are accepted." Display="Dynamic" ForeColor="Red" CssClass="text-sm italic mt-2" ValidationExpression="^.+\.(jpg|png|jpeg)$" />
--->
+
                             </div>
                             <div class="mt-2">
                             </div>
 
                         </div>
 
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label for="email" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Password</label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            <div class="flex items-center">
+                                <asp:Label runat="server" ID="lblPassword" Text="************" class="block focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg font-bold" />
+                                <asp:Button runat="server" Text="Change" ID="btnPassword" OnClick="btnPassword_Click" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></asp:Button>
+
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
@@ -171,6 +187,7 @@
                             </div>
 
                             <asp:RequiredFieldValidator ID="rfvDate" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="txtSelectDOB" ErrorMessage="DOB is required" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
+                            <asp:CustomValidator ID="CustomValidator3" OnServerValidate="CustomValidator3_ServerValidate" runat="server" ErrorMessage="The DOB must not be greater than today." ValidationGroup="ProfileValidation" ControlToValidate="txtSelectDOB" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic"></asp:CustomValidator>
 
                         </div>
                     </div>
@@ -220,11 +237,14 @@
                     <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
 
                         <ItemTemplate>
-                            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                                <div class=" px-4 md:p-5">
+                            <div class="flex flex-col bg-white dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                                <div class="p-6 border-t border-l border-r shadow-sm rounded-t-lg ">
                                     <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                                         <asp:Label runat="server" ID="lblVoucher" Text=""></asp:Label></h3>
-                                    <p class="mt-2 text-gray-500 dark:text-gray-400"><%# Eval("voucher_description") %></p>
+                                    <div>
+                                        <p class="mt-2 text-gray-500 text-justify dark:text-gray-400 text-justify"><%# Eval("voucher_description") %></p>
+
+                                    </div>
 
                                     <p class="mt-2 text-gray-500 dark:text-gray-400 text-xs">
                                         <asp:Label runat="server" ID="lblMinSpend" Text=""></asp:Label>
@@ -233,7 +253,7 @@
                                         <asp:Label runat="server" ID="lblCapAt" Text=""></asp:Label>
                                     </p>
                                     <input type="hidden" id='<%# "hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>' value='<%# Eval("voucher_name") %>'>
-                                    <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                    <div class="js-clipboard [--is-toggle-tooltip:false] hs-tooltip relative mt-4 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-md font-mono rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                                         data-clipboard-target='<%# "#hs-clipboard-tooltip-on-hover-" + Container.ItemIndex %>'
                                         data-clipboard-action="copy"
                                         data-clipboard-success-text="Copied">
@@ -255,8 +275,6 @@
                                     </div>
 
                                 </div>
-
-
                                 <div class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-slate-900 dark:border-gray-700">
                                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">
                                         Used By
@@ -269,6 +287,8 @@
                     </asp:Repeater>
                     <!-- End of card block -->
                     <!-- Repeat the card blocks for the desired number of cards -->
+
+
                 </div>
 
             </div>

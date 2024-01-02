@@ -175,6 +175,7 @@
     <Content Include="App_Data\ShirtTeeDB_log.ldf">
       <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
     </Content>
+    <Content Include="ChangePassword.aspx" />
     <Content Include="customer\Cart.aspx" />
     <Content Include="customer\Checkout.aspx" />
     <Content Include="customer\OrderDetails.aspx" />
@@ -318,6 +319,13 @@
     </Compile>
     <Compile Include="admin\VoucherDetails.aspx.designer.cs">
       <DependentUpon>VoucherDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>

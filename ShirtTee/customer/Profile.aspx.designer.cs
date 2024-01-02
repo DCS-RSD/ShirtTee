@@ -123,13 +123,22 @@ namespace ShirtTee.customer
         protected global::System.Web.UI.WebControls.FileUpload fileAvatar;
 
         /// <summary>
-        /// revPhoto control.
+        /// lblPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPhoto;
+        protected global::System.Web.UI.WebControls.Label lblPassword;
+
+        /// <summary>
+        /// btnPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPassword;
 
         /// <summary>
         /// txtUsername control.
@@ -211,6 +220,15 @@ namespace ShirtTee.customer
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDate;
+
+        /// <summary>
+        /// CustomValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator3;
 
         /// <summary>
         /// txtPhone control.
