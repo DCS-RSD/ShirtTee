@@ -47,18 +47,7 @@ namespace ShirtTee.admin
                     if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                     {
                         Session["VoucherAdded"] = "success";
-                        StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                        var options = new CouponCreateOptions
-                        {
-                            Duration = "once",
-                            Name = txtVoucherName.Text,
-                            Id = txtVoucherName.Text,
-                            PercentOff = (decimal)discount,
-                            RedeemBy = DateTime.Parse(txtDate.Text)
-                        };
 
-                        var service = new CouponService();
-                        service.Create(options);
                     }
                 dbconnection.closeConnection();
 

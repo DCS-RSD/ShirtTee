@@ -90,9 +90,6 @@ namespace ShirtTee.admin
                 {
                     Session["VoucherDeleted"] = "success";
 
-                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
-                    var service = new CouponService();
-                    service.Delete(voucherName);
                 }
             }
             catch (Exception)
