@@ -63,6 +63,7 @@ namespace ShirtTee
                     {
                         imgAvatar.ImageUrl = "~/Image/default-avatar.jpg";
                     }
+                    lblUsername.Text = string.Format("{0}", user["UserName"]);
                 }
                 dbconnection.closeConnection();
 
