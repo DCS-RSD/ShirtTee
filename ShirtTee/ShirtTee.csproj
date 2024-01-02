@@ -491,7 +491,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="Web.sitemap" />
+    <Content Include="WebCustomer.sitemap" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
