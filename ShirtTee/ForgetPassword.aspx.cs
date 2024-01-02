@@ -134,7 +134,7 @@ namespace ShirtTee
                     msg.Subject = "SHIRTTEE Account Reset Password";
                     msg.Body = ("Hi " + username + 
                         "<br/><br/>" + 
-                        "Your reset passwork link: " + link + 
+                        "Your reset passwork link: " + "<a href=\"" + link + "\">Reset Password</a>" + 
                         "<br/><br/>" + 
                         "The link is valid for 24 hours only.");
                     msg.IsBodyHtml = true;
