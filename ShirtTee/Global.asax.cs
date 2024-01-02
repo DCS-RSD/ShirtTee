@@ -47,6 +47,8 @@ namespace ShirtTee
 
         protected void Session_Start(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("start 1");
+
             if (Request.Cookies["user_ID"] != null)
             {
                 System.Diagnostics.Debug.WriteLine("start");
@@ -72,6 +74,14 @@ namespace ShirtTee
                 }
 
             }
+
+
+            if (HttpContext.Current != null && HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                System.Diagnostics.Debug.WriteLine("give session id");
+
+                Session["user_ID"] = HttpContext.Current.User.Identity.GetUserId();
+            }
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -91,16 +101,20 @@ namespace ShirtTee
 
         protected void Session_End(object sender, EventArgs e)
         {
+            //System.Diagnostics.Debug.WriteLine("end");
 
+            //if (HttpContext.Current != null && HttpContext.Current.User.Identity.IsAuthenticated)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("logout");
+
+            //    var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            //    authenticationManager.SignOut();
+            //}
         }
 
         protected void Application_End(object sender, EventArgs e)
         {
-            if (HttpContext.Current != null && HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-                authenticationManager.SignOut();
-            }
+
         }
     }
 }
