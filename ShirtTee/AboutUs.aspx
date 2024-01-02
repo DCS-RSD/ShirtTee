@@ -16,11 +16,13 @@
                             <div class="sm:col-span-2">
                                 <div class="space-y-4">
                                     <div class="text-lg leading-6 font-medium space-y-1">
-                                        <h3>Goh Chun Yen</h3>
-                                        <p class="text-indigo-600">Developer</p>
+                                        <h3>Prof. Dr Goh Chun Yen</h3>
+                                        <p class="text-indigo-600">Co-Founder / CEO</p>
                                     </div>
-                                    <div class="text-lg">
-                                        <p class="text-gray-500">A developer who developed this website.</p>
+                                    <div class="text-m text-justify">
+                                        <p class="text-gray-500">
+                                            As the Co-Founder and CEO of ShirtTee, Prof. Dr Goh is the driving force behind our innovative approach to online shopping. With a keen eye for fashion and a passion for empowering individual expression, Prof. Dr Goh has led ShirtTee to become a go-to destination for those seeking style, comfort, and sustainability.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -35,10 +37,10 @@
                                 <div class="space-y-4">
                                     <div class="text-lg leading-6 font-medium space-y-1">
                                         <h3>Yip Zi Yan</h3>
-                                        <p class="text-indigo-600">Developer</p>
+                                        <p class="text-indigo-600">Co-Founder / CTO</p>
                                     </div>
-                                    <div class="text-lg">
-                                        <p class="text-gray-500">A developer who developed this website.</p>
+                                    <div class="text-m text-justify">
+                                        <p class="text-gray-500">Meet the technological architect behind ShirtTee's success, Mr. Yip. As the Co-Founder and Chief Technology Officer, Mr. Yip is at the forefront of our digital evolution. With a profound commitment to innovation and a strategic vision, Mr. Yip ensures ShirtTee stays ahead in the ever-evolving landscape of online shopping.</p>
                                     </div>
                                 </div>
                             </div>

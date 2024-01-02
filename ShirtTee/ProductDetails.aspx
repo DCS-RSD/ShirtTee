@@ -400,20 +400,21 @@ ORDER BY review_date DESC">
 
 
     <div id="hs-subscription-with-image" class="flex justify-center items-center hidden w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
-        <div class="h-full hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full sm:mx-auto">
-            <div class="absolute top-2 end-2 z-[10]">
-                <button type="button" class="inline-flex justify-center items-center w-8 h-8 text-sm font-semibold rounded-lg border border-transparent bg-white/10 text-black hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-subscription-with-image">
-                    <span class="sr-only">Close</span>
-                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                    </svg>
-                </button>
-            </div>
+        <div class="flex justify-center items-center h-full hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full sm:mx-auto">
+
             <div class="relative flex flex-col bg-white shadow-lg rounded-xl dark:bg-gray-800">
 
 
                 <div>
+                    <div class=" absolute top-0 right-0 z-[10]">
+                        <button type="button" class="inline-flex justify-center items-center w-10 h-10 text-sm font-semibold rounded-lg border border-transparent bg-white/10 text-black hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-subscription-with-image">
+                            <span class="sr-only">Close</span>
+                            <svg class="flex-shrink-0 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18" />
+                                <path d="m6 6 12 12" />
+                            </svg>
+                        </button>
+                    </div>
                     <img class="w-full object-cover rounded-xl" src="" alt="Image Description">
                 </div>
 
