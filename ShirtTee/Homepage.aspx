@@ -45,7 +45,7 @@
                             </div>
                         </div>
 
-                        <a href="#" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">SHOP NOW</a>
+                        <asp:HyperLink runat="server" NavigateUrl="~/Products.aspx" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">SHOP NOW</asp:HyperLink>
                     </div>
                 </div>
             </div>
