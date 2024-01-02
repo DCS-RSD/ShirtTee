@@ -231,7 +231,7 @@
 
                     </div>
                     <div class="text-center mt-2">
-                           <asp:Label ID="lblErrAdd" runat="server" Text="" class="italic text-red-600 font-semibold "></asp:Label>
+                        <asp:Label ID="lblErrAdd" runat="server" Text="" class="italic text-red-600 font-semibold "></asp:Label>
                     </div>
 
 
@@ -249,7 +249,6 @@
                 <div class="mt-1 flex items-center">
                     <div>
                         <div runat="server" id="ratingStars" class="flex items-center">
-
                         </div>
                     </div>
                     <p class="ml-2 text-sm text-gray-900">
@@ -389,9 +388,12 @@ ORDER BY review_date DESC">
                             <ItemTemplate>
                                 <div class="py-4 border-t border-b">
                                     <div class="flex items-center">
-                                        <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("avatar")) %>' alt="<%# Eval("UserName") %>" class="h-12 w-12 rounded-full">
+                                        <img src='<%# Eval("avatar") != DBNull.Value?
+                                                "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("avatar"))
+                                                : ResolveUrl("~/Image/default-avatar.jpg").ToString()%>'
+                                            alt="<%# Eval("UserName") %>" class="h-12 w-12 rounded-full">
                                         <div class="ml-4">
-                                            <asp:Label runat="server" ID="lblRating" Text='<%# Eval("rating") %>' Visible="false"/>
+                                            <asp:Label runat="server" ID="lblRating" Text='<%# Eval("rating") %>' Visible="false" />
                                             <h4 class="text-sm font-bold text-gray-900"><%# Eval("UserName") %></h4>
                                             <div class="mt-1 flex items-center">
 
