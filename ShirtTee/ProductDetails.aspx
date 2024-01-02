@@ -63,7 +63,7 @@
                                         <ItemTemplate>
                                             <div class="hs-carousel-slide" style="width: 500px;">
                                                 <div class="flex justify-center h-full bg-gray-100 p-6">
-                                                    <span class="self-center text-4xl transition duration-700">First slide
+                                                    <span class="self-center text-4xl transition duration-700">
                                                         <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>' />
                                                     </span>
                                                 </div>
@@ -82,7 +82,7 @@
                                         <ItemTemplate>
                                             <div class="hs-carousel-slide" style="width: 624px;">
                                                 <div class="flex justify-center h-full bg-gray-100 p-6">
-                                                    <span class="self-center text-4xl transition duration-700">First slide
+                                                    <span class="self-center text-4xl transition duration-700">
                                                         <img src='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("image")) %>' />
                                                     </span>
                                                 </div>

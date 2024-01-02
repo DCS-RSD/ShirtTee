@@ -134,9 +134,11 @@ namespace ShirtTee
                     msg.Subject = "SHIRTTEE Account Reset Password";
                     msg.Body = ("Hi " + username + 
                         "<br/><br/>" + 
-                        "Your reset passwork link: " + link + 
+                        "Your reset passwork link: " + "<a href=\"" + link + "\">Reset Password</a>" + 
                         "<br/><br/>" + 
-                        "The link is valid for 24 hours only.");
+                        "The link is valid for 24 hours only." +
+                        "<br/><br/>" + 
+                        "Please do not share it to others.");
                     msg.IsBodyHtml = true;
                     //Admin@123
                     SmtpClient smt = new SmtpClient("smtp.gmail.com");
