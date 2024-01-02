@@ -81,7 +81,7 @@
                                     <div class="relative">
                                         <asp:TextBox runat="server" ID="signupConfirmPassword" ValidationGroup="SigninValidation" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" aria-describedby="signupConfirmPasswordError" TextMode="Password" />
                                         <asp:RequiredFieldValidator runat="server" ValidationGroup="SigninValidation" ControlToValidate="signupConfirmPassword" Display="Dynamic" ErrorMessage="Please confirm the password" ForeColor="Red" ID="rfvConfirmPassword" CssClass="text-sm italic" />
-                                        <asp:CompareValidator runat="server" ControlToValidate="signupConfirmPassword" ControlToCompare="signupPassword" Display="Dynamic" ErrorMessage="Password does not match" ForeColor="Red" ID="cvConfirmPassword" CssClass="text-sm italic" />
+                                        <asp:CompareValidator runat="server" ControlToValidate="signupConfirmPassword" ValidationGroup="SigninValidation" ControlToCompare="signupPassword" Display="Dynamic" ErrorMessage="Password does not match" ForeColor="Red" ID="cvConfirmPassword" CssClass="text-sm italic" />
                                                                                           <button type="button" data-hs-toggle-password='{
                 "target": "#signupConfirmPassword"
               }' class="absolute top-0 end-0 p-3.5 rounded-e-md dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">

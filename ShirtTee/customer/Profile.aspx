@@ -195,7 +195,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="city" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Phone</label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <asp:TextBox runat="server" ID="txtPhone" Text="" autocomplete="address-level2" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
+                            <asp:TextBox runat="server" ID="txtPhone" placeholder="Eg: +60123456789" Text="" autocomplete="address-level2" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
 
                             <asp:RequiredFieldValidator ID="rfvPhone" runat="server" ValidationGroup="ProfileValidation" ControlToValidate="txtPhone" ErrorMessage="Phone number is required" Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" />
                             <asp:RegularExpressionValidator ID="revPhoneNumber" runat="server" ControlToValidate="txtPhone" ValidationGroup="ProfileValidation"
