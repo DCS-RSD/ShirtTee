@@ -93,7 +93,7 @@ namespace ShirtTee
             color: #666;
         }}
 
-        button {{
+        a {{
             padding: 6px 12px;
             margin-top: 2%;
             font-size: 12px;
@@ -106,7 +106,7 @@ namespace ShirtTee
             cursor: pointer;
         }}
 
-        button:hover {{
+        a:hover {{
             background-color: #2779bd;
         }}
 
@@ -149,7 +149,7 @@ namespace ShirtTee
                 ShirtTee
             </p>
 
-            <button>Login</button>
+            <a href='https://localhost:44374/HomePage.aspx'>Login</a>
         </main>
 
         <footer>
