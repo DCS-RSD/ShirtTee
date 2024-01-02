@@ -16,8 +16,13 @@ namespace ShirtTee.customer
     public partial class Profile : System.Web.UI.Page
     {
 
-        protected override void OnPreRender(EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["ProfileChanged"] != null && !IsPostBack)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
+            }
+
             if (Session["user_ID"] != null && !IsPostBack)
             {
                 DBconnection dbconnection = new DBconnection();
@@ -90,6 +95,8 @@ namespace ShirtTee.customer
                     {
                         svgIcon.Visible = false;
                         rfvDate.Enabled = false;
+                        CustomValidator3.Enabled = false;
+                        txtSelectDOB.Visible = false;
 
                         DateTime dob = Convert.ToDateTime(profile["dob"].ToString());
 
@@ -100,9 +107,11 @@ namespace ShirtTee.customer
                     }
                     else
                     {
-                        //txtDOB.Visible = false;
-
+                        svgIcon.Visible = true;
+                        txtDOB.Text = "";
+                        txtSelectDOB.Visible = true;
                         rfvDate.Enabled = true;
+                        CustomValidator3.Enabled = true;
                     }
 
                     txtPhone.Text = profile["PhoneNumber"].ToString();
@@ -116,14 +125,6 @@ namespace ShirtTee.customer
 
 
         }
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (Session["ProfileChanged"] != null && !IsPostBack)
-            {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessToast", "showSuccessToast();", true);
-            }
-
-        }
 
 
         protected void btnChangeAvatar_Click(object sender, EventArgs e)
@@ -133,113 +134,120 @@ namespace ShirtTee.customer
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Page.Validate();
+            //Page.Validate();
             if (Page.IsValid)
             {
                 Boolean dobExist = false;
-                try
-                {
-                    DBconnection dbconnection = new DBconnection();
+                //try
+                //{
+                DBconnection dbconnection = new DBconnection();
 
-                    SqlParameter[] parameterUrl2 = new SqlParameter[]{
+                SqlParameter[] parameterUrl2 = new SqlParameter[]{
                          new SqlParameter("@user_ID", Session["user_ID"]),
                         };
+                dbconnection.createConnection();
+                SqlDataReader user = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [AspNetUsers] " +
+                    " WHERE Id = @user_ID", parameterUrl2).ExecuteReader();
 
-                    SqlDataReader user = dbconnection.ExecuteQuery(
-                        " SELECT * FROM [AspNetUsers] " +
-                        " WHERE Id = @user_ID", parameterUrl2).ExecuteReader();
-
-                    if (user.HasRows)
+                if (user.HasRows)
+                {
+                    user.Read();
+                    if (user["dob"] != DBNull.Value)
                     {
-                        user.Read();
-                        if (user["dob"] != DBNull.Value)
-                        {
-                            dobExist = true;
-                        }
+                        dobExist = true;
                     }
+                }
+                dbconnection.closeConnection();
 
-                    //if file invalid type, the fileUpload will still contain that invalid file, so need to validate here
-                    if (validatePhotoFormat())
-                    {
-                        string sqlCommand =
-                               "UPDATE AspNetUsers SET " +
-                               "Email = @email, " +
-                               (fileAvatar.HasFile ? "avatar = @avatar, " : "") +
-                               (dobExist ? "" : "dob = @dob, ") +
-                               "UserName = @username, " +
-                               "gender = @gender, " +
-                               "PhoneNumber = @phone " +
-                               "WHERE Id = @user_ID";
-
-                        SqlParameter[] parameters = {
-                        new SqlParameter("@email", txtEmail.Text),
-                        new SqlParameter("@username", txtUsername.Text),
-                        new SqlParameter("@gender", ddlGender.SelectedValue),
-                        new SqlParameter("@phone", txtPhone.Text),
-                        new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId())
-                    };
-
-                        if (!dobExist)
-                        {
-                            parameters = parameters.Append(new SqlParameter("@dob", Convert.ToDateTime(txtSelectDOB.Text))).ToArray();
-                        }
-
-                        if (fileAvatar.HasFile)
-                        {
-                            parameters = parameters.Append(new SqlParameter("@avatar", (object)fileAvatar.FileBytes)).ToArray();
-                        }
-
-                        if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
-                        {
-                            Session["ProfileChanged"] = "success";
-                        }
-                    }
-                    else
-                    {
-                        string sqlCommand =
+                //if file invalid type, the fileUpload will still contain that invalid file, so need to validate here
+                if (validatePhotoFormat())
+                {
+                    string sqlCommand =
                            "UPDATE AspNetUsers SET " +
                            "Email = @email, " +
+                           (fileAvatar.HasFile ? "avatar = @avatar, " : "") +
                            (dobExist ? "" : "dob = @dob, ") +
                            "UserName = @username, " +
                            "gender = @gender, " +
                            "PhoneNumber = @phone " +
                            "WHERE Id = @user_ID";
 
-                        SqlParameter[] parameters = {
+                    SqlParameter[] parameters = {
                         new SqlParameter("@email", txtEmail.Text),
                         new SqlParameter("@username", txtUsername.Text),
                         new SqlParameter("@gender", ddlGender.SelectedValue),
                         new SqlParameter("@phone", txtPhone.Text),
                         new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId())
                     };
-                        if (!dobExist)
-                        {
-                            parameters = parameters.Append(new SqlParameter("@dob", Convert.ToDateTime(txtSelectDOB.Text))).ToArray();
-                        }
 
-                        if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
-                        {
-                            Session["ProfileChanged"] = "success";
-                        }
+                    if (!dobExist)
+                    {
+                        parameters = parameters.Append(new SqlParameter("@dob", Convert.ToDateTime(txtSelectDOB.Text))).ToArray();
                     }
 
+                    if (fileAvatar.HasFile)
+                    {
+                        parameters = parameters.Append(new SqlParameter("@avatar", (object)fileAvatar.FileBytes)).ToArray();
+                    }
+                    dbconnection.createConnection();
+                    if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                    {
+                        Session["ProfileChanged"] = "success";
+                        dbconnection.closeConnection();
+                        Response.Redirect(Request.Url.AbsoluteUri);
+                    }
+                    dbconnection.closeConnection();
+                }
+                else
+                {
+                    string sqlCommand =
+                       "UPDATE AspNetUsers SET " +
+                       "Email = @email, " +
+                       (dobExist ? "" : "dob = @dob, ") +
+                       "UserName = @username, " +
+                       "gender = @gender, " +
+                       "PhoneNumber = @phone " +
+                       "WHERE Id = @user_ID";
 
+                    SqlParameter[] parameters = {
+                        new SqlParameter("@email", txtEmail.Text),
+                        new SqlParameter("@username", txtUsername.Text),
+                        new SqlParameter("@gender", ddlGender.SelectedValue),
+                        new SqlParameter("@phone", txtPhone.Text),
+                        new SqlParameter("@user_ID", HttpContext.Current.User.Identity.GetUserId())
+                    };
+                    if (!dobExist)
+                    {
+                        parameters = parameters.Append(new SqlParameter("@dob", Convert.ToDateTime(txtSelectDOB.Text))).ToArray();
+                    }
+                    dbconnection.createConnection();
+                    if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
+                    {
+                        Session["ProfileChanged"] = "success";
+                        Response.Redirect(Request.Url.AbsoluteUri);
+
+                    }
+                    dbconnection.closeConnection();
                 }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex + "profile");
-                    Session["ProfileChanged"] = "error";
-                }
-                finally
-                {
-                    Response.Redirect(Request.Url.AbsoluteUri);
-                }
+
+
+                //}
+                //catch (Exception ex)
+                //{
+                //    System.Diagnostics.Debug.WriteLine(ex + "profile");
+                //    Session["ProfileChanged"] = "error";
+                //}
+                //finally
+                //{
+                //    Response.Redirect(Request.Url.AbsoluteUri);
+                //}
             }
-   
 
-            
- 
-            
+
+
+
+
         }
 
         private Boolean validatePhotoFormat()
@@ -289,29 +297,30 @@ namespace ShirtTee.customer
 
         protected void btnRedeem_Click(object sender, EventArgs e)
         {
-            DBconnection dbconnection = new DBconnection();
+            DBconnection dbconnection0 = new DBconnection();
 
             SqlParameter[] parameterUrl2 = new SqlParameter[]{
                          new SqlParameter("@voucher_name", txtRedeem.Text.ToString()),
                         };
-            dbconnection.createConnection();
-            SqlDataReader voucher = dbconnection.ExecuteQuery(
+            dbconnection0.createConnection();
+            SqlDataReader voucher = dbconnection0.ExecuteQuery(
                 " SELECT * FROM [Voucher] AS v" +
                 " WHERE expiry_date > GETDATE() AND" +
                 " deleted_at IS NULL AND" +
                 " voucher_name = @voucher_name", parameterUrl2).ExecuteReader();
-     
+
             if (voucher.HasRows)
             {
 
                 voucher.Read();
+                DBconnection dbconnection1 = new DBconnection();
 
                 SqlParameter[] parameterUrl = new SqlParameter[]{
                          new SqlParameter("@user_ID", Session["user_ID"]),
                          new SqlParameter("@voucher_name", voucher["voucher_name"].ToString()),
                         };
-                dbconnection.createConnection();
-                SqlDataReader existingVoucher = dbconnection.ExecuteQuery(
+                dbconnection1.createConnection();
+                SqlDataReader existingVoucher = dbconnection1.ExecuteQuery(
                     " SELECT * FROM [Voucher_Details] AS vd" +
                     " INNER JOIN [Voucher] AS v ON vd.voucher_ID = v.voucher_ID" +
                     " WHERE user_ID = @user_ID AND" +
@@ -332,7 +341,7 @@ namespace ShirtTee.customer
                     SqlParameter[] parameters = {
                        new SqlParameter("@user_ID", Session["user_ID"]),
                          new SqlParameter("@voucher_ID", voucher["voucher_ID"].ToString()),
-                                    };
+                    };
 
                     DBconnection db = new DBconnection();
                     db.createConnection();
@@ -343,7 +352,7 @@ namespace ShirtTee.customer
 
                     db.closeConnection();
                 }
-                dbconnection.closeConnection();
+                dbconnection1.closeConnection();
 
 
             }
@@ -351,7 +360,7 @@ namespace ShirtTee.customer
             {
                 Session["ProfileChanged"] = "noSuchVoucher";
             }
-            dbconnection.closeConnection();
+            dbconnection0.closeConnection();
             Response.Redirect(Request.Url.AbsoluteUri);
         }
 
@@ -362,6 +371,7 @@ namespace ShirtTee.customer
             SqlParameter[] parameter = new SqlParameter[]{
                          new SqlParameter("@user_ID", Session["user_ID"].ToString()),
                     };
+            dbconnection.createConnection();
             SqlDataReader allUser = dbconnection.ExecuteQuery(
                 "SELECT * FROM [AspNetUsers] " +
                 "WHERE Id != @user_ID ",
@@ -378,11 +388,12 @@ namespace ShirtTee.customer
                     }
                 }
             }
+            dbconnection.closeConnection();
             if (same)
             {
                 args.IsValid = false;
             }
-            else 
+            else
             {
                 args.IsValid = true;
             }
@@ -392,9 +403,11 @@ namespace ShirtTee.customer
         {
             Boolean same = false;
             DBconnection dbconnection = new DBconnection();
+
             SqlParameter[] parameter = new SqlParameter[]{
                          new SqlParameter("@user_ID", Session["user_ID"].ToString()),
                     };
+            dbconnection.createConnection();
             SqlDataReader allUser = dbconnection.ExecuteQuery(
                 "SELECT * FROM [AspNetUsers] " +
                 "WHERE Id != @user_ID ",
@@ -411,6 +424,7 @@ namespace ShirtTee.customer
                     }
                 }
             }
+            dbconnection.closeConnection();
             if (same)
             {
                 args.IsValid = false;
@@ -419,6 +433,24 @@ namespace ShirtTee.customer
             {
                 args.IsValid = true;
             }
+        }
+
+        protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime dt = DateTime.Now;
+            if (Convert.ToDateTime(txtSelectDOB.Text) > dt)
+            {
+                args.IsValid = false;
+            }
+            else 
+            {
+                args.IsValid = true;
+            }
+        }
+
+        protected void btnPassword_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/customer/ChangePassword.aspx");
         }
     }
 }

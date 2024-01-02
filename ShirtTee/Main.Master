@@ -58,7 +58,7 @@
                     <asp:HyperLink ID="linkHomepage" runat="server" NavigateUrl="~/Homepage.aspx" class="flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" aria-label="Brand">SHIRTTEE</asp:HyperLink>
                 </div>
 
-                <div class="w-full flex items-center justify-end ms-auto justify-between sm:gap-x-3 sm:order-3">
+                <div class="w-full items-center justify-end ms-auto justify-between sm:gap-x-3 sm:order-3">
 
                     <div class="sm:block hidden">
                         <asp:Label runat="server" for="icon" class="sr-only">Search</asp:Label>
@@ -252,20 +252,16 @@
                                                 <div class="flex flex-col py-6 px-3 md:px-6">
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                                                        <asp:Repeater ID="Repeater5" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <asp:HyperLink runat="server" ID="linkMen" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
           
-    <div class="grow">
-        <p>T-Shirts</p>
-    </div>
-                                                        </asp:HyperLink>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
- 
-    <div class="grow">
-        <p>Pants</p>
-    </div>
-                                                        </asp:HyperLink>
+                                                            <div class="grow">
+                                                                <p><%# Eval("category_name") %></p>
+                                                            </div>
+                                                                </asp:HyperLink>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </div>
@@ -315,22 +311,17 @@
                                                 <div class="flex flex-col py-6 px-3 md:px-6">
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
-
-                                                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Category] WHERE ([category_group] = @category_group)">
-                                                            <SelectParameters>
-                                                                <asp:Parameter DefaultValue="kids" Name="category_group" Type="String"></asp:Parameter>
-                                                            </SelectParameters>
-                                                        </asp:SqlDataSource>
-                                                        <asp:Repeater ID="Repeater3" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
+                                                        <asp:Repeater ID="Repeater6" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
                                                             <ItemTemplate>
-                                                                <asp:HyperLink runat="server" ID="linkKids" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
-          
-                                                            <div class="grow">
-                                                                <p><%# Eval("category_name") %></p>
-                                                            </div>
+                                                                <asp:HyperLink runat="server" ID="linkWomen" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
+      
+                                                        <div class="grow">
+                                                            <p><%# Eval("category_name") %></p>
+                                                        </div>
                                                                 </asp:HyperLink>
                                                             </ItemTemplate>
                                                         </asp:Repeater>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -354,19 +345,21 @@
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
 
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                                                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Category] WHERE ([category_group] = @category_group)">
+                                                            <SelectParameters>
+                                                                <asp:Parameter DefaultValue="kids" Name="category_group" Type="String"></asp:Parameter>
+                                                            </SelectParameters>
+                                                        </asp:SqlDataSource>
+                                                        <asp:Repeater ID="Repeater3" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <asp:HyperLink runat="server" ID="linkKids" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
           
-    <div class="grow">
-        <p>T-Shirts</p>
-    </div>
-                                                        </asp:HyperLink>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
- 
-    <div class="grow">
-        <p>Pants</p>
-    </div>
-                                                        </asp:HyperLink>
+                                                            <div class="grow">
+                                                                <p><%# Eval("category_name") %></p>
+                                                            </div>
+                                                                </asp:HyperLink>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,19 +374,16 @@
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
 
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                                                        <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <asp:HyperLink runat="server" ID="linkKids" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
           
-    <div class="grow">
-        <p>T-Shirts</p>
-    </div>
-                                                        </asp:HyperLink>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
- 
-    <div class="grow">
-        <p>Pants</p>
-    </div>
-                                                        </asp:HyperLink>
+                                                            <div class="grow">
+                                                                <p><%# Eval("category_name") %></p>
+                                                            </div>
+                                                                </asp:HyperLink>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </div>
@@ -439,10 +429,10 @@
 
                             <Items>
 
-                                <asp:MenuItem Text="Shirts" NavigateUrl="" />
-                                <asp:MenuItem Text="Pants" NavigateUrl="" />
-                                <asp:MenuItem Text="Accessories" NavigateUrl="" />
-                                <asp:MenuItem Text="Shoes" NavigateUrl="" />
+                                <asp:MenuItem Text="Shirts" NavigateUrl="~/Products.aspx?category=men&sub=Shirts" />
+                                <asp:MenuItem Text="Pants" NavigateUrl="~/Products.aspx?category=men&sub=Pants" />
+                                <asp:MenuItem Text="Accessories" NavigateUrl="~/Products.aspx?category=men&sub=Accessories" />
+                                <asp:MenuItem Text="Shoes" NavigateUrl="~/Products.aspx?category=men&sub=Shoes" />
 
                             </Items>
                         </asp:Menu>
@@ -464,12 +454,12 @@
 
 
                             <Items>
-                                <asp:MenuItem Text="Shirts" NavigateUrl="" />
-                                <asp:MenuItem Text="Pants" NavigateUrl="" />
-                                <asp:MenuItem Text="Shoes" NavigateUrl="" />
-                                <asp:MenuItem Text="Dress" NavigateUrl="" />
-                                <asp:MenuItem Text="Skirts" NavigateUrl="" />
-                                <asp:MenuItem Text="Accessories" NavigateUrl="" />
+                                <asp:MenuItem Text="Shirts" NavigateUrl="~/Products.aspx?category=women&sub=Shirts" />
+                                <asp:MenuItem Text="Pants" NavigateUrl="~/Products.aspx?category=women&sub=Pants" />
+                                <asp:MenuItem Text="Shoes" NavigateUrl="~/Products.aspx?category=women&sub=Shoes" />
+                                <asp:MenuItem Text="Dress" NavigateUrl="~/Products.aspx?category=women&sub=Dress" />
+                                <asp:MenuItem Text="Skirts" NavigateUrl="~/Products.aspx?category=women&sub=Skirts" />
+                                <asp:MenuItem Text="Accessories" NavigateUrl="~/Products.aspx?category=women&sub=Accessories" />
                             </Items>
                         </asp:Menu>
 
@@ -489,8 +479,8 @@
 
 
                             <Items>
-                                <asp:MenuItem Text="Boys" NavigateUrl="" />
-                                <asp:MenuItem Text="Girls" NavigateUrl="" />
+                                <asp:MenuItem Text="Boys" NavigateUrl="~/Products.aspx?category=kids&sub=Boys" />
+                                <asp:MenuItem Text="Girls" NavigateUrl="~/Products.aspx?category=kids&sub=Girls" />
 
 
                             </Items>
@@ -512,11 +502,8 @@
 
 
                             <Items>
-                                <asp:MenuItem Text="About Us" NavigateUrl="" />
-                                <asp:MenuItem Text="Terms & Conditions" NavigateUrl="" />
-                                <asp:MenuItem Text="Contact Us" NavigateUrl="" />
-                                <asp:MenuItem Text="Size Chart" NavigateUrl="" />
-                                <asp:MenuItem Text="FAQ" NavigateUrl="" />
+                                <asp:MenuItem Text="About Us" NavigateUrl="~/AboutUs.aspx" />
+                                <asp:MenuItem Text="Contact Us" NavigateUrl="~/ContactUs.aspx" />
 
                             </Items>
                         </asp:Menu>
@@ -612,15 +599,16 @@ WHERE is_private = 0"></asp:SqlDataSource>
 
                         </ItemTemplate>
                     </asp:Repeater>
+                    <!--
                     <div class="mt-4 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <!-- Icon -->
+                                
                                 <span class="inline-flex justify-center items-center w-8 h-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
                                     <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
                                 </span>
-                                <!-- End Icon -->
+                                
                             </div>
                             <div class="ms-3">
                                 <h3 class="text-gray-800 font-semibold dark:text-white">Order Placed !</h3>
@@ -635,14 +623,14 @@ WHERE is_private = 0"></asp:SqlDataSource>
                     <div class="mt-4 bg-red-50 border-t-2 border-red-500 rounded-lg p-4 dark:bg-red-800/30" role="alert">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <!-- Icon -->
+                              
                                 <span class="inline-flex justify-center items-center w-8 h-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800 dark:border-red-900 dark:bg-red-800 dark:text-red-400">
                                     <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M18 6 6 18" />
                                         <path d="m6 6 12 12" />
                                     </svg>
                                 </span>
-                                <!-- End Icon -->
+                             
                             </div>
                             <div class="ms-3">
                                 <h3 class="text-gray-800 font-semibold dark:text-white">Order Placed !</h3>
@@ -657,7 +645,7 @@ WHERE is_private = 0"></asp:SqlDataSource>
                     <div class="mt-4 bg-yellow-50 border-t-2 border-yellow-500 rounded-lg p-4 dark:bg-yellow-800/30" role="alert">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <!-- Icon -->
+                           
                                 <span class="inline-flex justify-center items-center w-8 h-8 rounded-full border-4 border-yellow-100 bg-yellow-200 text-yellow-800 dark:border-yellow-900 dark:bg-yellow-800 dark:text-yellow-400">
                                     <svg class="flex-shrink-0 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
@@ -665,7 +653,7 @@ WHERE is_private = 0"></asp:SqlDataSource>
                                         <path d="M12 17h.01" />
                                     </svg>
                                 </span>
-                                <!-- End Icon -->
+                       
                             </div>
                             <div class="ms-3">
                                 <h3 class="text-gray-800 font-semibold dark:text-white">Order Placed !</h3>
@@ -677,7 +665,7 @@ WHERE is_private = 0"></asp:SqlDataSource>
                         </div>
                     </div>
 
-
+                -->
 
                     <div class="flex items-center justify-between">
                         <hr class="w-full">
