@@ -58,7 +58,7 @@
                     <asp:HyperLink ID="linkHomepage" runat="server" NavigateUrl="~/Homepage.aspx" class="flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" aria-label="Brand">SHIRTTEE</asp:HyperLink>
                 </div>
 
-                <div class="w-full flex items-center justify-end ms-auto justify-between sm:gap-x-3 sm:order-3">
+                <div class="w-full items-center justify-end ms-auto justify-between sm:gap-x-3 sm:order-3">
 
                     <div class="sm:block hidden">
                         <asp:Label runat="server" for="icon" class="sr-only">Search</asp:Label>
@@ -311,16 +311,16 @@
                                                 <div class="flex flex-col py-6 px-3 md:px-6">
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
-                                                                                                            <asp:Repeater ID="Repeater6" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
-                                                        <ItemTemplate>
-                                                            <asp:HyperLink runat="server" ID="linkWomen" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
+                                                        <asp:Repeater ID="Repeater6" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <asp:HyperLink runat="server" ID="linkWomen" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
       
                                                         <div class="grow">
                                                             <p><%# Eval("category_name") %></p>
                                                         </div>
-                                                            </asp:HyperLink>
-                                                        </ItemTemplate>
-                                                    </asp:Repeater>
+                                                                </asp:HyperLink>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
 
                                                     </div>
                                                 </div>
@@ -374,7 +374,7 @@
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
 
-                                                          <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
+                                                        <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
                                                             <ItemTemplate>
                                                                 <asp:HyperLink runat="server" ID="linkKids" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
           
