@@ -195,7 +195,8 @@
                     <div class="mt-10">
                         <div class="flex items-center justify-between">
                             <h3 class="text-sm font-medium text-gray-900">Size</h3>
-                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
+                            <!--
+                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>-->
                         </div>
                         <asp:Label ID="lblMsg" runat="server" Text="Select Color To View Available Size." class="italic" Visible="true"></asp:Label>
 

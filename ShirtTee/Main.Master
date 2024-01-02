@@ -429,10 +429,10 @@
 
                             <Items>
 
-                                <asp:MenuItem Text="Shirts" NavigateUrl="" />
-                                <asp:MenuItem Text="Pants" NavigateUrl="" />
-                                <asp:MenuItem Text="Accessories" NavigateUrl="" />
-                                <asp:MenuItem Text="Shoes" NavigateUrl="" />
+                                <asp:MenuItem Text="Shirts" NavigateUrl="~/Products.aspx?category=men&sub=Shirts" />
+                                <asp:MenuItem Text="Pants" NavigateUrl="~/Products.aspx?category=men&sub=Pants" />
+                                <asp:MenuItem Text="Accessories" NavigateUrl="~/Products.aspx?category=men&sub=Accessories" />
+                                <asp:MenuItem Text="Shoes" NavigateUrl="~/Products.aspx?category=men&sub=Shoes" />
 
                             </Items>
                         </asp:Menu>
@@ -454,12 +454,12 @@
 
 
                             <Items>
-                                <asp:MenuItem Text="Shirts" NavigateUrl="" />
-                                <asp:MenuItem Text="Pants" NavigateUrl="" />
-                                <asp:MenuItem Text="Shoes" NavigateUrl="" />
-                                <asp:MenuItem Text="Dress" NavigateUrl="" />
-                                <asp:MenuItem Text="Skirts" NavigateUrl="" />
-                                <asp:MenuItem Text="Accessories" NavigateUrl="" />
+                                <asp:MenuItem Text="Shirts" NavigateUrl="~/Products.aspx?category=women&sub=Shirts" />
+                                <asp:MenuItem Text="Pants" NavigateUrl="~/Products.aspx?category=women&sub=Pants" />
+                                <asp:MenuItem Text="Shoes" NavigateUrl="~/Products.aspx?category=women&sub=Shoes" />
+                                <asp:MenuItem Text="Dress" NavigateUrl="~/Products.aspx?category=women&sub=Dress" />
+                                <asp:MenuItem Text="Skirts" NavigateUrl="~/Products.aspx?category=women&sub=Skirts" />
+                                <asp:MenuItem Text="Accessories" NavigateUrl="~/Products.aspx?category=women&sub=Accessories" />
                             </Items>
                         </asp:Menu>
 
@@ -479,8 +479,8 @@
 
 
                             <Items>
-                                <asp:MenuItem Text="Boys" NavigateUrl="" />
-                                <asp:MenuItem Text="Girls" NavigateUrl="" />
+                                <asp:MenuItem Text="Boys" NavigateUrl="~/Products.aspx?category=kids&sub=Boys" />
+                                <asp:MenuItem Text="Girls" NavigateUrl="~/Products.aspx?category=kids&sub=Girls" />
 
 
                             </Items>
@@ -502,11 +502,8 @@
 
 
                             <Items>
-                                <asp:MenuItem Text="About Us" NavigateUrl="" />
-                                <asp:MenuItem Text="Terms & Conditions" NavigateUrl="" />
-                                <asp:MenuItem Text="Contact Us" NavigateUrl="" />
-                                <asp:MenuItem Text="Size Chart" NavigateUrl="" />
-                                <asp:MenuItem Text="FAQ" NavigateUrl="" />
+                                <asp:MenuItem Text="About Us" NavigateUrl="~/AboutUs.aspx" />
+                                <asp:MenuItem Text="Contact Us" NavigateUrl="~/ContactUs.aspx" />
 
                             </Items>
                         </asp:Menu>

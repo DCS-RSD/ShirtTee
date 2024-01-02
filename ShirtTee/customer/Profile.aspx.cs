@@ -450,7 +450,7 @@ namespace ShirtTee.customer
 
         protected void btnPassword_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ChangePassword.aspx");
+            Response.Redirect("~/customer/ChangePassword.aspx");
         }
     }
 }

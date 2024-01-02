@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShirtTee
+namespace ShirtTee.customer
 {
 
 

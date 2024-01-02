@@ -153,6 +153,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AboutUs.aspx" />
     <Content Include="admin\Analyze.aspx" />
     <Content Include="admin\AnalyzeCustomer.aspx" />
     <Content Include="admin\AnalyzeProduct.aspx" />
@@ -176,7 +177,9 @@
       <DependentUpon>ShirtTeeDB.mdf</DependentUpon>
     </Content>
     <Content Include="ChangePassword.aspx" />
+    <Content Include="ContactUs.aspx" />
     <Content Include="customer\Cart.aspx" />
+    <Content Include="customer\ChangePassword.aspx" />
     <Content Include="customer\Checkout.aspx" />
     <Content Include="customer\OrderDetails.aspx" />
     <Content Include="customer\OrderHistory.aspx" />
@@ -201,6 +204,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutUs.aspx.cs">
+      <DependentUpon>AboutUs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AboutUs.aspx.designer.cs">
+      <DependentUpon>AboutUs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\Analyze.aspx.cs">
       <DependentUpon>Analyze.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -327,12 +337,26 @@
     <Compile Include="ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ContactUs.aspx.cs">
+      <DependentUpon>ContactUs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContactUs.aspx.designer.cs">
+      <DependentUpon>ContactUs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="customer\Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="customer\ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customer\ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="customer\Checkout.aspx.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>

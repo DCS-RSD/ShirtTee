@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ShirtTee
+namespace ShirtTee.customer
 {
     public partial class ChangePassword : System.Web.UI.Page
     {
@@ -22,7 +21,7 @@ namespace ShirtTee
 
         protected void btnChange_Click(object sender, EventArgs e)
         {
-            if (Page.IsValid) 
+            if (Page.IsValid)
             {
                 var identityDbContext = new IdentityDbContext("ConnectionString");
 
@@ -58,10 +57,11 @@ namespace ShirtTee
             {
                 args.IsValid = true;
             }
-            else 
+            else
             {
                 args.IsValid = false;
             }
         }
+
     }
 }
