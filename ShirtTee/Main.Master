@@ -252,20 +252,16 @@
                                                 <div class="flex flex-col py-6 px-3 md:px-6">
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                                                        <asp:Repeater ID="Repeater5" runat="server" DataSourceID="SqlDataSource1" OnItemDataBound="Repeater1_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <asp:HyperLink runat="server" ID="linkMen" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
           
-    <div class="grow">
-        <p>T-Shirts</p>
-    </div>
-                                                        </asp:HyperLink>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
- 
-    <div class="grow">
-        <p>Pants</p>
-    </div>
-                                                        </asp:HyperLink>
+                                                            <div class="grow">
+                                                                <p><%# Eval("category_name") %></p>
+                                                            </div>
+                                                                </asp:HyperLink>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </div>
@@ -315,22 +311,17 @@
                                                 <div class="flex flex-col py-6 px-3 md:px-6">
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
+                                                                                                            <asp:Repeater ID="Repeater6" runat="server" DataSourceID="SqlDataSource2" OnItemDataBound="Repeater2_ItemDataBound">
+                                                        <ItemTemplate>
+                                                            <asp:HyperLink runat="server" ID="linkWomen" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
+      
+                                                        <div class="grow">
+                                                            <p><%# Eval("category_name") %></p>
+                                                        </div>
+                                                            </asp:HyperLink>
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
 
-                                                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Category] WHERE ([category_group] = @category_group)">
-                                                            <SelectParameters>
-                                                                <asp:Parameter DefaultValue="kids" Name="category_group" Type="String"></asp:Parameter>
-                                                            </SelectParameters>
-                                                        </asp:SqlDataSource>
-                                                        <asp:Repeater ID="Repeater3" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
-                                                            <ItemTemplate>
-                                                                <asp:HyperLink runat="server" ID="linkKids" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
-          
-                                                            <div class="grow">
-                                                                <p><%# Eval("category_name") %></p>
-                                                            </div>
-                                                                </asp:HyperLink>
-                                                            </ItemTemplate>
-                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </div>
@@ -354,19 +345,21 @@
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
 
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                                                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Category] WHERE ([category_group] = @category_group)">
+                                                            <SelectParameters>
+                                                                <asp:Parameter DefaultValue="kids" Name="category_group" Type="String"></asp:Parameter>
+                                                            </SelectParameters>
+                                                        </asp:SqlDataSource>
+                                                        <asp:Repeater ID="Repeater3" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <asp:HyperLink runat="server" ID="linkKids" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
           
-    <div class="grow">
-        <p>T-Shirts</p>
-    </div>
-                                                        </asp:HyperLink>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
- 
-    <div class="grow">
-        <p>Pants</p>
-    </div>
-                                                        </asp:HyperLink>
+                                                            <div class="grow">
+                                                                <p><%# Eval("category_name") %></p>
+                                                            </div>
+                                                                </asp:HyperLink>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,19 +374,16 @@
                                                     <div class="space-y-4">
                                                         <span class="mb-2 text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">SUB-CATEGORY</span>
 
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                                                          <asp:Repeater ID="Repeater7" runat="server" DataSourceID="SqlDataSource3" OnItemDataBound="Repeater3_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <asp:HyperLink runat="server" ID="linkKids" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" NavigateUrl="">
           
-    <div class="grow">
-        <p>T-Shirts</p>
-    </div>
-                                                        </asp:HyperLink>
-
-                                                        <asp:HyperLink runat="server" class="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
- 
-    <div class="grow">
-        <p>Pants</p>
-    </div>
-                                                        </asp:HyperLink>
+                                                            <div class="grow">
+                                                                <p><%# Eval("category_name") %></p>
+                                                            </div>
+                                                                </asp:HyperLink>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </div>

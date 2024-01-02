@@ -144,7 +144,7 @@ namespace ShirtTee
 
                 if (dataItem != null)
                 {
-                    linkWomen.NavigateUrl = "~/Products.aspx?category=men&sub=" + dataItem["category_name"].ToString();
+                    linkWomen.NavigateUrl = "~/Products.aspx?category=women&sub=" + dataItem["category_name"].ToString();
                 }
             }
         }
@@ -162,7 +162,7 @@ namespace ShirtTee
 
                 if (dataItem != null)
                 {
-                    linkKids.NavigateUrl = "~/Products.aspx?category=men&sub=" + dataItem["category_name"].ToString();
+                    linkKids.NavigateUrl = "~/Products.aspx?category=kids&sub=" + dataItem["category_name"].ToString();
                 }
             }
         }

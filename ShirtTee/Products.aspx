@@ -7,7 +7,7 @@
             <asp:Label runat="server" class="text-2xl font-bold tracking-tight text-gray-900" ID="lblProduct" Text=""></asp:Label>
 
             <div class="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              
+
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Product] AS p
 INNER JOIN [Category] AS c ON
 c.category_ID = p.category_ID
@@ -43,7 +43,79 @@ deleted_at IS NULL">
                         </div>
 
                     </ItemTemplate>
+
                 </asp:Repeater>
+
+                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Product] AS p
+INNER JOIN [Category] AS c ON
+c.category_ID = p.category_ID
+WHERE category_group = @category AND
+category_name = @subcategory AND
+deleted_at IS NULL">
+                    <SelectParameters>
+                        <asp:QueryStringParameter QueryStringField="category" Name="category"></asp:QueryStringParameter>
+                        <asp:QueryStringParameter QueryStringField="sub" Name="subcategory"></asp:QueryStringParameter>
+                    </SelectParameters>
+                </asp:SqlDataSource>
+                <asp:Repeater ID="Repeater2" runat="server" DataSourceID="SqlDataSource2">
+                    <ItemTemplate>
+                        <div onclick='<%# Eval("product_id", "window.location.href = \"ProductDetails.aspx?product_ID={0}\";") %>' class="group relative">
+                            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                <asp:Image ID="imageProduct" runat="server"
+                                    ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>'
+                                    AlternateText='<%# Eval("product_name") %>'
+                                    class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
+                            </div>
+                            <div class="mt-4 flex justify-between">
+                                <div>
+                                    <h3 class="text-sm text-gray-700">
+                                        <a href="#">
+                                            <span aria-hidden="true" class="absolute inset-0"></span>
+                                            <%# Eval("product_name") %>
+                                        </a>
+                                    </h3>
+
+                                </div>
+                                <p class="text-sm font-medium text-gray-900">
+                                    RM<%# Eval("price") %>
+                                </ph>
+                            </div>
+                        </div>
+
+                    </ItemTemplate>
+                </asp:Repeater>
+
+                <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [Product]
+WHERE deleted_at IS NULL">
+                </asp:SqlDataSource>
+                <asp:Repeater ID="Repeater3" runat="server" DataSourceID="SqlDataSource3">
+                    <ItemTemplate>
+                        <div onclick='<%# Eval("product_id", "window.location.href = \"ProductDetails.aspx?product_ID={0}\";") %>' class="group relative">
+                            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                <asp:Image ID="imageProduct" runat="server"
+                                    ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("thumbnail")) %>'
+                                    AlternateText='<%# Eval("product_name") %>'
+                                    class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
+                            </div>
+                            <div class="mt-4 flex justify-between">
+                                <div>
+                                    <h3 class="text-sm text-gray-700">
+                                        <a href="#">
+                                            <span aria-hidden="true" class="absolute inset-0"></span>
+                                            <%# Eval("product_name") %>
+                                        </a>
+                                    </h3>
+
+                                </div>
+                                <p class="text-sm font-medium text-gray-900">
+                                    RM<%# Eval("price") %>
+                                </ph>
+                            </div>
+                        </div>
+
+                    </ItemTemplate>
+                </asp:Repeater>
+
 
                 <!-- More products... -->
             </div>

@@ -15,22 +15,30 @@ namespace ShirtTee
         protected void Page_Load(object sender, EventArgs e)
         {
             string prodCategory = Request.QueryString["category"];
-            if (prodCategory != null)
-            {
-                if (prodCategory.Equals("men"))
-                {
-                    lblProduct.Text = "MEN";
-                }
-                else if (prodCategory.Equals("women"))
-                {
-                    lblProduct.Text = "WOMEN";
-                }
-                else if (prodCategory.Equals("kids"))
-                {
-                    lblProduct.Text = "KIDS";
-                }
-            }
+            string subCategory = Request.QueryString["sub"];
 
+            if (prodCategory != null && subCategory != null)
+            {
+                Repeater1.Visible = false;
+                Repeater2.Visible = true;
+                Repeater3.Visible = false;
+                lblProduct.Text = prodCategory.ToUpper() + " " + subCategory.ToUpper();
+
+            }
+            else if (prodCategory != null)
+            {
+                Repeater1.Visible = true;
+                Repeater2.Visible = false;
+                Repeater3.Visible = false;
+                lblProduct.Text = prodCategory.ToUpper();
+            }
+            else 
+            {
+                Repeater1.Visible = false;
+                Repeater2.Visible = false;
+                Repeater3.Visible = true;
+                lblProduct.Text = "ALL PRODUCTS";
+            }
 
         }
 
