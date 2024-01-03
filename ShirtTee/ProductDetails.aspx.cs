@@ -138,18 +138,13 @@ namespace ShirtTee
         {
             if (Session["user_ID"] != null)
             {
-                DBconnection dbconnection = new DBconnection();
-                SqlParameter[] parameterUrl = new SqlParameter[]{
-                 new SqlParameter("@user_ID", Session["user_ID"]),
-                 new SqlParameter("@product_ID", Request.QueryString["product_ID"])
-                };
-                dbconnection.createConnection();
-                SqlDataReader cartDetails = dbconnection.ExecuteQuery(
-                    " SELECT * FROM [Cart] AS c" +
-                    " INNER JOIN [Product_Details] AS p ON c.product_details_ID = p.product_details_ID"
-                  + " WHERE user_ID = @user_ID AND product_ID = @product_ID",
-                    parameterUrl).ExecuteReader();
+                //get prodctdetailsid
+                string prodDetailsID = "";
+                string prodID = "";
+                double price = 0;
+                int qty = 0;
 
+                bool toUpdate = false;
                 DBconnection dbconnection2 = new DBconnection();
                 SqlParameter[] parameterUrl2 = new SqlParameter[]{
                  new SqlParameter("@product_ID", Request.QueryString["product_ID"]),
@@ -164,125 +159,125 @@ namespace ShirtTee
                     " size_ID = @size_ID AND" +
                     " color_ID = @color_ID",
                     parameterUrl2).ExecuteReader();
-
                 if (productDetails.HasRows)
                 {
                     productDetails.Read();
+                    prodDetailsID = productDetails["product_details_ID"].ToString();
+                    price = Convert.ToDouble(productDetails["price"].ToString());
+                    prodID = productDetails["product_ID"].ToString();
+                }
+                dbconnection2.closeConnection();
 
-                    if (cartDetails.HasRows)
+
+                DBconnection dbconnection = new DBconnection();
+                SqlParameter[] parameterUrl = new SqlParameter[]{
+                 new SqlParameter("@user_ID", Session["user_ID"]),
+                 new SqlParameter("@product_ID", Request.QueryString["product_ID"])
+                };
+                dbconnection.createConnection();
+                SqlDataReader cartDetails = dbconnection.ExecuteQuery(
+                    " SELECT * FROM [Cart] AS c" +
+                    " INNER JOIN [Product_Details] AS p ON c.product_details_ID = p.product_details_ID"
+                  + " WHERE user_ID = @user_ID AND product_ID = @product_ID",
+                    parameterUrl).ExecuteReader();
+
+                if (cartDetails.HasRows)
+                {
+                    System.Diagnostics.Debug.WriteLine("has item");
+                    cartDetails.Read();
+                    //product already in cart, update
+                    qty = Convert.ToInt32(cartDetails["quantity"].ToString());
+
+                    if (qty < 15)
                     {
-                        while (cartDetails.Read())
-                        {
-                            if (cartDetails["product_details_ID"].Equals(productDetails["product_details_ID"]))
-                            {
-                                //product already in cart
-                                int qty = Convert.ToInt32(cartDetails["quantity"].ToString());
+                        toUpdate = true;
 
-                                if (qty < 15)
-                                {
-                                    try
-                                    {
-                                        string sqlcommand =
-                                            "UPDATE Cart SET " +
-                                            "quantity = @quantity, " +
-                                            "subtotal = @quantity * (SELECT price FROM [Product] WHERE product_ID = @product_ID) " +
-                                            "WHERE user_ID = @user_ID AND " +
-                                            "product_details_ID = @product_details_ID";
-                                        SqlParameter[] parameters = {
-                                            new SqlParameter("@quantity", qty + 1),
-                                            new SqlParameter("@product_ID", productDetails["product_ID"]),
-                                            new SqlParameter("@user_ID", Session["user_ID"]),
-                                            new SqlParameter("@product_details_ID", cartDetails["product_details_ID"]),
-                                        };
-                                        DBconnection db1 =new DBconnection();
-                                        db1.createConnection();
-                                        bool valid = db1.ExecuteNonQuery(sqlcommand, parameters);
-                                        db1.closeConnection();
-                                        if (valid)
-                                        {
-                                            //product add to cart sucess
-                                            Response.Redirect($"~/customer/Cart.aspx");
-                                        }
-                                        return;
-                                    }
-                                    catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "1"); }
 
-                                }
-                                else
-                                {
-                                    //max qty
-                                    lblErrAdd.Text = "You have reached the max number in the cart.";
-                                }
-                            }
-                            else
-                            {
-                                //add product into cart
-                                try
-                                {
-                                    string sqlcommand =
-                                        "INSERT INTO Cart (user_ID, product_details_ID, quantity, subtotal) " +
-                                        "VALUES (@user_ID, @product_details_ID, 1, @subtotal)";
-                                    SqlParameter[] parameters = {
-                                        new SqlParameter("@user_ID", Session["user_ID"]),
-                                        new SqlParameter("@product_details_ID", productDetails["product_details_ID"]),
-                                        new SqlParameter("@subtotal", productDetails["price"])
-                                    };
-                                    DBconnection db2 =new DBconnection();
-                                    db2.createConnection();
-                                    bool valid = db2.ExecuteNonQuery(sqlcommand, parameters);
-                                    db2.closeConnection();
-                                    if (valid)
-                                    {
-                                        //product add to cart sucess
-                                        Response.Redirect($"~/customer/Cart.aspx");
-                                    }
-                                    return;
-                                }
-                                catch (Exception ex)
-                                {
-                                    System.Diagnostics.Debug.WriteLine(ex.Message + "2");
-                                }
-                            }
-                        }
                     }
                     else
                     {
-                        //add product into cart
-                        try
-                        {
-                            string sqlcommand =
-                                "INSERT INTO Cart (user_ID, product_details_ID, quantity, subtotal) " +
-                                "VALUES (@user_ID, @product_details_ID, 1, @subtotal)";
-                            SqlParameter[] parameters = {
-                                        new SqlParameter("@user_ID", Session["user_ID"]),
-                                        new SqlParameter("@product_details_ID", productDetails["product_details_ID"]),
-                                        new SqlParameter("@subtotal", productDetails["price"])
-                                    };
-                            dbconnection.createConnection();
-                            bool valid = dbconnection.ExecuteNonQuery(sqlcommand, parameters);
-                            dbconnection.closeConnection();
-                            if (valid)
-                            {
-                                //product add to cart sucess
-                                Response.Redirect($"~/customer/Cart.aspx");
-                            }
-                            return;
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine(ex.Message + "3");
-                        }
+                        //max qty
+                        lblErrAdd.Text = "You have reached the max number in the cart.";
                     }
-                    dbconnection2.closeConnection();
-                }
-                else
-                {
-                    lblErrAdd.Text = "Please Select Color/Size Before Adding To Cart.";
+
                 }
                 dbconnection.closeConnection();
 
+                //add product into cart, not exist yet
+                if (toUpdate)
+                {
+                    updateCart(prodDetailsID, prodID, qty);
+
+                }
+                else
+                {
+                    addToCart(prodDetailsID, price);
+                }
+
+
+
             }
 
+
+        }
+
+        private void addToCart(string prodDetailsID, double price)
+        {
+            System.Diagnostics.Debug.WriteLine("no item");
+
+            try
+            {
+                string sqlcommand =
+                    "INSERT INTO Cart (user_ID, product_details_ID, quantity, subtotal) " +
+                    "VALUES (@user_ID, @product_details_ID, 1, @subtotal)";
+                SqlParameter[] parameters = {
+                                        new SqlParameter("@user_ID", Session["user_ID"]),
+                                        new SqlParameter("@product_details_ID", prodDetailsID),
+                                        new SqlParameter("@subtotal", price)
+                                    };
+                DBconnection db1 = new DBconnection();
+                db1.createConnection();
+                bool valid = db1.ExecuteNonQuery(sqlcommand, parameters);
+                db1.closeConnection();
+                if (valid)
+                {
+                    //product add to cart sucess
+                    Response.Redirect($"~/customer/Cart.aspx");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message + "3");
+            }
+        }
+
+        private void updateCart(string prodDetailsID, string prodID, int qty)
+        {
+            try
+            {
+                string sqlcommand =
+                    "UPDATE Cart SET " +
+                    "quantity = @quantity, " +
+                    "subtotal = @quantity * (SELECT price FROM [Product] WHERE product_ID = @product_ID) " +
+                    "WHERE user_ID = @user_ID AND " +
+                    "product_details_ID = @product_details_ID";
+                SqlParameter[] parameters = {
+                                            new SqlParameter("@quantity", qty + 1),
+                                            new SqlParameter("@product_ID", prodID),
+                                            new SqlParameter("@user_ID", Session["user_ID"]),
+                                            new SqlParameter("@product_details_ID", prodDetailsID),
+                                        };
+                DBconnection db1 = new DBconnection();
+                db1.createConnection();
+                bool valid = db1.ExecuteNonQuery(sqlcommand, parameters);
+                db1.closeConnection();
+                if (valid)
+                {
+                    //product add to cart sucess
+                    Response.Redirect($"~/customer/Cart.aspx");
+                }
+            }
+            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "1"); }
         }
 
         protected void radColor_CheckedChanged(object sender, EventArgs e)
@@ -343,7 +338,7 @@ namespace ShirtTee
             }
         }
 
-        private void calculateOverallRating() 
+        private void calculateOverallRating()
         {
             int totalReview = 0;
             int totalRating = 0;
