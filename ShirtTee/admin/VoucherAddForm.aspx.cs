@@ -47,6 +47,7 @@ namespace ShirtTee.admin
                     if (dbconnection.ExecuteNonQuery(sqlCommand, parameters))
                     {
                         Session["VoucherAdded"] = "success";
+
                     }
                 dbconnection.closeConnection();
 
