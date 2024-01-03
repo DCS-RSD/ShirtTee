@@ -128,7 +128,7 @@ WHERE order_ID = @order_ID">
                                                                         <asp:Label runat="server" ID="lblPrice" Text="" />
                                                                     </p>
                                                                 </div>
-                                                                <p class="hidden text-gray-500 sm:block sm:mt-2"><%# Eval("description") %></p>
+                                                                <p class="hidden text-gray-500 sm:block sm:mt-2 text-justify"><%# Eval("description") %></p>
                                                                 <p class="mt-2 text-gray-500 ">Quantity: <%# Eval("quantity") %></p>
                                                                 <p class="mt-1 text-gray-500"><%# Eval("color_name") %> / <%# Eval("size_name") %></p>
                                                                 <p class="mt-3 text-sm font-bold text-gray-900">

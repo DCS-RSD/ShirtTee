@@ -26,15 +26,15 @@
     <script>
         function showSuccessToast() {
             var status = '<%= Session["ReviewSubmitted"] %>';
-                console.log(status);
-                if (status !== null && status !== undefined) {
-                    if (status == "success") {
-                        toastr["success"]("Review submitted successfully.");
-                    }
-                    else {
-                        toastr["error"]("Empty rating / Same review & rating cannot be submitted.");
-                    }
+            console.log(status);
+            if (status !== null && status !== undefined) {
+                if (status == "success") {
+                    toastr["success"]("Review submitted successfully.");
                 }
+                else {
+                    toastr["error"]("Empty rating / Same review & rating cannot be submitted.");
+                }
+            }
         <% Session.Remove("ReviewSubmitted"); %>
         }
     </script>
@@ -68,7 +68,10 @@
                                         RM
                                         <asp:Label runat="server" ID="lblPrice" Text="" />
                                     </p>
-                                    <asp:Label runat="server" ID="lblDescription" Text="" class="mt-3 text-sm text-gray-500" />
+                                    <div class="text-justify">
+                                        <asp:Label runat="server" ID="lblDescription" Text="" class=" mt-3 text-sm text-gray-500 text-justify" />
+
+                                    </div>
                                     <p class="mt-3 text-sm font-bold text-gray-900">
                                         Total: RM
                                         <asp:Label runat="server" ID="lblTotal" Text="" />
@@ -420,6 +423,6 @@
         });
         const editorContent = editor.getHTML(); // Get the HTML content of the editor
         document.getElementById('<%= lblReviewText.ClientID %>').value = editorContent;
-        
+
     </script>
 </asp:Content>

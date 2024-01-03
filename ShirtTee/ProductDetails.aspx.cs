@@ -178,7 +178,7 @@ namespace ShirtTee
                                 //product already in cart
                                 int qty = Convert.ToInt32(cartDetails["quantity"].ToString());
 
-                                if (qty < 9)
+                                if (qty < 15)
                                 {
                                     try
                                     {
@@ -211,6 +211,7 @@ namespace ShirtTee
                                 else
                                 {
                                     //max qty
+                                    lblErrAdd.Text = "You have reached the max number in the cart.";
                                 }
                             }
                             else

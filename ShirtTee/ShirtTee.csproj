@@ -495,6 +495,9 @@
     <Compile Include="StripePublicKeyHandler.ashx.cs">
       <DependentUpon>StripePublicKeyHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="StripePublicLiveKeyHandler.ashx.cs">
+      <DependentUpon>StripePublicLiveKeyHandler.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
@@ -502,6 +505,7 @@
     <Content Include="customer\Web.config" />
     <None Include="packages.config" />
     <Content Include="StripePublicKeyHandler.ashx" />
+    <Content Include="StripePublicLiveKeyHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -590,7 +590,7 @@ WHERE is_private = 0"></asp:SqlDataSource>
                                     </div>
                                     <div class="ms-3">
                                         <h3 class="text-gray-800 font-semibold dark:text-white"><%# Eval("notice_title") %></h3>
-                                        <p class="mt-1 text-sm text-gray-700 dark:text-gray-400"><%# Eval("notice_content") %></p>
+                                        <p class="mt-1 text-sm text-gray-700 dark:text-gray-400 text-justify"><%# Eval("notice_content") %></p>
                                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                                             <%# Eval("created_at") %>
                                         </p>

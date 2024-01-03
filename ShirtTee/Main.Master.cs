@@ -78,7 +78,6 @@ namespace ShirtTee
         protected void Page_Load(object sender, EventArgs e)
         {
             // Application error 
-            // throw new Exception("This is a test exception for error handling.");
             if (!IsPostBack)
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated)

@@ -22,18 +22,27 @@ namespace ShirtTee.customer
         protected override void OnPreRender(EventArgs e)
         {
             Repeater1.DataBind();
-
-      
         }
-
-
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                if (chkLiveMode.Checked)
+                {
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretLiveKey"];
+                    var service2 = new CouponService();
+                    service2.Delete(Session["discountCode"].ToString());
+                }
+                else
+                {
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                    var service2 = new CouponService();
+                    service2.Delete(Session["discountCode"].ToString());
+                }
 
-            
+            }
+            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "checkout delete voucher stripe"); }
             //lbl1.Text = Session["voucherApplied"].ToString();
 
             DBconnection dbconnection = new DBconnection();
@@ -164,31 +173,121 @@ namespace ShirtTee.customer
             dbconnection.closeConnection();
 
             var shipping = new List<SessionShippingOptionOptions>();
-            if (Convert.ToDouble(Session["shipping"]) == 0)
+
+            if (chkLiveMode.Checked)
             {
-                //shipping free
-                shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTfRpFglGOSlsymW3eN9MPy" });
+                if (Convert.ToDouble(Session["shipping"]) == 0)
+                {
+                    //shipping free
+                    shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTrNeFglGOSlsymbPT6OTa0" });
+                }
+                else
+                {
+                    //shipping RM 12.00
+                    shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTfPwFglGOSlsymZ3jSc7nf" });
+                }
             }
             else
             {
-                //shipping RM 12.00
-                shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTfQmFglGOSlsymUjrBek5J" });
+                if (Convert.ToDouble(Session["shipping"]) == 0)
+                {
+                    //shipping free
+                    shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTfRpFglGOSlsymW3eN9MPy" });
+                }
+                else
+                {
+                    //shipping RM 12.00
+                    shipping.Add(new SessionShippingOptionOptions { ShippingRate = "shr_1OTfQmFglGOSlsymUjrBek5J" });
+                }
+
             }
 
-            try
+
+            if (chkLiveMode.Checked)
+            {
+                StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretLiveKey"];
+            }
+            else
             {
                 StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
 
-                SessionCreateOptions options;
+            }
 
-                string discountCode = null;
+            SessionCreateOptions options;
 
-                if (Session["discountCode"] != null)
+            string discountCode = null;
+
+            if (!string.IsNullOrEmpty(Session["discountCode"].ToString()))
+            {
+                discountCode = Session["discountCode"].ToString();
+
+                //create stripe voucher;
+                if (chkLiveMode.Checked)
                 {
-                    discountCode = Session["discountCode"].ToString();
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretLiveKey"];
                 }
+                else
+                {
+                    StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
 
+                }
+                double amountOff = Convert.ToDouble(Session["discountValue"].ToString());
+                var options2 = new CouponCreateOptions
+                {
+                    Duration = "once",
+                    Name = discountCode,
+                    Id = discountCode,
+                    AmountOff = (long)(amountOff * 100),
+                    Currency = "myr"
+                    //PercentOff = (decimal)discount,
+                    //RedeemBy = DateTime.Parse(txtDate.Text)
+                };
 
+                var service2 = new CouponService();
+                service2.Create(options2);
+            }
+
+            if (chkLiveMode.Checked)
+            {
+                if (!string.IsNullOrEmpty(discountCode))
+                {
+                    options = new SessionCreateOptions
+                    {
+                        PaymentMethodTypes = new List<String> {
+                            "card",
+                            "grabpay"
+                        },
+                        LineItems = items,
+                        Mode = "payment",
+                        Discounts = new List<SessionDiscountOptions>
+                        {
+                            new SessionDiscountOptions { Coupon = discountCode },
+                        },
+                        ShippingOptions = shipping,
+                        SuccessUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
+                        CancelUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
+
+                    };
+                }
+                else
+                {
+                    options = new SessionCreateOptions
+                    {
+                        PaymentMethodTypes = new List<String> {
+                            "card",
+                            "grabpay"
+                        },
+                        LineItems = items,
+                        Mode = "payment",
+                        ShippingOptions = shipping,
+                        SuccessUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
+                        CancelUrl = "https://localhost:44374/customer/OrderHistory.aspx?id={CHECKOUT_SESSION_ID}",
+
+                    };
+                }
+            }
+            else
+            {
                 if (!string.IsNullOrEmpty(discountCode))
                 {
                     options = new SessionCreateOptions
@@ -227,17 +326,13 @@ namespace ShirtTee.customer
 
                     };
                 }
-
-                var service = new SessionService();
-                Session session = service.Create(options);
-                sessionId = session.Id;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
 
 
+
+            var service = new SessionService();
+            Session session = service.Create(options);
+            sessionId = session.Id;
 
 
         }
@@ -251,7 +346,16 @@ namespace ShirtTee.customer
                 string shippingAddress = txtAddressLine1.Text + " " + txtAddressLine2.Text + " " + txtCity.Text + " " + txtPostalCode.Text + " " + ddlState.SelectedValue + " " + "Malaysia";
                 Session["shippingAddress"] = shippingAddress;
 
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "SubmitAPI", "submitAPI();", true);
+                if (chkLiveMode.Checked)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "SubmitLiveAPI", "submitLiveAPI();", true);
+
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "SubmitAPI", "submitAPI();", true);
+                }
+
 
             }
         }
