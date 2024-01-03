@@ -97,7 +97,7 @@ WHERE order_ID = @order_ID">
                                                 RM
                                                 <asp:Label runat="server" ID="lblPrice" Text="" />
                                             </p>
-                                            <p class="mt-3 text-sm text-gray-500"><%# Eval("description") %></p>
+                                            <p class="mt-3 text-sm text-gray-500 text-justify"><%# Eval("description") %></p>
                                             <p class="mt-3 text-sm font-bold text-gray-900">
                                                 Total: RM
                                                 <asp:Label runat="server" ID="lblTotal" Text="" />

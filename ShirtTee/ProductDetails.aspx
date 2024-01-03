@@ -138,7 +138,7 @@
 
                     <div class="mt-6">
 
-                        <div class="text-base text-gray-700 space-y-6">
+                        <div class="text-base text-gray-700 space-y-6 text-justify">
                             <asp:Label runat="server" ID="lblDesc"></asp:Label>
                         </div>
                     </div>

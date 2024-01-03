@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="ShirtTee.customer.Checkout" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 
     <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
         <div class="px-4 pt-4">
@@ -122,11 +122,11 @@ WHERE user_ID = @user_ID">
                     </div>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ValidationGroup="CheckOutValidation" ControlToValidate="txtPostalCode" class="text-sm italic" runat="server" ErrorMessage="Please fill in your postal code." Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="regexValidator" runat="server"
-    ControlToValidate="txtPostalCode"
-    ErrorMessage="Please enter correct postal code."
-    ValidationExpression="^(?!00000)\d{5}$"
-    Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" ValidationGroup="CheckOutValidation">
-</asp:RegularExpressionValidator>
+                        ControlToValidate="txtPostalCode"
+                        ErrorMessage="Please enter correct postal code."
+                        ValidationExpression="^(?!00000)\d{5}$"
+                        Display="Dynamic" ForeColor="Red" CssClass="text-sm italic" ValidationGroup="CheckOutValidation">
+                    </asp:RegularExpressionValidator>
 
                     <label for="state/country" class="mt-4 mb-2 block text-sm font-medium">State / Country</label>
                     <div class="flex flex-col sm:flex-row items-center sm:space-y-0 sm:space-x-4">
@@ -151,7 +151,7 @@ WHERE user_ID = @user_ID">
                         <asp:TextBox runat="server" ID="txtCountry" Text="Malaysia" disabled class="disabled:cursor-not-allowed w-full sm:w-1/2 sm:mt-0 mt-2 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:self-stretch" placeholder="Country" />
                     </div>
                     <asp:Label runat="server" ID="errState" Text="" class="italic text-red-500"></asp:Label>
-                    
+
                     <!-- Total -->
                     <div class="mt-6 border-t border-b py-2">
                         <div class="flex items-center justify-between">
@@ -188,6 +188,16 @@ WHERE user_ID = @user_ID">
                         </p>
                     </div>
                 </div>
+                <!-- Checkbox -->
+                <div class="flex items-center">
+                    <div>
+                        <asp:CheckBox runat="server" ID="chkLiveMode"  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+                    </div>
+                    <div class="ms-3">
+                        <asp:Label runat="server" for="remember-me" class="text-sm dark:text-white">Enable Live Mode</asp:Label>
+                    </div>
+                </div>
+                <!-- End Checkbox -->
                 <asp:Button ID="btnPlaceOrder" ValidationGroup="CheckOutValidation" CausesValidation="true" runat="server" class="mt-4 mb-4 w-full rounded-md hover:bg-gray-700 bg-gray-900 px-6 py-3 font-medium text-white" Text="PLACE ORDER" OnClick="btnPlaceOrder_Click" />
                 <div class="text-center mb-4">
                     <asp:Label ID="lblWarning" runat="server" class="italic font-semibold text-lg text-red-500 mt-2" Visible="false" Text="Cannot proceed due to insufficient stock."></asp:Label>
@@ -203,10 +213,57 @@ WHERE user_ID = @user_ID">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+        <script>
+
+            function isFPXChecked() {
+                var radFPX = document.getElementById("radio_1");
+                return radFPX.checked;
+            }
+
+            function submitLiveAPI() {
+                if (isFPXChecked()) {
+
+                    Page_ClientValidate();
+
+
+                    console.log("hi");
+                    if (Page_IsValid) {
+                        //e.preventDefault();
+                        console.log("vlaid");
+                        // Make an AJAX request to your server handler to get the Stripe public key
+                        fetch('/StripePublicLiveKeyHandler.ashx', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                // Include any necessary authentication headers if required
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                var stripe = Stripe(data.stripePublicLiveKey);
+                                stripe.redirectToCheckout({
+                                    sessionId: "<%= sessionId %>"
+                            });
+                        })
+                            .catch(error => console.error('Error fetching Stripe public live key:', error));
+                    }
+                    else {
+                        console.log("error");
+                    }
+
+                }
+
+                else {
+                    return;
+                }
+            };
+
+        </script>
+
 
 
     <script>
-        
+
         function isFPXChecked() {
             var radFPX = document.getElementById("radio_1");
             return radFPX.checked;
@@ -214,7 +271,7 @@ WHERE user_ID = @user_ID">
 
         function submitAPI() {
             if (isFPXChecked()) {
-                
+
                 Page_ClientValidate();
 
 

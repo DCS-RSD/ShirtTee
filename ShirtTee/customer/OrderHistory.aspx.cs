@@ -371,6 +371,7 @@ namespace ShirtTee.customer
                                 }
                                 else
                                 {
+
                                     successIcon.Visible = false;
                                     failedIcon.Visible = true;
                                     // Payment canceled
@@ -409,7 +410,15 @@ namespace ShirtTee.customer
                     lblPaymentDesc.Text = "You have cancelled your payment, please try again.";
                 }
             }
-
+            //stripe delete voucher
+            try {
+                StripeConfiguration.ApiKey = ConfigurationManager.AppSettings["StripeSecretKey"];
+                var service2 = new CouponService();
+                service2.Delete(Session["discountCode"].ToString());
+            }
+            catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex.Message + "stripe delete voucher");
+            }
 
 
             displayStatus();
